@@ -74,11 +74,38 @@ La configuración se eligió con datos desde 2020. Con el histórico Dukascopy d
 
 Entre 2005 y 2019 solo EURAUD gana (PF 1.15); NZDUSD pierde un 8%.
 
+## Monte Carlo del challenge FTMO, repetido
+
+Mismo método que `ftmo_montecarlo.py`: bootstrap con reemplazo de los días reales del
+portfolio, 5.000 trayectorias de hasta 500 días, objetivo +10%, caída diaria 5% y caída
+total 10% medida desde el máximo. Ahora está en `python -m lab.nnfx --monte-carlo 5000`.
+
+Con Dukascopy desde 2020 y el riesgo doble del motor original, el port da 65.5% de P(pass)
+y 10.6% de caída P95, cerca del 69.7% y 10.5% del proyecto; la diferencia viene del empate de
+USDCHF y del generador aleatorio.
+
+| Datos | Riesgo | Costes | P(pass) | P(fail) | Mediana hasta pasar | Caída P95 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Resultado previo del proyecto (2020–2026) | 0.8% efectivo | normales | 69.7% | 19.8% | 210 días | 10.5% |
+| Dukascopy 2020–2026 | 0.40% | normales | 32.0% | 1.6% | 360 días | 8.3% |
+| Dukascopy 2020–2026 | 0.40% | al doble | 25.8% | 2.3% | 361 días | 8.7% |
+| Dukascopy 2005–2026 | 0.40% | normales | 7.6% | 5.4% | 383 días | 10.0% |
+| Dukascopy 2005–2026 | 0.40% | al doble | 5.5% | 7.2% | 379 días | 10.1% |
+| Dukascopy 2005–2019 | 0.40% | normales | 2.8% | 10.0% | 388 días | 10.1% |
+| Dukascopy 2005–2026 | 0.80% | normales | 35.3% | 44.9% | 239 días | 10.7% |
+| Yahoo 2016–2026 | 0.40% | normales | 3.8% | 9.5% | 384 días | 10.1% |
+| Yahoo 2016–2026 | 0.40% | al doble | 2.7% | 12.6% | 372 días | 10.2% |
+
+El resto hasta 100% son trayectorias que no pasan ni fallan en 500 días. Con el riesgo real
+del EA y todo el histórico, la probabilidad de pasar baja del 69.7% a un 5–8%, y lo normal es
+no llegar al objetivo en casi dos años. Subir el riesgo al 0.8% sube P(pass) al 35%, pero a
+costa de fallar el 45% de las veces.
+
 ## Conclusión
 
 La ventaja aparece en el periodo en que se eligió la configuración y en la fuente de datos
 con que se eligió. En 15 años previos no vistos es negativa, con una caída que superaría el
 10% del FTMO, y con otra fuente de datos para el mismo periodo se reduce a EURAUD. Los costes
 al doble restan poco (opera ~14 veces al año por par), así que el problema no son los costes
-sino la falta de ventaja estable. Antes de arriesgar la cuenta de un challenge convendría
-repetir el Monte Carlo con el riesgo corregido y con el histórico desde 2005.
+sino la falta de ventaja estable. El Monte Carlo repetido con el riesgo corregido y el histórico desde 2005 lo
+confirma: la probabilidad de pasar el challenge queda en torno al 5–8%.

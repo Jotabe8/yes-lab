@@ -81,6 +81,20 @@ class EngineTests(unittest.TestCase):
         self.assertIn("ret", wf["windows"][0]["fixed"])
 
 
+class MonteCarloTests(unittest.TestCase):
+    def test_ftmo_path_rules(self):
+        self.assertEqual(nnfx.ftmo_path([1.0] * 20)["result"], "PASS")
+        self.assertEqual(nnfx.ftmo_path([-5.0])["result"], "FAIL")          # caída diaria del 5%
+        self.assertEqual(nnfx.ftmo_path([-2.0] * 6)["result"], "FAIL")      # caída total del 10%
+        self.assertEqual(nnfx.ftmo_path([0.0] * 10)["result"], "TIMEOUT")
+
+    def test_monte_carlo_is_reproducible(self):
+        daily = [0.5, -0.4, 0.0, 0.0, 0.8]
+        a, b = nnfx.monte_carlo(daily, sims=200), nnfx.monte_carlo(daily, sims=200)
+        self.assertEqual(a, b)
+        self.assertGreater(a["p_pass"], 0)
+
+
 class DataTests(unittest.TestCase):
     def test_daily_bars_close_is_next_open(self):
         rows = [{"d": "a", "o": 1.0, "h": 1.2, "l": 0.9, "c": 1.0},

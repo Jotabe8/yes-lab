@@ -15,6 +15,7 @@ Uso:
     python -m lab.nnfx                      # portfolio de 5 pares, costes normales y al doble
     python -m lab.nnfx --walk-forward       # además, walk-forward anual
     python -m lab.nnfx --since 2020-01-01   # mismo periodo que los resultados previos
+    python -m lab.nnfx --monte-carlo 5000   # probabilidad de pasar el challenge FTMO
 """
 
 from __future__ import annotations
@@ -387,6 +388,46 @@ def daily_bars(rows: list[dict]) -> list[dict]:
     return out
 
 
+def portfolio_daily_returns(results: dict[str, Result]) -> list[float]:
+    """Retorno diario del portfolio en %: suma de los retornos diarios de cada par (ftmo_montecarlo.py)."""
+    rets: dict[str, float] = {}
+    for r in results.values():
+        for i in range(1, len(r.equity)):
+            rets[r.dates[i]] = rets.get(r.dates[i], 0.0) + (r.equity[i] / r.equity[i - 1] - 1) * 100
+    return [rets[d] for d in sorted(rets)]
+
+
+def ftmo_path(daily_pct: list[float], target: float = 10.0, max_dd: float = 10.0, daily_dd: float = 5.0) -> dict:
+    """Una trayectoria del challenge con las reglas de ftmo_montecarlo.py del proyecto.
+
+    Como allí, la caída total se mide desde el máximo alcanzado (más estricto que el
+    límite estático de FTMO) y la diaria como pérdida del día respecto al balance.
+    """
+    bal = peak = 100.0
+    worst = 0.0
+    for day, r in enumerate(daily_pct, 1):
+        bal *= 1 + r / 100
+        if -r >= daily_dd:
+            return {"result": "FAIL", "days": day, "dd": worst}
+        peak = max(peak, bal)
+        worst = max(worst, peak - bal)
+        if worst >= max_dd:
+            return {"result": "FAIL", "days": day, "dd": worst}
+        if bal - 100 >= target:
+            return {"result": "PASS", "days": day, "dd": worst}
+    return {"result": "TIMEOUT", "days": len(daily_pct), "dd": worst}
+
+
+def monte_carlo(daily_pct: list[float], sims: int = 5000, days: int = 500, seed: int = 42) -> dict:
+    """Bootstrap con reemplazo de días reales, como bootstrap_simulate del proyecto."""
+    rnd = __import__("random").Random(seed)
+    out = [ftmo_path([rnd.choice(daily_pct) for _ in range(days)]) for _ in range(sims)]
+    passed = sorted(o["days"] for o in out if o["result"] == "PASS")
+    dds = sorted(o["dd"] for o in out)
+    return {"p_pass": len(passed) / sims, "p_fail": sum(o["result"] == "FAIL" for o in out) / sims,
+            "days_p50": passed[len(passed) // 2] if passed else None, "dd_p95": dds[int(0.95 * (sims - 1))]}
+
+
 def load(ident: str, since: str | None = None) -> list[dict]:
     bars = daily_bars(json.loads((DATA_DIR / f"{ident}.json").read_text()))
     if not bars:
@@ -412,6 +453,7 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--since", help="fecha inicial AAAA-MM-DD (por defecto, toda la serie)")
     ap.add_argument("--risk", type=float, default=0.40, help="riesgo por operación en %% del balance")
     ap.add_argument("--walk-forward", action="store_true")
+    ap.add_argument("--monte-carlo", type=int, metavar="SIMS", help="simula el challenge FTMO con SIMS trayectorias")
     a = ap.parse_args(argv)
     cfg = Config(risk_pct=a.risk)
 
@@ -428,6 +470,13 @@ def main(argv: list[str] | None = None) -> None:
         print(f"  PORTFOLIO total {_pct(m['total'])} (B&H cesta {_pct(b['total'])}) | CAGR {_pct(m['cagr'])} "
               f"(B&H {_pct(b['cagr'])}) | caída máx {_pct(m['max_drawdown'])} (B&H {_pct(b['max_drawdown'])}) "
               f"| Sharpe {m['sharpe']:.2f} (B&H {b['sharpe']:.2f})")
+
+    if a.monte_carlo:
+        for label, mult in (("costes normales", 1.0), ("costes al doble", 2.0)):
+            mc = monte_carlo(portfolio_daily_returns(run_portfolio(a.since, mult, cfg)["pairs"]), a.monte_carlo)
+            print(f"\n[Monte Carlo FTMO, {label}, {a.monte_carlo} simulaciones de 500 días] P(pass) {mc['p_pass'] * 100:.1f}% "
+                  f"| P(fail) {mc['p_fail'] * 100:.1f}% | mediana hasta pasar {mc['days_p50']} días "
+                  f"| caída P95 {mc['dd_p95']:.1f}%")
 
     if a.walk_forward:
         for label, mult in (("costes normales", 1.0), ("costes al doble", 2.0)):
