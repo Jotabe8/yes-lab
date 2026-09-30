@@ -1,0 +1,85 @@
+{
+ "updated": "2026-09-30T19:42:16+00:00",
+ "series": [
+  {
+   "id": "btc",
+   "name": "Bitcoin (BTC/USDT)",
+   "market": "cripto",
+   "source": "binance",
+   "symbol": "BTCUSDT",
+   "first": "2017-08-17",
+   "last": "2026-09-30",
+   "n": 3332
+  },
+  {
+   "id": "eth",
+   "name": "Ether (ETH/USDT)",
+   "market": "cripto",
+   "source": "binance",
+   "symbol": "ETHUSDT",
+   "first": "2017-08-17",
+   "last": "2026-09-30",
+   "n": 3332
+  },
+  {
+   "id": "eurusd",
+   "name": "EUR/USD",
+   "market": "forex",
+   "source": "yahoo",
+   "symbol": "EURUSD=X",
+   "first": "2016-09-29",
+   "last": "2026-09-30",
+   "n": 2601
+  },
+  {
+   "id": "gbpusd",
+   "name": "GBP/USD",
+   "market": "forex",
+   "source": "yahoo",
+   "symbol": "GBPUSD=X",
+   "first": "2016-09-29",
+   "last": "2026-09-30",
+   "n": 2601
+  },
+  {
+   "id": "ibex",
+   "name": "IBEX 35",
+   "market": "acciones",
+   "source": "yahoo",
+   "symbol": "^IBEX",
+   "first": "2016-09-30",
+   "last": "2026-09-30",
+   "n": 2556
+  },
+  {
+   "id": "san",
+   "name": "Banco Santander",
+   "market": "acciones",
+   "source": "yahoo",
+   "symbol": "SAN.MC",
+   "first": "2016-09-30",
+   "last": "2026-09-30",
+   "n": 2557
+  },
+  {
+   "id": "spy",
+   "name": "SPY (S&P 500 ETF)",
+   "market": "acciones",
+   "source": "yahoo",
+   "symbol": "SPY",
+   "first": "2016-09-30",
+   "last": "2026-09-30",
+   "n": 2513
+  },
+  {
+   "id": "usdjpy",
+   "name": "USD/JPY",
+   "market": "forex",
+   "source": "yahoo",
+   "symbol": "JPY=X",
+   "first": "2016-09-29",
+   "last": "2026-09-30",
+   "n": 2601
+  }
+ ]
+}
