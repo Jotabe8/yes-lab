@@ -6,7 +6,8 @@ Fuentes (ver trading/research/B-datos-y-apis.md):
 - Binance, API pública de datos (data-api.binance.vision): cripto, sin clave.
 
 Salida: docs/data/<id>.json con [{"d": "AAAA-MM-DD", "c": cierre}, ...]
-y docs/data/index.json con el catálogo.
+y docs/data/index.json con el catálogo. Los pares forex guardan además apertura,
+máximo y mínimo ("o", "h", "l"), que necesita la estrategia NNFX (lab/nnfx.py).
 """
 
 from __future__ import annotations
@@ -33,6 +34,10 @@ INSTRUMENTS = [
     ("eurusd", "EUR/USD", "forex", "yahoo", "EURUSD=X"),
     ("gbpusd", "GBP/USD", "forex", "yahoo", "GBPUSD=X"),
     ("usdjpy", "USD/JPY", "forex", "yahoo", "JPY=X"),
+    ("nzdusd", "NZD/USD", "forex", "yahoo", "NZDUSD=X"),
+    ("usdchf", "USD/CHF", "forex", "yahoo", "CHF=X"),
+    ("euraud", "EUR/AUD", "forex", "yahoo", "EURAUD=X"),
+    ("gbpjpy", "GBP/JPY", "forex", "yahoo", "GBPJPY=X"),
 ]
 
 
@@ -49,7 +54,7 @@ def _get_json(url: str, retries: int = 3) -> object:
     raise RuntimeError(f"No se pudo descargar {url}: {last}")
 
 
-def fetch_yahoo(symbol: str, years: int) -> list[dict]:
+def fetch_yahoo(symbol: str, years: int, ohlc: bool = False) -> list[dict]:
     sym = urllib.request.quote(symbol, safe="")
     url = f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range={years}y&interval=1d"
     payload = _get_json(url)
@@ -57,12 +62,20 @@ def fetch_yahoo(symbol: str, years: int) -> list[dict]:
     stamps = result.get("timestamp") or []
     quote = result["indicators"]
     closes = (quote.get("adjclose") or [{}])[0].get("adjclose") or quote["quote"][0]["close"]
+    q = quote["quote"][0]
     rows = []
-    for ts, close in zip(stamps, closes):
+    for i, (ts, close) in enumerate(zip(stamps, closes)):
         if close is None:
             continue
         day = dt.datetime.fromtimestamp(ts, dt.timezone.utc).date().isoformat()
-        rows.append({"d": day, "c": round(float(close), 6)})
+        row = {"d": day, "c": round(float(close), 6)}
+        if ohlc:
+            # sin ajustar: en forex no hay dividendos, así que casa con el cierre
+            o, h, l = q["open"][i], q["high"][i], q["low"][i]
+            if None in (o, h, l):
+                continue
+            row.update(o=round(float(o), 6), h=round(float(max(h, o, close)), 6), l=round(float(min(l, o, close)), 6))
+        rows.append(row)
     return dedupe(rows)
 
 
@@ -105,7 +118,8 @@ def main(argv: list[str] | None = None) -> int:
         if args.only and ident not in args.only:
             continue
         try:
-            rows = fetch_yahoo(symbol, args.years) if source == "yahoo" else fetch_binance(symbol, args.years)
+            rows = (fetch_yahoo(symbol, args.years, ohlc=market == "forex") if source == "yahoo"
+                    else fetch_binance(symbol, args.years))
             if len(rows) < 30:
                 raise RuntimeError(f"solo {len(rows)} filas")
         except Exception as exc:  # un instrumento caído no debe tumbar el resto
