@@ -1,9 +1,10 @@
 name: Actualizar datos de mercado
 
 on:
-  schedule:
-    # De lunes a viernes a las 22:15 UTC, tras el cierre de Wall Street
-    - cron: "15 22 * * 1-5"
+  # Programación en pausa por decisión de Jorge (2026-10-01): se lanza a mano cuando haga falta.
+  # Para reactivarla, descomentar estas líneas.
+  # schedule:
+  #   - cron: "15 22 * * 1-5"
   workflow_dispatch:
 
 permissions:
