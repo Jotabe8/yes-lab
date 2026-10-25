@@ -4,7 +4,7 @@ import random
 import unittest
 
 from lab.backtest import run
-from lab.estrategias import (fx_momentum_weights, month_ranks, run_portfolio, run_weights, turn_of_month,
+from lab.estrategias import (fx_momentum_weights, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
                              vol_managed, walk_forward_tom, walk_forward_weights, window_stats)
 
 
@@ -101,6 +101,26 @@ class FxMomentumTests(unittest.TestCase):
         # con tendencias constantes la cartera gana
         eq = run_portfolio(prices, w, cost_pct=0)
         self.assertGreater(eq[-1], eq[0])
+
+
+class RebalanceTests(unittest.TestCase):
+    def test_short_after_stocks_beat_bonds_only_in_last_sessions(self):
+        dates = business_days("2026-01-01", 45)        # enero y febrero completos
+        stocks = [100 * 1.002 ** i for i in range(45)]   # las acciones suben
+        bonds = [100.0] * 45                             # los bonos no se mueven
+        w = month_end_rebalance(dates, stocks, dias=2, umbral=0.0, bonos=bonds)
+        _, last = month_ranks(dates)
+        held = [last[i + 1] for i in range(len(w) - 1) if w[i] != 0]
+        self.assertTrue(held and all(x <= 2 for x in held))
+        self.assertTrue(all(x in (0.0, -1.0) for x in w))
+        self.assertIn(-1.0, w)
+
+    def test_long_when_stocks_lag(self):
+        dates = business_days("2026-01-01", 45)
+        stocks = [100 * 0.998 ** i for i in range(45)]
+        w = month_end_rebalance(dates, stocks, dias=1, umbral=0.0, bonos=[100.0] * 45)
+        self.assertIn(1.0, w)
+        self.assertNotIn(-1.0, w)
 
 
 if __name__ == "__main__":

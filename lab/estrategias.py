@@ -170,18 +170,27 @@ def walk_forward_weights(dates, closes, year, cost_pct, build, grid, train_years
 
 # --- Rebalanceo de fin de mes -----------------------------------------------------------
 
-def month_end_rebalance(dates: list[str], closes: list[float], dias: int = 3, umbral: float = 0.0) -> list[float]:
+def month_end_rebalance(dates: list[str], closes: list[float], dias: int = 3, umbral: float = 0.0,
+                        bonos: list[float] | None = None) -> list[float]:
     """Pesos (+1, -1 o 0) decididos al cierre: se fijan cuando quedan `dias` sesiones para fin de mes.
 
     La señal del cierre de la sesión con last == dias + 1 se aplica a las `dias` últimas sesiones.
+    Sin `bonos`, la señal es la rentabilidad del mes del índice. Con `bonos` (mismas fechas), es
+    la desviación del peso en acciones de una cartera 60/40 rebalanceada a fin del mes anterior,
+    como en el paper; entonces `umbral` se mide en puntos de peso (0.01 = 61% frente a 60%).
     """
     first, last = month_ranks(dates)
     w, cur = [0.0] * len(closes), 0.0
     for i in range(len(closes)):
         if last[i] == dias + 1 and i - first[i] >= 0:
             start = i - first[i]            # último cierre del mes anterior
-            mtd = closes[i] / closes[start] - 1 if start >= 0 else 0.0
-            cur = -1.0 if mtd > umbral else (1.0 if mtd < -umbral else 0.0)
+            gs = closes[i] / closes[start]
+            if bonos is None:
+                dev = gs - 1
+            else:
+                gb = bonos[i] / bonos[start]
+                dev = 0.6 * gs / (0.6 * gs + 0.4 * gb) - 0.6
+            cur = -1.0 if dev > umbral else (1.0 if dev < -umbral else 0.0)
         elif last[i] == 1:
             cur = 0.0                       # cierra al terminar el mes
         w[i] = cur
@@ -189,6 +198,7 @@ def month_end_rebalance(dates: list[str], closes: list[float], dias: int = 3, um
 
 
 REB_GRID = [{"dias": d, "umbral": u} for d in (1, 2, 3, 5) for u in (0.0, 0.02, 0.04)]
+REB_GRID_6040 = [{"dias": d, "umbral": u} for d in (1, 2, 3, 5) for u in (0.0, 0.005, 0.01)]
 
 
 # --- Momentum de divisas ----------------------------------------------------------------
@@ -279,6 +289,7 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--meses", type=int, default=3, help="momentum-divisas: meses de retorno para ordenar")
     ap.add_argument("--k", type=int, default=2, help="momentum-divisas: divisas compradas y vendidas")
     ap.add_argument("--umbral", type=float, default=0.0, help="rebalanceo: subida/caída mínima del mes")
+    ap.add_argument("--bonos", help="rebalanceo: serie de bonos para la señal 60/40 (p. ej. tlt)")
     ap.add_argument("--walk-forward", action="store_true")
     a = ap.parse_args(argv)
 
@@ -335,8 +346,15 @@ def _main_vol(a) -> None:
 
 def _main_reb(a) -> None:
     dates, closes, year = load_dated(a.serie)
+    bonos, grid = None, REB_GRID
+    if a.bonos:
+        bd, bc, _ = load_dated(a.bonos)
+        common = sorted(set(dates) & set(bd))
+        cmap, bmap = dict(zip(dates, closes)), dict(zip(bd, bc))
+        dates, closes, bonos = common, [cmap[d] for d in common], [bmap[d] for d in common]
+        grid = REB_GRID_6040
     dias = a.dias if a.dias != 21 else 3        # --dias por defecto es el de vol-gestionada
-    w = month_end_rebalance(dates, closes, dias, a.umbral)
+    w = month_end_rebalance(dates, closes, dias, a.umbral, bonos)
     trades = sum(1 for i in range(1, len(w)) if w[i] != 0 and w[i - 1] == 0)
     print(f"{a.serie} {dates[0]} → {dates[-1]} | últimas {dias} sesiones, umbral {a.umbral:.0%} | "
           f"{trades} operaciones, {sum(1 for x in w if x < 0)} días cortos y {sum(1 for x in w if x > 0)} largos")
@@ -344,11 +362,12 @@ def _main_reb(a) -> None:
         s = metrics(run_weights(closes, w, cost), year)
         print(f"[{label}] CAGR {_pct(s['cagr'])} | caída máx {_pct(s['max_drawdown'])} | Sharpe {s['sharpe']:.2f}")
     if a.walk_forward:
-        build = lambda d, c, **p: month_end_rebalance(d, c, **p)
+        bmap = dict(zip(dates, bonos)) if bonos else None
+        build = lambda d, c, **p: month_end_rebalance(d, c, bonos=[bmap[x] for x in d] if bmap else None, **p)
         for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
-            wf = walk_forward_weights(dates, closes, year, cost, build, REB_GRID)
+            wf = walk_forward_weights(dates, closes, year, cost, build, grid)
             o = wf["oos"]
-            params = ", ".join(f"{p['dias']}d/{p['umbral']:.0%}" for p in wf["params"])
+            params = ", ".join(f"{p['dias']}d/{p['umbral']:.1%}" for p in wf["params"])
             print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
                   f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | días/umbral: {params}")
 

@@ -11,9 +11,58 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Rebalanceo de fin de mes (60/40) | SPY con TLT | Prometedora pero frágil: el efecto aparece, el walk-forward es inestable |
 | 2026-10-25 | Volatilidad gestionada | SPY, IBEX, SAN, BTC, ETH | Sin ventaja en Sharpe fuera de muestra; solo reduce caídas |
 | 2026-10-25 | Momentum de divisas | 6 divisas G10 frente al USD | Descartada: pierde con todos los horizontes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Rebalanceo de fin de mes
+
+**Hipótesis.** Los fondos mixtos (pensiones, 60/40) rebalancean de forma predecible. Cuando
+las acciones han subido más que los bonos, a fin de mes venden acciones y compran bonos, y al
+revés. Harvey, Mazzoleni & Melone (2025) estiman una caída de 17 pb en las acciones al día
+siguiente cuando están sobreponderadas. Es una ventaja de **flujos**, no una anomalía de
+calendario: tiene un motivo económico y alguien que paga por ella (unos 16.000 millones de
+dólares al año, según el paper).
+
+**Regla.** Cuando quedan `dias` sesiones para fin de mes, calcula el peso de las acciones en
+una cartera 60/40 (SPY/TLT) rebalanceada al cierre del mes anterior. Si pasa del 60% más el
+umbral, vende SPY hasta el último cierre del mes; si queda por debajo, lo compra. El resto
+del mes, en liquidez. Añade la serie TLT a `lab/fetch.py`.
+
+```bash
+python -m lab.estrategias rebalanceo spy --bonos tlt --dias 1 --cost 0.05
+```
+
+**Resultados 2016-10 a 2026-10, sin umbral, 0.05% por lado.**
+
+| Ventana | Rentabilidad media de SPY en días cortos (t) | En días largos (t) | CAGR | Caída máx | Sharpe |
+| --- | --- | --- | --- | --- | --- |
+| Última sesión | −0.184% (−2.02), 77 días | +0.286% (1.65), 43 días | +1.4% | −6.2% | 0.45 |
+| 2 últimas | −0.038% (−0.55) | +0.287% (2.29) | +1.9% | −9.2% | 0.41 |
+| 5 últimas | +0.004% (0.09) | +0.211% (2.74) | +3.0% | −11.6% | 0.41 |
+
+La media de SPY en un día cualquiera es +0.063%. El último día del mes tras sobreponderación
+cae −0.18%, el mismo orden que los 17 pb del paper, y fuera de la muestra de este.
+
+Solo con SPY (sin bonos, usando la subida del mes como señal) no funciona: walk-forward
+−1.1% anual. Hace falta la comparación con los bonos.
+
+**Walk-forward (6 años).** Sharpe 0.25 con 0.05% y 0.01 con costes al doble; con 0.02%,
+0.07. El resultado depende de qué ventana elija cada año, y el ajuste salta entre 3 y
+5 días: es inestable.
+
+**Conclusión.** **Prometedora, pero frágil.** El efecto del último día aparece en estos
+10 años con el signo y el tamaño del paper. Pero la ganancia es pequeña (está invertido
+solo un 5% del tiempo) y la elección de la ventana no es estable. Como estrategia
+independiente no compensa; como **filtro** puede servir, por ejemplo para no abrir largos en
+US500/US100 el último día de un mes en que la bolsa ha batido mucho a los bonos. Siguiente
+paso: probarla con futuros o CFD en MT5 (coste menor) y con la cartera de bonos agregada (AGG).
+
+**Límites.** TLT es un bono largo, más volátil que la cartera de bonos de un fondo real; sin
+interés por la liquidez; solo 120 meses.
 
 ---
 
