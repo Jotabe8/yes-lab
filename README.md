@@ -9,7 +9,7 @@ Laboratorio **simulado** para investigar estrategias en acciones/ETFs, cripto y 
 | `lab/fetch.py` | Descarga cierres diarios (Yahoo Finance y Binance) a `docs/data/*.json` |
 | `lab/backtest.py` | Backtester de cruce de medias y momentum con costes, métricas y walk-forward |
 | `lab/nnfx.py` | Portfolio NNFX de 5 pares (largo y corto, SL/TP por ATR) con costes y walk-forward |
-| `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, …) |
+| `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, volatilidad gestionada, momentum de divisas…) |
 | `DIARIO.md` | Diario con los resultados de cada estrategia probada |
 | `informes/nnfx-portfolio.md` | Resultados del portfolio NNFX frente a comprar y mantener |
 | `docs/index.html` | Dashboard: backtester en el navegador, calculadora de posición y diario simulado |

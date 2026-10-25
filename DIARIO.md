@@ -11,7 +11,79 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Volatilidad gestionada | SPY, IBEX, SAN, BTC, ETH | Sin ventaja en Sharpe fuera de muestra; solo reduce caídas |
+| 2026-10-25 | Momentum de divisas | 6 divisas G10 frente al USD | Descartada: pierde con todos los horizontes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Volatilidad gestionada
+
+**Hipótesis.** Reducir la exposición cuando la volatilidad reciente es alta y subirla cuando
+es baja mejora el Sharpe, porque la volatilidad persiste y el retorno esperado no sube con
+ella (Moreira & Muir, 2017: alfa del 4,86% anual en el mercado de EE. UU. de 1926 a 2015).
+Cederburg et al. (2020) lo repiten en 103 estrategias y concluyen que, aplicado en tiempo
+real, no supera en general a la cartera sin gestionar.
+
+**Regla.** A fin de mes, exposición = objetivo / volatilidad anualizada de los últimos
+21 días, con un tope de 1 (sin apalancamiento). El walk-forward elige el objetivo (8-30%) y
+la ventana (21 o 63 días) por Sharpe.
+
+```bash
+python -m lab.estrategias vol-gestionada spy --cost 0.05 --walk-forward
+```
+
+**Resultados, coste del 0.05% por lado** (los costes al doble apenas cambian nada: unos
+12 reajustes pequeños al año).
+
+| Serie | Fijo 12%/21 días: CAGR, caída, Sharpe | B&H: CAGR, caída, Sharpe | Walk-forward: Sharpe | B&H mismos años: Sharpe |
+| --- | --- | --- | --- | --- |
+| SPY | +11.6%, −23.0%, 0.95 | +15.4%, −33.7%, 0.89 | 0.78 | 0.85 |
+| IBEX 35 | +6.0%, −34.1%, 0.51 | +8.2%, −45.2%, 0.53 | 0.68 | 0.69 |
+| Santander | +7.1%, −40.3%, 0.57 | +16.3%, −72.1%, 0.63 | 0.78 | 0.78 |
+| BTC | +11.8%, −27.1%, 0.83 | +38.5%, −83.2%, 0.83 | 0.49 | 0.77 |
+| ETH | +10.3%, −25.8%, 0.77 | +27.1%, −94.0%, 0.71 | 0.28 | 0.70 |
+
+Con tope de 1.5 (algo de apalancamiento) en SPY, el walk-forward da un Sharpe de 0.90
+frente a 0.85, con CAGR +18.7% frente a +16.7% y la misma caída máxima: una mejora pequeña
+que no es significativa con 6 años.
+
+**Conclusión.** Fuera de muestra no mejora el Sharpe en ningún mercado; en cripto lo
+empeora bastante. Lo que sí hace siempre es recortar la caída máxima (de −83% a −27% en BTC
+con parámetros fijos) a cambio de menos rentabilidad. **No es una fuente de ventaja**, pero
+sí una regla útil de gestión del tamaño de la posición, por ejemplo para limitar la caída en
+un challenge.
+
+**Límites.** 10 años; sin interés por la liquidez; SPY de 2016 a 2026 apenas tuvo
+caídas largas, que es donde la regla más ayuda.
+
+---
+
+## 2026-10-25 · Momentum de divisas
+
+**Hipótesis.** Las divisas que más se han apreciado en los últimos meses siguen haciéndolo:
+diferencial de hasta el 10% anual entre ganadoras y perdedoras (Menkhoff, Sarno, Schmeling
+& Schrimpf, 2012), concentrado en divisas caras de operar y con fuertes límites al arbitraje.
+
+**Regla.** Seis divisas frente al dólar (EUR, GBP, AUD, NZD, JPY, CHF), construidas a partir
+de los 7 pares del laboratorio con el cierre corregido de Yahoo. A fin de mes compra las 2 que
+más han subido en N meses y vende las 2 que menos (exposición bruta 1). Coste del 0.02% por
+lado sobre lo que cambia. Solo precio, sin el diferencial de tipos.
+
+```bash
+python -m lab.estrategias momentum-divisas fx --cost 0.02 --walk-forward
+```
+
+**Resultados 2016-2026.** CAGR −1.4% (1 mes), −2.2% (3 meses), −1.4% (6 meses) y
+−0.7% (12 meses); Sharpe entre −0.18 y −0.60. Walk-forward (7 años): −1.1% anual, Sharpe
+−0.27; con 1 larga y 1 corta, −1.2%. Los costes no son el problema: el resultado es
+negativo antes de costes.
+
+**Conclusión.** **Descartada** en divisas principales. Coincide con el paper: el efecto vive
+sobre todo en divisas emergentes poco líquidas, a las que un minorista apenas accede.
+
+**Límites.** Solo 6 divisas (dos posiciones por lado, mucho ruido) y sin carry; con swaps,
+el resultado cambiaría según el diferencial de tipos de cada año.
 
 ---
 
