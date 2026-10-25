@@ -12,6 +12,11 @@ Estrategias:
 - vol-gestionada: exposición al activo = volatilidad objetivo / volatilidad realizada de los
   últimos `dias` días, con tope `tope` (1 = sin apalancamiento), revisada a fin de mes
   (Moreira & Muir, 2017). Cada cambio de peso paga el coste sobre la parte que cambia.
+- rebalanceo: front-running del rebalanceo de fin de mes de los fondos mixtos (Harvey, Mazzoleni
+  & Melone, 2025). A `dias` sesiones del fin de mes mira la rentabilidad del mes: si sube más
+  del `umbral`, vende el índice hasta el cierre del mes (los fondos venderán acciones); si cae
+  más del `umbral`, lo compra. El resto del tiempo, en liquidez. Usa solo el índice como proxy:
+  el laboratorio no tiene serie de bonos.
 - momentum-divisas: cartera de 6 divisas frente al dólar (EUR, GBP, AUD, NZD, JPY, CHF);
   a fin de mes compra las `k` que más han subido en `meses` meses y vende las `k` que menos
   (Menkhoff et al., 2012). Exposición bruta 1. Solo precio: no incluye el diferencial de tipos.
@@ -21,6 +26,7 @@ Uso:
     python -m lab.estrategias cambio-de-mes spy --antes 1 --despues 3 --cost 0.05 --walk-forward
     python -m lab.estrategias vol-gestionada spy --cost 0.05 --walk-forward
     python -m lab.estrategias momentum-divisas fx --cost 0.02 --walk-forward
+    python -m lab.estrategias rebalanceo spy --cost 0.05 --walk-forward
 """
 
 from __future__ import annotations
@@ -162,6 +168,29 @@ def walk_forward_weights(dates, closes, year, cost_pct, build, grid, train_years
     return {"windows": len(chosen), "params": chosen, "oos": metrics(oos, year)}
 
 
+# --- Rebalanceo de fin de mes -----------------------------------------------------------
+
+def month_end_rebalance(dates: list[str], closes: list[float], dias: int = 3, umbral: float = 0.0) -> list[float]:
+    """Pesos (+1, -1 o 0) decididos al cierre: se fijan cuando quedan `dias` sesiones para fin de mes.
+
+    La señal del cierre de la sesión con last == dias + 1 se aplica a las `dias` últimas sesiones.
+    """
+    first, last = month_ranks(dates)
+    w, cur = [0.0] * len(closes), 0.0
+    for i in range(len(closes)):
+        if last[i] == dias + 1 and i - first[i] >= 0:
+            start = i - first[i]            # último cierre del mes anterior
+            mtd = closes[i] / closes[start] - 1 if start >= 0 else 0.0
+            cur = -1.0 if mtd > umbral else (1.0 if mtd < -umbral else 0.0)
+        elif last[i] == 1:
+            cur = 0.0                       # cierra al terminar el mes
+        w[i] = cur
+    return w
+
+
+REB_GRID = [{"dias": d, "umbral": u} for d in (1, 2, 3, 5) for u in (0.0, 0.02, 0.04)]
+
+
 # --- Momentum de divisas ----------------------------------------------------------------
 
 FX_PAIRS = ("eurusd", "gbpusd", "nzdusd", "usdjpy", "usdchf", "euraud")
@@ -239,7 +268,7 @@ def walk_forward_fx(dates, prices, year, cost_pct, train_years=3, test_years=1, 
 
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description="Estrategias del informe semanal")
-    ap.add_argument("estrategia", choices=["cambio-de-mes", "vol-gestionada", "momentum-divisas"])
+    ap.add_argument("estrategia", choices=["cambio-de-mes", "vol-gestionada", "momentum-divisas", "rebalanceo"])
     ap.add_argument("serie", help="serie de docs/data (en momentum-divisas se ignora: usa los 6 pares)")
     ap.add_argument("--antes", type=int, default=1, help="sesiones finales del mes invertido")
     ap.add_argument("--despues", type=int, default=3, help="sesiones iniciales del mes siguiente invertido")
@@ -249,6 +278,7 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--tope", type=float, default=1.0, help="vol-gestionada: exposición máxima")
     ap.add_argument("--meses", type=int, default=3, help="momentum-divisas: meses de retorno para ordenar")
     ap.add_argument("--k", type=int, default=2, help="momentum-divisas: divisas compradas y vendidas")
+    ap.add_argument("--umbral", type=float, default=0.0, help="rebalanceo: subida/caída mínima del mes")
     ap.add_argument("--walk-forward", action="store_true")
     a = ap.parse_args(argv)
 
@@ -256,6 +286,8 @@ def main(argv: list[str] | None = None) -> None:
         return _main_vol(a)
     if a.estrategia == "momentum-divisas":
         return _main_fx(a)
+    if a.estrategia == "rebalanceo":
+        return _main_reb(a)
 
     dates, closes, year = load_dated(a.serie)
     sig = turn_of_month(dates, a.antes, a.despues)
@@ -299,6 +331,26 @@ def _main_vol(a) -> None:
         start = 3 * year
         o = metrics([c / closes[start - 1] for c in closes[start - 1:start + wf["windows"] * year]], year)
         print(f"[B&H en los mismos años] CAGR {_pct(o['cagr'])} | caída máx {_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f}")
+
+
+def _main_reb(a) -> None:
+    dates, closes, year = load_dated(a.serie)
+    dias = a.dias if a.dias != 21 else 3        # --dias por defecto es el de vol-gestionada
+    w = month_end_rebalance(dates, closes, dias, a.umbral)
+    trades = sum(1 for i in range(1, len(w)) if w[i] != 0 and w[i - 1] == 0)
+    print(f"{a.serie} {dates[0]} → {dates[-1]} | últimas {dias} sesiones, umbral {a.umbral:.0%} | "
+          f"{trades} operaciones, {sum(1 for x in w if x < 0)} días cortos y {sum(1 for x in w if x > 0)} largos")
+    for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+        s = metrics(run_weights(closes, w, cost), year)
+        print(f"[{label}] CAGR {_pct(s['cagr'])} | caída máx {_pct(s['max_drawdown'])} | Sharpe {s['sharpe']:.2f}")
+    if a.walk_forward:
+        build = lambda d, c, **p: month_end_rebalance(d, c, **p)
+        for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+            wf = walk_forward_weights(dates, closes, year, cost, build, REB_GRID)
+            o = wf["oos"]
+            params = ", ".join(f"{p['dias']}d/{p['umbral']:.0%}" for p in wf["params"])
+            print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
+                  f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | días/umbral: {params}")
 
 
 def _main_fx(a) -> None:
