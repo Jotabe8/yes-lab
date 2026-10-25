@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Momentum intradía al cierre y zona de ruido (Zarattini) | US100.cash M1 FTMO | Descartados el momentum de cierre, la extensión del ORB y la zona de ruido (no mejora frente a subir el riesgo del ORB) |
 | 2026-10-25 | Efecto Halloween | SPY, IBEX, SAN + 10 índices D1 | No pasa: falla en EE. UU. y Japón; en Europa y Hong Kong sí aparece |
 | 2026-10-25 | Oro largo en sesión asiática | XAUUSD M1 | Descartada: neto negativo dentro de muestra |
 | 2026-10-25 | Prima nocturna EE. UU. | US500, US100 M1 | Descartada: el swap y el spread se comen el efecto |
@@ -18,6 +19,33 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 | 2026-10-25 | Momentum intradía BTC | BTCUSDT 30m | Descartada: negativa incluso sin costes |
 | 2026-10-25 | Valor relativo (11 pares D1) | Índices, forex, metales, petróleo | Descartada: sin edge ni antes de costes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Momentum intradía al cierre en US100 (complemento del ORB)
+
+Reglas fijadas antes en `informes/momentum-cierre-preregistro.md`; detalle en
+`informes/momentum-cierre-resultados.md`. US100.cash M1 de FTMO 2021-10 a 2026-09 (1.228 días),
+Dukascopy 2018-2021 aparte. La regla básica ya se había probado el 24/10 en el PC (≈0 neto); aquí
+se completa el resto del informe.
+
+```bash
+python -m lab.momentum_cierre todo --m1 datos/US100_cash_M1_FTMO.csv --orb datos/orb_R_2018_2026.csv
+```
+
+| Prueba | Costes ×1 | Costes ×2 | Fuera de muestra (×2) |
+| --- | --- | --- | --- |
+| Regresión 22:30-23:00 sobre el día | pendiente 0,006 (t 0,6), R² 0,07 % | | |
+| Complementaria 22:30-22:55 | −0,029 R/op | −0,055 R | −0,13 y −0,00 |
+| Extensión del ORB a 22:55 | −0,006 R/op del ORB | −0,006 R | peor en las dos |
+| Zona de ruido (Zarattini, sin ajustar) | +0,119 R/día (t 2,3) | +0,096 (t 1,9) | +0,082 y +0,053 (t 0,8 juntas) |
+
+Spread real de 22:30 a 23:00: 0,8-0,9 puntos (2,2 desde las 23:01); el coste no es el problema,
+el efecto no existe en el CFD desde 2023. La zona de ruido cumple el listón por la mínima, pero se
+apaga (2025 +0,07, 2026 +0,02 R/día), pierde hasta −7 R en un día y en EV por cuota (2-Step 100K)
+el ORB más la zona de ruido a medio tamaño da +24.000 €/año con costes al doble frente a +26.400 €
+de subir el riesgo del ORB un 25 %. **Veredicto:** las tres descartadas (momentum de cierre,
+extensión del ORB y zona de ruido); no se escribe ningún EA.
 
 ---
 
