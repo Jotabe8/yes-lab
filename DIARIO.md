@@ -11,8 +11,27 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Momentum intradía BTC | BTCUSDT 30m | Descartada: negativa incluso sin costes |
 | 2026-10-25 | Valor relativo (11 pares D1) | Índices, forex, metales, petróleo | Descartada: sin edge ni antes de costes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Momentum intradía en Bitcoin
+
+Reglas fijadas antes de descargar los datos en `informes/btc-intradia-preregistro.md`
+(Shen, Urquhart y Wang, 2022). Velas de 30 min de BTCUSDT en Binance, 2017-08 a 2026-10
+(3.353 días), descargadas con el workflow `descargar-intradia.yml`.
+
+| Regla | Coste | Dentro (hasta 2020) | Fuera (2021-2026) |
+| --- | --- | --- | --- |
+| Signo de 00:00-00:30 → 23:30-24:00 | 0 | −0,027 % (t −1,5) | −0,009 % (t −1,1) |
+| Ídem | 0,05 % | −0,077 % (t −4,1) | −0,059 % (t −7,0) |
+| Signo de r1 + 23:00-23:30 | 0 | −0,018 % (t −1,0) | +0,000 % (t 0,0) |
+| Ídem | 0,05 % | −0,068 % (t −3,7) | −0,050 % (t −5,9) |
+
+Negativa en todos los años con costes. **Descartada**: el efecto no aparece ni antes de costes
+en Binance, y con el spread de un CFD pierde con claridad.
 
 ---
 

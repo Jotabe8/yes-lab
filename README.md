@@ -11,6 +11,7 @@ Laboratorio **simulado** para investigar estrategias en acciones/ETFs, cripto y 
 | `lab/nnfx.py` | Portfolio NNFX de 5 pares (largo y corto, SL/TP por ATR) con costes y walk-forward |
 | `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, …) |
 | `lab/pares.py` | Valor relativo entre pares de mercados (D1 de Dukascopy en `datos/d1/`, fuera del repositorio) |
+| `lab/btc_intradia.py` | Momentum intradía en BTC (velas de 30 min en `datos_intradia/`) |
 | `lab/intradia.py` | Descarga velas intradía de Binance; la lanza el workflow `descargar-intradia.yml` |
 | `DIARIO.md` | Diario con los resultados de cada estrategia probada |
 | `informes/nnfx-portfolio.md` | Resultados del portfolio NNFX frente a comprar y mantener |
