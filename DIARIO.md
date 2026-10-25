@@ -11,7 +11,18 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Gap de resultados (continuación 5 sesiones) | 71 acciones EE. UU. | Descartada: +0,03 R neto, t 0,74; negativa al doble de coste |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Gap de resultados en acciones
+
+Gap de apertura ≥ 3 % con volumen ≥ 3 veces la media y cierre en la misma dirección; entrada al
+cierre, stop a 2 ATR, salida a las 5 sesiones. Fuera de muestra 2018-2026 en 71 acciones: +0,078 R
+bruto, +0,028 R neto (t 0,74), negativa al doble de coste. La lista FTMO sale bien (+0,14 R) pero
+es selección de tecnológicas volátiles. **Descartada.** Detalle en
+`informes/gap-resultados-resultados.md`.
 
 ---
 
