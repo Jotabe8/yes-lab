@@ -11,9 +11,21 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Oro largo en sesión asiática | XAUUSD M1 | Descartada: neto negativo dentro de muestra |
+| 2026-10-25 | Prima nocturna EE. UU. | US500, US100 M1 | Descartada: el swap y el spread se comen el efecto |
+| 2026-10-25 | Fin de mes en forex (Melvin y Prins) | EURUSD, GBPUSD, AUDUSD, USDJPY | Descartada: sin efecto |
 | 2026-10-25 | Momentum intradía BTC | BTCUSDT 30m | Descartada: negativa incluso sin costes |
 | 2026-10-25 | Valor relativo (11 pares D1) | Índices, forex, metales, petróleo | Descartada: sin edge ni antes de costes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Segunda ronda: fin de mes en forex, prima nocturna y oro en Asia
+
+Reglas fijadas antes en `informes/ronda2-preregistro.md`; detalle en `informes/ronda2-resultados.md`.
+Las tres fallan. Antes de costes hay efecto en la prima nocturna (+0,04 % por noche en US500) y en
+el oro asiático (+0,07 % fuera de muestra), pero el spread y el swap de un CFD cuestan lo mismo.
+El fin de mes en forex no muestra efecto ni antes de costes.
 
 ---
 
