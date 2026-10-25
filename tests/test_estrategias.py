@@ -4,7 +4,8 @@ import random
 import unittest
 
 from lab.backtest import run
-from lab.estrategias import month_ranks, turn_of_month, walk_forward_tom, window_stats
+from lab.estrategias import (fx_momentum_weights, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
+                             vol_managed, walk_forward_tom, walk_forward_weights, window_stats)
 
 
 def business_days(start, n):
@@ -52,6 +53,74 @@ class TurnOfMonthTests(unittest.TestCase):
         wf = walk_forward_tom(dates, closes, 252, 0.05)
         self.assertEqual(wf["windows"], 2)
         self.assertGreater(window_stats(closes, turn_of_month(dates))["exposicion"], 0.1)
+
+
+def walk(n, seed, vol=0.01):
+    rnd = random.Random(seed)
+    p, out = 100.0, []
+    for _ in range(n):
+        p *= math.exp(0.0002 + vol * rnd.gauss(0, 1))
+        out.append(p)
+    return out
+
+
+class VolManagedTests(unittest.TestCase):
+    def test_full_weight_without_costs_is_buy_and_hold(self):
+        closes = walk(300, 4)
+        eq = run_weights(closes, [1.0] * len(closes), cost_pct=0)
+        self.assertAlmostEqual(eq[-1] / eq[0], closes[-1] / closes[0])
+
+    def test_weight_is_capped_and_changes_only_at_month_end(self):
+        dates = business_days("2020-01-01", 300)
+        closes = walk(300, 5, vol=0.002)    # volatilidad muy baja: el peso choca con el tope
+        w = vol_managed(dates, closes, 252, objetivo=0.12, dias=21, tope=1.0)
+        self.assertTrue(all(0 <= x <= 1.0 for x in w))
+        _, last = month_ranks(dates)
+        for i in range(1, len(w)):
+            if w[i] != w[i - 1]:
+                self.assertEqual(last[i], 1)
+
+    def test_walk_forward_runs(self):
+        dates = business_days("2018-01-01", 252 * 5)
+        closes = walk(len(dates), 6)
+        build = lambda d, c, **p: vol_managed(d, c, 252, **p)
+        wf = walk_forward_weights(dates, closes, 252, 0.05, build, [{"objetivo": 0.1, "dias": 21}])
+        self.assertEqual(wf["windows"], 2)
+
+
+class FxMomentumTests(unittest.TestCase):
+    def test_weights_are_dollar_neutral_and_long_winners(self):
+        dates = business_days("2020-01-01", 120)
+        prices = {c: [100 * (1 + g) ** i for i in range(120)]
+                  for c, g in zip("ABCDEF", (0.002, 0.001, 0.0, -0.001, -0.002, 0.0005))}
+        w = fx_momentum_weights(dates, prices, meses=1, k=2)
+        self.assertAlmostEqual(sum(w[-1].values()), 0.0)
+        self.assertAlmostEqual(sum(abs(x) for x in w[-1].values()), 1.0)
+        self.assertGreater(w[-1]["A"], 0)
+        self.assertLess(w[-1]["E"], 0)
+        # con tendencias constantes la cartera gana
+        eq = run_portfolio(prices, w, cost_pct=0)
+        self.assertGreater(eq[-1], eq[0])
+
+
+class RebalanceTests(unittest.TestCase):
+    def test_short_after_stocks_beat_bonds_only_in_last_sessions(self):
+        dates = business_days("2026-01-01", 45)        # enero y febrero completos
+        stocks = [100 * 1.002 ** i for i in range(45)]   # las acciones suben
+        bonds = [100.0] * 45                             # los bonos no se mueven
+        w = month_end_rebalance(dates, stocks, dias=2, umbral=0.0, bonos=bonds)
+        _, last = month_ranks(dates)
+        held = [last[i + 1] for i in range(len(w) - 1) if w[i] != 0]
+        self.assertTrue(held and all(x <= 2 for x in held))
+        self.assertTrue(all(x in (0.0, -1.0) for x in w))
+        self.assertIn(-1.0, w)
+
+    def test_long_when_stocks_lag(self):
+        dates = business_days("2026-01-01", 45)
+        stocks = [100 * 0.998 ** i for i in range(45)]
+        w = month_end_rebalance(dates, stocks, dias=1, umbral=0.0, bonos=[100.0] * 45)
+        self.assertIn(1.0, w)
+        self.assertNotIn(-1.0, w)
 
 
 if __name__ == "__main__":

@@ -27,6 +27,7 @@ UA = "Mozilla/5.0 (laboratorio-trading; uso personal)"
 # id, nombre visible, mercado, fuente, símbolo en la fuente
 INSTRUMENTS = [
     ("spy", "SPY (S&P 500 ETF)", "acciones", "yahoo", "SPY"),
+    ("tlt", "TLT (bonos del Tesoro EE. UU. a 20+ años)", "acciones", "yahoo", "TLT"),
     ("ibex", "IBEX 35", "acciones", "yahoo", "^IBEX"),
     ("san", "Banco Santander", "acciones", "yahoo", "SAN.MC"),
     ("btc", "Bitcoin (BTC/USDT)", "cripto", "binance", "BTCUSDT"),

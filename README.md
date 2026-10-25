@@ -9,14 +9,14 @@ Laboratorio **simulado** para investigar estrategias en acciones/ETFs, cripto y 
 | `lab/fetch.py` | Descarga cierres diarios (Yahoo Finance y Binance) a `docs/data/*.json` |
 | `lab/backtest.py` | Backtester de cruce de medias y momentum con costes, métricas y walk-forward |
 | `lab/nnfx.py` | Portfolio NNFX de 5 pares (largo y corto, SL/TP por ATR) con costes y walk-forward |
-| `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, …) |
+| `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, volatilidad gestionada, momentum de divisas, rebalanceo de fin de mes…) |
 | `DIARIO.md` | Diario con los resultados de cada estrategia probada |
 | `informes/nnfx-portfolio.md` | Resultados del portfolio NNFX frente a comprar y mantener |
 | `docs/index.html` | Dashboard: backtester en el navegador, calculadora de posición y diario simulado |
 | `.github/workflows/actualizar-datos.yml` | Actualiza los datos de lunes a viernes a las 22:15 UTC |
 | `tests/` | Tests con `unittest`, sin dependencias externas |
 
-Instrumentos: SPY, IBEX 35, Banco Santander, BTC, ETH, EUR/USD, GBP/USD, USD/JPY, NZD/USD, USD/CHF, EUR/AUD y GBP/JPY. Los pares forex guardan también apertura, máximo y mínimo.
+Instrumentos: SPY, TLT (bonos del Tesoro a 20+ años), IBEX 35, Banco Santander, BTC, ETH, EUR/USD, GBP/USD, USD/JPY, NZD/USD, USD/CHF, EUR/AUD y GBP/JPY. Los pares forex guardan también apertura, máximo y mínimo.
 
 ## Uso
 
