@@ -1,0 +1,51 @@
+name: Descargar tipos de interés y COT
+
+# FRED y la CFTC no son accesibles desde el entorno de trabajo de Claude: esta descarga corre en GitHub
+# y sube los archivos a la misma rama (datos_macro/).
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/descargar-macro.yml
+
+permissions:
+  contents: write
+
+jobs:
+  macro:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tipos a 3 meses (OECD vía FRED) y COT de la CFTC
+        run: |
+          mkdir -p datos_macro/fred datos_macro/cot
+          for c in US EZ GB JP AU CA NZ CH; do
+            curl -sfL -m 60 -o datos_macro/fred/IR3TIB01${c}M156N.csv "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IR3TIB01${c}M156N" || echo "falla $c"
+          done
+          for s in DFF DGS2 IRLTLT01DEM156N IRLTLT01GBM156N IRLTLT01JPM156N IRLTLT01AUM156N IRLTLT01CAM156N IRLTLT01NZM156N IRLTLT01CHM156N; do
+            curl -sfL -m 60 -o datos_macro/fred/$s.csv "https://fred.stlouisfed.org/graph/fredgraph.csv?id=$s" || echo "falla $s"
+          done
+          curl -sfL -m 120 -o /tmp/c.zip "https://www.cftc.gov/files/dea/history/deacot1986_2016.zip" && unzip -o -q /tmp/c.zip -d /tmp/c && mv /tmp/c/*.txt datos_macro/cot/cot_1986_2016.txt || echo "falla 1986-2016"
+          for y in $(seq 2017 2026); do
+            rm -rf /tmp/c; curl -sfL -m 120 -o /tmp/c.zip "https://www.cftc.gov/files/dea/history/deacot$y.zip" && unzip -o -q /tmp/c.zip -d /tmp/c && mv /tmp/c/*.txt datos_macro/cot/cot_$y.txt || echo "falla $y"
+          done
+          # solo divisas y oro, para que pese poco
+          python3 - <<'PY'
+          import glob, csv
+          keep = ("EURO FX", "BRITISH POUND", "JAPANESE YEN", "AUSTRALIAN DOLLAR", "CANADIAN DOLLAR", "NZ DOLLAR", "NEW ZEALAND DOLLAR", "SWISS FRANC", "GOLD - COMMODITY", "U.S. DOLLAR INDEX")
+          rows, hdr = [], None
+          for f in sorted(glob.glob("datos_macro/cot/cot_*.txt")):
+              r = csv.reader(open(f, encoding="latin-1")); h = next(r); hdr = hdr or h
+              rows += [x for x in r if any(k in x[0].upper() for k in keep)]
+          w = csv.writer(open("datos_macro/cot/cot_divisas_oro.csv", "w", newline="")); w.writerow(hdr); w.writerows(rows)
+          print(len(rows), "filas COT")
+          PY
+          rm -f datos_macro/cot/cot_*.txt
+          ls -la datos_macro/fred datos_macro/cot
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos_macro
+          git diff --cached --quiet || git commit -m "Tipos de interés y COT $(date -u +%F)"
+          git push
