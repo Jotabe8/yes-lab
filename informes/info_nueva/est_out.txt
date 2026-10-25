@@ -1,0 +1,6 @@
+K=5 2010-2016: n 893 media -0.039 (unid. vol mensual) t -1.19 | años+ 29%
+K=5 2017-2026: n 1289 media -0.058 (unid. vol mensual) t -2.10 | años+ 30%
+K=10 2010-2016: n 240 media +0.063 (unid. vol mensual) t +0.85 | años+ 100%
+K=10 2017-2026: n 1239 media -0.052 (unid. vol mensual) t -1.89 | años+ 30%
+K=15 2010-2016: n 0 media +nan (unid. vol mensual) t +nan | años+ nan%
+K=15 2017-2026: n 819 media -0.052 (unid. vol mensual) t -1.43 | años+ 38%

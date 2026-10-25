@@ -1,0 +1,11 @@
+carry nivel con swap                       | ajuste: n 667 media -0.104 t -2.22 años+ 22% | OOS: n 793 media +0.004 t +0.13 años+ 50%
+carry nivel solo precio                    | ajuste: n 667 media -0.118 t -2.52 años+ 22% | OOS: n 793 media -0.007 t -0.21 años+ 50%
+carry cambio3m con swap                    | ajuste: n 1165 media -0.033 t -0.98 años+ 44% | OOS: n 1234 media -0.068 t -2.46 años+ 40%
+carry cambio3m solo precio                 | ajuste: n 1165 media +0.008 t +0.24 años+ 44% | OOS: n 1234 media -0.015 t -0.56 años+ 60%
+carry largo_cambio3m con swap              | ajuste: n 1167 media -0.044 t -1.34 años+ 44% | OOS: n 1243 media -0.020 t -0.71 años+ 50%
+carry largo_cambio3m solo precio           | ajuste: n 1167 media -0.001 t -0.03 años+ 44% | OOS: n 1243 media +0.033 t +1.21 años+ 60%
+cot sigue cambio 1 sem                     | ajuste: n 4016 media -0.022 t -1.24 años+ 36% | OOS: n 3840 media -0.042 t -2.45 años+ 20%
+cot sigue cambio 4 sem                     | ajuste: n 4016 media -0.032 t -1.83 años+ 45% | OOS: n 3840 media -0.056 t -3.25 años+ 10%
+cot sigue nivel                            | ajuste: n 4016 media +0.003 t +0.18 años+ 55% | OOS: n 3840 media -0.044 t -2.56 años+ 20%
+cot contrario extremos z>1,5 (3 años)      | ajuste: n 929 media -0.133 t -3.43 años+ 18% | OOS: n 876 media +0.024 t +0.65 años+ 50%
+cot sigue extremos z>1,5 (3 años)          | ajuste: n 929 media +0.072 t +1.86 años+ 55% | OOS: n 876 media -0.104 t -2.87 años+ 10%
