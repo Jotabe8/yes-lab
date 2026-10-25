@@ -164,7 +164,7 @@ def backtest(name: str, sa: str, sb: str, p: Params, datos: Path = DATOS) -> tup
     daily: dict[str, float] = {}
     start = max(p.beta_win + p.z_win, p.vol_win + 1)
     t = start
-    while t < len(dates) - 1:
+    while t < len(dates) - 2:
         zt = z[t]
         if zt is None or abs(zt) <= p.entrada or abs(zt) >= p.stop:
             t += 1

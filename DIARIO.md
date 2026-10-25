@@ -11,7 +11,21 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Valor relativo (11 pares D1) | Índices, forex, metales, petróleo | Descartada: sin edge ni antes de costes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Valor relativo entre mercados parecidos (pares)
+
+Reglas fijadas antes en `informes/pares-preregistro.md`; detalle en `informes/pares-resultados.md`.
+11 pares (US500 contra US100, US30 y US2000; GER40, FRA40 y UK100 contra EU50; GER40/FRA40;
+oro/plata; EURUSD/GBPUSD; AUDUSD/NZDUSD; Brent/WTI) con datos D1 de Dukascopy 2010-2025.
+Entrada con |z| > 2 del diferencial, salida en |z| < 0,5, |z| > 4 o 20 días.
+
+Fuera de muestra (2020-2025), todos los pares juntos: −1,0 % por operación con costes (t −4,9),
+−0,08 % sin costes. Solo 2 de 11 pares positivos. **Descartada.** La financiación de las dos
+patas del CFD se come cerca del 1 % por operación, y antes de costes tampoco hay efecto.
 
 ---
 
