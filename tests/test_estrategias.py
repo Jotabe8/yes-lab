@@ -4,7 +4,7 @@ import random
 import unittest
 
 from lab.backtest import run
-from lab.estrategias import month_ranks, turn_of_month, walk_forward_tom, window_stats
+from lab.estrategias import month_ranks, semester, semester_differences, turn_of_month, walk_forward_tom, window_stats
 
 
 def business_days(start, n):
@@ -52,6 +52,24 @@ class TurnOfMonthTests(unittest.TestCase):
         wf = walk_forward_tom(dates, closes, 252, 0.05)
         self.assertEqual(wf["windows"], 2)
         self.assertGreater(window_stats(closes, turn_of_month(dates))["exposicion"], 0.1)
+
+
+class HalloweenTests(unittest.TestCase):
+    def test_semester_signal_holds_november_to_april(self):
+        dates = business_days("2025-10-27", 200)
+        sig = semester(dates, 11)
+        held = {dates[i + 1][:7] for i in range(len(dates) - 1) if sig[i]}
+        self.assertEqual(held, {"2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04"})
+
+    def test_semester_differences_uses_month_end_closes(self):
+        dates = business_days("2024-10-01", 420)
+        # sube un 10 % en abril de 2025 (dentro del invierno 2024-25) y no se mueve en el verano
+        closes = [110.0 if d[:7] >= "2025-04" else 100.0 for d in dates]
+        diffs = semester_differences(dates, closes, 11)
+        self.assertEqual(len(diffs), 1)
+        year, diff = diffs[0]
+        self.assertEqual(year, 2024)
+        self.assertAlmostEqual(diff, 0.10)
 
 
 if __name__ == "__main__":

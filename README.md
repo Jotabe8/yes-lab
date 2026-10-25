@@ -9,7 +9,7 @@ Laboratorio **simulado** para investigar estrategias en acciones/ETFs, cripto y 
 | `lab/fetch.py` | Descarga cierres diarios (Yahoo Finance y Binance) a `docs/data/*.json` |
 | `lab/backtest.py` | Backtester de cruce de medias y momentum con costes, métricas y walk-forward |
 | `lab/nnfx.py` | Portfolio NNFX de 5 pares (largo y corto, SL/TP por ATR) con costes y walk-forward |
-| `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, …) |
+| `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, Halloween, …) |
 | `lab/pares.py` | Valor relativo entre pares de mercados (D1 de Dukascopy en `datos/d1/`, fuera del repositorio) |
 | `lab/btc_intradia.py` | Momentum intradía en BTC (velas de 30 min en `datos_intradia/`) |
 | `lab/ronda2.py` | Fin de mes en forex, prima nocturna de EE. UU. y oro en Asia (M1 del PC de Jorge) |
@@ -31,6 +31,7 @@ python -m lab.backtest spy --strategy sma --fast 50 --slow 200
 python -m lab.backtest btc --strategy mom --look 126 --walk-forward
 python -m lab.nnfx --walk-forward             # portfolio NNFX de 5 pares
 python -m lab.estrategias cambio-de-mes spy --cost 0.05 --walk-forward
+python -m lab.estrategias halloween           # lista cerrada de 13 mercados y placebo
 ```
 
 El backtest imprime siempre el resultado con costes normales y con costes al doble, frente a comprar y mantener.

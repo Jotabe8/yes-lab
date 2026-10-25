@@ -11,12 +11,45 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-25 | Efecto Halloween | SPY, IBEX, SAN + 10 índices D1 | No pasa: falla en EE. UU. y Japón; en Europa y Hong Kong sí aparece |
 | 2026-10-25 | Oro largo en sesión asiática | XAUUSD M1 | Descartada: neto negativo dentro de muestra |
 | 2026-10-25 | Prima nocturna EE. UU. | US500, US100 M1 | Descartada: el swap y el spread se comen el efecto |
 | 2026-10-25 | Fin de mes en forex (Melvin y Prins) | EURUSD, GBPUSD, AUDUSD, USDJPY | Descartada: sin efecto |
 | 2026-10-25 | Momentum intradía BTC | BTCUSDT 30m | Descartada: negativa incluso sin costes |
 | 2026-10-25 | Valor relativo (11 pares D1) | Índices, forex, metales, petróleo | Descartada: sin edge ni antes de costes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-25 · Efecto Halloween ("Sell in May")
+
+**Diseño contra el sobreajuste** (fijado antes en `informes/halloween-preregistro.md`): la regla
+del artículo sin ningún parámetro (invertido de noviembre a abril), la diferencia invierno −
+verano medida año a año, 13 mercados en una lista cerrada, un placebo con los 12 semestres
+posibles y los años posteriores a 2017 como fuera de muestra del artículo.
+
+```bash
+python -m lab.estrategias halloween
+```
+
+**Resultados.** 148 mercado-años (2012-2024): invierno − verano = +4,1 puntos de media (t 2,8).
+Después de 2017: +4,3 puntos (t 2,0). Noviembre-abril es el mejor de los 12 semestres del
+placebo. Pero el efecto es regional:
+
+| Mercados | Media invierno − verano |
+| --- | --- |
+| IBEX, Santander, GER40, FRA40, EU50, UK100, Hang Seng, ASX | de +2,7 a +20 puntos |
+| SPY, US500, US100, US30, Nikkei | de −6,2 a −0,1 puntos |
+
+Como estrategia, con liquidez sin interés: SPY Sharpe 0,52 frente a 0,89 de comprar y mantener
+(CAGR +6,8 % frente a +15,4 %); IBEX 0,55 frente a 0,53; Santander 0,65 frente a 0,63, con
+caídas máximas menores en los dos españoles.
+
+**Veredicto: no pasa.** Cumple dos de las cuatro condiciones (media global con t > 2 y primer
+puesto en el placebo), pero falla en la amplitud (8 de 13 mercados positivos, hacía falta 9) y en
+SPY como estrategia. El t global exagera, porque las bolsas se mueven juntas y 10-12 años por
+mercado son pocos. Quedarse solo con Europa sería elegir a posteriori. Como dato, en bolsas
+europeas el verano ha sido peor que el invierno 8-9 de cada 12 años.
 
 ---
 
