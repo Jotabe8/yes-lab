@@ -13,7 +13,7 @@ recomendación de inversión.
 | 1. Regresión última media hora | Pendiente sobre `r_día` 0,006 (t 0,6), R² 0,07 %; signo acertado 50,4 % | Sin efecto |
 | 2. Complementaria 22:30-22:55 | −0,029 R/op con costes, −0,055 R con costes al doble; fuera de muestra −0,10 y +0,02 | No pasa |
 | 3. Extensión del ORB a 22:55 | −0,006 R por operación del ORB (t −1,2); peor en las dos ventanas | No pasa |
-| 4. Zona de ruido (Zarattini) | +0,12 R/día con costes, +0,10 al doble (t 1,9); fuera de muestra +0,08 y +0,05 al doble | Cumple el listón por la mínima; no mejora la cuenta frente a subir el riesgo del ORB |
+| 4. Zona de ruido (Zarattini) | +0,12 R/día con costes, +0,10 al doble (t 1,9); fuera de muestra +0,08 y +0,05 al doble | Cumple el listón por la mínima, pero no mejora la cuenta frente a subir el riesgo del ORB; descartada |
 
 ## 1. Regresión
 
@@ -115,8 +115,7 @@ sistema que mantener. El ORB GER40 sí superaba ese control (informe del 25/10).
   US100.cash desde 2021 y negativo desde 2023. Es la misma conclusión que la prueba del 24/10 en
   el PC, ahora con regresión, walk-forward, volatilidad y Dukascopy.
 - Extensión del ORB hasta las 22:55: **descartada**. Resta en todas las ventanas.
-- Zona de ruido de Zarattini: **en reserva, no se pasa a MQL5**. Cumple el listón del informe por
-  la mínima, pero fuera de muestra no es significativa al doble de costes (t 0,8), se apaga en
-  2025-2026, tiene colas de −7 R en un día y en EV por cuota no supera a subir el riesgo del ORB.
-  Si se quiere seguir, lo siguiente sería registrarla en papel desde ya (sin dinero) y revisarla
-  en 6 meses con datos nuevos.
+- Zona de ruido de Zarattini: **descartada**. Cumple el listón del informe por la mínima, pero
+  fuera de muestra no es significativa al doble de costes (t 0,8), se apaga en 2025-2026, tiene
+  colas de −7 R en un día y en EV por cuota no supera a subir el riesgo del ORB. Jorge decidió el
+  25/10 que lo que no sirve como estrategia nueva por sí misma se descarta.

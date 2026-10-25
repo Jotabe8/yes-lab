@@ -11,7 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
-| 2026-10-25 | Momentum intradía al cierre y zona de ruido (Zarattini) | US100.cash M1 FTMO | Descartado el momentum de cierre y la extensión del ORB; zona de ruido en reserva (no mejora frente a subir el riesgo del ORB) |
+| 2026-10-25 | Momentum intradía al cierre y zona de ruido (Zarattini) | US100.cash M1 FTMO | Descartados el momentum de cierre, la extensión del ORB y la zona de ruido (no mejora frente a subir el riesgo del ORB) |
 | 2026-10-25 | Efecto Halloween | SPY, IBEX, SAN + 10 índices D1 | No pasa: falla en EE. UU. y Japón; en Europa y Hong Kong sí aparece |
 | 2026-10-25 | Oro largo en sesión asiática | XAUUSD M1 | Descartada: neto negativo dentro de muestra |
 | 2026-10-25 | Prima nocturna EE. UU. | US500, US100 M1 | Descartada: el swap y el spread se comen el efecto |
@@ -44,8 +44,8 @@ Spread real de 22:30 a 23:00: 0,8-0,9 puntos (2,2 desde las 23:01); el coste no 
 el efecto no existe en el CFD desde 2023. La zona de ruido cumple el listón por la mínima, pero se
 apaga (2025 +0,07, 2026 +0,02 R/día), pierde hasta −7 R en un día y en EV por cuota (2-Step 100K)
 el ORB más la zona de ruido a medio tamaño da +24.000 €/año con costes al doble frente a +26.400 €
-de subir el riesgo del ORB un 25 %. **Veredicto:** momentum de cierre y extensión descartados;
-zona de ruido en reserva, no se escribe en MQL5.
+de subir el riesgo del ORB un 25 %. **Veredicto:** las tres descartadas (momentum de cierre,
+extensión del ORB y zona de ruido); no se escribe ningún EA.
 
 ---
 
