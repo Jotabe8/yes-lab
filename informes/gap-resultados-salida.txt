@@ -1,0 +1,67 @@
+Regla preregistrada: Regla(gap=0.03, vol_x=3.0, ret=0.03, atr_k=2.0, sesiones=5, stop=True)
+
+== AMPLIO, costes x1 ==
+  bruto fuera    n=  638  R/op=+0.078  t=+2.06  PF=1.23  acierto=52%  mov medio=+0.42%
+  2005-2017      n=  764  R/op=+0.014  t=+0.44  PF=1.04  acierto=50%  mov medio=+0.37%
+  2018-2026      n=  638  R/op=+0.028  t=+0.74  PF=1.08  acierto=49%  mov medio=+0.42%
+    largos       n=  262  R/op=+0.066  t=+1.02  PF=1.18  acierto=49%  mov medio=+0.62%
+    cortos       n=  376  R/op=+0.001  t=+0.02  PF=1.00  acierto=49%  mov medio=+0.28%
+  por año (fuera):
+       count   mean     sum
+fecha                      
+2018      70  0.201  14.070
+2019      74  0.029   2.130
+2020      65 -0.061  -3.982
+2021      60 -0.039  -2.345
+2022      71  0.094   6.667
+2023      65 -0.169 -10.972
+2024      90  0.028   2.526
+2025      83  0.029   2.377
+2026      60  0.122   7.332
+  años positivos: 6 de 9
+  correlación P&L diario con QQQ: -0.191  (días con posición: 1468)
+
+== AMPLIO, costes x2 ==
+  bruto fuera    n=  638  R/op=+0.078  t=+2.06  PF=1.23  acierto=52%  mov medio=+0.42%
+  2005-2017      n=  764  R/op=-0.041  t=-1.26  PF=0.89  acierto=46%  mov medio=+0.37%
+  2018-2026      n=  638  R/op=-0.022  t=-0.60  PF=0.94  acierto=46%  mov medio=+0.42%
+    largos       n=  262  R/op=+0.012  t=+0.19  PF=1.03  acierto=46%  mov medio=+0.62%
+    cortos       n=  376  R/op=-0.047  t=-1.03  PF=0.87  acierto=47%  mov medio=+0.28%
+
+== FTMO, costes x1 ==
+  bruto fuera    n=  249  R/op=+0.186  t=+3.03  PF=1.64  acierto=58%  mov medio=+1.08%
+  2005-2017      n=  280  R/op=+0.093  t=+1.65  PF=1.29  acierto=55%  mov medio=+0.75%
+  2018-2026      n=  249  R/op=+0.138  t=+2.26  PF=1.45  acierto=57%  mov medio=+1.08%
+    largos       n=  105  R/op=+0.181  t=+1.73  PF=1.55  acierto=56%  mov medio=+1.29%
+    cortos       n=  144  R/op=+0.107  t=+1.45  PF=1.36  acierto=57%  mov medio=+0.93%
+  por año (fuera):
+       count   mean    sum
+fecha                     
+2018      26  0.209  5.439
+2019      29  0.014  0.409
+2020      25 -0.051 -1.265
+2021      24  0.141  3.396
+2022      35  0.247  8.640
+2023      24 -0.035 -0.835
+2024      30  0.318  9.528
+2025      32  0.190  6.093
+2026      24  0.126  3.013
+  años positivos: 7 de 9
+  correlación P&L diario con QQQ: -0.157  (días con posición: 857)
+
+== FTMO, costes x2 ==
+  bruto fuera    n=  249  R/op=+0.186  t=+3.03  PF=1.64  acierto=58%  mov medio=+1.08%
+  2005-2017      n=  280  R/op=+0.044  t=+0.77  PF=1.13  acierto=51%  mov medio=+0.75%
+  2018-2026      n=  249  R/op=+0.090  t=+1.47  PF=1.27  acierto=53%  mov medio=+1.08%
+    largos       n=  105  R/op=+0.129  t=+1.24  PF=1.37  acierto=52%  mov medio=+1.29%
+    cortos       n=  144  R/op=+0.062  t=+0.84  PF=1.20  acierto=54%  mov medio=+0.93%
+
+== Sensibilidad, AMPLIO 2018-2026, costes x1 (solo contexto) ==
+  1 sesión     n=  646  R/op=+0.008  t=+0.40  PF=1.04  acierto=49%  mov medio=+0.20%
+  3 sesiones   n=  641  R/op=+0.032  t=+1.04  PF=1.11  acierto=51%  mov medio=+0.42%
+  10 sesiones  n=  631  R/op=+0.037  t=+0.74  PF=1.08  acierto=45%  mov medio=+0.43%
+  gap 2 %      n=  703  R/op=+0.034  t=+0.91  PF=1.09  acierto=49%  mov medio=+0.44%
+  gap 5 %      n=  465  R/op=+0.043  t=+1.01  PF=1.13  acierto=52%  mov medio=+0.53%
+  volumen x2   n= 1231  R/op=-0.034  t=-1.26  PF=0.91  acierto=45%  mov medio=-0.12%
+  volumen x5   n=  172  R/op=+0.120  t=+1.67  PF=1.38  acierto=52%  mov medio=+0.81%
+  sin stop     n=  636  R/op=+0.074  t=+1.87  PF=1.22  acierto=52%  mov medio=+0.63%
