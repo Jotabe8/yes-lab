@@ -60,6 +60,15 @@ señal y las aperturas para ejecutar.
 - Si pasa, los pares positivos dentro de muestra forman la cartera que se mete en el simulador
   de FTMO. Si no pasa, se descarta y no se reajusta.
 
+## Corrección del 2026-10-25, antes de mirar los resultados corregidos
+
+Calcular cada diferencial histórico con su propio β era un error de diseño: como `ln B` vale
+en torno a 4-10, un cambio de β de 0,01 mueve el diferencial más que el propio desajuste entre
+los dos mercados, y el z mide sobre todo el ruido del β. Lo detectó el test con datos sintéticos
+(un diferencial que revierte rápido perdía dinero). La regla correcta, que es la habitual, aplica
+el β de hoy a los 60 días anteriores: `s_k = ln A_k − β_t·ln B_k` para k de t−60 a t. El resto
+de reglas, pares, costes y criterio no cambian. Se publican los dos resultados.
+
 ## Sensibilidad (solo informativa, no sirve para elegir)
 
 Umbral de entrada 1,5 y 2,5; ventana del z 20 y 120. Se publica la tabla completa.
