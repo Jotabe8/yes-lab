@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-01T01:18:42+00:00",
+ "updated": "2026-10-25T09:12:47+00:00",
  "series": [
   {
    "id": "btc",
@@ -8,8 +8,8 @@
    "source": "binance",
    "symbol": "BTCUSDT",
    "first": "2017-08-17",
-   "last": "2026-10-01",
-   "n": 3333
+   "last": "2026-10-25",
+   "n": 3357
   },
   {
    "id": "eth",
@@ -18,8 +18,8 @@
    "source": "binance",
    "symbol": "ETHUSDT",
    "first": "2017-08-17",
-   "last": "2026-10-01",
-   "n": 3333
+   "last": "2026-10-25",
+   "n": 3357
   },
   {
    "id": "euraud",
@@ -27,9 +27,9 @@
    "market": "forex",
    "source": "yahoo",
    "symbol": "EURAUD=X",
-   "first": "2016-10-02",
-   "last": "2026-10-01",
-   "n": 2602
+   "first": "2016-10-23",
+   "last": "2026-10-25",
+   "n": 2604
   },
   {
    "id": "eurusd",
@@ -37,9 +37,9 @@
    "market": "forex",
    "source": "yahoo",
    "symbol": "EURUSD=X",
-   "first": "2016-10-02",
-   "last": "2026-10-01",
-   "n": 2601
+   "first": "2016-10-23",
+   "last": "2026-10-23",
+   "n": 2603
   },
   {
    "id": "gbpjpy",
@@ -47,9 +47,9 @@
    "market": "forex",
    "source": "yahoo",
    "symbol": "GBPJPY=X",
-   "first": "2016-10-02",
-   "last": "2026-10-01",
-   "n": 2602
+   "first": "2016-10-23",
+   "last": "2026-10-23",
+   "n": 2604
   },
   {
    "id": "gbpusd",
@@ -57,9 +57,9 @@
    "market": "forex",
    "source": "yahoo",
    "symbol": "GBPUSD=X",
-   "first": "2016-10-02",
-   "last": "2026-10-01",
-   "n": 2601
+   "first": "2016-10-23",
+   "last": "2026-10-25",
+   "n": 2603
   },
   {
    "id": "ibex",
@@ -67,9 +67,9 @@
    "market": "acciones",
    "source": "yahoo",
    "symbol": "^IBEX",
-   "first": "2016-09-30",
-   "last": "2026-09-29",
-   "n": 2555
+   "first": "2016-10-24",
+   "last": "2026-10-23",
+   "n": 2557
   },
   {
    "id": "nzdusd",
@@ -77,9 +77,9 @@
    "market": "forex",
    "source": "yahoo",
    "symbol": "NZDUSD=X",
-   "first": "2016-10-02",
-   "last": "2026-10-01",
-   "n": 2601
+   "first": "2016-10-23",
+   "last": "2026-10-25",
+   "n": 2603
   },
   {
    "id": "san",
@@ -87,9 +87,9 @@
    "market": "acciones",
    "source": "yahoo",
    "symbol": "SAN.MC",
-   "first": "2016-09-30",
-   "last": "2026-09-30",
-   "n": 2557
+   "first": "2016-10-24",
+   "last": "2026-10-23",
+   "n": 2558
   },
   {
    "id": "spy",
@@ -97,9 +97,19 @@
    "market": "acciones",
    "source": "yahoo",
    "symbol": "SPY",
-   "first": "2016-10-03",
-   "last": "2026-09-29",
-   "n": 2511
+   "first": "2016-10-24",
+   "last": "2026-10-23",
+   "n": 2514
+  },
+  {
+   "id": "tlt",
+   "name": "TLT (bonos del Tesoro EE. UU. a 20+ años)",
+   "market": "acciones",
+   "source": "yahoo",
+   "symbol": "TLT",
+   "first": "2016-10-24",
+   "last": "2026-10-23",
+   "n": 2514
   },
   {
    "id": "usdchf",
@@ -107,9 +117,9 @@
    "market": "forex",
    "source": "yahoo",
    "symbol": "CHF=X",
-   "first": "2016-10-02",
-   "last": "2026-10-01",
-   "n": 2601
+   "first": "2016-10-23",
+   "last": "2026-10-25",
+   "n": 2603
   },
   {
    "id": "usdjpy",
@@ -117,9 +127,9 @@
    "market": "forex",
    "source": "yahoo",
    "symbol": "JPY=X",
-   "first": "2016-10-02",
-   "last": "2026-10-01",
-   "n": 2601
+   "first": "2016-10-23",
+   "last": "2026-10-23",
+   "n": 2603
   }
  ]
 }
