@@ -61,26 +61,25 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
 
-## 2026-10-26 — Cuatro ideas por el embudo: tres descartadas y una viva
+## 2026-10-26 — Cuatro ideas por el embudo: las cuatro descartadas
 
 Primera tanda con el método del embudo (`metodo/METODO.md`), preregistro antes de mirar datos
 en cada una. Datos: M1 bid/ask de Dukascopy y de FTMO del PC de Jorge.
 
-| Idea | Mercados | Veredicto | Dónde cae |
-| --- | --- | --- | --- |
-| Gotobi (días de liquidación japoneses, compra de USDJPY en la fijación de Tokio) | USDJPY, EURJPY, GBPJPY | Descartada | P1/P2: el efecto es real (+0,106 R bruto, t 3,5; se repite en los tres cruces) pero son 2,4 pips contra 1,6 de coste; bruto 1,5× coste y neto ×2 de −0,037 R |
-| Continuación del shock macro de las 08:30 de Nueva York | XAUUSD, US500, US30, US2000, EURUSD | Descartada | P1: bruto +0,016 R = 0,5× coste y por debajo del p95 del placebo |
-| Asia marca el día en Europa (JP225 + HK50 → apertura europea) | FRA40, EU50, UK100 | Descartada | P1-P3: neto −0,047 R dentro y −0,057 fuera de muestra |
-| **Prima nocturna tras un día de estrés** (caída de sesión > 1,5 %, comprar al cierre, vender en la apertura siguiente) | US500, US30, US2000, FRA40, EU50, UK100, GER40 | **Pasa P0-P4** | — |
+| Idea | Mercados | Dónde cae |
+| --- | --- | --- |
+| Gotobi (días de liquidación japoneses, compra de USDJPY en la fijación de Tokio) | USDJPY, EURJPY, GBPJPY | P1/P2: el efecto es real (+0,106 R bruto, t 3,5; se repite en los tres cruces) pero son 2,4 pips contra 1,6 de coste; bruto 1,5× coste y neto ×2 de −0,037 R |
+| Continuación del shock macro de las 08:30 de Nueva York | XAUUSD, US500, US30, US2000, EURUSD | P1: bruto +0,016 R = 0,5× coste y por debajo del p95 del placebo |
+| Asia marca el día en Europa (JP225 + HK50 → apertura europea) | FRA40, EU50, UK100 | P1-P3: neto −0,047 R dentro y −0,057 fuera de muestra |
+| Prima nocturna tras un día de estrés (caída de sesión > 1,5 %, comprar al cierre, vender en la apertura siguiente) | US500, US30, US2000, FRA40, EU50, UK100, GER40 | P1: bruto real −0,086 R (t −1,9) |
 
-La superviviente: 737 operaciones 2018-2026 (85/año), coste 0,026 R, bruto +0,183 R = 7× coste,
-por encima del p95 del placebo (+0,096), neto fuera de muestra +0,076 R (t 1,42), 7 de 9 años
-positivos, EV por cuota 2-Step +5.139 € frente a +736 € del control sin edge y correlación
-−0,00 con el ORB US100. Los siete mercados apuntan en la misma dirección y la meseta del
-umbral es monótona.
+La prima nocturna pareció pasar todas las puertas (+0,183 R brutos, EV 2-Step +5.139 €) y se
+llegó a escribir el EA, pero era un fallo del backtest: la R se calculaba como
+`max((salida − entrada) / stop, −1)`, un stop que corta los huecos a −1 R y nunca salta en las
+caídas nocturnas que se recuperan. Recorriendo las velas M1 de toda la noche (stop en la primera
+vela que lo toca, huecos llenados a la apertura) sale −0,086 R bruto y −0,112 neto, negativo en
+los siete mercados y en los dos periodos. Sin stop, +0,005 R, por debajo de las noches normales.
+EA retirado. Detalle en `cartera/noche_estres/RESULTADOS_NOCHE.md`.
 
-Dos avisos: la financiación de las noches no está en las cifras (0,04 % por noche deja el
-fuera de muestra en t 0,67) y el sistema es lento (34 noches al año; mediana de 316 días
-hábiles para pasar las dos fases). Sirve como segundo EA junto al ORB, no como EA único.
-`ea/NocheEstres_v100.mq5` está escrito sobre la plantilla; falta el Strategy Tester (P5).
-Detalle en `cartera/noche_estres/RESULTADOS_NOCHE.md`.
+**Lección para el método:** toda salida por stop se comprueba vela a vela entre entrada y salida,
+y los huecos se llenan a la apertura. Recortar el resultado final a −1 R es mirar el futuro.
