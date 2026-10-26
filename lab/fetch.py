@@ -4,6 +4,8 @@ Fuentes (ver trading/research/B-datos-y-apis.md):
 - Yahoo Finance, endpoint no oficial v8/finance/chart: acciones, índices y forex.
   Solo uso personal; puede devolver 429 o cambiar sin aviso.
 - Binance, API pública de datos (data-api.binance.vision): cripto, sin clave.
+- Tesoro de EE. UU. (api.fiscaldata.treasury.gov, auctions_query): calendario de
+  subastas de notas y bonos, sin clave. Se guarda en docs/data/subastas.json.
 
 Salida: docs/data/<id>.json con [{"d": "AAAA-MM-DD", "c": cierre}, ...]
 y docs/data/index.json con el catálogo. Los pares forex guardan además apertura,
@@ -28,6 +30,7 @@ UA = "Mozilla/5.0 (laboratorio-trading; uso personal)"
 INSTRUMENTS = [
     ("spy", "SPY (S&P 500 ETF)", "acciones", "yahoo", "SPY"),
     ("tlt", "TLT (bonos del Tesoro EE. UU. a 20+ años)", "acciones", "yahoo", "TLT"),
+    ("ief", "IEF (bonos del Tesoro EE. UU. a 7-10 años)", "acciones", "yahoo", "IEF"),
     ("ibex", "IBEX 35", "acciones", "yahoo", "^IBEX"),
     ("san", "Banco Santander", "acciones", "yahoo", "SAN.MC"),
     ("btc", "Bitcoin (BTC/USDT)", "cripto", "binance", "BTCUSDT"),
@@ -100,6 +103,29 @@ def fetch_binance(symbol: str, years: int) -> list[dict]:
     return dedupe(rows)
 
 
+FISCALDATA = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+
+
+def fetch_auctions(years: int) -> list[dict]:
+    """Subastas de notas y bonos del Tesoro: [{"d": fecha, "plazo": "10-Year", "reapertura": bool}]."""
+    since = (dt.date.today() - dt.timedelta(days=365 * years)).isoformat()
+    rows: list[dict] = []
+    page = 1
+    while True:
+        url = (f"{FISCALDATA}?fields=auction_date,security_type,security_term,reopening"
+               f"&filter=auction_date:gte:{since},security_type:in:(Note,Bond)"
+               f"&sort=auction_date&page%5Bsize%5D=1000&page%5Bnumber%5D={page}")
+        payload = _get_json(url)
+        for r in payload.get("data", []):
+            rows.append({"d": r["auction_date"], "plazo": r["security_term"],
+                         "reapertura": r.get("reopening") == "Yes"})
+        if page >= int(payload.get("meta", {}).get("total-pages", 1)):
+            break
+        page += 1
+    unique = {(r["d"], r["plazo"]): r for r in rows}
+    return [unique[k] for k in sorted(unique)]
+
+
 def dedupe(rows: list[dict]) -> list[dict]:
     seen: dict[str, dict] = {}
     for r in rows:
@@ -131,6 +157,17 @@ def main(argv: list[str] | None = None) -> int:
         index.append({"id": ident, "name": name, "market": market, "source": source,
                       "symbol": symbol, "first": rows[0]["d"], "last": rows[-1]["d"], "n": len(rows)})
         print(f"OK {ident}: {len(rows)} filas, {rows[0]['d']} a {rows[-1]['d']}")
+
+    if not args.only or "subastas" in args.only:
+        try:
+            auctions = fetch_auctions(args.years)
+            if len(auctions) < 30:
+                raise RuntimeError(f"solo {len(auctions)} subastas")
+            (DATA_DIR / "subastas.json").write_text(json.dumps(auctions, separators=(",", ":")))
+            print(f"OK subastas: {len(auctions)}, {auctions[0]['d']} a {auctions[-1]['d']}")
+        except Exception as exc:
+            failures.append(f"subastas: {exc}")
+            print(f"ERROR subastas: {exc}", file=sys.stderr)
 
     if index:
         old = {}
