@@ -52,3 +52,8 @@ Las autocorrelaciones reales ayudan (+3.553 € frente a +1.579 € con ruido i.
 3. **Riesgo alto, cerca del borde:** el EV máximo aparece con el riesgo más alto probado (2x, vol ≈ 14 %). Si se usa, debe ser con una exposición moderada (vol 7 %), que se parezca a una gestión normal.
 4. **El simulador es un modelo:** el EV depende de cómo modela FTMO (retiros cada 10 días, devolución de la cuota). Las cuotas y las reglas pueden cambiar.
 5. **Regla de gap:** no se puede abrir posiciones en las 2 horas antes de una pausa de 2 horas o más. Hay que reequilibrar a media sesión y nunca el viernes por la tarde.
+
+## Añadido: largo/corto y riesgo moderado
+- **Versión largo/corto** (corto bajo la media de 200): el Sharpe 2008-2026 baja a 0,01-0,11, porque el corto paga dividendos, cobra poco por la financiación y va contra la deriva. A 3 años da +1.578 / +2.791 € en 2-Step 200K con riesgo máximo, y ≈ 0 con riesgo moderado. **Peor que solo largo.**
+- **Solo largo con riesgo moderado** (volatilidad ≈ 7 %), 3 años, 1-Step 200K: **+3.069 € sin dividendos y +4.671 € con dividendos**. En 2-Step 200K: +1.011 / +2.129 €. En 2-Step el mejor riesgo es ≈ 10-14 % de volatilidad (+3.955 a +7.423 €).
+- Con un riesgo moderado y normal ya sale EV positivo, sin tener que llegar a la sobreexposición.
