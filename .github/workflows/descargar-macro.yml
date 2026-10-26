@@ -42,6 +42,20 @@ jobs:
           PY
           rm -f datos_macro/cot/cot_*.txt
           ls -la datos_macro/fred datos_macro/cot
+      - name: Índices diarios largos (Yahoo) y Nasdaq 100 (FRED)
+        run: |
+          mkdir -p datos_macro/indices
+          curl -sfL -m 60 -o datos_macro/indices/NASDAQ100_fred.csv "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQ100" || echo "falla NASDAQ100"
+          pip install -q yfinance
+          python3 - <<'PY'
+          import yfinance as yf
+          for t, n in {"^GSPC": "SP500", "^NDX": "NDX", "^GDAXI": "DAX", "^N225": "N225", "^DJI": "DJI", "^FTSE": "FTSE"}.items():
+              try:
+                  d = yf.download(t, start="1985-01-01", auto_adjust=False, progress=False)
+                  d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+                  d.to_csv(f"datos_macro/indices/{n}.csv"); print(n, len(d))
+              except Exception as e: print("falla", n, e)
+          PY
       - name: Guardar cambios
         run: |
           git config user.name "github-actions[bot]"
