@@ -69,3 +69,12 @@ trailing 2 ATR, TP 1 ATR, Van Tharp trailing 3 ATR, VP con cierre a 20 días) en
 ajuste y prueba. EV por cuota FTMO negativo salvo +55 € en 2-Step 100K midiendo solo al cierre, que se vuelve
 negativo al doble de costes. El control de media cero da +1.569 €: la estructura de FTMO no basta para cubrir
 el coste de 600-1.400 operaciones al año. **Descartada.** Detalle en `informes/entrada_aleatoria/RESULTADOS.md`.
+
+## 2026-10-26 · Scalping con gestión NNFX (descartado)
+
+Velas M1 bid/ask en 7 mercados (EURUSD, GBPUSD, USDJPY, oro, US100, US500, GER40), M1/M5/M15, solo en sesión
+líquida, gestión NNFX (SL 1,5 ATR, mitad a 1 ATR, BE, trailing 2 ATR) y cuatro entradas pre-registradas
+(aleatoria, retroceso a EMA20, ruptura Donchian 20, RSI(2) a favor de la EMA200). 0 de 105 casillas ganan en
+2023-26. El spread cuesta 0,3-0,4 R por operación en M1 en forex y oro y 0,02-0,03 R en índices FTMO en M15; el
+bruto no lo cubre en ningún caso. La única casilla con t > 2 en ajuste (ruptura US100 M15, +0,078 R) da −0,006 R
+en prueba. **Descartado.** Detalle en `informes/scalping_nnfx/RESULTADOS.md`.
