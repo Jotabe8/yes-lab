@@ -12,6 +12,8 @@ Laboratorio **simulado** para investigar estrategias en acciones/ETFs, cripto y 
 | `lab/estrategias.py` | Estrategias del informe semanal de investigación (cambio de mes, …) |
 | `DIARIO.md` | Diario con los resultados de cada estrategia probada |
 | `informes/nnfx-portfolio.md` | Resultados del portfolio NNFX frente a comprar y mantener |
+| `lab/us100.py` | ORB y VWAP intradía en US100 con velas M1 de MT5, walk-forward y Monte Carlo FTMO |
+| `informes/us100-orb-vwap.md` | Resultados de ORB y VWAP en US100 y comparación con los backtests previos |
 | `docs/index.html` | Dashboard: backtester en el navegador, calculadora de posición y diario simulado |
 | `.github/workflows/actualizar-datos.yml` | Actualiza los datos de lunes a viernes a las 22:15 UTC |
 | `tests/` | Tests con `unittest`, sin dependencias externas |
@@ -27,6 +29,8 @@ python -m lab.backtest spy --strategy sma --fast 50 --slow 200
 python -m lab.backtest btc --strategy mom --look 126 --walk-forward
 python -m lab.nnfx --walk-forward             # portfolio NNFX de 5 pares
 python -m lab.estrategias cambio-de-mes spy --cost 0.05 --walk-forward
+python -m lab.us100 --export                   # vuelca US100.cash M1 desde MetaTrader 5 a data/
+python -m lab.us100 --walk-forward --monte-carlo 5000   # ORB y VWAP en US100
 ```
 
 El backtest imprime siempre el resultado con costes normales y con costes al doble, frente a comprar y mantener.
