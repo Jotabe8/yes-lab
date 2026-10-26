@@ -35,18 +35,17 @@ y en la memoria (regla de Jorge: no se deja nada "en reserva").
 | --- | --- | --- | --- |
 | **P0 Ficha** | 10 min | Hipótesis causal (quién pierde dinero y por qué), mercado, marco, ops/año esperadas, stop típico, **coste en R** = (spread + comisión) / stop con datos bid/ask. Mirar la lista de descartados de la memoria. | Ya está descartada; coste > 0,10 R; < 40 ops/año; o el efecto publicado es < 3 × coste. |
 | **P1 Prueba rápida** | 1 h | Regla fija, sin optimizar, salida simple (N velas o stop/objetivo fijos). Ajuste 2018-2022. **A la vez en 3-5 mercados parecidos.** Placebo con las mismas salidas (dirección o hora aleatoria, 200 réplicas). | Bruto < 3 × coste; no supera el p95 del placebo; funciona en un solo mercado. |
-| **P2 Neto y estabilidad** | 2 h | Costes reales y al doble; años positivos; meseta de parámetros (vecinos ±20 % conservan la mitad del edge); prueba de ruido. | Neto ×2 ≤ 0; < 60 % de años positivos; pico aislado de parámetros; < 90 % de réplicas con ruido > 0. |
-| **P3 Fuera de muestra** | 30 min | Se abre **una vez** 2023-2026. t total contra el t corregido por número de pruebas (tabla abajo). | OOS ≤ 0 o t OOS < 1; t total < t requerido. |
-| **P4 Prop** | 30 min | EV/cuota 2-Step (Monte Carlo por días) frente al control sin edge; correlación diaria con el ORB US100. | EV ≤ control; correlación > 0,3. |
+| **P2 Neto y estabilidad** | 2 h | Costes reales y al doble; años positivos; meseta de parámetros (vecinos ±20 % conservan la mitad del edge); si hay sospecha, prueba de ruido sobre los precios (no sobre las R). | Neto ×2 ≤ 0; < 60 % de años positivos; pico aislado de parámetros. |
+| **P3 Fuera de muestra** | 30 min | Se abre **una vez** 2023-2026. t total contra el t corregido por número de pruebas (tabla abajo), como aviso. | OOS ≤ 0 o t OOS < 1. |
+| **P4 Prop** | 30 min | EV/cuota 2-Step (Monte Carlo por días) con la media **recortada** en (t requerido − 1,64) errores estándar, frente a la misma serie con media 0; correlación diaria con el ORB US100. | EV recortada ≤ control; correlación > 0,3. |
 | **P5 MQL5** | 2 h | EA desde `PlantillaPropEA.mq5`, solo con lo probado. Strategy Tester con ticks reales de FTMO en el mismo periodo. | Ops o R media a más de ±20 % de Python (primero se busca el fallo; si es del modelo, se descarta). |
 | **P6 Incubación** | 4-8 semanas | Demo o Free Trial de FTMO, sin tocar nada. | Resultado fuera de la banda del Monte Carlo (p5-p95). |
 
-`metodo/embudo.py` automatiza P1-P4 con una tabla de operaciones (fecha, R bruta, coste en R):
+`metodo/embudo.py` automatiza P0-P4 (salvo multi-mercado y meseta) con una tabla de operaciones (fecha, R bruta, coste en R):
 
 ```python
 from metodo.embudo import embudo
-print(embudo(ops, n_pruebas=24, corte_oos="2023-01-01", placebo=sim_aleatoria,
-             ev_control=1569))
+print(embudo(ops, n_pruebas=24, corte_oos="2023-01-01", placebo=sim_aleatoria))
 ```
 
 **t requerido según el número de variantes miradas** (una cola, 5 %, Bonferroni):
@@ -58,7 +57,7 @@ Cuenta todo: parámetros, mercados, horarios y salidas probados, aunque no se pr
 1. **Preregistro de 5 líneas** antes de mirar datos: regla, mercados, periodo, métrica, umbral.
 2. Una idea por hilo y presupuesto de tiempo; si una puerta se alarga el doble, se para.
 3. Primero el bruto en varios mercados, después los detalles. Nunca al revés.
-4. Siempre un control: placebo con las mismas salidas y, en P4, la cesta sin edge.
+4. Siempre un control: placebo con las mismas salidas y, en P4, la misma serie sin edge.
 5. Nada de rescates: si falla, no se añaden filtros para salvarla (eso suma pruebas).
 6. El EA se escribe después de P4. El Strategy Tester confirma la simulación, no la descubre.
 7. Datos: M1 bid/ask de Dukascopy (hora servidor = NY+7) y ticks de FTMO; D1 de
@@ -73,25 +72,43 @@ patrones de precio.
 
 Candidatas no probadas en este proyecto, en orden:
 
-1. **Rebalanceo institucional 60/40** (Harvey, Mazzoleni y Melone, NBER 33554, 2025). Si las
-   acciones han batido a los bonos en el mes, los fondos venden acciones en la última semana
-   y el índice cae; al revés, sube. Réplica independiente: Sharpe > 1,4 en futuros, beta 0,07.
-   Es **condicional** al rendimiento relativo, distinto del "cambio de mes" ya descartado.
-   Se prueba en US500/US100 (y GER40) solo con la pata de acciones; bonos de FRED (DGS10)
-   con el workflow `descargar-macro.yml`. Riesgo: ~5-10 ops/año, quizá pocas para un reto.
-2. **Deriva previa al FOMC condicionada a volatilidad alta** (Lucca y Moench; Quantpedia:
+1. **Deriva previa al FOMC condicionada a volatilidad alta** (Lucca y Moench; Quantpedia:
    ~109 pb con la volatilidad implícita por encima de la mediana frente a ~10 pb por debajo).
-   8 ops/año: solo como complemento de cartera, nunca como EA principal.
-3. **Ideas generadas en masa con corrección honesta**: si se hace una búsqueda amplia (tipo
-   StrategyQuant), fijar antes el número de variantes y exigir el t de la tabla; la
-   búsqueda de 25.000 reglas intradía ya se hizo y no dejó supervivientes, así que solo
-   tiene sentido en un espacio nuevo (otros marcos o eventos).
+   8 ops/año: no pasa P0 como EA solo; únicamente como complemento en la cuenta del ORB.
+2. **Ideas generadas en masa con corrección honesta**: si se hace una búsqueda amplia (tipo
+   StrategyQuant), fijar antes el número de variantes; el recorte de la EV en P4 cobra la
+   búsqueda. La de 25.000 reglas intradía ya se hizo sin supervivientes: solo tiene sentido
+   en un espacio nuevo (otros marcos o eventos).
+
+Probada con el método el 2026-10-26 y descartada: **rebalanceo 60/40 de fin de mes**
+(Harvey, Mazzoleni y Melone, 2025) en 7 índices; ver la sección 7.
 
 Ya descartadas (no repetir): ver la memoria del proyecto; incluye reversión a la media, RSI(2),
 momentum de cierre y de última media hora, cambio de mes, trend following y TSMOM, noticias,
 VWAP, ORB fuera de US100/GER40, pares, BTC intradía, prima nocturna, Halloween, carry/COT,
 Bollinger en oro, Supertrend, pullback de Pons, NNFX D1, entrada aleatoria, scalping M1-M15 y
 EMA20 GER40.
+
+## 7. Calibración (2026-10-26)
+
+El embudo se probó con dos casos de resultado conocido y una idea nueva
+(`metodo/pruebas/`). La primera versión tenía dos fallos que se corrigieron:
+
+| Caso | Versión 1 | Versión 2 (actual) | Esperado |
+| --- | --- | --- | --- |
+| ORB US100 v018 (en real en FTMO), 50 pruebas supuestas | Descartado solo por t 2,46 < 3,09 | **Pasa**: EV recortada +3.683 € vs control +1.923 € | Pasa |
+| GER40 EMA20 (murió luego en 14 mercados) | Descartado | **Descartado en P1**: bruto 1,7× coste, neto ×2 −0,025 R, EV recortada < control | Cae |
+| Rebalanceo 60/40, US500 (idea nueva) | Descartado, pero la EV pasaba (+2.848 € vs 1.569 € de otro simulador) | **Descartado en P0/P1**: 12 ops/año, bruto 1,3× coste, bajo el p95 del placebo | — |
+
+Correcciones: (1) la "prueba de ruido" sobre las R era inútil (daba 100 % a todo) y se quitó;
+(2) el control de EV ahora se simula igual que la estrategia (misma serie con media 0) y la
+EV se calcula con la media recortada por el número de pruebas, en vez de bloquear por t.
+
+Rebalanceo 60/40: 110 meses (2016-11 a 2025-12) con IEF como bono. Bruto en US500 +0,063 R/op
+(t 0,63) y fuera de muestra +0,02; con |señal| > 2 % sube a +0,18 R pero t 1,36 y el p95
+del placebo es +0,13. La señal manda corto el 70 % de los meses y comprar esos mismos días
+da +0,086 R: lo que se ve es la deriva alcista, no el flujo. Europa sale algo mejor en
+ajuste y se da la vuelta en prueba. Tiempo total con el método: unos 20 minutos.
 
 ## 6. Plantilla MQL5
 

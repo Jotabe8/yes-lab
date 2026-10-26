@@ -56,19 +56,6 @@ def montecarlo_dd(r: np.ndarray, n: int = 5000, semilla: int = 0) -> dict:
     return {"dd_p50": float(np.percentile(dds, 50)), "dd_p95": float(np.percentile(dds, 95))}
 
 
-def ruido(r: np.ndarray, n: int = 1000, sd_r: float = 0.1, semilla: int = 0) -> float:
-    """Prueba de ruido barata: suma ruido N(0, sd_r) a cada operación y tira el 10 % de
-    ellas al azar. Devuelve la fracción de réplicas con media > 0. Para una prueba de
-    ruido completa hay que perturbar los precios y volver a simular (ver METODO.md)."""
-    rng = np.random.default_rng(semilla)
-    r = np.asarray(r, float)
-    buenas = 0
-    for _ in range(n):
-        m = rng.random(len(r)) > 0.10
-        buenas += (r[m] + rng.normal(0, sd_r, m.sum())).mean() > 0
-    return buenas / n
-
-
 def ftmo_2step(r_dia: np.ndarray, riesgo: float = 0.01, cuota: float = 540.0,
                capital: float = 100_000, meses_fondeada: int = 12, reparto: float = 0.8,
                n: int = 4000, semilla: int = 0) -> dict:
@@ -120,17 +107,17 @@ def ftmo_2step(r_dia: np.ndarray, riesgo: float = 0.01, cuota: float = 540.0,
 
 @dataclass
 class Resultado:
-    puertas: list = field(default_factory=list)  # (nombre, ok, detalle)
+    puertas: list = field(default_factory=list)  # (nombre, ok, detalle, bloquea)
 
-    def add(self, nombre, ok, detalle):
-        self.puertas.append((nombre, bool(ok), detalle))
+    def add(self, nombre, ok, detalle, bloquea=True):
+        self.puertas.append((nombre, bool(ok), detalle, bloquea))
 
     @property
     def pasa(self):
-        return all(ok for _, ok, _ in self.puertas)
+        return all(ok for _, ok, _, bloquea in self.puertas if bloquea)
 
     def __str__(self):
-        filas = [f"{'OK ' if ok else 'NO '} {n:<28} {d}" for n, ok, d in self.puertas]
+        filas = [f"{'OK ' if ok else ('NO ' if b else 'ojo')} {n:<28} {d}" for n, ok, d, b in self.puertas]
         filas.append("VEREDICTO: " + ("sigue al siguiente paso" if self.pasa else "DESCARTAR"))
         return "\n".join(filas)
 
@@ -138,11 +125,12 @@ class Resultado:
 def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
            n_placebo: int = 200, riesgo: float = 0.01, cuota: float = 540.0,
            ev_control: float | None = None) -> Resultado:
-    """Aplica las puertas P1-P5 de METODO.md y devuelve el veredicto.
+    """Aplica las puertas P0-P4 de METODO.md y devuelve el veredicto.
 
     ops: columnas fecha (datetime), r_bruto (R antes de costes), coste_r (R por operación).
-    ev_control: EV/cuota del control sin edge (p. ej. la cesta de índices); si se pasa, la
-    idea tiene que superarlo.
+    ev_control: EV/cuota de un control externo (opcional). Siempre se compara además con la
+    misma serie con media 0, simulada igual. La EV se calcula con la media recortada en
+    (t_requerido - 1,64) errores estándar: lo que queda tras descontar la suerte de buscar.
     """
     ops = ops.sort_values("fecha").reset_index(drop=True)
     ops["fecha"] = pd.to_datetime(ops["fecha"])
@@ -166,7 +154,7 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
         p95 = float(np.percentile(medias, 95))
         res.add("supera placebo p95", bruto > p95, f"bruto {bruto:+.3f} vs p95 {p95:+.3f}")
 
-    # P2: neto, costes al doble, estabilidad por años, ruido
+    # P2: neto, costes al doble, estabilidad por años
     dentro = ops.fecha < pd.Timestamp(corte_oos)
     res.add("neto ajuste > 0", neto[dentro].mean() > 0,
             f"{neto[dentro].mean():+.3f} R/op, t {t_stat(neto[dentro]):.2f}")
@@ -175,8 +163,6 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
     frac = (por_año > 0).mean()
     res.add("años positivos", frac >= MIN_AÑOS_POSITIVOS,
             f"{(por_año > 0).sum()}/{len(por_año)} años")
-    fr = ruido(neto)
-    res.add("ruido", fr >= 0.9, f"{fr:.0%} réplicas con media > 0")
 
     # P3: fuera de muestra con t corregido por número de pruebas
     oos = neto[~dentro]
@@ -184,14 +170,22 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
     res.add("fuera de muestra", len(oos) > 30 and oos.mean() > 0 and t_stat(oos) >= 1.0,
             f"{oos.mean() if len(oos) else 0:+.3f} R/op, n {len(oos)}, t {t_stat(oos):.2f}")
     res.add("t total corregido", t_stat(neto) >= t_req,
-            f"t {t_stat(neto):.2f} vs {t_req:.2f} ({n_pruebas} pruebas)")
+            f"t {t_stat(neto):.2f} vs {t_req:.2f} ({n_pruebas} pruebas); aviso, lo decide la EV recortada",
+            bloquea=False)
 
-    # P5: Monte Carlo y EV por cuota
+    # P4: Monte Carlo y EV por cuota con la media recortada por el número de pruebas (haircut),
+    # frente al control: la misma serie con media 0 (misma frecuencia y volatilidad, sin edge).
     mc = montecarlo_dd(neto)
-    r_dia = pd.Series(neto).groupby(ops.fecha.dt.date).sum().to_numpy()
+    se = neto.std(ddof=1) / np.sqrt(len(neto))
+    recorte = (t_req - NormalDist().inv_cdf(0.95)) * se
+    dias = pd.Series(neto).groupby(ops.fecha.dt.date)
+    n_dia = dias.size().to_numpy()
+    r_dia = dias.sum().to_numpy() - recorte * n_dia
+    r_ctl = dias.sum().to_numpy() - neto.mean() * n_dia
     ev = ftmo_2step(r_dia, riesgo=riesgo, cuota=cuota)
-    umbral = ev_control if ev_control is not None else 0.0
-    res.add("EV/cuota 2-Step", ev["ev_cuota"] > umbral,
-            f"{ev['ev_cuota']:+.0f} € (p pasar {ev['p_pasar']:.0%}, umbral {umbral:+.0f}),"
-            f" DD p95 {mc['dd_p95']:.1f} R")
+    ctl = ftmo_2step(r_ctl, riesgo=riesgo, cuota=cuota)
+    umbral = max(ctl["ev_cuota"], ev_control if ev_control is not None else -np.inf)
+    res.add("EV/cuota 2-Step recortada", ev["ev_cuota"] > umbral,
+            f"{ev['ev_cuota']:+.0f} € con {neto.mean() - recorte:+.3f} R/op (p pasar {ev['p_pasar']:.0%})"
+            f" vs control sin edge {ctl['ev_cuota']:+.0f} €, DD p95 {mc['dd_p95']:.1f} R")
     return res
