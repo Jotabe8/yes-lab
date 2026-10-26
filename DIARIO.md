@@ -60,3 +60,35 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 **Pendiente del mismo informe.** El momentum intradía (la primera media hora predice la
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
+
+## 2026-10-26 — Cuatro ideas por el embudo: las cuatro descartadas
+
+Primera tanda con el método del embudo (`metodo/METODO.md`), preregistro antes de mirar datos
+en cada una. Datos: M1 bid/ask de Dukascopy y de FTMO del PC de Jorge.
+
+| Idea | Mercados | Dónde cae |
+| --- | --- | --- |
+| Gotobi (días de liquidación japoneses, compra de USDJPY en la fijación de Tokio) | USDJPY, EURJPY, GBPJPY | P1/P2: el efecto es real (+0,106 R bruto, t 3,5; se repite en los tres cruces) pero son 2,4 pips contra 1,6 de coste; bruto 1,5× coste y neto ×2 de −0,037 R |
+| Continuación del shock macro de las 08:30 de Nueva York | XAUUSD, US500, US30, US2000, EURUSD | P1: bruto +0,016 R = 0,5× coste y por debajo del p95 del placebo |
+| Asia marca el día en Europa (JP225 + HK50 → apertura europea) | FRA40, EU50, UK100 | P1-P3: neto −0,047 R dentro y −0,057 fuera de muestra |
+| Prima nocturna tras un día de estrés (caída de sesión > 1,5 %, comprar al cierre, vender en la apertura siguiente) | US500, US30, US2000, FRA40, EU50, UK100, GER40 | P1: bruto real −0,086 R (t −1,9) |
+
+La prima nocturna pareció pasar todas las puertas (+0,183 R brutos, EV 2-Step +5.139 €) y se
+llegó a escribir el EA, pero era un fallo del backtest: la R se calculaba como
+`max((salida − entrada) / stop, −1)`, un stop que corta los huecos a −1 R y nunca salta en las
+caídas nocturnas que se recuperan. Recorriendo las velas M1 de toda la noche (stop en la primera
+vela que lo toca, huecos llenados a la apertura) sale −0,086 R bruto y −0,112 neto, negativo en
+los siete mercados y en los dos periodos. Sin stop, +0,005 R, por debajo de las noches normales.
+EA retirado. Detalle en `cartera/noche_estres/RESULTADOS_NOCHE.md`.
+
+**Lección para el método:** toda salida por stop se comprueba vela a vela entre entrada y salida,
+y los huecos se llenan a la apertura. Recortar el resultado final a −1 R es mirar el futuro.
+
+## 2026-10-26 (tarde) — Dos ideas más, descartadas
+
+| Idea | Mercados | Dónde cae |
+| --- | --- | --- |
+| Ciclo de la Fed: comprado en las semanas pares tras cada FOMC (Cieslak, Morse y Vissing-Jorgensen) | 11 índices D1 2011-2025 | P1: bruto +0,055 R contra +0,044 R en las semanas impares (es la deriva alcista); 0,9 × coste, bajo el placebo |
+| Reversión del hueco nocturno entre índices (CO-OC, QuantReturns 2025) | EE. UU. y Europa, intradía | P1: bruto 0,7 × y 0,1 × coste, bajo el placebo en los dos grupos |
+
+Balance del día con el embudo: seis ideas, ninguna superviviente. Detalle en `cartera/ciclo_fed/` y `cartera/co_oc/`.
