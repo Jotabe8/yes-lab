@@ -1,0 +1,471 @@
+grupo,var,año,mercado,neto,n
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2018,forex,-0.03219450562106208,461.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2018,oro,-0.06922488416345375,39.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2019,forex,-0.05164078433558172,407.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2019,oro,-0.03207016787307624,47.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2020,forex,-0.035683299565186566,472.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2020,oro,-0.025498993895235474,54.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2021,forex,-0.041000683200459916,437.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2021,oro,-0.02789345005883389,41.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2022,forex,-0.031127540271756737,517.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2022,oro,-0.034445021770628456,47.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2023,forex,-0.040861616509637946,430.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2023,oro,-0.10376226687042335,41.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2024,forex,-0.05286382491467189,455.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2024,oro,-0.01369134376655687,48.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2025,forex,-0.0369588713408347,422.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2025,oro,-0.014285270062507426,55.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2026,forex,-0.0368928017469329,153.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2026,oro,-0.04137040990473738,14.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,AUDNZD,-0.05551032062119389,301.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,AUDUSD,-0.03833094776325402,350.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,EURAUD,-0.033556943937938816,332.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,EURJPY,-0.03955801291045242,358.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,EURUSD,-0.03429464011120145,363.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,GBPJPY,-0.023837655492217738,341.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,GBPUSD,-0.03322163200382173,350.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,NZDUSD,-0.03266286252325124,341.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,USDCAD,-0.04105365568647599,344.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,USDCHF,-0.04747113366790779,328.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,USDJPY,-0.06102223861426473,346.0
+forex+oro,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,XAUUSD,-0.03788309469681358,386.0
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2018,forex,-0.0576966063075482,291.18
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2018,oro,0.03020575218362953,24.21
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2019,forex,-0.10744873784832124,284.29
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2019,oro,0.05496073697685112,24.8
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2020,forex,-0.023431383925579335,279.6
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2020,oro,0.048147042710262794,26.62
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2021,forex,-0.07966491805309367,282.59
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2021,oro,0.065563251008781,25.18
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2022,forex,-0.04692117645823327,296.33
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2022,oro,0.06645105013120817,26.37
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2023,forex,-0.05013824198468836,289.19
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2023,oro,0.03627514331432239,23.96
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2024,forex,-0.06803187391776354,290.21
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2024,oro,0.10737148378284417,25.39
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2025,forex,-0.06893558968845219,282.26
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2025,oro,0.3215034291357968,22.83
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2026,forex,-0.09421943875541682,85.13
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2026,oro,0.10647460010566492,6.98
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,AUDNZD,-0.10083649107380156,195.58
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,AUDUSD,-0.1075448892483372,227.85
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,EURAUD,-0.041110968734672404,209.53
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,EURJPY,-0.07220068577398568,228.03
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,EURUSD,-0.09001289137401305,217.38
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,GBPJPY,-0.014905883473662474,213.12
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,GBPUSD,-0.06082860845144317,215.7
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,NZDUSD,-0.07694614904504513,218.24
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,USDCAD,-0.08164931742207024,223.09
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,USDCHF,-0.03808302273344585,209.92
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,USDJPY,-0.01738823417664569,222.34
+forex+oro,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,XAUUSD,0.08945240413717746,206.34
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2018,forex,-0.030520854422346557,653.69
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2018,oro,-0.06837657235571383,55.29
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2019,forex,-0.04250969672181009,609.14
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2019,oro,-0.04368453791743201,58.58
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2020,forex,-0.05335884108097073,622.98
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2020,oro,-0.11903347261268306,68.23
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2021,forex,-0.04342761540988842,621.78
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2021,oro,-0.015226867262293534,57.12
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2022,forex,-0.040381851206903734,689.04
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2022,oro,-0.06662434361908723,63.01
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2023,forex,-0.007722273756698869,635.29
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2023,oro,-0.022912773479491957,60.95
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2024,forex,-0.045469090683680616,642.3
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2024,oro,-0.06745104198774085,62.91
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2025,forex,-0.024913178214367716,604.48
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2025,oro,-0.038241930208187225,66.43
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2026,forex,-0.015171752308639914,209.96
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),2026,oro,-0.04997806628569506,17.78
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,AUDNZD,-0.0314745798149639,433.87
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,AUDUSD,-0.043113682038830405,490.53
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,EURAUD,-0.020527635962207236,477.19
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,EURJPY,-0.035016878632099194,491.15
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,EURUSD,-0.04309831835898421,475.03
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,GBPJPY,-0.022235595645590918,487.41
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,GBPUSD,-0.03657426176259318,492.63
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,NZDUSD,-0.03369384697042529,481.37
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,USDCAD,-0.04226795144796595,472.43
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,USDCHF,-0.03628711911263238,490.09
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,USDJPY,-0.04260107576628842,496.96
+forex+oro,V2 NNFX 1 orden (TP 1 ATR),todo,XAUUSD,-0.05604133517516791,510.3
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2018,forex,-0.12064221860443781,106.27
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2018,oro,0.004234376090153401,10.64
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2019,forex,-0.21577129206631968,107.39
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2019,oro,0.3933977869171462,9.74
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2020,forex,-0.034262211113753216,104.68
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2020,oro,-0.19850028020180657,14.99
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2021,forex,-0.16264599649306344,101.05
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2021,oro,0.015918161580833267,10.21
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2022,forex,-0.017432908184765086,108.14
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2022,oro,0.3618202427703465,8.74
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2023,forex,-0.1301271570034918,102.13
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2023,oro,-0.20913634339742201,14.14
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2024,forex,-0.09793302907385301,113.01
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2024,oro,0.26047227437862736,11.63
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2025,forex,-0.08283247163742939,94.13
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2025,oro,0.6489974725633364,10.43
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2026,forex,-0.2528639688804273,23.61
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),2026,oro,-0.22599147002420242,4.1
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,AUDNZD,-0.17941102041454923,66.32
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,AUDUSD,-0.13073232993191458,77.1
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,EURAUD,-0.12149216390136369,75.14
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,EURJPY,-0.17432664700335757,83.58
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,EURUSD,-0.1353577790651966,79.84
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,GBPJPY,-0.13062832849315115,86.16
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,GBPUSD,-0.06708009083997504,78.04
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,NZDUSD,-0.1256134413637003,78.69
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,USDCAD,-0.1369489877955208,79.95
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,USDCHF,-0.08014415438818343,75.47
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,USDJPY,0.04783004343669936,80.12
+forex+oro,V3 Van Tharp (trail 3 ATR siempre),todo,XAUUSD,0.10717232746375555,94.62
+forex+oro,V4 NNFX VP + máx 20 días,2018,forex,-0.047867792816849525,335.21
+forex+oro,V4 NNFX VP + máx 20 días,2018,oro,-0.018934935969465588,26.94
+forex+oro,V4 NNFX VP + máx 20 días,2019,forex,-0.09436736199166595,326.03
+forex+oro,V4 NNFX VP + máx 20 días,2019,oro,0.08910907933065272,28.3
+forex+oro,V4 NNFX VP + máx 20 días,2020,forex,-0.03589014076388191,342.37
+forex+oro,V4 NNFX VP + máx 20 días,2020,oro,0.037833250908614814,31.06
+forex+oro,V4 NNFX VP + máx 20 días,2021,forex,-0.062284676517969984,327.28
+forex+oro,V4 NNFX VP + máx 20 días,2021,oro,0.11200511537675406,27.48
+forex+oro,V4 NNFX VP + máx 20 días,2022,forex,-0.03496516079089728,338.23
+forex+oro,V4 NNFX VP + máx 20 días,2022,oro,0.07685694593788445,28.47
+forex+oro,V4 NNFX VP + máx 20 días,2023,forex,-0.05034535713686764,333.92
+forex+oro,V4 NNFX VP + máx 20 días,2023,oro,0.041664561384627874,28.02
+forex+oro,V4 NNFX VP + máx 20 días,2024,forex,-0.04667600973033372,332.3
+forex+oro,V4 NNFX VP + máx 20 días,2024,oro,0.02754274967482701,29.55
+forex+oro,V4 NNFX VP + máx 20 días,2025,forex,-0.08751614377706794,330.27
+forex+oro,V4 NNFX VP + máx 20 días,2025,oro,0.19270903976014517,28.85
+forex+oro,V4 NNFX VP + máx 20 días,2026,forex,-0.044573583491010586,105.07
+forex+oro,V4 NNFX VP + máx 20 días,2026,oro,0.10607320797611734,8.24
+forex+oro,V4 NNFX VP + máx 20 días,todo,AUDNZD,-0.05925168450322588,236.28
+forex+oro,V4 NNFX VP + máx 20 días,todo,AUDUSD,-0.0827217744894892,252.7
+forex+oro,V4 NNFX VP + máx 20 días,todo,EURAUD,-0.037418904207812326,246.91
+forex+oro,V4 NNFX VP + máx 20 días,todo,EURJPY,-0.06303480340478049,260.93
+forex+oro,V4 NNFX VP + máx 20 días,todo,EURUSD,-0.07500143198818342,248.67
+forex+oro,V4 NNFX VP + máx 20 días,todo,GBPJPY,-0.02422186851427821,255.07
+forex+oro,V4 NNFX VP + máx 20 días,todo,GBPUSD,-0.06182155702576652,252.13
+forex+oro,V4 NNFX VP + máx 20 días,todo,NZDUSD,-0.06619637520985959,251.92
+forex+oro,V4 NNFX VP + máx 20 días,todo,USDCAD,-0.07625997140471798,252.92
+forex+oro,V4 NNFX VP + máx 20 días,todo,USDCHF,-0.04780630536800309,252.57
+forex+oro,V4 NNFX VP + máx 20 días,todo,USDJPY,-0.031372774529641455,260.58
+forex+oro,V4 NNFX VP + máx 20 días,todo,XAUUSD,0.0711993020909131,236.91
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2018,cripto,-0.034661486006238716,101.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2018,forex,-0.03219450562106208,461.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2018,indices,-0.03070032897550654,375.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2018,materias,-0.06127211370972181,77.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2018,oro,-0.06922488416345375,39.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2019,cripto,-0.0604329758225203,84.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2019,forex,-0.05164078433558172,407.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2019,indices,-0.037998743624132046,339.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2019,materias,-0.05696624150551873,73.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2019,oro,-0.03207016787307624,47.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2020,cripto,-0.054724758808673654,109.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2020,forex,-0.035683299565186566,472.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2020,indices,-0.01901455077307902,337.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2020,materias,-0.03608176741809678,86.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2020,oro,-0.025498993895235474,54.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2021,cripto,-0.04674073053077968,91.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2021,forex,-0.041000683200459916,437.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2021,indices,-0.029110439560442878,355.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2021,materias,-0.025805472802228748,73.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2021,oro,-0.02789345005883389,41.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2022,cripto,-0.05309292452545324,90.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2022,forex,-0.031127540271756737,517.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2022,indices,-0.025546946651265563,338.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2022,materias,-0.016494397015159507,85.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2022,oro,-0.034445021770628456,47.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2023,cripto,-0.06042501731945282,110.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2023,forex,-0.040861616509637946,430.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2023,indices,-0.03880642494426013,334.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2023,materias,-0.03510468253598526,77.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2023,oro,-0.10376226687042335,41.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2024,cripto,-0.04986295933412027,129.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2024,forex,-0.05286382491467189,455.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2024,indices,-0.038589676214155204,356.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2024,materias,-0.035478973672945155,70.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2024,oro,-0.01369134376655687,48.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2025,cripto,-0.03733498176366073,109.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2025,forex,-0.0369588713408347,422.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2025,indices,-0.054857347260473366,348.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2025,materias,-0.04557313545959132,77.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",2025,oro,-0.014285270062507426,55.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,AUDNZD,-0.056883872871065264,288.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,AUDUSD,-0.03680491297615853,334.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,BTCUSD,-0.058508772072833753,412.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,ETHUSD,-0.040430464790588386,411.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,EU50,-0.04647824247307818,351.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,EURAUD,-0.0324662681328382,320.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,EURJPY,-0.039832659600271575,345.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,EURUSD,-0.03656088297697358,343.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,FRA40,-0.03497928951945053,354.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,GBPJPY,-0.02392243914234635,327.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,GBPUSD,-0.03244296090218765,338.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,GER40,-0.03597545643943407,360.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,JP225,-0.022182701426086932,343.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,NZDUSD,-0.03185767623352318,328.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,UK100,-0.04635403788769426,301.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,US100,-0.029786710637332826,359.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,US30,-0.031054080196580496,356.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,US500,-0.029617857567078423,358.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,USDCAD,-0.04181025690071872,331.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,USDCHF,-0.047755182393488,311.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,USDJPY,-0.06147742332353681,336.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,WTI,-0.03587421641776043,310.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,XAGUSD,-0.04168849577148977,308.0
+todos,"V0 moneda 1:1 (SL=TP=1,5 ATR)",todo,XAUUSD,-0.03775185165135408,372.0
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2018,cripto,0.18558768294960945,54.3
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2018,forex,-0.0576966063075482,291.18
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2018,indices,-0.023375472885937505,240.34
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2018,materias,-0.06534026625230414,52.37
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2018,oro,0.03020575218362953,24.21
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2019,cripto,0.09278964367885664,56.27
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2019,forex,-0.10744873784832124,284.29
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2019,indices,-0.025447994525989063,200.94
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2019,materias,-0.09704561771958493,50.74
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2019,oro,0.05496073697685112,24.8
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2020,cripto,0.24743915857816345,59.04
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2020,forex,-0.023431383925579335,279.6
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2020,indices,0.06735125141649279,212.45
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2020,materias,0.07674519313385703,50.17
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2020,oro,0.048147042710262794,26.62
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2021,cripto,0.1059564144125698,59.81
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2021,forex,-0.07966491805309367,282.59
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2021,indices,-0.12222645239987008,246.91
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2021,materias,0.0637629453616919,42.29
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2021,oro,0.065563251008781,25.18
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2022,cripto,-0.02343897585299971,61.71
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2022,forex,-0.04692117645823327,296.33
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2022,indices,-0.06600625217531061,215.04
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2022,materias,-0.04589397069524601,47.06
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2022,oro,0.06645105013120817,26.37
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2023,cripto,0.05416322122406775,63.66
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2023,forex,-0.05013824198468836,289.19
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2023,indices,-0.045628527302735776,204.69
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2023,materias,-0.03175592423163009,52.55
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2023,oro,0.03627514331432239,23.96
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2024,cripto,0.0513178157375305,69.58
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2024,forex,-0.06803187391776354,290.21
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2024,indices,-0.04289670482339435,228.75
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2024,materias,-0.07007229046070261,51.4
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2024,oro,0.10737148378284417,25.39
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2025,cripto,-0.09755729105646993,63.23
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2025,forex,-0.06847961410269406,281.96
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2025,indices,-0.08578030554354109,223.57
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2025,materias,0.0652695199190579,46.91
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",2025,oro,0.3215034291357968,22.83
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,AUDNZD,-0.09922108817473468,189.25
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,AUDUSD,-0.10639415445774542,220.68
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,BTCUSD,0.06662826643284321,248.31
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,ETHUSD,0.079836341816443,239.29
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,EU50,-0.06771866635807273,227.32
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,EURAUD,-0.03831092750333543,206.78
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,EURJPY,-0.06889968027892385,218.06
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,EURUSD,-0.09195411434458624,211.04
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,FRA40,-0.059964105135792395,227.03
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,GBPJPY,-0.009659729503342897,204.75
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,GBPUSD,-0.05973582047234604,207.49
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,GER40,-0.03788975253958263,216.96
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,JP225,-0.03490821399391797,221.94
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,NZDUSD,-0.08134968524940421,210.77
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,UK100,-0.03541114224414501,209.14
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,US100,-0.028025868341360328,222.23
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,US30,-0.04506892856918149,225.04
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,US500,-0.04651400522902554,223.03
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,USDCAD,-0.08657800240178881,213.86
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,USDCHF,-0.0296509072738399,200.67
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,USDJPY,-0.015440291322963892,212.0
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,WTI,-0.0217277446360349,193.71
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,XAGUSD,-0.009804326278779541,199.78
+todos,"V1 NNFX VP (mitad 1 ATR, BE, trail 2)",todo,XAUUSD,0.08885642235617806,199.36
+todos,V2 NNFX 1 orden (TP 1 ATR),2018,cripto,-0.06860074020036654,136.05
+todos,V2 NNFX 1 orden (TP 1 ATR),2018,forex,-0.030520854422346557,653.69
+todos,V2 NNFX 1 orden (TP 1 ATR),2018,indices,-0.03643900483137118,540.67
+todos,V2 NNFX 1 orden (TP 1 ATR),2018,materias,-0.06575530480040363,110.63
+todos,V2 NNFX 1 orden (TP 1 ATR),2018,oro,-0.06837657235571383,55.29
+todos,V2 NNFX 1 orden (TP 1 ATR),2019,cripto,-0.021737626490130876,128.05
+todos,V2 NNFX 1 orden (TP 1 ATR),2019,forex,-0.04250969672181009,609.14
+todos,V2 NNFX 1 orden (TP 1 ATR),2019,indices,-0.030998452653002925,465.5
+todos,V2 NNFX 1 orden (TP 1 ATR),2019,materias,-0.08083619301408405,109.16
+todos,V2 NNFX 1 orden (TP 1 ATR),2019,oro,-0.04368453791743201,58.58
+todos,V2 NNFX 1 orden (TP 1 ATR),2020,cripto,-0.05491318517900148,160.08
+todos,V2 NNFX 1 orden (TP 1 ATR),2020,forex,-0.05335884108097073,622.98
+todos,V2 NNFX 1 orden (TP 1 ATR),2020,indices,-0.0068631775825243185,468.77
+todos,V2 NNFX 1 orden (TP 1 ATR),2020,materias,-0.04817624386230012,116.39
+todos,V2 NNFX 1 orden (TP 1 ATR),2020,oro,-0.11903347261268306,68.23
+todos,V2 NNFX 1 orden (TP 1 ATR),2021,cripto,0.0006310447341605257,145.73
+todos,V2 NNFX 1 orden (TP 1 ATR),2021,forex,-0.04342761540988842,621.78
+todos,V2 NNFX 1 orden (TP 1 ATR),2021,indices,-0.03728381536450711,506.03
+todos,V2 NNFX 1 orden (TP 1 ATR),2021,materias,0.003890377285274394,106.27
+todos,V2 NNFX 1 orden (TP 1 ATR),2021,oro,-0.015226867262293534,57.12
+todos,V2 NNFX 1 orden (TP 1 ATR),2022,cripto,-0.040724625972933935,136.93
+todos,V2 NNFX 1 orden (TP 1 ATR),2022,forex,-0.040381851206903734,689.04
+todos,V2 NNFX 1 orden (TP 1 ATR),2022,indices,0.004242398829223171,462.21
+todos,V2 NNFX 1 orden (TP 1 ATR),2022,materias,-0.028403372692837388,120.47
+todos,V2 NNFX 1 orden (TP 1 ATR),2022,oro,-0.06662434361908723,63.01
+todos,V2 NNFX 1 orden (TP 1 ATR),2023,cripto,-0.06401951330457101,156.05
+todos,V2 NNFX 1 orden (TP 1 ATR),2023,forex,-0.007722273756698869,635.29
+todos,V2 NNFX 1 orden (TP 1 ATR),2023,indices,-0.012311535291152165,473.25
+todos,V2 NNFX 1 orden (TP 1 ATR),2023,materias,-0.016393607130359936,119.41
+todos,V2 NNFX 1 orden (TP 1 ATR),2023,oro,-0.022912773479491957,60.95
+todos,V2 NNFX 1 orden (TP 1 ATR),2024,cripto,-0.0287527178014881,173.68
+todos,V2 NNFX 1 orden (TP 1 ATR),2024,forex,-0.045469090683680616,642.3
+todos,V2 NNFX 1 orden (TP 1 ATR),2024,indices,-0.02559178842264582,496.2
+todos,V2 NNFX 1 orden (TP 1 ATR),2024,materias,-0.025152491991108018,107.32
+todos,V2 NNFX 1 orden (TP 1 ATR),2024,oro,-0.06745104198774085,62.91
+todos,V2 NNFX 1 orden (TP 1 ATR),2025,cripto,-0.061000018336063416,154.82
+todos,V2 NNFX 1 orden (TP 1 ATR),2025,forex,-0.024508128471610418,603.67
+todos,V2 NNFX 1 orden (TP 1 ATR),2025,indices,-0.0202939271132923,483.62
+todos,V2 NNFX 1 orden (TP 1 ATR),2025,materias,-0.04368436854854967,119.81
+todos,V2 NNFX 1 orden (TP 1 ATR),2025,oro,-0.038241930208187225,66.43
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,AUDNZD,-0.028167637013627584,416.04
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,AUDUSD,-0.04112433778853603,470.73
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,BTCUSD,-0.05157020643659675,586.31
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,ETHUSD,-0.03401783157108047,605.08
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,EU50,-0.03780005342836531,472.7
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,EURAUD,-0.024266766476753326,459.55
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,EURJPY,-0.036380205528805686,474.18
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,EURUSD,-0.042667742633612,454.78
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,FRA40,-0.032756846191521145,473.95
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,GBPJPY,-0.022552534360069737,470.44
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,GBPUSD,-0.0373960744692713,472.99
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,GER40,-0.026770965682571188,491.59
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,JP225,-0.020126586886273043,493.13
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,NZDUSD,-0.03518637861637718,461.73
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,UK100,-0.014198347831846071,443.06
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,US100,-0.01434540779341666,519.15
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,US30,-0.005558968189677275,495.23
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,US500,-0.0189664296741585,507.44
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,USDCAD,-0.0430391948813694,451.41
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,USDCHF,-0.03671093414807162,470.13
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,USDJPY,-0.04770632735157509,475.91
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,WTI,-0.03435237912430229,459.69
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,XAGUSD,-0.041829046492412564,449.77
+todos,V2 NNFX 1 orden (TP 1 ATR),todo,XAUUSD,-0.056260219526777656,492.52
+todos,V3 Van Tharp (trail 3 ATR siempre),2018,cripto,0.11059079685591262,27.11
+todos,V3 Van Tharp (trail 3 ATR siempre),2018,forex,-0.12064221860443781,106.27
+todos,V3 Van Tharp (trail 3 ATR siempre),2018,indices,-0.06455245452257151,91.66
+todos,V3 Van Tharp (trail 3 ATR siempre),2018,materias,-0.04749961965147783,19.4
+todos,V3 Van Tharp (trail 3 ATR siempre),2018,oro,0.004234376090153401,10.64
+todos,V3 Van Tharp (trail 3 ATR siempre),2019,cripto,0.6308685361433579,19.07
+todos,V3 Van Tharp (trail 3 ATR siempre),2019,forex,-0.21577129206631968,107.39
+todos,V3 Van Tharp (trail 3 ATR siempre),2019,indices,-0.190468620256471,91.46
+todos,V3 Van Tharp (trail 3 ATR siempre),2019,materias,0.17824728550862906,14.58
+todos,V3 Van Tharp (trail 3 ATR siempre),2019,oro,0.3933977869171462,9.74
+todos,V3 Van Tharp (trail 3 ATR siempre),2020,cripto,0.628757529629813,22.4
+todos,V3 Van Tharp (trail 3 ATR siempre),2020,forex,-0.034262211113753216,104.68
+todos,V3 Van Tharp (trail 3 ATR siempre),2020,indices,-0.0013774782077905828,91.07
+todos,V3 Van Tharp (trail 3 ATR siempre),2020,materias,0.36691211522115796,20.09
+todos,V3 Van Tharp (trail 3 ATR siempre),2020,oro,-0.19850028020180657,14.99
+todos,V3 Van Tharp (trail 3 ATR siempre),2021,cripto,-0.009968152516301544,27.47
+todos,V3 Van Tharp (trail 3 ATR siempre),2021,forex,-0.16264599649306344,101.05
+todos,V3 Van Tharp (trail 3 ATR siempre),2021,indices,-0.2596564857877489,92.93
+todos,V3 Van Tharp (trail 3 ATR siempre),2021,materias,0.0312983959096968,15.65
+todos,V3 Van Tharp (trail 3 ATR siempre),2021,oro,0.015918161580833267,10.21
+todos,V3 Van Tharp (trail 3 ATR siempre),2022,cripto,0.05337311567795642,23.73
+todos,V3 Van Tharp (trail 3 ATR siempre),2022,forex,-0.017432908184765086,108.14
+todos,V3 Van Tharp (trail 3 ATR siempre),2022,indices,-0.13530505875934948,79.52
+todos,V3 Van Tharp (trail 3 ATR siempre),2022,materias,-0.11224672885385154,17.51
+todos,V3 Van Tharp (trail 3 ATR siempre),2022,oro,0.3618202427703465,8.74
+todos,V3 Van Tharp (trail 3 ATR siempre),2023,cripto,0.09257424366327412,24.49
+todos,V3 Van Tharp (trail 3 ATR siempre),2023,forex,-0.1301271570034918,102.13
+todos,V3 Van Tharp (trail 3 ATR siempre),2023,indices,-0.07020315730545544,75.52
+todos,V3 Van Tharp (trail 3 ATR siempre),2023,materias,-0.16695885314908995,19.92
+todos,V3 Van Tharp (trail 3 ATR siempre),2023,oro,-0.20913634339742201,14.14
+todos,V3 Van Tharp (trail 3 ATR siempre),2024,cripto,-0.048390161616949805,30.51
+todos,V3 Van Tharp (trail 3 ATR siempre),2024,forex,-0.09793302907385301,113.01
+todos,V3 Van Tharp (trail 3 ATR siempre),2024,indices,-0.1255329127627601,86.11
+todos,V3 Van Tharp (trail 3 ATR siempre),2024,materias,-0.1607278791542795,19.12
+todos,V3 Van Tharp (trail 3 ATR siempre),2024,oro,0.26047227437862736,11.63
+todos,V3 Van Tharp (trail 3 ATR siempre),2025,cripto,-0.09291437633518242,22.09
+todos,V3 Van Tharp (trail 3 ATR siempre),2025,forex,-0.08283247163742939,94.13
+todos,V3 Van Tharp (trail 3 ATR siempre),2025,indices,-0.10099521472913553,71.76
+todos,V3 Van Tharp (trail 3 ATR siempre),2025,materias,0.07690624161718201,18.41
+todos,V3 Van Tharp (trail 3 ATR siempre),2025,oro,0.6489974725633364,10.43
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,AUDNZD,-0.17427298590333196,65.88
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,AUDUSD,-0.12573894837281327,76.02
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,BTCUSD,0.17766805367142216,99.46
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,ETHUSD,0.114701603953569,97.41
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,EU50,-0.12458357917798803,85.25
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,EURAUD,-0.12745743584617966,73.53
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,EURJPY,-0.1673618599023672,81.7
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,EURUSD,-0.13505812053026436,76.49
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,FRA40,-0.07562058619682958,82.16
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,GBPJPY,-0.12590251117216292,84.26
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,GBPUSD,-0.06351341418079282,76.74
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,GER40,-0.12672049913428055,85.8
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,JP225,-0.12400462133249654,88.9
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,NZDUSD,-0.12331473811362409,75.55
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,UK100,-0.17454631375424384,75.72
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,US100,-0.06153843276213452,83.12
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,US30,-0.14752787923566504,88.46
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,US500,-0.12798845551940108,90.62
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,USDCAD,-0.1348376059096651,76.78
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,USDCHF,-0.07561606039750103,72.68
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,USDJPY,0.0649163780153303,77.17
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,WTI,-0.0011447284431393653,71.5
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,XAGUSD,0.03650931207601952,73.18
+todos,V3 Van Tharp (trail 3 ATR siempre),todo,XAUUSD,0.12226260110163256,90.52
+todos,V4 NNFX VP + máx 20 días,2018,cripto,0.17119573922224957,67.1
+todos,V4 NNFX VP + máx 20 días,2018,forex,-0.047867792816849525,335.21
+todos,V4 NNFX VP + máx 20 días,2018,indices,-0.012999971713677706,257.99
+todos,V4 NNFX VP + máx 20 días,2018,materias,-0.07316905100904564,63.75
+todos,V4 NNFX VP + máx 20 días,2018,oro,-0.018934935969465588,26.94
+todos,V4 NNFX VP + máx 20 días,2019,cripto,0.08822868347325996,67.84
+todos,V4 NNFX VP + máx 20 días,2019,forex,-0.09436736199166595,326.03
+todos,V4 NNFX VP + máx 20 días,2019,indices,-0.02181023527171181,243.87
+todos,V4 NNFX VP + máx 20 días,2019,materias,-0.06898460286500041,58.91
+todos,V4 NNFX VP + máx 20 días,2019,oro,0.08910907933065272,28.3
+todos,V4 NNFX VP + máx 20 días,2020,cripto,0.09805739659178918,82.35
+todos,V4 NNFX VP + máx 20 días,2020,forex,-0.03589014076388191,342.37
+todos,V4 NNFX VP + máx 20 días,2020,indices,0.07025897777615848,252.12
+todos,V4 NNFX VP + máx 20 días,2020,materias,0.06535028941779138,60.1
+todos,V4 NNFX VP + máx 20 días,2020,oro,0.037833250908614814,31.06
+todos,V4 NNFX VP + máx 20 días,2021,cripto,0.04352921605705038,78.46
+todos,V4 NNFX VP + máx 20 días,2021,forex,-0.062284676517969984,327.28
+todos,V4 NNFX VP + máx 20 días,2021,indices,-0.11239551949532221,267.59
+todos,V4 NNFX VP + máx 20 días,2021,materias,-0.01807758310828111,56.67
+todos,V4 NNFX VP + máx 20 días,2021,oro,0.11200511537675406,27.48
+todos,V4 NNFX VP + máx 20 días,2022,cripto,-0.03263931928918847,75.95
+todos,V4 NNFX VP + máx 20 días,2022,forex,-0.03496516079089728,338.23
+todos,V4 NNFX VP + máx 20 días,2022,indices,-0.02170143266320805,236.81
+todos,V4 NNFX VP + máx 20 días,2022,materias,-0.04965002696761441,59.93
+todos,V4 NNFX VP + máx 20 días,2022,oro,0.07685694593788445,28.47
+todos,V4 NNFX VP + máx 20 días,2023,cripto,0.10529602021163335,80.78
+todos,V4 NNFX VP + máx 20 días,2023,forex,-0.05034535713686764,333.92
+todos,V4 NNFX VP + máx 20 días,2023,indices,-0.044797329400290915,243.33
+todos,V4 NNFX VP + máx 20 días,2023,materias,-0.02451962159699267,60.56
+todos,V4 NNFX VP + máx 20 días,2023,oro,0.041664561384627874,28.02
+todos,V4 NNFX VP + máx 20 días,2024,cripto,0.006570491877045356,85.67
+todos,V4 NNFX VP + máx 20 días,2024,forex,-0.04667600973033372,332.3
+todos,V4 NNFX VP + máx 20 días,2024,indices,-0.0368886650036708,255.4
+todos,V4 NNFX VP + máx 20 días,2024,materias,-0.04686765880163021,59.38
+todos,V4 NNFX VP + máx 20 días,2024,oro,0.02754274967482701,29.55
+todos,V4 NNFX VP + máx 20 días,2025,cripto,-0.08360757190324944,80.51
+todos,V4 NNFX VP + máx 20 días,2025,forex,-0.08685982599539309,329.65
+todos,V4 NNFX VP + máx 20 días,2025,indices,-0.09720577308235794,258.52
+todos,V4 NNFX VP + máx 20 días,2025,materias,0.007899805433290422,59.57
+todos,V4 NNFX VP + máx 20 días,2025,oro,0.19270903976014517,28.85
+todos,V4 NNFX VP + máx 20 días,todo,AUDNZD,-0.058947688112237336,226.94
+todos,V4 NNFX VP + máx 20 días,todo,AUDUSD,-0.08484669835312421,243.75
+todos,V4 NNFX VP + máx 20 días,todo,BTCUSD,0.04878044975848939,310.89
+todos,V4 NNFX VP + máx 20 días,todo,ETHUSD,0.04437127563521425,307.77
+todos,V4 NNFX VP + máx 20 días,todo,EU50,-0.04718416479444697,251.1
+todos,V4 NNFX VP + máx 20 días,todo,EURAUD,-0.0406285545232967,238.96
+todos,V4 NNFX VP + máx 20 días,todo,EURJPY,-0.06037796260439048,249.99
+todos,V4 NNFX VP + máx 20 días,todo,EURUSD,-0.07791557896504774,239.11
+todos,V4 NNFX VP + máx 20 días,todo,FRA40,-0.04626472866394933,251.94
+todos,V4 NNFX VP + máx 20 días,todo,GBPJPY,-0.01926886062378536,244.86
+todos,V4 NNFX VP + máx 20 días,todo,GBPUSD,-0.06379532867296091,241.93
+todos,V4 NNFX VP + máx 20 días,todo,GER40,-0.021713868328937926,250.09
+todos,V4 NNFX VP + máx 20 días,todo,JP225,-0.017039363698154397,247.97
+todos,V4 NNFX VP + máx 20 días,todo,NZDUSD,-0.06973136917225942,243.25
+todos,V4 NNFX VP + máx 20 días,todo,UK100,-0.034963485956274624,242.09
+todos,V4 NNFX VP + máx 20 días,todo,US100,-0.03486840079165161,260.17
+todos,V4 NNFX VP + máx 20 días,todo,US30,-0.025483876831859396,252.47
+todos,V4 NNFX VP + máx 20 días,todo,US500,-0.05579719744085267,259.8
+todos,V4 NNFX VP + máx 20 días,todo,USDCAD,-0.08112439730890034,243.77
+todos,V4 NNFX VP + máx 20 días,todo,USDCHF,-0.042865917407147576,242.75
+todos,V4 NNFX VP + máx 20 días,todo,USDJPY,-0.029951850866133008,249.68
+todos,V4 NNFX VP + máx 20 días,todo,WTI,-0.04219677381321513,243.17
+todos,V4 NNFX VP + máx 20 días,todo,XAGUSD,-0.009915864570403221,235.7
+todos,V4 NNFX VP + máx 20 días,todo,XAUUSD,0.06994263971939921,228.67

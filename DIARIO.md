@@ -60,3 +60,31 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 **Pendiente del mismo informe.** El momentum intradía (la primera media hora predice la
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
+
+## 2026-10-26 · Entrada aleatoria con gestión NNFX (descartada)
+
+Moneda (largo/corto al 50 %) con cinco gestiones NNFX fijadas de antemano (1:1, VP con mitad a 1 ATR + BE +
+trailing 2 ATR, TP 1 ATR, Van Tharp trailing 3 ATR, VP con cierre a 20 días) en 24 mercados D1, 2018-2026,
+100 semillas, spread y financiación. Bruto ≈ 0 en todas (|t| < 2); neto −0,03 a −0,09 R por operación en
+ajuste y prueba. EV por cuota FTMO negativo salvo +55 € en 2-Step 100K midiendo solo al cierre, que se vuelve
+negativo al doble de costes. El control de media cero da +1.569 €: la estructura de FTMO no basta para cubrir
+el coste de 600-1.400 operaciones al año. **Descartada.** Detalle en `informes/entrada_aleatoria/RESULTADOS.md`.
+
+## 2026-10-26 · Scalping con gestión NNFX (descartado)
+
+Velas M1 bid/ask en 7 mercados (EURUSD, GBPUSD, USDJPY, oro, US100, US500, GER40), M1/M5/M15, solo en sesión
+líquida, gestión NNFX (SL 1,5 ATR, mitad a 1 ATR, BE, trailing 2 ATR) y cuatro entradas pre-registradas
+(aleatoria, retroceso a EMA20, ruptura Donchian 20, RSI(2) a favor de la EMA200). 0 de 105 casillas ganan en
+2023-26. El spread cuesta 0,3-0,4 R por operación en M1 en forex y oro y 0,02-0,03 R en índices FTMO en M15; el
+bruto no lo cubre en ningún caso. La única casilla con t > 2 en ajuste (ruptura US100 M15, +0,078 R) da −0,006 R
+en prueba. **Descartado.** Detalle en `informes/scalping_nnfx/RESULTADOS.md`.
+
+## 2026-10-26 · Scalping de coste bajo: indicio en GER40 (pendiente de Strategy Tester)
+
+US100 y GER40, M15/M30, señal solo en la primera hora y media de contado, máximo 2 operaciones al día, filtro de
+coste y dos gestiones NNFX. Coste de 0,015 a 0,05 R. De 48 casillas pasa una, GER40 M30 con retroceso a EMA20 y
+corredor: +0,060 R en ajuste (t 0,95) y +0,191 R en prueba (t 2,13), 8 de 9 años positivos, EV +4.779 € en 2-Step
+100K (control +1.435 €). Aviso: con dirección aleatoria en las mismas velas sale +0,096 R en prueba, así que gran
+parte es momento de entrada más corredor. Detalle en `informes/scalping_nnfx/RESULTADOS_COSTE_BAJO.md`.
+
+**Actualización (mismo día):** con las mismas reglas en 14 mercados más (índices europeos, de EE. UU. y de Asia, y EURUSD, GBPUSD y USDJPY) no se repite. Ninguno gana en los dos periodos con t ≥ 1, y GER40 queda por debajo del p95 del placebo de dirección aleatoria. **Descartado.**
