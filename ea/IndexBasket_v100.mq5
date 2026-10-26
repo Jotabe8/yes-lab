@@ -17,7 +17,6 @@
 //+------------------------------------------------------------------+
 #property copyright "yes-lab"
 #property version   "1.00"
-#property strict
 #include <Trade/Trade.mqh>
 
 input string Symbols          = "US500.cash,US100.cash,US30.cash,GER40.cash,UK100.cash,JP225.cash";
