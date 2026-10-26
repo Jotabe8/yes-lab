@@ -83,3 +83,12 @@ EA retirado. Detalle en `cartera/noche_estres/RESULTADOS_NOCHE.md`.
 
 **Lección para el método:** toda salida por stop se comprueba vela a vela entre entrada y salida,
 y los huecos se llenan a la apertura. Recortar el resultado final a −1 R es mirar el futuro.
+
+## 2026-10-26 (tarde) — Dos ideas más, descartadas
+
+| Idea | Mercados | Dónde cae |
+| --- | --- | --- |
+| Ciclo de la Fed: comprado en las semanas pares tras cada FOMC (Cieslak, Morse y Vissing-Jorgensen) | 11 índices D1 2011-2025 | P1: bruto +0,055 R contra +0,044 R en las semanas impares (es la deriva alcista); 0,9 × coste, bajo el placebo |
+| Reversión del hueco nocturno entre índices (CO-OC, QuantReturns 2025) | EE. UU. y Europa, intradía | P1: bruto 0,7 × y 0,1 × coste, bajo el placebo en los dos grupos |
+
+Balance del día con el embudo: seis ideas, ninguna superviviente. Detalle en `cartera/ciclo_fed/` y `cartera/co_oc/`.
