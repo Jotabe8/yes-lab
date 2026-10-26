@@ -4,7 +4,7 @@ import random
 import unittest
 
 from lab.backtest import run
-from lab.estrategias import (fx_momentum_weights, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
+from lab.estrategias import (auction_bucket, auction_cycle, fx_momentum_weights, month_end_fixing, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
                              vol_managed, walk_forward_tom, walk_forward_weights, window_stats)
 
 
@@ -121,6 +121,56 @@ class RebalanceTests(unittest.TestCase):
         w = month_end_rebalance(dates, stocks, dias=1, umbral=0.0, bonos=[100.0] * 45)
         self.assertIn(1.0, w)
         self.assertNotIn(-1.0, w)
+
+
+class AuctionCycleTests(unittest.TestCase):
+    def test_bucket_groups_reopenings(self):
+        self.assertEqual(auction_bucket("10-Year"), "10")
+        self.assertEqual(auction_bucket("9-Year 10-Month"), "10")
+        self.assertEqual(auction_bucket("29-Year 11-Month"), "30")
+        self.assertEqual(auction_bucket("19-Year 10-Month"), "20")
+        self.assertEqual(auction_bucket("1-Year 11-Month"), "2")
+        self.assertEqual(auction_bucket("7-Year"), "7")
+
+    def test_short_before_long_after(self):
+        dates = business_days("2026-01-05", 20)
+        w = auction_cycle(dates, [100.0] * 20, {dates[10]}, antes=3, despues=2)
+        # w[t] se aplica a t+1: cortos las sesiones 7, 8 y 9; largos la 11 y la 12
+        held = [0.0] + w[:-1]
+        self.assertEqual(held[7:10], [-1.0, -1.0, -1.0])
+        self.assertEqual(held[10], 0.0)
+        self.assertEqual(held[11:13], [1.0, 1.0])
+        self.assertEqual(held[13], 0.0)
+
+    def test_filter_is_long_except_before(self):
+        dates = business_days("2026-01-05", 20)
+        w = auction_cycle(dates, [100.0] * 20, {dates[10]}, antes=2, filtro=True)
+        held = [None] + w[:-1]
+        self.assertEqual(held[8:10], [0.0, 0.0])
+        self.assertEqual(held[5], 1.0)
+        self.assertEqual(held[10], 1.0)
+
+
+class MonthEndFixingTests(unittest.TestCase):
+    def test_buys_currencies_only_on_last_day_after_equity_rise(self):
+        dates = business_days("2026-01-01", 45)
+        equity = [100 * 1.002 ** i for i in range(45)]
+        prices = {"EUR": [1.0] * 45, "JPY": [1.0] * 45}
+        w = month_end_fixing(dates, prices, equity)
+        _, last = month_ranks(dates)
+        active = [i for i, x in enumerate(w) if any(x.values())]
+        self.assertTrue(active)
+        self.assertTrue(all(last[i] == 2 for i in active))        # se aplica al último día
+        self.assertTrue(all(w[i]["EUR"] == 0.5 for i in active))
+
+    def test_threshold_and_falling_equity(self):
+        dates = business_days("2026-01-01", 45)
+        falling = [100 * 0.998 ** i for i in range(45)]
+        prices = {"EUR": [1.0] * 45}
+        w = month_end_fixing(dates, prices, falling)
+        self.assertIn(-1.0, [x["EUR"] for x in w])
+        flat = month_end_fixing(dates, prices, falling, umbral=0.5)
+        self.assertFalse(any(x["EUR"] for x in flat))
 
 
 if __name__ == "__main__":

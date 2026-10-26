@@ -11,10 +11,112 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-26 | Fixing de divisas de fin de mes | 6 divisas frente al USD | Descartada con datos diarios: −5 pb por operación; queda pendiente probarla con datos intradía |
+| 2026-10-26 | Ciclo de subastas del Tesoro | TLT, IEF | Descartada: la caída previa existe (−0,24% en 5 sesiones), pero depende de 2022 y pierde en el walk-forward |
 | 2026-10-25 | Rebalanceo de fin de mes (60/40) | SPY con TLT | Prometedora pero frágil: el efecto aparece, el walk-forward es inestable |
 | 2026-10-25 | Volatilidad gestionada | SPY, IBEX, SAN, BTC, ETH | Sin ventaja en Sharpe fuera de muestra; solo reduce caídas |
 | 2026-10-25 | Momentum de divisas | 6 divisas G10 frente al USD | Descartada: pierde con todos los horizontes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-10-26 · Fixing de divisas de fin de mes
+
+**Hipótesis.** Los inversores extranjeros con acciones de EE. UU. cubren el dólar y reajustan
+la cobertura en el fixing de Londres (16:00) del último día hábil del mes. Si el S&P 500 ha
+subido, tienen que vender más dólares y el dólar baja; si ha caído, al revés. Melvin & Prins
+(2015), con datos intradía de 2004 a 2012, estiman que una subida relativa del 10% en bolsa
+deprecia la divisa 14 pb en la hora previa al fixing, y que el 72% del movimiento se deshace
+antes del mediodía siguiente. Es un flujo forzado y con fecha fija.
+
+**Regla.** Al penúltimo cierre del mes se mira el S&P 500 en el mes (SPY desde el último cierre
+del mes anterior). Si sube más del `umbral`, se compran las 6 divisas frente al dólar (EUR,
+GBP, AUD, NZD, JPY, CHF; exposición bruta 1) para el último día del mes; si cae, se venden.
+
+```bash
+python -m lab.estrategias fixing-fin-de-mes fx --cost 0.02 --walk-forward
+```
+
+**Resultados 2016-10 a 2026-10, 120 operaciones, 0.02% por lado.**
+
+| Variante | Media por operación | Sharpe (costes normales / al doble) |
+| --- | --- | --- |
+| Sin umbral | −5,2 pb (t = −1,32), 45% de aciertos | −0,72 / −1,03 |
+| Umbral 2% (86 operaciones) | −7,0 pb (t = −1,53) | −0,73 / −0,99 |
+| Walk-forward (7 años) | | −0,35 / −0,41 |
+
+**Trampa encontrada.** En una primera prueba rápida con los cierres de Yahoo tal cual, la
+estrategia ganaba +8 pb por operación en EUR/USD, con una pendiente casi idéntica a la del
+paper. Era un espejismo: en forex, Yahoo pone como cierre el precio del arranque de la
+sesión, así que esa "rentabilidad del último día" era en realidad la del penúltimo, el mismo
+día de la señal del S&P 500. Medía la correlación de siempre entre bolsa al alza y dólar a la
+baja, no el fixing. Con los cierres corregidos (`nnfx.daily_bars`, como en el resto del
+laboratorio) el efecto desaparece.
+
+**Conclusión: descartada con datos diarios.** El efecto del paper dura una hora y se deshace
+en buena parte antes del cierre diario, así que el cierre diario no puede verlo. La prueba
+justa es con velas M1 del broker: entrar a las 15:00 y salir a las 16:00 de Londres el último
+día del mes. Las tiene MetaTrader 5 en el PC de Jorge.
+
+**Límites.** Solo usa el S&P 500 como señal (el paper usa la bolsa de cada país frente a la de
+EE. UU.), y solo hay 120 meses.
+
+---
+
+## 2026-10-26 · Ciclo de subastas del Tesoro
+
+**Hipótesis.** Antes de cada subasta, los creadores de mercado y los inversores tienen que
+hacer hueco en el balance para la deuda nueva, así que los bonos bajan en los días previos y
+se recuperan después. Lou, Yan & Zhang (2013), 1980-2008: los bonos a 5 y 10 años rinden unos
+23 pb menos en las 5 sesiones previas que en las 5 siguientes. Un sondeo del 25 de octubre con
+fechas aproximadas daba −0,26% en TLT; esta prueba usa el calendario oficial.
+
+**Regla.** Corto en las `antes` sesiones previas a cada subasta de los plazos elegidos y largo
+en las `despues` siguientes. Con `--filtro`, largo todo el tiempo salvo las sesiones previas.
+Se añaden a `lab/fetch.py` el ETF IEF (bonos a 7-10 años) y el calendario de subastas de
+notas y bonos del Tesoro (API fiscaldata, `docs/data/subastas.json`, 1.039 subastas desde
+noviembre de 2016). Las reaperturas cuentan en su plazo nominal (por ejemplo, "9 años y 10
+meses" es el 10 años).
+
+```bash
+python -m lab.estrategias subastas tlt --plazos 10,30 --antes 5 --cost 0.05 --walk-forward
+```
+
+**Estudio de eventos, 5 sesiones antes y después de la subasta (2016-2026).**
+
+| Plazos | TLT antes | TLT después | IEF antes | IEF después |
+| --- | --- | --- | --- | --- |
+| 10 y 30 años (323 días) | −0,24% (t = −2,3) | +0,02% | −0,11% (t = −2,4) | 0,00% |
+| 20 años (78 días) | −0,18% (t = −0,8) | −0,11% | −0,01% | 0,00% |
+| 5 y 7 años (276 días) | +0,08% | +0,26% (t = +2,3) | +0,02% | +0,22% (t = +3,9) |
+
+Una ventana cualquiera de 5 sesiones da −0,02% en TLT. Los t están inflados porque las
+subastas de 10 y 30 años caen en la misma semana y las ventanas se solapan.
+
+**Estrategia en TLT, subastas de 10 y 30 años, 0.05% por lado.**
+
+| Variante | Sharpe (costes normales / al doble) | Comprar y mantener |
+| --- | --- | --- |
+| Corto 5 sesiones antes | 0,24 / 0,09 | −0,06 |
+| Walk-forward (6 años) | −0,25 / −0,21 | −0,17 |
+| Filtro: largo salvo antes | 0,14 / 0,00 | −0,06 |
+| Walk-forward del filtro | −0,30 / −0,44 | −0,17 |
+| Subastas de 20 años, walk-forward | 0,43 / 0,47 | −0,17 |
+
+**Por años** (media de las 5 sesiones previas a las subastas de 10 y 30 años): negativa en
+2018, 2020, 2021, 2022 (−1,34%), 2025 y 2026, y positiva en 2017, 2019, 2023 y 2024. El
+resultado depende sobre todo de 2022, el año del desplome de los bonos.
+
+**Conclusión: descartada.** La caída previa aparece con el signo del paper, pero no hay
+recuperación posterior, depende de un año y el walk-forward pierde. Las subastas de 20 años,
+que no coinciden con el IPC, ganan en el walk-forward, pero con 6 ventanas y un Sharpe en
+muestra de 0,06 parece ruido. El rebote tras las subastas de 5 y 7 años, al final del mes,
+probablemente es otro efecto: las compras de fin de mes de los fondos indexados a bonos para
+alargar la duración. Queda anotado como posible candidata.
+
+**Límites.** El calendario incluye TIPS y bonos flotantes en los mismos plazos, porque la API
+no los separa en el campo usado. El dato del IPC sigue sin aislarse: no hay una fuente de
+fechas accesible desde el laboratorio.
 
 ---
 

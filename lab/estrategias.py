@@ -20,6 +20,15 @@ Estrategias:
 - momentum-divisas: cartera de 6 divisas frente al dólar (EUR, GBP, AUD, NZD, JPY, CHF);
   a fin de mes compra las `k` que más han subido en `meses` meses y vende las `k` que menos
   (Menkhoff et al., 2012). Exposición bruta 1. Solo precio: no incluye el diferencial de tipos.
+- fixing-fin-de-mes: cobertura de divisa de los inversores extranjeros en bolsa de EE. UU.
+  (Melvin & Prins, 2015). Si el S&P 500 ha subido en el mes, quien tiene acciones de EE. UU.
+  con la divisa cubierta tiene que vender más dólares en el fixing de Londres del último día
+  hábil, y el dólar baja; si ha caído, sube. El penúltimo cierre del mes se compran las 6
+  divisas frente al dólar (o se venden) con exposición bruta 1, y se cierra el último día.
+- subastas: ciclo de subastas del Tesoro de EE. UU. (Lou, Yan & Zhang, 2013). Los bonos bajan en
+  las `antes` sesiones previas a cada subasta de los `plazos` elegidos y se recuperan en las
+  `despues` siguientes. Corto antes y largo después; con --filtro, largo todo el tiempo salvo
+  las sesiones previas (en liquidez). Fechas oficiales en docs/data/subastas.json.
 
 Uso:
     python -m lab.estrategias cambio-de-mes spy
@@ -27,6 +36,8 @@ Uso:
     python -m lab.estrategias vol-gestionada spy --cost 0.05 --walk-forward
     python -m lab.estrategias momentum-divisas fx --cost 0.02 --walk-forward
     python -m lab.estrategias rebalanceo spy --cost 0.05 --walk-forward
+    python -m lab.estrategias fixing-fin-de-mes fx --cost 0.02 --walk-forward
+    python -m lab.estrategias subastas tlt --plazos 10,30 --antes 5 --cost 0.05 --walk-forward
 """
 
 from __future__ import annotations
@@ -276,9 +287,107 @@ def walk_forward_fx(dates, prices, year, cost_pct, train_years=3, test_years=1, 
     return {"windows": len(chosen), "params": chosen, "oos": metrics(oos, year)}
 
 
+# --- Fixing de fin de mes ---------------------------------------------------------------
+
+def month_end_fixing(dates: list[str], prices: dict[str, list[float]], equity: list[float],
+                     umbral: float = 0.0) -> list[dict[str, float]]:
+    """Pesos decididos al penúltimo cierre del mes (last == 2) y aplicados solo al último día.
+
+    `equity` es el cierre del índice de EE. UU. alineado con `dates` (el último disponible en
+    cada fecha). Si el mes va más de `umbral` en positivo, compra las divisas frente al dólar.
+    """
+    first, last = month_ranks(dates)
+    n_cur, zero = len(prices), {c: 0.0 for c in prices}
+    out = []
+    for i in range(len(dates)):
+        w = dict(zero)
+        if last[i] == 2 and i - first[i] - 1 >= 0:
+            mtd = equity[i] / equity[i - first[i] - 1] - 1   # desde el cierre del mes anterior
+            if abs(mtd) > umbral:
+                side = 1.0 if mtd > 0 else -1.0
+                w = {c: side / n_cur for c in prices}
+        out.append(w)
+    return out
+
+
+def aligned_equity(dates: list[str], ident: str = "spy") -> list[float]:
+    """Cierre del índice en cada fecha de `dates`; si ese día no cotiza, el último anterior."""
+    rows = json.loads((DATA_DIR / f"{ident}.json").read_text())
+    out, j, cur = [], 0, rows[0]["c"]
+    for d in dates:
+        while j < len(rows) and rows[j]["d"] <= d:
+            cur, j = rows[j]["c"], j + 1
+        out.append(cur)
+    return out
+
+
+FIX_GRID = [{"umbral": u} for u in (0.0, 0.01, 0.02, 0.03)]
+
+
+def walk_forward_portfolio(dates, prices, year, cost_pct, build, grid, train_years=3, test_years=1) -> dict:
+    """Walk-forward para carteras: `build(dates, prices, **p)` devuelve los pesos por día."""
+    tr, te = train_years * year, test_years * year
+    oos, chosen, start = [1.0], [], 0
+    sl = lambda a, b: {c: v[a:b] for c, v in prices.items()}
+    while start + tr + te <= len(dates):
+        best = max(grid, key=lambda p: metrics(run_portfolio(
+            sl(start, start + tr), build(dates[start:start + tr], sl(start, start + tr), **p), cost_pct),
+            year)["sharpe"])
+        w = build(dates[:start + tr + te], sl(0, start + tr + te), **best)
+        eq = run_portfolio(sl(start + tr - 1, start + tr + te), w[start + tr - 1:start + tr + te], cost_pct)
+        for i in range(1, len(eq)):
+            oos.append(oos[-1] * eq[i] / eq[i - 1])
+        chosen.append(best)
+        start += te
+    if len(oos) < 2:
+        raise ValueError("serie demasiado corta para walk-forward")
+    return {"windows": len(chosen), "params": chosen, "oos": metrics(oos, year)}
+
+
+# --- Ciclo de subastas del Tesoro -------------------------------------------------------
+
+def auction_bucket(term: str) -> str:
+    """Plazo nominal de una subasta: '9-Year 10-Month' (reapertura del 10 años) → '10'."""
+    parts = term.replace("-Year", "").replace("-Month", "").split()
+    years = int(parts[0]) + (int(parts[1]) / 12 if len(parts) > 1 else 0)
+    for limit, name in ((27, "30"), (17, "20"), (8.5, "10"), (6, "7"), (4, "5"), (2.5, "3")):
+        if years >= limit:
+            return name
+    return "2"
+
+
+def load_auctions(plazos: tuple[str, ...]) -> set[str]:
+    rows = json.loads((DATA_DIR / "subastas.json").read_text())
+    return {r["d"] for r in rows if auction_bucket(r["plazo"]) in plazos}
+
+
+def auction_cycle(dates: list[str], closes: list[float], subastas: set[str], antes: int = 5,
+                  despues: int = 0, filtro: bool = False) -> list[float]:
+    """Pesos decididos al cierre de t para el día t+1 según su distancia a la subasta más cercana.
+
+    Las sesiones `antes` previas a una subasta van cortas (o en liquidez con `filtro`) y las
+    `despues` siguientes, largas. Si ambas ventanas se solapan, manda la previa.
+    """
+    n = len(dates)
+    held = [1.0 if filtro else 0.0] * n          # exposición deseada en cada sesión
+    idx = [i for i, d in enumerate(dates) if d in subastas]
+    for a in idx:
+        for j in range(a + 1, min(n, a + despues + 1)):
+            held[j] = 1.0
+    for a in idx:
+        for j in range(max(0, a - antes), a):
+            held[j] = 0.0 if filtro else -1.0
+    return held[1:] + [held[-1]]                 # w[t] se aplica a t+1
+
+
+SUB_GRID = [{"antes": a, "despues": d} for a in (1, 2, 3, 4, 5) for d in (0, 3, 5)]
+SUB_GRID_FILTRO = [{"antes": a, "despues": 0} for a in (1, 2, 3, 4, 5)]
+
+
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description="Estrategias del informe semanal")
-    ap.add_argument("estrategia", choices=["cambio-de-mes", "vol-gestionada", "momentum-divisas", "rebalanceo"])
+    ap.add_argument("estrategia", choices=["cambio-de-mes", "vol-gestionada", "momentum-divisas", "rebalanceo",
+                                                 "subastas", "fixing-fin-de-mes"])
     ap.add_argument("serie", help="serie de docs/data (en momentum-divisas se ignora: usa los 6 pares)")
     ap.add_argument("--antes", type=int, default=1, help="sesiones finales del mes invertido")
     ap.add_argument("--despues", type=int, default=3, help="sesiones iniciales del mes siguiente invertido")
@@ -290,6 +399,9 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--k", type=int, default=2, help="momentum-divisas: divisas compradas y vendidas")
     ap.add_argument("--umbral", type=float, default=0.0, help="rebalanceo: subida/caída mínima del mes")
     ap.add_argument("--bonos", help="rebalanceo: serie de bonos para la señal 60/40 (p. ej. tlt)")
+    ap.add_argument("--plazos", default="10,30", help="subastas: plazos que cuentan (2,3,5,7,10,20,30)")
+    ap.add_argument("--despues-sub", type=int, default=0, help="subastas: sesiones largas tras la subasta")
+    ap.add_argument("--filtro", action="store_true", help="subastas: largo salvo antes de la subasta")
     ap.add_argument("--walk-forward", action="store_true")
     a = ap.parse_args(argv)
 
@@ -299,6 +411,10 @@ def main(argv: list[str] | None = None) -> None:
         return _main_fx(a)
     if a.estrategia == "rebalanceo":
         return _main_reb(a)
+    if a.estrategia == "subastas":
+        return _main_sub(a)
+    if a.estrategia == "fixing-fin-de-mes":
+        return _main_fix(a)
 
     dates, closes, year = load_dated(a.serie)
     sig = turn_of_month(dates, a.antes, a.despues)
@@ -372,6 +488,38 @@ def _main_reb(a) -> None:
                   f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | días/umbral: {params}")
 
 
+def _main_sub(a) -> None:
+    dates, closes, year = load_dated(a.serie)
+    plazos = tuple(a.plazos.split(","))
+    subastas = load_auctions(plazos)
+    antes = a.antes if a.antes != 1 else 5       # --antes por defecto es el de cambio-de-mes
+    w = auction_cycle(dates, closes, subastas, antes, a.despues_sub, a.filtro)
+    n_sub = sum(1 for d in dates if d in subastas)
+    rets = [closes[i] / closes[i - 1] - 1 for i in range(1, len(closes))]
+    pre = [r for r, x in zip(rets, w[:-1]) if x == (0.0 if a.filtro else -1.0)]
+    rest = [r for r, x in zip(rets, w[:-1]) if x != (0.0 if a.filtro else -1.0)]
+    print(f"{a.serie} {dates[0]} → {dates[-1]} | {n_sub} días de subasta ({a.plazos} años) | "
+          f"{len(pre)} sesiones previas: media {sum(pre) / len(pre) * 100:+.3f}% frente a "
+          f"{sum(rest) / len(rest) * 100:+.3f}% el resto")
+    bh = metrics([c / closes[0] for c in closes], year)
+    print(f"[comprar y mantener] CAGR {_pct(bh['cagr'])} | caída máx {_pct(bh['max_drawdown'])} | Sharpe {bh['sharpe']:.2f}")
+    for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+        s = metrics(run_weights(closes, w, cost), year)
+        print(f"[{label}] CAGR {_pct(s['cagr'])} | caída máx {_pct(s['max_drawdown'])} | Sharpe {s['sharpe']:.2f}")
+    if a.walk_forward:
+        build = lambda d, c, **p: auction_cycle(d, c, subastas, filtro=a.filtro, **p)
+        grid = SUB_GRID_FILTRO if a.filtro else SUB_GRID
+        for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+            wf = walk_forward_weights(dates, closes, year, cost, build, grid)
+            o = wf["oos"]
+            params = ", ".join(f"{p['antes']}/{p['despues']}" for p in wf["params"])
+            print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
+                  f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | antes/después: {params}")
+        start = 3 * year
+        o = metrics([c / closes[start - 1] for c in closes[start - 1:start + wf["windows"] * year]], year)
+        print(f"[B&H en los mismos años] CAGR {_pct(o['cagr'])} | caída máx {_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f}")
+
+
 def _main_fx(a) -> None:
     dates, prices = fx_series()
     year = YEAR["forex"]
@@ -386,6 +534,33 @@ def _main_fx(a) -> None:
             o = wf["oos"]
             print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
                   f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | meses: {', '.join(map(str, wf['params']))}")
+
+
+def _main_fix(a) -> None:
+    dates, prices = fx_series()
+    year = YEAR["forex"]
+    equity = aligned_equity(dates, "spy")
+    w = month_end_fixing(dates, prices, equity, a.umbral)
+    rets = []
+    for i in range(len(dates) - 1):
+        if any(w[i].values()):
+            rets.append(sum(w[i][c] * (prices[c][i + 1] / prices[c][i] - 1) for c in prices))
+    mu = sum(rets) / len(rets)
+    sd = math.sqrt(sum((r - mu) ** 2 for r in rets) / (len(rets) - 1))
+    print(f"6 divisas frente al USD {dates[0]} → {dates[-1]} | señal: S&P 500 del mes, umbral {a.umbral:.0%} | "
+          f"{len(rets)} operaciones, media {mu * 1e4:+.1f} pb por operación (t = {mu / sd * math.sqrt(len(rets)):.2f}), "
+          f"aciertos {sum(r > 0 for r in rets) / len(rets):.0%}")
+    for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+        s = metrics(run_portfolio(prices, w, cost), year)
+        print(f"[{label}] CAGR {_pct(s['cagr'])} | caída máx {_pct(s['max_drawdown'])} | Sharpe {s['sharpe']:.2f}")
+    if a.walk_forward:
+        build = lambda d, p, **kw: month_end_fixing(d, p, aligned_equity(d, "spy"), **kw)
+        for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+            wf = walk_forward_portfolio(dates, prices, year, cost, build, FIX_GRID)
+            o = wf["oos"]
+            params = ", ".join(f"{p['umbral']:.0%}" for p in wf["params"])
+            print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
+                  f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | umbral: {params}")
 
 
 if __name__ == "__main__":
