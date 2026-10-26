@@ -72,3 +72,36 @@ que es la siguiente puerta del flujo. Comprobar también su solapamiento con el 
 
 `coste_bajo.py`, `robustez_ger40.py`, `ev_ger40.py`, `cb_resumen.csv`, `cb_placebo.csv`, `robustez_ger40.csv`,
 `ger40_e1_trades.csv`, `ev_ger40.csv`.
+
+## Prueba en otros mercados (`otros_mercados.py`, 2026-10-26): no se repite
+
+Se aplicaron las mismas reglas de GER40, sin cambiar nada, a 14 mercados más, cada uno a su hora de apertura. Los
+índices europeos abren a las 10:00 servidor; los de EE. UU., a las 16:30; JP225, a las 09:00 de Tokio; HK50, a las
+09:30 de Hong Kong; y el forex, en la apertura de Londres. El placebo son 20 repeticiones con dirección aleatoria en
+las mismas velas. Los costes de los índices salen de Dukascopy, que suele cotizar algo más ancho que FTMO.
+
+| Mercado | Neto 2018-22 | Neto 2023-26 (t) | Años + | Coste R | Placebo 2023-26 (p95) |
+|---|---|---|---|---|---|
+| GER40 | +0,060 | +0,191 (2,13) | 8/9 | 0,036 | +0,086 (0,202) |
+| FRA40 | +0,072 | +0,027 (0,38) | 6/9 | 0,066 | +0,011 (0,109) |
+| EU50 | −0,110 | −0,135 | 0/9 | 0,179 | −0,098 |
+| ESP35 | −0,259 | −0,162 | 1/9 | 0,196 | −0,171 |
+| NLD25 | −0,108 | −0,067 | 1/9 | 0,129 | −0,058 |
+| UK100 | −0,040 | −0,138 | 2/9 | 0,087 | −0,089 |
+| US100 | +0,040 | −0,016 | 3/9 | 0,030 | −0,076 |
+| US500 | −0,041 | −0,064 | 2/9 | 0,053 | −0,029 |
+| US30 | −0,003 | +0,008 (0,14) | 4/9 | 0,027 | −0,052 |
+| US2000 | −0,019 | −0,020 | 3/8 | 0,046 | −0,000 |
+| JP225 | −0,081 | −0,135 | 2/9 | 0,078 | −0,074 |
+| HK50 | −0,082 | −0,056 | 2/9 | 0,104 | −0,079 |
+| EURUSD | −0,058 | +0,014 (0,19) | 5/9 | 0,090 | −0,062 |
+| GBPUSD | +0,024 | −0,082 | 5/9 | 0,100 | −0,138 |
+| USDJPY | −0,009 | +0,073 (0,97) | 4/9 | 0,074 | +0,015 |
+
+Fuera de GER40, ningún mercado gana en los dos periodos con t ≥ 1. La dirección de la señal mejora al placebo
+en unos mercados y lo empeora en otros, con una media cercana a cero. En esta tanda, además, GER40 queda por
+debajo del p95 de su propio placebo (0,191 frente a 0,202).
+
+**Veredicto revisado: descartado.** Lo de GER40 es, con toda probabilidad, la casilla afortunada de 48 más un efecto
+de "cuándo entrar" propio del DAX en 2022-2025, ya cubierto por el ORB GER40. No hay un patrón general de
+retroceso a la EMA20 en las aperturas.

@@ -86,3 +86,5 @@ coste y dos gestiones NNFX. Coste de 0,015 a 0,05 R. De 48 casillas pasa una, GE
 corredor: +0,060 R en ajuste (t 0,95) y +0,191 R en prueba (t 2,13), 8 de 9 años positivos, EV +4.779 € en 2-Step
 100K (control +1.435 €). Aviso: con dirección aleatoria en las mismas velas sale +0,096 R en prueba, así que gran
 parte es momento de entrada más corredor. Detalle en `informes/scalping_nnfx/RESULTADOS_COSTE_BAJO.md`.
+
+**Actualización (mismo día):** con las mismas reglas en 14 mercados más (índices europeos, de EE. UU. y de Asia, y EURUSD, GBPUSD y USDJPY) no se repite. Ninguno gana en los dos periodos con t ≥ 1, y GER40 queda por debajo del p95 del placebo de dirección aleatoria. **Descartado.**
