@@ -60,3 +60,12 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 **Pendiente del mismo informe.** El momentum intradía (la primera media hora predice la
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
+
+## 2026-10-26 · Entrada aleatoria con gestión NNFX (descartada)
+
+Moneda (largo/corto al 50 %) con cinco gestiones NNFX fijadas de antemano (1:1, VP con mitad a 1 ATR + BE +
+trailing 2 ATR, TP 1 ATR, Van Tharp trailing 3 ATR, VP con cierre a 20 días) en 24 mercados D1, 2018-2026,
+100 semillas, spread y financiación. Bruto ≈ 0 en todas (|t| < 2); neto −0,03 a −0,09 R por operación en
+ajuste y prueba. EV por cuota FTMO negativo salvo +55 € en 2-Step 100K midiendo solo al cierre, que se vuelve
+negativo al doble de costes. El control de media cero da +1.569 €: la estructura de FTMO no basta para cubrir
+el coste de 600-1.400 operaciones al año. **Descartada.** Detalle en `informes/entrada_aleatoria/RESULTADOS.md`.
