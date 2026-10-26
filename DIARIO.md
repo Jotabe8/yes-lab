@@ -78,3 +78,11 @@ líquida, gestión NNFX (SL 1,5 ATR, mitad a 1 ATR, BE, trailing 2 ATR) y cuatro
 2023-26. El spread cuesta 0,3-0,4 R por operación en M1 en forex y oro y 0,02-0,03 R en índices FTMO en M15; el
 bruto no lo cubre en ningún caso. La única casilla con t > 2 en ajuste (ruptura US100 M15, +0,078 R) da −0,006 R
 en prueba. **Descartado.** Detalle en `informes/scalping_nnfx/RESULTADOS.md`.
+
+## 2026-10-26 · Scalping de coste bajo: indicio en GER40 (pendiente de Strategy Tester)
+
+US100 y GER40, M15/M30, señal solo en la primera hora y media de contado, máximo 2 operaciones al día, filtro de
+coste y dos gestiones NNFX. Coste de 0,015 a 0,05 R. De 48 casillas pasa una, GER40 M30 con retroceso a EMA20 y
+corredor: +0,060 R en ajuste (t 0,95) y +0,191 R en prueba (t 2,13), 8 de 9 años positivos, EV +4.779 € en 2-Step
+100K (control +1.435 €). Aviso: con dirección aleatoria en las mismas velas sale +0,096 R en prueba, así que gran
+parte es momento de entrada más corredor. Detalle en `informes/scalping_nnfx/RESULTADOS_COSTE_BAJO.md`.
