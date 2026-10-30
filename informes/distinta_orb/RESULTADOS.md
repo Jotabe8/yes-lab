@@ -57,3 +57,30 @@ el GER40 desde su apertura, oro, USDJPY, EURUSD, US2000−US100 y el día anteri
 
 Ninguno supera el placebo; lo poco que hay es 2020. **Descartada en P1** (n_pruebas 4; acumulado 45).
 El coste aquí es 1 pb frente a 100 pb de movimiento: la señal sencillamente no predice la dirección.
+
+## D. ORB en otros mercados y otros horarios (`orb_horas.py`)
+La regla del ORB en barras de 30 min (dirección del cuerpo de la primera barra, stop 0,15 ATR diario, sin
+objetivo, salida al cierre de la ventana), en 11 mercados × 4 aperturas: Tokio (02:00 servidor), Europa
+(10:00), datos de EE. UU. (15:30) y NY (16:30). Ajuste 2018-22, placebo con dirección al azar y las mismas salidas.
+n_pruebas 44 (acumulado 89). Tabla: `orb_horas_ajuste.csv`.
+
+Calibración: US100 en NY +0,15 R neto (t 2,4) y GER40 en Europa +0,17 R (t 2,3), como los ORB conocidos.
+
+| Casilla | Bruto R | Coste R | Neto R (t) | p95 placebo | Años + |
+|---|---|---|---|---|---|
+| US100 · NY (el ORB actual) | 0,197 | 0,045 | **+0,152 (2,4)** | 0,122 | 5/5 |
+| GER40 · Europa (ORB GER40) | 0,209 | 0,043 | **+0,166 (2,3)** | 0,195 | 5/5 |
+| US500 · NY | 0,181 | 0,074 | +0,107 (1,6) | 0,142 | 5/5 |
+| GER40 · NY | 0,089 | 0,041 | +0,049 (0,9) | 0,105 | 4/5 |
+| US30 · Europa | 0,094 | 0,059 | +0,034 (0,5) | 0,193 | 3/5 |
+| JP225 · Tokio | 0,159 | 0,126 | +0,033 (0,6) | 0,146 | 2/5 |
+| US100 · Europa | 0,107 | 0,115 | −0,008 | 0,177 | 2/5 |
+| Resto (34 casillas) | | | negativo | | |
+
+- **Otros horarios no sirven**: ninguna casilla fuera de la apertura propia de cada mercado supera el placebo.
+  El ORB funciona porque la apertura de contado concentra el flujo de órdenes de ese mercado; la apertura
+  de otra bolsa no lo hace.
+- **Otros mercados en su apertura**: US500 en NY es la única que pasa el placebo (+0,107 R, 5/5 años),
+  pero es la misma operación que el US100 (mismo momento, mismo sentido casi siempre): no diversifica y para
+  FTMO cuenta como la misma estrategia. JP225 en Tokio supera el placebo antes de costes, pero el spread se
+  come el 80 %. Europa (UK100, FRA40, EU50), US2000, oro y petróleo no pasan.

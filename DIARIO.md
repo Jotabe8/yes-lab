@@ -128,3 +128,10 @@ real de US100/GER40/US30. Informe: `informes/distinta_orb/COMO_VENCER_SPREAD.md`
 En la ventana más barata (apertura de contado → cierre, coste ≈ 1 % del movimiento), predecir la dirección
 a las 9:30 NY con la noche, el GER40, oro, yen, euro y US2000 (ridge sin mirar el futuro): bruto +5/+0/+2/−0 pb
 en US100/US500/US30/US2000 (2019-22), ninguno sobre el placebo, solo 2020 positivo. **Descartada en P1.**
+
+## 2026-10-30 · ORB en otros mercados y otros horarios
+
+Regla del ORB en barras de 30 min, 11 mercados × 4 aperturas (Tokio, Europa, datos EE. UU., NY), 2018-22.
+Solo superan el placebo las aperturas propias: US100 NY +0,15 R, GER40 Europa +0,17 R, US500 NY +0,11 R
+(misma operación que el US100). Ninguna apertura ajena funciona; JP225 Tokio se lo come el spread.
+**No hay ORB nuevo descorrelacionado.** Informe: `informes/distinta_orb/RESULTADOS.md` (sección D).
