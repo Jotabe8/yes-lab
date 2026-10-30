@@ -60,3 +60,13 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 **Pendiente del mismo informe.** El momentum intradía (la primera media hora predice la
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
+
+## 2026-10-30 · Tendencia con operaciones largas y trailing stop
+
+Ruptura Donchian (20/55/100 días) con stop inicial 3 ATR y trailing chandelier (2/3/4 ATR), largos y
+cortos o solo largos, en 39 mercados diarios de Yahoo (índices, forex, metales, energía, agrícolas,
+cripto), ajuste 2005-2022, swap con tipos reales de FRED. La principal (55/3/ambos) da +0,031 R bruto,
+−0,022 neto y −0,062 con los swaps de FTMO, por debajo del p95 del placebo con las mismas salidas.
+La única variante que supera el placebo (100/4/largos) depende de 35 operaciones en cripto; sin cripto,
++0,02 R con swaps de FTMO y −0,17 R a costes ×2; índices −0,16 R con FTMO. **Descartada en P2**
+(n_pruebas 27; la prueba 2023-26 no se abrió). Informe: `informes/tendencia_trailing/RESULTADOS.md`.
