@@ -21,3 +21,13 @@ Escrito antes de mirar resultados.
   supera el p95 de un placebo con las mismas salidas (entrada en día y dirección aleatorios,
   mismo nº de entradas por mercado, 200 réplicas) y es positivo en ≥ 3 grupos de mercados.
   P3: prueba 2023-26 > 0 con t ≥ 1. P4: EV/cuota 2-Step > control y correlación diaria con el ORB US100 < 0,3.
+
+## Adenda 2026-10-30 (antes de abrir 2023-2026): cuenta sin swap
+
+Tras ver que el swap es lo que mata el bruto, se fija una sola prueba fuera de muestra:
+- Variantes: 100 días / trailing 4 ATR, (a) solo largos y (b) largos y cortos.
+- Mercados: solo instrumentos de contado (13 índices, 11 pares, oro, plata, platino, cobre); fuera
+  energía y agrícolas (sus CFD se basan en futuros y pagan el contango al renovar aunque no haya swap) y cripto.
+- Costes: spread, sin financiación (cuenta swap-free). También se informa con swap normal y FTMO.
+- Umbral: neto OOS > 0 con t ≥ 1 en ambas, y placebo OOS por debajo.
+- n_pruebas acumulado: 18 + 9 (meseta) + 4 (sin swap) = 31.

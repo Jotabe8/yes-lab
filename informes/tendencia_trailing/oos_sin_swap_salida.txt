@@ -1,0 +1,13 @@
+ lados  costes periodo  ops   dias   neto      t  indices  forex  metales  placebo  placebo_p95
+largos sinswap  ajuste  949 41.274  0.160  3.425    0.124  0.105    0.397    0.088        0.149
+largos sinswap  prueba  241 40.822  0.121  1.332    0.060 -0.090    0.657    0.194        0.340
+largos  normal  ajuste  949 41.274  0.064  1.439   -0.015  0.105    0.298      NaN          NaN
+largos  normal  prueba  241 40.822 -0.013 -0.152   -0.138 -0.046    0.524      NaN          NaN
+largos    ftmo  ajuste  949 41.274 -0.038 -0.901   -0.158  0.052    0.265      NaN          NaN
+largos    ftmo  prueba  241 40.822 -0.113 -1.359   -0.267 -0.114    0.495      NaN          NaN
+ ambos sinswap  ajuste 1595 38.283  0.031  0.905   -0.002 -0.017    0.247   -0.020        0.040
+ ambos sinswap  prueba  338 37.311 -0.073 -1.061   -0.039 -0.337    0.297   -0.058        0.057
+ ambos  normal  ajuste 1595 38.283 -0.042 -1.275   -0.099 -0.051    0.177      NaN          NaN
+ ambos  normal  prueba  338 37.311 -0.175 -2.676   -0.190 -0.345    0.202      NaN          NaN
+ ambos    ftmo  ajuste 1595 38.283 -0.120 -3.804   -0.210 -0.098    0.147      NaN          NaN
+ ambos    ftmo  prueba  338 37.311 -0.259 -4.098   -0.303 -0.402    0.178      NaN          NaN

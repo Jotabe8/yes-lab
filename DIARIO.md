@@ -90,3 +90,10 @@ Con índices de contado de Yahoo salía +0,08 R neto (t 9,6) en 18 mercados, per
 todo en US2000/AUS200: precios rancios del contado. Con futuros (ES, NQ, YM, RTY) el bruto es ≈ 0 y el neto
 −0,05 a −0,07 R. **Descartada en P1** (n_pruebas 3, OOS sin abrir). Lección: no probar reglas intradía con
 máximos/mínimos/apertura de índices de contado de Yahoo. Informe: `informes/nr7/RESULTADOS.md`.
+
+## 2026-10-30 · Tendencia en cuenta sin swap
+
+Sin financiación, la tendencia 100/4 (contado: índices, forex, metales) gana en ajuste (+0,16 R, t 3,4) pero en
+2023-26 (abierto una vez) da +0,12 R por debajo del placebo de largos al azar (+0,19); largos y cortos −0,07 R.
+Es deriva, no tendencia. **Descartada.** Lo que queda útil: la cesta larga (IndexBasket) en una cuenta sin swap
+(E8PRO v2, FTMO o The5ers bajo petición). Informe: `informes/tendencia_trailing/SIN_SWAP.md`.
