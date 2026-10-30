@@ -30,7 +30,8 @@ jobs:
                "GBPJPY=X": "GBPJPY", "AUDJPY=X": "AUDJPY", "EURGBP=X": "EURGBP",
                "GC=F": "XAUUSD", "SI=F": "XAGUSD", "PL=F": "XPTUSD", "HG=F": "COPPER", "CL=F": "WTI", "BZ=F": "BRENT",
                "NG=F": "NATGAS", "ZC=F": "CORN", "ZW=F": "WHEAT", "ZS=F": "SOYBEAN", "KC=F": "COFFEE", "SB=F": "SUGAR",
-               "CC=F": "COCOA", "BTC-USD": "BTCUSD", "ETH-USD": "ETHUSD"}
+               "CC=F": "COCOA", "BTC-USD": "BTCUSD", "ETH-USD": "ETHUSD",
+               "ES=F": "ES_FUT", "NQ=F": "NQ_FUT", "YM=F": "YM_FUT", "RTY=F": "RTY_FUT"}
           for t, n in T.items():
               try:
                   d = yf.download(t, start="1999-01-01", auto_adjust=False, progress=False)
