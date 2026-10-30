@@ -1,0 +1,4 @@
+55/3.0/ambos sin cripto: ops 3498 neto -0.002 t -0.10 | placebo neto medio -0.012 p95 +0.021 | {'agricolas': 0.017, 'energia': 0.155, 'forex': -0.066, 'indices': -0.032, 'metales': 0.097}
+100/4.0/ambos sin cripto: ops 2093 neto +0.065 t 2.04 | placebo neto medio -0.008 p95 +0.046 | {'agricolas': 0.125, 'energia': 0.289, 'forex': -0.017, 'indices': -0.002, 'metales': 0.247}
+55/3.0/largos sin cripto: ops 1987 neto +0.070 t 2.96 | placebo neto medio +0.060 p95 +0.098 | {'agricolas': 0.155, 'energia': 0.09, 'forex': -0.025, 'indices': 0.045, 'metales': 0.205}
+100/4.0/largos sin cripto: ops 1218 neto +0.200 t 4.47 | placebo neto medio +0.105 p95 +0.160 | {'agricolas': 0.371, 'energia': 0.274, 'forex': 0.105, 'indices': 0.124, 'metales': 0.397}

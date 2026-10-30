@@ -60,3 +60,48 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 **Pendiente del mismo informe.** El momentum intradía (la primera media hora predice la
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
+
+## 2026-10-30 · Tendencia con operaciones largas y trailing stop
+
+Ruptura Donchian (20/55/100 días) con stop inicial 3 ATR y trailing chandelier (2/3/4 ATR), largos y
+cortos o solo largos, en 39 mercados diarios de Yahoo (índices, forex, metales, energía, agrícolas,
+cripto), ajuste 2005-2022, swap con tipos reales de FRED. La principal (55/3/ambos) da +0,031 R bruto,
+−0,022 neto y −0,062 con los swaps de FTMO, por debajo del p95 del placebo con las mismas salidas.
+La única variante que supera el placebo (100/4/largos) depende de 35 operaciones en cripto; sin cripto,
++0,02 R con swaps de FTMO y −0,17 R a costes ×2; índices −0,16 R con FTMO. **Descartada en P2**
+(n_pruebas 27; la prueba 2023-26 no se abrió). Informe: `informes/tendencia_trailing/RESULTADOS.md`.
+
+## 2026-10-30 · Muchas operaciones pequeñas dentro de las normas de FTMO
+
+No se prueba de nuevo: ya lo cubren el scalping con gestión NNFX (105 combinaciones M1-M15, 0 con neto > 0
+en 2023-26), la búsqueda de 25.000 reglas intradía y el GER40 EMA20 en 14 mercados. Sin ventaja de entrada,
+cambiar stop y objetivo solo reparte el coste; y a menor stop, más pesa el spread. Jorge decide dejarlo descartado.
+
+## 2026-10-30 · Víspera de festivo en índices
+
+Idea no probada antes. 13 índices, ajuste 2000-2022: comprar la víspera de un festivo (apertura → cierre)
+da +0,044 R (≈ 0,06 %) frente a −0,005 R de un día normal; supera el placebo y es + en 12/13 índices, pero
+el bruto es 1,8× el coste y con costes ×2 pierde. **Descartada en P1** (n_pruebas 3, OOS sin abrir).
+Informe: `informes/vispera_festivo/RESULTADOS.md`.
+
+## 2026-10-30 · Ruptura intradía tras día estrecho (NR7, Crabel)
+
+Con índices de contado de Yahoo salía +0,08 R neto (t 9,6) en 18 mercados, pero igual en días normales y sobre
+todo en US2000/AUS200: precios rancios del contado. Con futuros (ES, NQ, YM, RTY) el bruto es ≈ 0 y el neto
+−0,05 a −0,07 R. **Descartada en P1** (n_pruebas 3, OOS sin abrir). Lección: no probar reglas intradía con
+máximos/mínimos/apertura de índices de contado de Yahoo. Informe: `informes/nr7/RESULTADOS.md`.
+
+## 2026-10-30 · Tendencia en cuenta sin swap
+
+Sin financiación, la tendencia 100/4 (contado: índices, forex, metales) gana en ajuste (+0,16 R, t 3,4) pero en
+2023-26 (abierto una vez) da +0,12 R por debajo del placebo de largos al azar (+0,19); largos y cortos −0,07 R.
+Es deriva, no tendencia. **Descartada.** Lo que queda útil: la cesta larga (IndexBasket) en una cuenta sin swap
+(E8PRO v2, FTMO o The5ers bajo petición). Informe: `informes/tendencia_trailing/SIN_SWAP.md`.
+
+## 2026-10-30 · Cesta de índices sin swap con reglas de E8 Pro
+
+Normas verificadas (help center E8, tradetanto ago-2026): 1 fase 8 %, diario 2,5 %, máx 8 % estática (al saldo
+inicial tras el 1er retiro), tope 2 %/día, retiros diarios del 50 %, una estrategia por usuario; swap en índices
+sin confirmar. Monte Carlo 3 años (6 índices, SMA200, vol 5-10 %): cobro medio 1.100-1.300 $ por cuenta de 100K
+esperando al 4-8 % para el primer retiro (control 500-600 $), mediana 0 $. No compensa ocupar la plaza de E8
+(mejor el ORB). Pendiente: preguntar a FTMO por swap-free en índices. Informe: `informes/cesta_sin_swap/`.

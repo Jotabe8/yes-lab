@@ -1,0 +1,58 @@
+--- índices sin dividendos, financ.+2.5%: ret  +0.6%/año vol  6.9% Sharpe +0.09 t +0.27 maxDD -17.3% años+ 78%
+  1 año(s) ORB solo           1-Step 200K reto 0.75 fond 0.75 | neto medio   +6976 € | P(neto>0) 30% | P(pasar) 51%
+  1 año(s) ORB solo           2-Step 200K reto 0.75 fond 1.5 | neto medio   +7309 € | P(neto>0) 31% | P(pasar) 45%
+  1 año(s) índices solos      1-Step 200K reto 2.0 fond 2.0 | neto medio   +1517 € | P(neto>0) 19% | P(pasar) 30%
+  1 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio    +947 € | P(neto>0) 20% | P(pasar) 25%
+  1 año(s) ORB + índices x1   1-Step 200K reto 0.75 fond 0.75 | neto medio   +7610 € | P(neto>0) 30% | P(pasar) 52%
+  1 año(s) ORB + índices x1   2-Step 200K reto 1.0 fond 1.0 | neto medio   +7797 € | P(neto>0) 35% | P(pasar) 44%
+  1 año(s) ORB + índices x2   1-Step 200K reto 0.75 fond 0.5 | neto medio   +5846 € | P(neto>0) 31% | P(pasar) 45%
+  1 año(s) ORB + índices x2   2-Step 200K reto 0.75 fond 1.0 | neto medio   +7664 € | P(neto>0) 36% | P(pasar) 46%
+  3 año(s) ORB solo           1-Step 200K reto 0.5 fond 0.5 | neto medio  +11797 € | P(neto>0) 41% | P(pasar) 57%
+  3 año(s) ORB solo           2-Step 200K reto 0.5 fond 0.5 | neto medio  +11691 € | P(neto>0) 50% | P(pasar) 55%
+  3 año(s) índices solos      1-Step 200K reto 1.0 fond 1.5 | neto medio   +3320 € | P(neto>0) 29% | P(pasar) 41%
+  3 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio   +4492 € | P(neto>0) 30% | P(pasar) 35%
+  3 año(s) ORB + índices x1   1-Step 200K reto 0.5 fond 0.5 | neto medio  +11975 € | P(neto>0) 40% | P(pasar) 57%
+  3 año(s) ORB + índices x1   2-Step 200K reto 0.5 fond 0.5 | neto medio  +12096 € | P(neto>0) 49% | P(pasar) 54%
+  3 año(s) ORB + índices x2   1-Step 200K reto 0.5 fond 0.5 | neto medio   +9915 € | P(neto>0) 35% | P(pasar) 52%
+  3 año(s) ORB + índices x2   2-Step 200K reto 0.5 fond 0.5 | neto medio  +11484 € | P(neto>0) 46% | P(pasar) 52%
+--- índices sin dividendos, financ.+3.5%: ret  -0.0%/año vol  6.9% Sharpe -0.00 t -0.00 maxDD -18.1% años+ 67%
+  1 año(s) índices solos      1-Step 200K reto 2.0 fond 2.0 | neto medio   +1221 € | P(neto>0) 17% | P(pasar) 28%
+  1 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio    +623 € | P(neto>0) 18% | P(pasar) 22%
+  1 año(s) ORB + índices x1   1-Step 200K reto 0.75 fond 0.75 | neto medio   +7440 € | P(neto>0) 30% | P(pasar) 51%
+  1 año(s) ORB + índices x1   2-Step 200K reto 1.0 fond 1.0 | neto medio   +7509 € | P(neto>0) 34% | P(pasar) 43%
+  1 año(s) ORB + índices x2   1-Step 200K reto 0.75 fond 0.5 | neto medio   +5591 € | P(neto>0) 30% | P(pasar) 45%
+  1 año(s) ORB + índices x2   2-Step 200K reto 0.75 fond 1.0 | neto medio   +7230 € | P(neto>0) 35% | P(pasar) 45%
+  3 año(s) índices solos      1-Step 200K reto 1.5 fond 1.0 | neto medio   +2479 € | P(neto>0) 25% | P(pasar) 31%
+  3 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio   +3600 € | P(neto>0) 27% | P(pasar) 32%
+  3 año(s) ORB + índices x1   1-Step 200K reto 0.5 fond 0.5 | neto medio  +11522 € | P(neto>0) 39% | P(pasar) 56%
+  3 año(s) ORB + índices x1   2-Step 200K reto 0.5 fond 0.5 | neto medio  +11609 € | P(neto>0) 48% | P(pasar) 53%
+  3 año(s) ORB + índices x2   1-Step 200K reto 0.5 fond 0.5 | neto medio   +9304 € | P(neto>0) 34% | P(pasar) 51%
+  3 año(s) ORB + índices x2   2-Step 200K reto 0.5 fond 0.5 | neto medio  +10826 € | P(neto>0) 45% | P(pasar) 51%
+--- índices con dividendos, financ.+2.5%: ret  +1.7%/año vol  6.9% Sharpe +0.24 t +0.72 maxDD -15.9% años+ 78%
+  1 año(s) índices solos      1-Step 200K reto 2.0 fond 2.0 | neto medio   +2038 € | P(neto>0) 21% | P(pasar) 34%
+  1 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio   +1803 € | P(neto>0) 27% | P(pasar) 32%
+  1 año(s) ORB + índices x1   1-Step 200K reto 0.75 fond 0.75 | neto medio   +8007 € | P(neto>0) 31% | P(pasar) 53%
+  1 año(s) ORB + índices x1   2-Step 200K reto 1.0 fond 1.0 | neto medio   +8226 € | P(neto>0) 36% | P(pasar) 44%
+  1 año(s) ORB + índices x2   1-Step 200K reto 0.75 fond 0.5 | neto medio   +6410 € | P(neto>0) 32% | P(pasar) 47%
+  1 año(s) ORB + índices x2   2-Step 200K reto 0.75 fond 1.0 | neto medio   +8504 € | P(neto>0) 38% | P(pasar) 48%
+  3 año(s) índices solos      1-Step 200K reto 1.0 fond 1.5 | neto medio   +4779 € | P(neto>0) 36% | P(pasar) 48%
+  3 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio   +7423 € | P(neto>0) 39% | P(pasar) 43%
+  3 año(s) ORB + índices x1   1-Step 200K reto 0.5 fond 0.5 | neto medio  +12753 € | P(neto>0) 41% | P(pasar) 58%
+  3 año(s) ORB + índices x1   2-Step 200K reto 0.5 fond 0.5 | neto medio  +13049 € | P(neto>0) 50% | P(pasar) 55%
+  3 año(s) ORB + índices x2   1-Step 200K reto 0.5 fond 0.5 | neto medio  +11065 € | P(neto>0) 37% | P(pasar) 53%
+  3 año(s) ORB + índices x2   2-Step 200K reto 0.5 fond 0.5 | neto medio  +12771 € | P(neto>0) 48% | P(pasar) 54%
+--- índices con dividendos, financ.+3.5%: ret  +1.0%/año vol  6.9% Sharpe +0.15 t +0.45 maxDD -16.7% años+ 78%
+  1 año(s) índices solos      1-Step 200K reto 2.0 fond 2.0 | neto medio   +1700 € | P(neto>0) 20% | P(pasar) 32%
+  1 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio   +1388 € | P(neto>0) 24% | P(pasar) 29%
+  1 año(s) ORB + índices x1   1-Step 200K reto 0.75 fond 0.75 | neto medio   +7725 € | P(neto>0) 31% | P(pasar) 52%
+  1 año(s) ORB + índices x1   2-Step 200K reto 1.0 fond 1.0 | neto medio   +7981 € | P(neto>0) 35% | P(pasar) 44%
+  1 año(s) ORB + índices x2   1-Step 200K reto 0.75 fond 0.5 | neto medio   +6052 € | P(neto>0) 31% | P(pasar) 46%
+  1 año(s) ORB + índices x2   2-Step 200K reto 0.75 fond 1.0 | neto medio   +7933 € | P(neto>0) 37% | P(pasar) 46%
+  3 año(s) índices solos      1-Step 200K reto 1.0 fond 1.5 | neto medio   +3822 € | P(neto>0) 31% | P(pasar) 44%
+  3 año(s) índices solos      2-Step 200K reto 2.0 fond 2.0 | neto medio   +6259 € | P(neto>0) 36% | P(pasar) 41%
+  3 año(s) ORB + índices x1   1-Step 200K reto 0.5 fond 0.5 | neto medio  +12230 € | P(neto>0) 40% | P(pasar) 57%
+  3 año(s) ORB + índices x1   2-Step 200K reto 0.5 fond 0.5 | neto medio  +12454 € | P(neto>0) 49% | P(pasar) 55%
+  3 año(s) ORB + índices x2   1-Step 200K reto 0.5 fond 0.5 | neto medio  +10325 € | P(neto>0) 36% | P(pasar) 52%
+  3 año(s) ORB + índices x2   2-Step 200K reto 0.5 fond 0.5 | neto medio  +12043 € | P(neto>0) 47% | P(pasar) 53%
+
+[exited with code 0]

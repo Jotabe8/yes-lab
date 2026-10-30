@@ -1,0 +1,14 @@
+--- largo/corto sin div: 1990-2007 ret  +0.3%/año vol  7.6% Sharpe +0.04 t +0.19 maxDD -21.1% años+ 56% | 2008-2026 ret  +0.1%/año vol  7.6% Sharpe +0.01 t +0.05 maxDD -26.1% años+ 42%
+  1 año(s) 1-Step 200K reto 2.0 fond 2.0 | neto medio    +456 € | P(neto>0) 11% | P(pasar) 24%
+  1 año(s) 2-Step 200K reto 2.0 fond 2.0 | neto medio     +69 € | P(neto>0) 12% | P(pasar) 16%
+  3 año(s) 1-Step 200K reto 2.0 fond 1.0 | neto medio   +1076 € | P(neto>0) 17% | P(pasar) 24%
+  3 año(s) 2-Step 200K reto 2.0 fond 2.0 | neto medio   +1578 € | P(neto>0) 18% | P(pasar) 23%
+  riesgo moderado 1.0 (vol ~7 %) 3 años 2-Step 200K | neto medio    -276 € | P(pasar) 12%
+  riesgo moderado 1.0 (vol ~7 %) 3 años 1-Step 200K | neto medio    +692 € | P(pasar) 24%
+--- largo/corto con div: 1990-2007 ret  +1.0%/año vol  7.6% Sharpe +0.14 t +0.59 maxDD -18.6% años+ 61% | 2008-2026 ret  +0.9%/año vol  7.6% Sharpe +0.11 t +0.50 maxDD -21.8% años+ 53%
+  1 año(s) 1-Step 200K reto 2.0 fond 2.0 | neto medio    +748 € | P(neto>0) 13% | P(pasar) 26%
+  1 año(s) 2-Step 200K reto 2.0 fond 2.0 | neto medio    +501 € | P(neto>0) 16% | P(pasar) 20%
+  3 año(s) 1-Step 200K reto 2.0 fond 1.0 | neto medio   +1611 € | P(neto>0) 19% | P(pasar) 26%
+  3 año(s) 2-Step 200K reto 2.0 fond 2.0 | neto medio   +2791 € | P(neto>0) 23% | P(pasar) 28%
+  riesgo moderado 1.0 (vol ~7 %) 3 años 2-Step 200K | neto medio    +108 € | P(pasar) 16%
+  riesgo moderado 1.0 (vol ~7 %) 3 años 1-Step 200K | neto medio   +1324 € | P(pasar) 29%

@@ -1,0 +1,48 @@
+name: Descargar diarios para tendencia
+
+# Yahoo no es accesible desde el entorno de Claude: esta descarga corre en GitHub y sube los
+# diarios a la misma rama (datos_tendencia/).
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/descargar-tendencia.yml
+
+permissions:
+  contents: write
+
+jobs:
+  diarios:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Diarios Yahoo (índices, forex, metales, energía, cripto)
+        run: |
+          mkdir -p datos_tendencia
+          pip install -q yfinance
+          python3 - <<'PY'
+          import yfinance as yf
+          T = {"^GSPC": "US500", "^NDX": "US100", "^DJI": "US30", "^RUT": "US2000", "^GDAXI": "GER40",
+               "^FCHI": "FRA40", "^STOXX50E": "EU50", "^FTSE": "UK100", "^N225": "JP225", "^HSI": "HK50",
+               "^AXJO": "AUS200", "^IBEX": "SPA35", "^AEX": "NLD25",
+               "EURUSD=X": "EURUSD", "GBPUSD=X": "GBPUSD", "JPY=X": "USDJPY", "AUDUSD=X": "AUDUSD",
+               "CAD=X": "USDCAD", "NZDUSD=X": "NZDUSD", "CHF=X": "USDCHF", "EURJPY=X": "EURJPY",
+               "GBPJPY=X": "GBPJPY", "AUDJPY=X": "AUDJPY", "EURGBP=X": "EURGBP",
+               "GC=F": "XAUUSD", "SI=F": "XAGUSD", "PL=F": "XPTUSD", "HG=F": "COPPER", "CL=F": "WTI", "BZ=F": "BRENT",
+               "NG=F": "NATGAS", "ZC=F": "CORN", "ZW=F": "WHEAT", "ZS=F": "SOYBEAN", "KC=F": "COFFEE", "SB=F": "SUGAR",
+               "CC=F": "COCOA", "BTC-USD": "BTCUSD", "ETH-USD": "ETHUSD",
+               "ES=F": "ES_FUT", "NQ=F": "NQ_FUT", "YM=F": "YM_FUT", "RTY=F": "RTY_FUT"}
+          for t, n in T.items():
+              try:
+                  d = yf.download(t, start="1999-01-01", auto_adjust=False, progress=False)
+                  d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+                  d[["Open", "High", "Low", "Close"]].to_csv(f"datos_tendencia/{n}.csv"); print(n, len(d))
+              except Exception as e: print("falla", n, e)
+          PY
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos_tendencia
+          git diff --cached --quiet || git commit -m "Diarios para tendencia $(date -u +%F)"
+          git push

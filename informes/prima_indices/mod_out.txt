@@ -1,0 +1,16 @@
+solo largo sin div riesgo 1.0 (vol ~7 %) 3 años 1-Step 200K | neto medio   +3069 € | P(pasar) 41%
+solo largo sin div riesgo 1.0 (vol ~7 %) 3 años 2-Step 200K | neto medio   +1011 € | P(pasar) 26%
+solo largo sin div riesgo 1.5 (vol ~10 %) 3 años 1-Step 200K | neto medio   +2779 € | P(pasar) 33%
+solo largo sin div riesgo 1.5 (vol ~10 %) 3 años 2-Step 200K | neto medio   +3955 € | P(pasar) 37%
+solo largo sin div riesgo 2.0 (vol ~14 %) 3 años 1-Step 200K | neto medio   +2172 € | P(pasar) 31%
+solo largo sin div riesgo 2.0 (vol ~14 %) 3 años 2-Step 200K | neto medio   +4492 € | P(pasar) 35%
+solo largo sin div riesgo 3.0 (vol ~21 %) 3 años 1-Step 200K | neto medio    +783 € | P(pasar) 25%
+solo largo sin div riesgo 3.0 (vol ~21 %) 3 años 2-Step 200K | neto medio   +3439 € | P(pasar) 30%
+solo largo con div riesgo 1.0 (vol ~7 %) 3 años 1-Step 200K | neto medio   +4671 € | P(pasar) 48%
+solo largo con div riesgo 1.0 (vol ~7 %) 3 años 2-Step 200K | neto medio   +2129 € | P(pasar) 35%
+solo largo con div riesgo 1.5 (vol ~10 %) 3 años 1-Step 200K | neto medio   +3866 € | P(pasar) 37%
+solo largo con div riesgo 1.5 (vol ~10 %) 3 años 2-Step 200K | neto medio   +5868 € | P(pasar) 44%
+solo largo con div riesgo 2.0 (vol ~14 %) 3 años 1-Step 200K | neto medio   +2803 € | P(pasar) 34%
+solo largo con div riesgo 2.0 (vol ~14 %) 3 años 2-Step 200K | neto medio   +7423 € | P(pasar) 43%
+solo largo con div riesgo 3.0 (vol ~21 %) 3 años 1-Step 200K | neto medio   +1083 € | P(pasar) 26%
+solo largo con div riesgo 3.0 (vol ~21 %) 3 años 2-Step 200K | neto medio   +4529 € | P(pasar) 33%

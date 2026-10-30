@@ -1,0 +1,11 @@
+periodo 2018-01-23 - 2026-06-12 | NNFX 998 ops, +0.019 R (1x), +0.001 R (2x)
+ORB US100 solo                     1-Step 200K reto 0.75% fond 0.75% | neto medio   +7184 € mediana   -999 | P(neto>0) 30% | P(pasar) 52%
+ORB US100 solo                     2-Step 200K reto 1.0% fond 1.0% | neto medio   +7507 € mediana  -1080 | P(neto>0) 35% | P(pasar) 43%
+NNFX D1 solo (coste 1x)            1-Step 100K reto 1.5% fond 1.5% | neto medio     -66 € mediana   -499 | P(neto>0) 9% | P(pasar) 22%
+NNFX D1 solo (coste 1x)            2-Step  10K reto 1.5% fond 1.5% | neto medio     -74 € mediana    -89 | P(neto>0) 8% | P(pasar) 11%
+NNFX D1 solo (coste 2x, edge ~0)   1-Step  10K reto 0.5% fond 0.5% | neto medio     -79 € mediana    -79 | P(neto>0) 0% | P(pasar) 0%
+NNFX D1 solo (coste 2x, edge ~0)   2-Step  10K reto 0.5% fond 0.5% | neto medio     -89 € mediana    -89 | P(neto>0) 0% | P(pasar) 0%
+ORB + NNFX (coste 1x)              1-Step 200K reto 0.75% fond 0.75% | neto medio   +7884 € mediana   -999 | P(neto>0) 30% | P(pasar) 52%
+ORB + NNFX (coste 1x)              2-Step 200K reto 1.0% fond 1.0% | neto medio   +8159 € mediana  -1080 | P(neto>0) 35% | P(pasar) 43%
+ORB + NNFX (coste 2x)              1-Step 200K reto 0.75% fond 0.75% | neto medio   +7124 € mediana   -999 | P(neto>0) 29% | P(pasar) 50%
+ORB + NNFX (coste 2x)              2-Step 200K reto 1.0% fond 1.0% | neto medio   +7363 € mediana  -1080 | P(neto>0) 34% | P(pasar) 42%

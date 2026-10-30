@@ -1,0 +1,16 @@
+1 año(s) índices reales (sin div, +2,5 %)           1-Step 200K reto 2.0 fond 2.0 | neto medio   +1517 € | P(neto>0) 19% | P(pasar) 30%
+1 año(s) índices reales (sin div, +2,5 %)           2-Step 200K reto 2.0 fond 2.0 | neto medio    +947 € | P(neto>0) 20% | P(pasar) 25%
+3 año(s) índices reales (sin div, +2,5 %)           1-Step 200K reto 1.0 fond 1.5 | neto medio   +3320 € | P(neto>0) 29% | P(pasar) 41%
+3 año(s) índices reales (sin div, +2,5 %)           2-Step 200K reto 2.0 fond 2.0 | neto medio   +4492 € | P(neto>0) 30% | P(pasar) 35%
+1 año(s) índices con media 0 (control sin edge)     1-Step 200K reto 2.0 fond 2.0 | neto medio   +1213 € | P(neto>0) 17% | P(pasar) 28%
+1 año(s) índices con media 0 (control sin edge)     2-Step 200K reto 2.0 fond 2.0 | neto medio    +637 € | P(neto>0) 18% | P(pasar) 22%
+3 año(s) índices con media 0 (control sin edge)     1-Step 200K reto 1.5 fond 1.0 | neto medio   +2474 € | P(neto>0) 25% | P(pasar) 31%
+3 año(s) índices con media 0 (control sin edge)     2-Step 200K reto 2.0 fond 2.0 | neto medio   +3553 € | P(neto>0) 27% | P(pasar) 32%
+1 año(s) índices con media negativa (−2 %/año)      1-Step 200K reto 2.0 fond 2.0 | neto medio    +454 € | P(neto>0) 12% | P(pasar) 23%
+1 año(s) índices con media negativa (−2 %/año)      2-Step 100K reto 2.0 fond 2.0 | neto medio     -57 € | P(neto>0) 12% | P(pasar) 16%
+3 año(s) índices con media negativa (−2 %/año)      1-Step 200K reto 2.0 fond 1.0 | neto medio    +951 € | P(neto>0) 17% | P(pasar) 23%
+3 año(s) índices con media negativa (−2 %/año)      2-Step 200K reto 2.0 fond 2.0 | neto medio   +1402 € | P(neto>0) 18% | P(pasar) 22%
+1 año(s) ruido normal i.i.d. misma vol, media 0     1-Step 200K reto 2.0 fond 2.0 | neto medio    +959 € | P(neto>0) 14% | P(pasar) 24%
+1 año(s) ruido normal i.i.d. misma vol, media 0     2-Step 100K reto 2.0 fond 2.0 | neto medio     -16 € | P(neto>0) 11% | P(pasar) 14%
+3 año(s) ruido normal i.i.d. misma vol, media 0     1-Step 200K reto 2.0 fond 2.0 | neto medio   +1579 € | P(neto>0) 15% | P(pasar) 26%
+3 año(s) ruido normal i.i.d. misma vol, media 0     2-Step 200K reto 2.0 fond 2.0 | neto medio    +970 € | P(neto>0) 15% | P(pasar) 19%

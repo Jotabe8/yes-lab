@@ -1,0 +1,27 @@
+cesta                        ops  1253  bruto +0.279  neto +0.172 (t 3.44)  costes x2 +0.065  FTMO +0.086  FTMO x2 -0.108
+sin cripto                   ops  1218  bruto +0.213  neto +0.107 (t 2.52)  costes x2 +0.001  FTMO +0.020  FTMO x2 -0.174
+sin cripto ni agrícolas      ops  1033  bruto +0.180  neto +0.075 (t 1.75)  costes x2 -0.030  FTMO -0.021  FTMO x2 -0.223
+  agricolas                  ops   185  bruto +0.398  neto +0.287 (t 1.97)  costes x2 +0.176  FTMO +0.249  FTMO x2 +0.101
+  cripto                     ops    35  bruto +2.562  neto +2.419 (t 2.58)  costes x2 +2.276  FTMO +2.376  FTMO x2 +2.189
+  energia                    ops    84  bruto +0.286  neto +0.204 (t 1.20)  costes x2 +0.123  FTMO +0.170  FTMO x2 +0.054
+  forex                      ops   254  bruto +0.111  neto +0.105 (t 1.25)  costes x2 +0.100  FTMO +0.052  FTMO x2 -0.006
+  indices                    ops   553  bruto +0.134  neto -0.015 (t -0.32)  costes x2 -0.165  FTMO -0.158  FTMO x2 -0.450
+  metales                    ops   142  bruto +0.422  neto +0.298 (t 1.72)  costes x2 +0.173  FTMO +0.265  FTMO x2 +0.108
+
+Por año (sin cripto, neto normal / FTMO):
+entrada    2005    2006    2007    2008    2009    2010    2011    2012    2013    2014    2015    2016    2017    2018    2019    2020    2021    2022
+count    82.000  82.000  78.000  42.000  90.000  80.000  49.000  64.000  76.000  70.000  39.000  67.000  66.000  54.000  76.000  75.000  82.000  46.000
+mean      0.281   0.425   0.351   0.127   0.071   0.196  -0.314   0.459  -0.053  -0.219  -0.173   0.283   0.254  -0.322  -0.269   0.416   0.031  -0.032
+ftmo      0.173   0.297   0.260   0.096   0.012   0.122  -0.359   0.348  -0.160  -0.302  -0.247   0.182   0.096  -0.389  -0.363   0.348  -0.053  -0.070
+años positivos: 0.61 FTMO: 0.56
+
+Meseta (solo largos, sin cripto, neto normal / FTMO):
+   80/3.5: ops 1477 neto +0.065 t 1.96  FTMO -0.005
+   80/4.0: ops 1348 neto +0.077 t 1.91  FTMO -0.009
+   80/4.5: ops 1241 neto +0.085 t 1.85  FTMO -0.014
+  100/3.5: ops 1342 neto +0.086 t 2.46  FTMO +0.015
+  100/4.0: ops 1218 neto +0.107 t 2.52  FTMO +0.020
+  100/4.5: ops 1116 neto +0.124 t 2.51  FTMO +0.021
+  120/3.5: ops 1260 neto +0.076 t 2.07  FTMO +0.004
+  120/4.0: ops 1142 neto +0.099 t 2.21  FTMO +0.010
+  120/4.5: ops 1049 neto +0.114 t 2.21  FTMO +0.011
