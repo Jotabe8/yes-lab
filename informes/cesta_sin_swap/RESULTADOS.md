@@ -45,3 +45,24 @@ pronto es lo peor, porque el suelo sube al saldo inicial con muy poco colchón.
 - Para la cesta, la única opción razonable es FTMO, que admite varias estrategias y ya tiene el EA probado.
   Antes hay que preguntar a su soporte si la cuenta sin swap cubre índices, qué cuesta, y si una cesta
   siempre comprada choca con la norma de "apuestas de un solo lado". Con esa respuesta se simula con sus reglas.
+
+## Un año en FTMO 2-Step Swing 100K (`ftmo_1anio.py`)
+
+Monte Carlo de 5.000 años (bloques de 20 días, 2005-2026), cuota de 540 €. Reglas: fase 1 del 10 % y fase 2
+del 5 %, pérdida diaria del 5 %, máxima del 10 %, mínimo de 4 días, reparto del 80 %, retiros cada 14 días y
+cuota devuelta. Swap FTMO = tipo de la divisa + 6,5 % sobre lo invertido. Sin dividendos. € netos para Jorge en un año:
+
+| Volatilidad | Swap | Recompra | Media | Mediana | 10 % peor | 10 % mejor | Llega a fondeada | Gana dinero | Control media 0 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 15 % | FTMO | no | +569 | −540 | −540 | +3.533 | 21 % | 16 % | +1.101 |
+| 15 % | sin swap | no | +2.527 | −540 | −540 | +11.175 | 39 % | 34 % | +1.187 |
+| 15 % | sin swap | sí | +3.268 | −62 | −2.160 | +13.209 | 64 % | 50 % | +1.291 |
+| 20 % | sin swap | sí | +6.315 | +3.598 | −2.700 | +20.282 | 81 % | 63 % | +3.220 |
+| 10 % | sin swap | no | +752 | −540 | −540 | +4.757 | 29 % | 23 % | +107 |
+
+- Con el swap de FTMO la cesta rinde **por debajo del control** (−3 a −6 % al año): descartada en esas condiciones.
+- Sin swap supera al control en 1.300-3.100 € al año por cuenta. Aun así, en la mayoría de los años se pierde la
+  cuota: la media sale de los pocos años buenos.
+- Para comparar: el ORB US100 en la misma cuenta da unos +24.100 €/año de media (cuentas-3000).
+- Supuestos optimistas: cuenta sin swap al mismo precio, pérdida diaria medida al cierre, sin denegación por
+  "apuestas de un solo lado".
