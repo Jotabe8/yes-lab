@@ -42,3 +42,18 @@ ha ido apagando; además el spread de FTMO en USOIL se ha doblado.
 Con estas dos ya son unas 30 familias. Patrón: lo único que sobrevive al coste de un CFD de prop
 es el momentum de la apertura de la sesión de contado (ORB). Las reglas de precio de un solo
 mercado en otras horas o ventanas no cubren el spread.
+
+## C. Dirección de la sesión de NY con información de otros mercados (`PREREGISTRO_SESION_NY.md`)
+Aplicando el mapa de coste: ventana más barata (apertura de contado → cierre), una operación al día,
+dirección decidida a las 9:30 NY por una regresión ridge (solo con el pasado) sobre la noche del índice,
+el GER40 desde su apertura, oro, USDJPY, EURUSD, US2000−US100 y el día anterior. Ajuste 2019-2022:
+
+| Mercado | Ops | Bruto pb (t) | Coste pb | p95 placebo | Por año |
+|---|---|---|---|---|---|
+| US100 | 645 | +5,2 (0,99) | 0,9 | +8,8 | 2020 +18 · 2021 +1 · 2022 0 |
+| US500 | 659 | +0,4 (0,11) | 1,3 | +4,9 | 2020 +11 · 2021 −1 · 2022 −6 |
+| US30 | 657 | +2,0 (0,59) | 0,8 | +5,0 | 2020 +12 · 2021 0 · 2022 −3 |
+| US2000 | 659 | −0,3 (−0,06) | 1,9 | +7,6 | 2020 −7 · 2021 +7 · 2022 −3 |
+
+Ninguno supera el placebo; lo poco que hay es 2020. **Descartada en P1** (n_pruebas 4; acumulado 45).
+El coste aquí es 1 pb frente a 100 pb de movimiento: la señal sencillamente no predice la dirección.

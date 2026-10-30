@@ -122,3 +122,9 @@ GER40 y US30, durante la sesión de contado, el spread es el 1-2 % del movimient
 allí lo que falta es señal, no margen. El spread decide en M1-M5, de noche, en EU50/UK100/forex y en
 posiciones de noche (swap). Los costes supuestos en las pruebas con Yahoo (0,02-0,04 %) eran 3-5 veces el
 real de US100/GER40/US30. Informe: `informes/distinta_orb/COMO_VENCER_SPREAD.md`.
+
+## 2026-10-30 · Dirección de la sesión de NY con otros mercados
+
+En la ventana más barata (apertura de contado → cierre, coste ≈ 1 % del movimiento), predecir la dirección
+a las 9:30 NY con la noche, el GER40, oro, yen, euro y US2000 (ridge sin mirar el futuro): bruto +5/+0/+2/−0 pb
+en US100/US500/US30/US2000 (2019-22), ninguno sobre el placebo, solo 2020 positivo. **Descartada en P1.**
