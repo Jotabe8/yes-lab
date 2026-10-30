@@ -1,0 +1,39 @@
+      esc               firma                                      caso  cuota_ini  media  mediana    p10  p_neg  caja_p10  p_fondear  cuotas
+     base         FTMO 2-Step                              US 50K 2/1,5        345 14,245   12,463    464      9    -2,415        100       7
+     base       FP 2-Step Std                US 50K 2/0.75 noticias 0 %        204  9,592    8,884  1,965      4    -1,221        100       4
+     base       FP 2-Step Std               US 50K 2/0.75 noticias 10 %        204  7,048    6,324    514      8    -1,476        100       5
+     base       FP 2-Step Std                 US 50K 2/1.0 noticias 0 %        204 12,381   11,421  2,296      4    -1,476        100       5
+     base       FP 2-Step Std                US 50K 2/1.0 noticias 10 %        204  9,238    8,251    698      7    -1,476        100       6
+     base       FP 2-Step Std               US 50K 2/0,75 mensual 100 %        204  4,438     -204 -1,476     56    -1,730        100       3
+     base       FP 2-Step Pro                             US 50K 1/0,75        160  4,110    3,088 -1,158     21    -1,360         98       6
+     base         FTMO 2-Step                             US 100K 2/1,5        540 29,274   25,709  2,096      7    -3,780        100       7
+     base       FP 2-Step Std               US 100K 2/0.75 noticias 0 %        389 19,253   17,829  4,066      4    -2,331        100       4
+     base       FP 2-Step Std              US 100K 2/0.75 noticias 10 %        389 14,182   12,724  1,169      7    -2,817        100       5
+     base       FP 2-Step Std                US 100K 2/1.0 noticias 0 %        389 24,860   22,937  4,754      4    -2,817        100       5
+     base       FP 2-Step Std               US 100K 2/1.0 noticias 10 %        389 18,591   16,611  1,552      7    -2,817        100       6
+     base       FP 2-Step Std              US 100K 2/0,75 mensual 100 %        389  8,951     -389 -2,817     56    -3,303        100       3
+     base       FP 2-Step Pro                            US 100K 1/0,75        301  8,350    6,303 -2,127     21    -2,562         98       6
+     base         FTMO 2-Step                         US 100K + GER 50K        885 36,589   33,570  7,194      4    -4,965         99      17
+     base       FP 2-Step Std US 100K + GER 50K (2/0,75, noticias 10 %)        592 17,937   16,789  3,916      4    -3,298        100      12
+     base         FTMO 2-Step                          US 50K + GER 25K        595 17,221   15,755  2,256      6    -3,415         99      17
+     base       FP 2-Step Std  US 50K + GER 25K (2/0,75, noticias 10 %)        324  8,762    8,191  1,708      5    -1,791        100      12
+     base FP (control irreal)                US 100K 2/1,5 sin noticias        389 32,671   29,172  4,776      5    -3,303        100       7
+costes x2         FTMO 2-Step                              US 50K 2/1,5        345 10,539    8,551 -1,809     16    -3,105         99       8
+costes x2       FP 2-Step Std                US 50K 2/0.75 noticias 0 %        204  7,700    6,910    516      8    -1,512        100       5
+costes x2       FP 2-Step Std               US 50K 2/0.75 noticias 10 %        204  5,492    4,710   -547     13    -1,730        100       5
+costes x2       FP 2-Step Std                 US 50K 2/1.0 noticias 0 %        204  9,902    8,834    606      8    -1,730        100       6
+costes x2       FP 2-Step Std                US 50K 2/1.0 noticias 10 %        204  7,214    6,049   -599     13    -1,985        100       7
+costes x2       FP 2-Step Std               US 50K 2/0,75 mensual 100 %        204  2,738     -458 -1,985     67    -1,985        100       4
+costes x2       FP 2-Step Pro                             US 50K 1/0,75        160  2,761    1,674 -1,360     32    -1,560         95       6
+costes x2         FTMO 2-Step                             US 100K 2/1,5        540 22,042   17,994 -2,289     14    -4,860         99       8
+costes x2       FP 2-Step Std               US 100K 2/0.75 noticias 0 %        389 15,493   13,907  1,186      7    -2,817        100       5
+costes x2       FP 2-Step Std              US 100K 2/0.75 noticias 10 %        389 11,093    9,521   -946     13    -3,303        100       5
+costes x2       FP 2-Step Std                US 100K 2/1.0 noticias 0 %        389 19,927   17,791  1,398      7    -3,303        100       6
+costes x2       FP 2-Step Std               US 100K 2/1.0 noticias 10 %        389 14,569   12,227   -985     12    -3,789        100       7
+costes x2       FP 2-Step Std              US 100K 2/0,75 mensual 100 %        389  5,569     -874 -3,789     67    -3,789        100       4
+costes x2       FP 2-Step Pro                            US 100K 1/0,75        301  5,666    3,496 -2,562     31    -2,939         95       6
+costes x2         FTMO 2-Step                         US 100K + GER 50K        885 26,554   23,087    546      9    -6,345         98      19
+costes x2       FP 2-Step Std US 100K + GER 50K (2/0,75, noticias 10 %)        592 13,579   12,317    545      9    -4,062         99      14
+costes x2         FTMO 2-Step                          US 50K + GER 25K        595 12,010   10,306 -1,267     14    -4,415         98      19
+costes x2       FP 2-Step Std  US 50K + GER 25K (2/0,75, noticias 10 %)        324  6,543    5,926    -10     10    -2,248         99      14
+costes x2 FP (control irreal)                US 100K 2/1,5 sin noticias        389 25,768   21,913    184     10    -4,274        100       8
