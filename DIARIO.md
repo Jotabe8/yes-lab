@@ -83,3 +83,10 @@ Idea no probada antes. 13 índices, ajuste 2000-2022: comprar la víspera de un 
 da +0,044 R (≈ 0,06 %) frente a −0,005 R de un día normal; supera el placebo y es + en 12/13 índices, pero
 el bruto es 1,8× el coste y con costes ×2 pierde. **Descartada en P1** (n_pruebas 3, OOS sin abrir).
 Informe: `informes/vispera_festivo/RESULTADOS.md`.
+
+## 2026-10-30 · Ruptura intradía tras día estrecho (NR7, Crabel)
+
+Con índices de contado de Yahoo salía +0,08 R neto (t 9,6) en 18 mercados, pero igual en días normales y sobre
+todo en US2000/AUS200: precios rancios del contado. Con futuros (ES, NQ, YM, RTY) el bruto es ≈ 0 y el neto
+−0,05 a −0,07 R. **Descartada en P1** (n_pruebas 3, OOS sin abrir). Lección: no probar reglas intradía con
+máximos/mínimos/apertura de índices de contado de Yahoo. Informe: `informes/nr7/RESULTADOS.md`.
