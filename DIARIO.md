@@ -70,3 +70,9 @@ cripto), ajuste 2005-2022, swap con tipos reales de FRED. La principal (55/3/amb
 La única variante que supera el placebo (100/4/largos) depende de 35 operaciones en cripto; sin cripto,
 +0,02 R con swaps de FTMO y −0,17 R a costes ×2; índices −0,16 R con FTMO. **Descartada en P2**
 (n_pruebas 27; la prueba 2023-26 no se abrió). Informe: `informes/tendencia_trailing/RESULTADOS.md`.
+
+## 2026-10-30 · Muchas operaciones pequeñas dentro de las normas de FTMO
+
+No se prueba de nuevo: ya lo cubren el scalping con gestión NNFX (105 combinaciones M1-M15, 0 con neto > 0
+en 2023-26), la búsqueda de 25.000 reglas intradía y el GER40 EMA20 en 14 mercados. Sin ventaja de entrada,
+cambiar stop y objetivo solo reparte el coste; y a menor stop, más pesa el spread. Jorge decide dejarlo descartado.
