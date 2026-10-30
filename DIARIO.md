@@ -97,3 +97,11 @@ Sin financiación, la tendencia 100/4 (contado: índices, forex, metales) gana e
 2023-26 (abierto una vez) da +0,12 R por debajo del placebo de largos al azar (+0,19); largos y cortos −0,07 R.
 Es deriva, no tendencia. **Descartada.** Lo que queda útil: la cesta larga (IndexBasket) en una cuenta sin swap
 (E8PRO v2, FTMO o The5ers bajo petición). Informe: `informes/tendencia_trailing/SIN_SWAP.md`.
+
+## 2026-10-30 · Cesta de índices sin swap con reglas de E8 Pro
+
+Normas verificadas (help center E8, tradetanto ago-2026): 1 fase 8 %, diario 2,5 %, máx 8 % estática (al saldo
+inicial tras el 1er retiro), tope 2 %/día, retiros diarios del 50 %, una estrategia por usuario; swap en índices
+sin confirmar. Monte Carlo 3 años (6 índices, SMA200, vol 5-10 %): cobro medio 1.100-1.300 $ por cuenta de 100K
+esperando al 4-8 % para el primer retiro (control 500-600 $), mediana 0 $. No compensa ocupar la plaza de E8
+(mejor el ORB). Pendiente: preguntar a FTMO por swap-free en índices. Informe: `informes/cesta_sin_swap/`.
