@@ -66,3 +66,23 @@ cuota devuelta. Swap FTMO = tipo de la divisa + 6,5 % sobre lo invertido. Sin di
 - Para comparar: el ORB US100 en la misma cuenta da unos +24.100 €/año de media (cuentas-3000).
 - Supuestos optimistas: cuenta sin swap al mismo precio, pérdida diaria medida al cierre, sin denegación por
   "apuestas de un solo lado".
+
+## Otros mercados (`otros_mercados.py`, un año en FTMO 2-Step 100K, recomprando)
+
+Misma regla (comprado sobre la SMA200; en forex largo o corto según la SMA200), pesos inversos a la volatilidad.
+Swap aproximado (no son las cifras reales de FTMO): metales tipo USD + 4 %, forex diferencial ± 2 %,
+cripto 20 %, índices tipo + 6,5 %. € netos medios en un año:
+
+| Cesta | Vol | Con swap aprox. | Sin swap | Control media 0 | Datos desde |
+| --- | --- | --- | --- | --- | --- |
+| Oro | 20 % | +3.173 | +5.092 | +1.829 | 2005 |
+| Metales (oro, plata, platino, cobre) | 20 % | +2.472 | +4.150 | +2.257 | 2005 |
+| Forex 11 pares (largo/corto) | 20 % | −232 | +1.109 | +1.546 | 2007 |
+| Cripto BTC + ETH | 20 % | +7.999 | +10.126 | +4.102 | 2018 |
+| Índices + metales | 20 % | +2.828 | +7.755 | +2.958 | 2005 |
+
+- Con swap, solo el oro y la cripto superan al control. En ambos casos es la subida de 2005-2026 (oro) y
+  2018-2026 (cripto): una apuesta a que sigan subiendo, no una ventaja. Si no suben, queda el control o menos.
+- Forex: peor que no hacer nada, con o sin swap.
+- Falta el swap real de FTMO de cada símbolo: se ve en MT5 (Observación de mercado → clic derecho en el
+  símbolo → Especificación → Swap largo).

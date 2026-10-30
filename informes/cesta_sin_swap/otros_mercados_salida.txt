@@ -1,0 +1,41 @@
+                       cesta  vol       swap   serie  desde  rend_anual     media       p10   mediana       p90  prob_fondeo  prob_ganar
+                         oro 0.15 FTMO aprox   cesta   2005       0.045  1681.025 -2700.000 -1080.000  9671.418        0.518       0.342
+                         oro 0.15 FTMO aprox control   2005      -0.000   822.347 -2700.000 -1080.000  7223.817        0.436       0.268
+                         oro 0.15   sin swap   cesta   2005       0.098  2996.054 -2160.000  -540.000 13036.307        0.613       0.431
+                         oro 0.15   sin swap control   2005       0.000   907.041 -2700.000 -1080.000  7475.369        0.445       0.275
+                         oro 0.20 FTMO aprox   cesta   2005       0.063  3173.043 -3240.000 -1018.360 14560.228        0.682       0.439
+                         oro 0.20 FTMO aprox control   2005      -0.000  1829.213 -3240.000 -1080.000 11199.492        0.604       0.360
+                         oro 0.20   sin swap   cesta   2005       0.132  5092.389 -2700.000   744.694 18475.572        0.752       0.531
+                         oro 0.20   sin swap control   2005       0.000  1937.800 -3240.000 -1189.294 11398.954        0.615       0.362
+                     metales 0.15 FTMO aprox   cesta   2005       0.007  1425.062 -2160.000 -1080.000  9473.626        0.482       0.319
+                     metales 0.15 FTMO aprox control   2005      -0.000  1271.485 -2320.089 -1080.000  9069.050        0.469       0.310
+                     metales 0.15   sin swap   cesta   2005       0.056  2721.530 -2160.000  -540.000 12856.325        0.568       0.408
+                     metales 0.15   sin swap control   2005      -0.000  1383.120 -2160.000 -1080.000  9264.656        0.473       0.315
+                     metales 0.20 FTMO aprox   cesta   2005       0.012  2472.235 -3240.000 -1080.000 13604.866        0.645       0.403
+                     metales 0.20 FTMO aprox control   2005       0.000  2256.900 -3240.000 -1080.000 13047.120        0.633       0.389
+                     metales 0.20   sin swap   cesta   2005       0.077  4149.651 -2700.000  -343.324 17480.515        0.726       0.486
+                     metales 0.20   sin swap control   2005      -0.000  2348.694 -3240.000 -1080.000 13298.088        0.637       0.397
+forex 11 pares (largo/corto) 0.15 FTMO aprox   cesta   2007      -0.080  -557.540 -2160.000 -1080.000  1288.810        0.215       0.133
+forex 11 pares (largo/corto) 0.15 FTMO aprox control   2007      -0.000   565.234 -1620.000 -1080.000  5824.083        0.348       0.243
+forex 11 pares (largo/corto) 0.15   sin swap   cesta   2007      -0.017   293.113 -1620.000 -1080.000  5029.222        0.316       0.218
+forex 11 pares (largo/corto) 0.15   sin swap control   2007      -0.000   579.052 -1620.000 -1080.000  5757.410        0.347       0.243
+forex 11 pares (largo/corto) 0.20 FTMO aprox   cesta   2007      -0.106  -231.501 -2700.000 -1620.000  5293.761        0.396       0.215
+forex 11 pares (largo/corto) 0.20 FTMO aprox control   2007      -0.000  1545.837 -2700.000 -1080.000 10268.079        0.542       0.345
+forex 11 pares (largo/corto) 0.20   sin swap   cesta   2007      -0.023  1108.535 -2700.000 -1554.615  8819.940        0.514       0.313
+forex 11 pares (largo/corto) 0.20   sin swap control   2007      -0.000  1546.813 -2700.000 -1080.000 10102.193        0.545       0.343
+              cripto BTC+ETH 0.15 FTMO aprox   cesta   2018       0.107  4468.487 -2160.000  -540.000 17318.516        0.575       0.428
+              cripto BTC+ETH 0.15 FTMO aprox control   2018       0.000  1788.196 -2160.000 -1080.000  8859.611        0.416       0.280
+              cripto BTC+ETH 0.15   sin swap   cesta   2018       0.155  5913.040 -1620.000   219.445 20474.327        0.642       0.510
+              cripto BTC+ETH 0.15   sin swap control   2018      -0.000  1829.449 -2160.000 -1080.000  9398.118        0.419       0.281
+              cripto BTC+ETH 0.20 FTMO aprox   cesta   2018       0.141  7999.191 -2700.000   943.837 29659.376        0.712       0.528
+              cripto BTC+ETH 0.20 FTMO aprox control   2018       0.000  4102.013 -3240.000 -1080.000 20789.902        0.580       0.366
+              cripto BTC+ETH 0.20   sin swap   cesta   2018       0.203 10125.631 -2700.000  3309.017 34831.196        0.763       0.601
+              cripto BTC+ETH 0.20   sin swap control   2018       0.000  4086.634 -3240.000 -1080.000 21222.279        0.581       0.364
+           índices + metales 0.15 FTMO aprox   cesta   2005      -0.006   964.916 -2160.000 -1080.000  7683.355        0.441       0.309
+           índices + metales 0.15 FTMO aprox control   2005      -0.000  1097.911 -2160.000 -1080.000  7853.941        0.452       0.319
+           índices + metales 0.15   sin swap   cesta   2005       0.104  4114.167 -1620.000   749.840 15218.265        0.646       0.529
+           índices + metales 0.15   sin swap control   2005      -0.000  1236.065 -2160.000 -1080.000  8449.800        0.463       0.329
+           índices + metales 0.20 FTMO aprox   cesta   2005      -0.006  2827.991 -2700.000  -540.000 13019.044        0.659       0.461
+           índices + metales 0.20 FTMO aprox control   2005      -0.000  2958.213 -2700.000  -540.000 13347.561        0.669       0.466
+           índices + metales 0.20   sin swap   cesta   2005       0.140  7755.047 -2160.000  5066.468 22748.259        0.822       0.666
+           índices + metales 0.20   sin swap control   2005      -0.000  3229.349 -2700.000  -465.507 14324.384        0.664       0.481
