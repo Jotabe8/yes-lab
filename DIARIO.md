@@ -76,3 +76,10 @@ La única variante que supera el placebo (100/4/largos) depende de 35 operacione
 No se prueba de nuevo: ya lo cubren el scalping con gestión NNFX (105 combinaciones M1-M15, 0 con neto > 0
 en 2023-26), la búsqueda de 25.000 reglas intradía y el GER40 EMA20 en 14 mercados. Sin ventaja de entrada,
 cambiar stop y objetivo solo reparte el coste; y a menor stop, más pesa el spread. Jorge decide dejarlo descartado.
+
+## 2026-10-30 · Víspera de festivo en índices
+
+Idea no probada antes. 13 índices, ajuste 2000-2022: comprar la víspera de un festivo (apertura → cierre)
+da +0,044 R (≈ 0,06 %) frente a −0,005 R de un día normal; supera el placebo y es + en 12/13 índices, pero
+el bruto es 1,8× el coste y con costes ×2 pierde. **Descartada en P1** (n_pruebas 3, OOS sin abrir).
+Informe: `informes/vispera_festivo/RESULTADOS.md`.
