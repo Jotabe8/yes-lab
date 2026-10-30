@@ -105,3 +105,12 @@ inicial tras el 1er retiro), tope 2 %/día, retiros diarios del 50 %, una estrat
 sin confirmar. Monte Carlo 3 años (6 índices, SMA200, vol 5-10 %): cobro medio 1.100-1.300 $ por cuenta de 100K
 esperando al 4-8 % para el primer retiro (control 500-600 $), mediana 0 $. No compensa ocupar la plaza de E8
 (mejor el ORB). Pendiente: preguntar a FTMO por swap-free en índices. Informe: `informes/cesta_sin_swap/`.
+
+## 2026-10-30 · Buscar un sistema distinto al ORB: periodicidad intradía y deriva EIA
+
+Dos ideas nuevas preregistradas. **Periodicidad intradía** (ir en la dirección de la misma media hora de
+los 20 días anteriores o de las 8 semanas anteriores, 10 mercados, 2018-22): bruto −0,29/−0,15 pb frente
+a 2 pb de coste, 0/20 sobre el placebo. **Descartada en P1.** **Deriva tras el inventario de crudo EIA**
+(USOIL, dirección de 10:30-10:35 NY, salida 14:30): ajuste 2021-22 +33 pb (t 2,1) con meseta, pero
+2023-26 +11 pb (t 1,1, bajo el p95 del placebo) y neto con stop 0,5 ATR +0,02 R (t 0,37), negativo en 2026.
+**Descartada en P3** (n_pruebas 41). Informe: `informes/distinta_orb/RESULTADOS.md`.
