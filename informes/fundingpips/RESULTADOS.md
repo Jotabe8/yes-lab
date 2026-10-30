@@ -1,90 +1,113 @@
-# FundingPips para los ORB (30/10/2026)
+# FundingPips para los ORB (30/10/2026, condiciones oficiales)
 
-**Conclusión: FundingPips sirve como firma adicional, sobre todo en cuentas de 10K, pero no sustituye a FTMO y no
-hace falta correr por Halloween.** El descuento de Halloween (20 % a clientes nuevos, código `HALLOWEEN`) es el
-mismo 20 % que da siempre el código de bienvenida `HELLO` en la primera compra. El cambio de verdad frente a lo que
-pensábamos: el EA propio está permitido si se demuestra que es tuyo (el `.mq5` fuente vale), así que el motivo por
-el que se descartó FundingPips el 26/10 ya no aplica.
+**Conclusión: FundingPips vale como firma adicional para el US100, sobre todo en 10K o 50K, pero no sustituye a FTMO
+en cuentas grandes y no hace falta correr por Halloween.** Condiciones leídas en la web oficial (help.fundingpips.com y
+fundingpips.com) con el navegador el 30/10/2026.
 
-## Reglas que importan (2-Step Standard)
+## Lo que dice la web oficial
 
-| | FundingPips 2-Step Standard | FTMO 2-Step |
-|---|---|---|
-| Objetivos | **8 % / 5 %** | 10 % / 5 % |
-| Días mínimos | 3 por fase | 4 |
-| Pérdida diaria / máxima | 5 % / 10 % estática (diaria sobre el mayor de saldo o equity a las 00:00 UTC+3) | 5 % / 10 % |
-| Precio de lista 10K / 25K / 50K / 100K | 63 / 168 / 285 / 544 $ (≈ 56 / 150 / 254 / 486 €) | 89 / 250 / 345 / 540 € |
-| Reparto | 60 % semanal, **80 % quincenal**, 90 % a demanda (consistencia 35 %), 100 % mensual (consistencia 35 % + 7 días ≥ 0,5 %) | 80 % (90 % con Scaling) |
-| Cuota devuelta | en el **4º** retiro | en el 1º |
-| EAs | propio permitido con prueba de autoría (código fuente); de terceros solo como gestor | permitido |
-| Noticias | **solo en fondeada (Master)**: se quita el beneficio de operaciones abiertas o cerradas a < 5 min de una noticia fuerte de la divisa afectada (10 min en discursos) | Swing: sin restricción |
-| Riesgo por idea (Striking System) | Master ≥ 25K: flotante de −1,2 % (o 1 %) en una idea = aviso; avisos repetidos bajan el reparto y cierran la cuenta | no |
-| Apalancamiento índices | fases: 1:20; **Master: escalonado por lotes, 1:5 por encima de 0,5 lotes** (temporal desde 16/03/2026) | por confirmar en MT5 |
-| Otros | fin de semana: cierre automático el viernes; 30 días sin cerrar operación = cuenta perdida; copiar la misma estrategia entre tus cuentas permitido; tope 300-400K entre todas las cuentas (las fuentes difieren); índices sin comisión; MT5 sí | |
+**Promoción:** banner "HALLOWEEN SALE: 20 % OFF New Clients | 15 % OFF Existing Clients – Code: HALLOWEEN". No pone fecha
+de fin. El código de bienvenida `HELLO` también da 20 % en la primera compra, así que Halloween solo aporta algo si ya
+eres cliente (15 %).
 
-**Consecuencia para el ORB:** en fondeada no se puede arriesgar el 1,5 % como en FTMO. Con el stop del ORB (≈ 0,2 % del
-precio; GER40 mediana 0,19 %, p10 0,14 % en el tester) y apalancamiento 1:5, el nominal máximo da para ≈ 0,6-1,1 % de
-riesgo según el día, y en cuentas ≥ 25K el Striking avisa con −1,2 % flotante. Riesgo fondeado realista: **0,75-1 %**.
-En las fases (1:20) el 2 % sí cabe.
+**Precios de lista (2-Step, diaria 5 %):**
 
-## Simulación 1 año (fp_vs_ftmo.py, fp_10k.py)
+| | 10K | 25K | 50K | 100K |
+|---|---|---|---|---|
+| Standard (8 %/5 %, máx 10 %) | 72 $ | 195 $ | 349 $ | 652 $ |
+| Flex (10 %/8 %, diaria 4 %, máx 12 %) | 64 $ | 175 $ | 299 $ | 555 $ |
+| Pro (6 %/6 %, diaria 3 %, máx 6 %) | 55 $ | 145 $ | 249 $ | 466 $ |
+| *FTMO 2-Step (10 %/5 %)* | *89 €* | *250 €* | *345 €* | *540 €* |
 
-Mismo método que dos-orb/ (bloques de 20 días 2022-26, 20.000 MC, coste 0,05 R, recompra al quemar, retiro cada 10 días
-hábiles al 80 %). FundingPips con la primera compra al −20 % y recompras a precio de lista. "Noticias 10 %" = se anula el
-beneficio del 10 % de los días ganadores en fondeada (estimación: no tengo el calendario de noticias "restringidas").
+**2-Step Standard:**
+- Fases: 8 % y 5 %, 3 días mínimos por fase, sin límite de tiempo. Diaria 5 % sobre el mayor de saldo o equity de
+  apertura del día; máxima 10 % estática. 30 días sin cerrar una operación = cuenta perdida.
+- Retiros: semanal 60 %, **quincenal 80 % (sin más condiciones)**, o "On Demand" 100 % con consistencia 35 %, 7 días
+  con ≥ 0,5 % y **Striking System** (aviso si una idea pierde 1 % entre cerrado y flotante; 2º aviso reparto a la mitad,
+  3º al 20 %, 4º cuenta cerrada). **El Striking solo aplica al ciclo On Demand.** Mínimo de retiro 1 %.
+  Cuota devuelta en el **4º** retiro (solo Standard).
+- Reset con descuento (12 % fase 1, 10 % fase 2, 7 % Master) si se compra en 7 días.
 
-**€ netos al año por cuenta, US100:**
+**2-Step Flex:** 10 % y 8 %, diaria 4 %, máxima 12 %. Se elige al comprar: 80 % quincenal (1 día mínimo) o **95 %
+quincenal con 3 días ≥ 0,5 % por fase y por ciclo**. Sin consistencia en los quincenales, sin devolución de cuota.
 
-| Cuenta | Cuota | Media | Mediana | Año < 0 | Caja p10 | Media costes ×2 |
+**Noticias:** en las fases no hay restricción. En Master se **quita el beneficio** de operaciones abiertas o cerradas de
+5 min antes a 5 min después de una noticia fuerte de la divisa afectada (en discursos, toda la duración más 5 min). No
+cierra la cuenta. Las operaciones abiertas 5 h antes o más quedan exentas. Calendario oficial: el del panel de FundingPips.
+"Operar noticias a propósito" está prohibido en todas las fases. Los ejemplos hablan de pares USD; no aclara índices.
+
+**Noche y fin de semana:** permitidos en fases; en Master Standard/Flex el sistema **cierra todo cada día** entre
+20:45-21:00 UTC en verano y 21:45-22:00 UTC en invierno (las 22:45 de Madrid en los dos casos), sin penalizar. Al ORB no le afecta
+(cierra antes, con el cierre de contado). El add-on Swing evita el cierre pero baja índices a 1:5 también en fases: no comprarlo.
+
+**Apalancamiento y comisión:** índices 1:20 en fases y **en Master escalonado por lotes** (1:50 hasta 0,05; 1:30; 1:25;
+1:20; 1:10; **1:5 por encima de 0,5 lotes**), "temporal" desde el 16/03/2026. Índices sin comisión. Máximo 20 lotes por
+orden. Índices disponibles: NDX100, GER40, SPX500, DJI30, FTSE100, JP225, STX50. Tamaño de contrato y swap: solo en la
+plataforma (MT5, cTrader o Match-Trader).
+
+**EAs:** de terceros solo como gestor de riesgo. **EA propio con automatización completa permitido** si se demuestra
+autoría: código fuente `.mq5` sin compilar, historial de versiones, pruebas del entorno de desarrollo o explicar la
+lógica en una llamada. El `.ex5` solo no vale. Prohibidos: gap trading, HFT, arbitraje, tick scalping, hedging, cuentas
+opuestas. **La misma estrategia en varias cuentas propias está permitida.** **Prohibido conectarse con VPN o VPS**:
+el MT5 tiene que correr en tu PC, y la IP debe ser siempre de la misma región.
+
+**Tope:** 400.000 $ entre todas las cuentas (web oficial).
+
+**Consecuencia para el ORB:** en las fases el 2 % de riesgo cabe. En Master el tope lo pone el margen: con el stop del
+ORB (≈ 0,2 % del precio; GER40 mediana 0,19 %, p10 0,14 %) y 1:5, el nominal máximo da para ≈ 0,6-1,1 % de riesgo según
+el día. Con reparto quincenal no hay Striking. **Riesgo fondeado realista: 0,75-1 %** (en FTMO usamos 1,5 %).
+
+## Simulación 1 año, US100 (fp_oficial.py)
+
+Mismo método que dos-orb/ (bloques de 20 días 2022-26, 20.000 MC, coste 0,05 R, recompra al quemar). FundingPips con la
+primera compra a −20 % y recompras a −15 %. "Noticias 10 %": se anula el beneficio del 10 % de los días ganadores en
+Master (estimación; falta medirlo con el calendario).
+
+**€ netos al año por cuenta, riesgo 2 % en fases / 1 % en fondeada (FTMO 1,5 %):**
+
+| Cuenta | Cuota | Media sin noticias | Media noticias 10 % | Año < 0 | Caja p10 | Media costes ×2 (noticias 10 %) |
 |---|---|---|---|---|---|---|
-| FTMO 100K (2/1,5 %) | 540 € | 29.300 | 25.700 | 7 % | −3.800 | 22.000 |
-| FP 100K (2/1 %, sin noticias) | 389 € | 24.900 | 22.900 | 4 % | −2.800 | 19.900 |
-| FP 100K (2/1 %, noticias 10 %) | 389 € | 18.600 | 16.600 | 7 % | −2.800 | 14.600 |
-| FP 100K (2/0,75 %, noticias 10 %) | 389 € | 14.200 | 12.700 | 7 % | −2.800 | 11.100 |
-| FTMO 50K (2/1,5 %) | 345 € | 14.200 | 12.500 | 9 % | −2.400 | 10.500 |
-| FP 50K (2/1 %, noticias 10 %) | 204 € | 9.200 | 8.300 | 7 % | −1.500 | 7.200 |
-| **FTMO 10K (2/1,5 %)** | 89 € | 2.750 | 2.400 | 11 % | −620 | 2.000 |
-| **FP 10K (2/1 %, sin noticias)** | 45 € | 2.450 | 2.260 | 4 % | −330 | 1.950 |
-| **FP 10K (2/1 %, noticias 10 %)** | 45 € | 1.820 | 1.620 | 8 % | −330 | 1.410 |
-| FP 10K (2/1,5 %, sin noticias)* | 45 € | 3.220 | 2.870 | 6 % | −380 | 2.520 |
+| FTMO 100K | 540 € | 29.300 | — | 7 % | −3.800 | 22.000 |
+| FP Standard 100K | 466 € | 24.800 | 18.500 | 4-7 % | −2.900 | 14.500 |
+| FP Flex 95 % 100K | 396 € | 26.900 | 19.900 | 5-9 % | −2.100 a −2.500 | 15.100 |
+| FTMO 50K | 345 € | 14.200 | — | 9 % | −2.400 | 10.500 |
+| FP Standard 50K | 249 € | 12.300 | 9.200 | 4-8 % | −1.600 | 7.100 |
+| FP Flex 95 % 50K | 214 € | 13.400 | 9.900 | 6-9 % | −1.100 a −1.350 | 7.500 |
+| FTMO 10K | 89 € | 2.750 | — | 11 % | −620 | 2.000 |
+| FP Standard 10K | 51 € | 2.450 | 1.820 | 4-8 % | −330 | 1.410 |
+| FP Flex 95 % 10K | 46 € | 2.670 | 1.960 | 6-9 % | −240 a −290 | 1.480 |
 
-\* En 10K no hay Striking; si el margen deja el 1,5 % depende del tamaño de contrato del NAS100 en FundingPips (míralo en la
-cuenta de prueba gratis).
-
-Otras variantes: el reparto **100 % mensual no sirve** al ORB (la regla del 35 % de consistencia lo bloquea: mediana ≈ 0,
-56 % de años negativos); **2-Step Pro** (diaria 3 %, máx. 6 %) rinde un tercio (8.350 € en 100K, 21 % años negativos).
-Combinación US100 100K + GER40 50K: FTMO 36.600 € / FP 17.900 € (caja −5.000 / −3.300).
+Con 0,75 % en fondeada, todas las FP bajan un 20-25 %. Ver fp_oficial.csv.
 
 **Lectura:**
-- En cuentas grandes FTMO gana: cobra con el 1,5 % de riesgo y sin norma de noticias. Una FP 100K rinde el 50-85 % de
-  una FTMO 100K con el 75 % de la caja.
-- En 10K FundingPips es igual o mejor por euro arriesgado: cuesta la mitad (45 € frente a 89 €) y la caja en el 10 %
-  peor es −330 € frente a −620 €. Encaja con el presupuesto de 100-200 €/mes.
-- Como tercera firma (repartir riesgo de firma y sumar capacidad fuera del tope de FTMO) compite con The5ers y E8.
+- Por cuenta, FTMO gana porque cobra al 1,5 % y sin norma de noticias. FundingPips rinde un 65-90 % de la FTMO del mismo
+  tamaño, con un 55-75 % de la caja en riesgo.
+- **Por euro arriesgado, FundingPips es igual o mejor**, sobre todo el Flex 95 %: cuota más baja y caja peor de
+  −240 € en 10K frente a −620 € en FTMO.
+- Flex 95 % y Standard quedan muy parejos; Flex es algo más barato y con más margen (12 %), Standard devuelve la cuota en el
+  4º retiro y aprueba antes (8 %).
+- Todo depende de dos cosas que hay que medir: el riesgo que deja el margen en Master y cuántas ganancias se comería la
+  norma de noticias.
 
 ## Recomendación
 
-1. **No hace falta comprar antes de que acabe Halloween:** `HELLO` da el mismo 20 % en la primera compra (según
-   cryptoslate excluye la de 100K). Halloween solo añade un 15 % para clientes que ya hayan comprado.
-2. Antes de comprar, abrir la **cuenta de prueba gratis** de FundingPips en MT5 y mirar en Especificación del NAS100
-   (y DE40): tamaño de contrato, spread a las 15:30-16:00 hora de Madrid y margen con 2-3 lotes. Así sabremos si en Master
-   cabe el 1 % (o el 1,5 % en 10K).
-3. Si cuadra, usar FundingPips como la tercera firma del plan (enero) con **2-Step Standard 10K, US100**, riesgo 2 % en
-   fases y 1 % en Master, reparto **quincenal 80 %**, y el filtro de noticias USD del EA activado solo en Master.
-4. Tener a mano el `.mq5` fuente por si piden la prueba de autoría.
+1. **Sin prisa por Halloween.** `HELLO` da el mismo 20 % en la primera compra.
+2. **Abrir la Free Trial** (botón en la web) y anotar en MT5, Especificación de NDX100: tamaño de contrato, spread a las
+   15:30-16:00 de Madrid y el margen que pide 1 lote. Con eso fijamos el riesgo de Master.
+3. Si cuadra, tercera firma del plan con **una 10K de US100**, 2-Step Flex 95 % o Standard; riesgo 2 % en fases y
+   0,75-1 % en Master, y el filtro de noticias USD del EA activado solo en Master.
+4. Guardar el `.mq5` fuente y su historial (yes-lab) como prueba de autoría. MT5 en el PC, nunca en VPS.
 
-## Pendiente de verificar (las webs oficiales no se pudieron leer desde aquí)
-- Fecha de fin de la promoción de Halloween (ninguna fuente la publica).
-- Si la norma de noticias se aplica a NAS100/DE40 (las fuentes hablan de "divisa afectada").
-- Si el apalancamiento escalonado sigue vigente y cómo cuenta los lotes (por símbolo o total).
-- Si el Striking System es 1 % o 1,2 % y si aplica a 25K.
-- Spreads y swap reales (el ORB no deja posiciones de noche).
+## Pendiente
+- Fecha de fin de Halloween (no publicada).
+- Si la norma de noticias afecta a NDX100/GER40 (el texto habla de "divisa afectada").
+- Medir el % de operaciones del ORB que abren o cierran a ±5 min de noticias fuertes USD (calendario de FundingPips).
+- El artículo "Risk Per Trade Idea" del centro de ayuda ahora pide iniciar sesión; no aparece en las páginas de
+  Standard ni Flex.
 
-## Fuentes
-- Halloween: https://forexpropreviews.com/fundingpips-halloween-sale-offers-up-to-20-off/ (29/10/2026)
-- Web oficial (código HELLO, 2-Step 8 %/5 %/5 %/10 %): https://fundingpips.com
-- Reglas por modelo: https://tradetanto.com/learn/fundingpips-rules ; https://proptradingvibes.com/blog/fundingpips-rules
-- Precios y Striking: https://cryptoslate.com/prop-firms/fundingpips-review/ ; https://www.proptradingvibes.com/blog/fundingpips-account-types
-- Apalancamiento escalonado: https://proptradingvibes.com/blog/fundingpips-dynamic-leverage
-- EAs, noticias, copia entre cuentas: https://pickmytrade.io/prop-firm-faq/fundingpips/ ; https://blog.pickmytrade.io/fundingpips-review-rules-payouts-automation/
-- Centro de ayuda oficial (bloqueado desde el contenedor): https://help.fundingpips.com/hc/en-us/articles/34501809112081-2-Step-Standard
+## Fuentes oficiales (leídas el 30/10/2026)
+- https://fundingpips.com (banner Halloween, precios, tope de 400K)
+- https://help.fundingpips.com/hc/en-us/articles/34501809112081-2-Step-Standard
+- https://help.fundingpips.com/hc/en-us/articles/47835196271249-2-Step-Flex
+- https://help.fundingpips.com/hc/en-us/articles/34505029138449-Trading-Conduct-and-Security-Standards
+- https://help.fundingpips.com/hc/en-us/articles/44390730743825-Get-Started

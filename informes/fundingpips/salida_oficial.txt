@@ -1,0 +1,55 @@
+      esc                                  caso  cuota_ini  media  mediana    p10  p_neg  caja_p10  cuotas
+     base                        FTMO 10K 2/1,5         89  2,745    2,396    -56     11      -623       7
+     base   FP Standard 10K 2/0.75 noticias 0 %         51  1,901    1,762    366      4      -270       4
+     base    FP Flex 95 10K 2/0.75 noticias 0 %         46  2,037    1,858    288      5      -240       3
+     base  FP Standard 10K 2/0.75 noticias 10 %         51  1,390    1,246     74      8      -325       5
+     base   FP Flex 95 10K 2/0.75 noticias 10 %         46  1,478    1,278     25      9      -240       3
+     base    FP Standard 10K 2/1.0 noticias 0 %         51  2,454    2,264    425      4      -325       5
+     base     FP Flex 95 10K 2/1.0 noticias 0 %         46  2,665    2,414    339      6      -240       4
+     base   FP Standard 10K 2/1.0 noticias 10 %         51  1,822    1,624    105      8      -325       6
+     base    FP Flex 95 10K 2/1.0 noticias 10 %         46  1,960    1,684     29      9      -289       4
+     base                        FTMO 50K 2/1,5        345 14,245   12,463    464      9    -2,415       7
+     base   FP Standard 50K 2/0.75 noticias 0 %        249  9,533    8,835  1,876      4    -1,309       4
+     base    FP Flex 95 50K 2/0.75 noticias 0 %        214 10,236    9,328  1,520      5    -1,121       3
+     base  FP Standard 50K 2/0.75 noticias 10 %        249  6,980    6,262    417      8    -1,574       5
+     base   FP Flex 95 50K 2/0.75 noticias 10 %        214  7,444    6,444    202      9    -1,121       3
+     base    FP Standard 50K 2/1.0 noticias 0 %        249 12,308   11,348  2,178      4    -1,574       5
+     base     FP Flex 95 50K 2/1.0 noticias 0 %        214 13,388   12,121  1,781      6    -1,121       4
+     base   FP Standard 50K 2/1.0 noticias 10 %        249  9,154    8,169    586      8    -1,574       6
+     base    FP Flex 95 50K 2/1.0 noticias 10 %        214  9,868    8,488    235      9    -1,348       4
+     base                       FTMO 100K 2/1,5        540 29,274   25,709  2,096      7    -3,780       7
+     base  FP Standard 100K 2/0.75 noticias 0 %        466 19,174   17,753  3,934      4    -2,445       4
+     base   FP Flex 95 100K 2/0.75 noticias 0 %        396 20,572   18,749  3,187      5    -2,081       3
+     base FP Standard 100K 2/0.75 noticias 10 %        466 14,093   12,641  1,040      7    -2,940       5
+     base  FP Flex 95 100K 2/0.75 noticias 10 %        396 15,000   13,000    545      9    -2,081       3
+     base   FP Standard 100K 2/1.0 noticias 0 %        466 24,766   22,845  4,614      4    -2,940       5
+     base    FP Flex 95 100K 2/1.0 noticias 0 %        396 26,900   24,370  3,759      5    -2,081       4
+     base  FP Standard 100K 2/1.0 noticias 10 %        466 18,486   16,507  1,419      7    -2,940       6
+     base   FP Flex 95 100K 2/1.0 noticias 10 %        396 19,875   17,108    648      9    -2,502       4
+costes x2                        FTMO 10K 2/1,5         89  1,979    1,585   -534     19      -801       8
+costes x2   FP Standard 10K 2/0.75 noticias 0 %         51  1,519    1,363     69      8      -341       5
+costes x2    FP Flex 95 10K 2/0.75 noticias 0 %         46  1,589    1,379    -25     11      -289       4
+costes x2  FP Standard 10K 2/0.75 noticias 10 %         51  1,074      920   -143     15      -379       5
+costes x2   FP Flex 95 10K 2/0.75 noticias 10 %         46  1,118      892   -191     16      -289       4
+costes x2    FP Standard 10K 2/1.0 noticias 0 %         51  1,954    1,742     83      8      -379       6
+costes x2     FP Flex 95 10K 2/1.0 noticias 0 %         46  2,068    1,764    -45     11      -337       5
+costes x2   FP Standard 10K 2/1.0 noticias 10 %         51  1,413    1,182   -160     14      -434       7
+costes x2    FP Flex 95 10K 2/1.0 noticias 10 %         46  1,480    1,178   -240     16      -337       5
+costes x2                        FTMO 50K 2/1,5        345 10,539    8,551 -1,809     16    -3,105       8
+costes x2   FP Standard 50K 2/0.75 noticias 0 %        249  7,629    6,843    404      8    -1,633       5
+costes x2    FP Flex 95 50K 2/0.75 noticias 0 %        214  8,004    6,951    -36     10    -1,348       4
+costes x2  FP Standard 50K 2/0.75 noticias 10 %        249  5,410    4,636   -655     14    -1,838       5
+costes x2   FP Flex 95 50K 2/0.75 noticias 10 %        214  5,656    4,524   -894     16    -1,348       4
+costes x2    FP Standard 50K 2/1.0 noticias 0 %        249  9,814    8,750    483      8    -1,838       6
+costes x2     FP Flex 95 50K 2/1.0 noticias 0 %        214 10,412    8,895   -125     10    -1,575       5
+costes x2   FP Standard 50K 2/1.0 noticias 10 %        249  7,117    5,956   -723     14    -2,103       7
+costes x2    FP Flex 95 50K 2/1.0 noticias 10 %        214  7,482    5,964 -1,105     16    -1,575       5
+costes x2                       FTMO 100K 2/1,5        540 22,042   17,994 -2,289     14    -4,860       8
+costes x2  FP Standard 100K 2/0.75 noticias 0 %        466 15,400   13,815  1,059      8    -2,955       5
+costes x2   FP Flex 95 100K 2/0.75 noticias 0 %        396 16,131   14,005    101     10    -2,502       4
+costes x2 FP Standard 100K 2/0.75 noticias 10 %        466 10,990    9,421 -1,070     13    -3,435       5
+costes x2  FP Flex 95 100K 2/0.75 noticias 10 %        396 11,448    9,202 -1,660     15    -2,502       4
+costes x2   FP Standard 100K 2/1.0 noticias 0 %        466 19,819   17,680  1,259      8    -3,435       6
+costes x2    FP Flex 95 100K 2/1.0 noticias 0 %        396 20,976   17,926    -40     10    -2,924       5
+costes x2  FP Standard 100K 2/1.0 noticias 10 %        466 14,451   12,113 -1,132     13    -3,929       7
+costes x2   FP Flex 95 100K 2/1.0 noticias 10 %        396 15,128   12,082 -1,954     15    -2,924       5

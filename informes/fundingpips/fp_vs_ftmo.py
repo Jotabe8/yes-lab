@@ -19,7 +19,7 @@ st=rng.integers(0,len(cal)-BLOCK,(N,DAYS//BLOCK+1)); IDX=(st[:,:,None]+np.arange
 U_NEWS=np.random.default_rng(11).random((N,DAYS))
 
 def cuenta(name,size,fee1,fee_re,rc=2.0,rf=1.5,t1=10,t2=5,mind=4,daily=5,maxdd=10,split=0.8,cada=10,
-           refund_n=1,q_news=0.0,HC=0.05,mensual=False):
+           refund_n=1,q_news=0.0,HC=0.05,mensual=False,minpos=0):
     """fee1/fee_re en €: primera compra y recompras. mensual=True: ciclo de 21 días al 100 % con condiciones FP
     (>= 7 días con >= 0,5 %, mejor día <= 35 % del beneficio del ciclo); si no se cumplen, el ciclo sigue."""
     R,RB=S[name]; has=np.isfinite(R[IDX]); r=np.where(has,R[IDX]-HC,0); rb=np.where(has,RB[IDX]-HC,0)
@@ -39,7 +39,7 @@ def cuenta(name,size,fee1,fee_re,rc=2.0,rf=1.5,t1=10,t2=5,mind=4,daily=5,maxdd=1
         if mensual:
             can=fund&~fail&(since>=21)&(bal>=1)&(gd>=7)&(best<=0.35*bal); sp=1.0
         else:
-            can=fund&~fail&(since>=cada)&(bal>=1); sp=split
+            can=fund&~fail&(since>=cada)&(bal>=1)&(gd>=minpos); sp=split
         nrw+=can
         ref=can&(nrw==refund_n)
         cash[:,m]+=np.where(can,bal/100*USD*sp/EUR,0)+np.where(ref,paid,0)-np.where(fail,fee_re,0)
