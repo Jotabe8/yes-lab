@@ -4,7 +4,7 @@ import random
 import unittest
 
 from lab.backtest import run
-from lab.estrategias import (auction_bucket, auction_cycle, fx_momentum_weights, month_end_fixing, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
+from lab.estrategias import (auction_bucket, auction_cycle, bond_month_end, fx_momentum_weights, month_end_fixing, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
                              vol_managed, walk_forward_tom, walk_forward_weights, window_stats)
 
 
@@ -171,6 +171,25 @@ class MonthEndFixingTests(unittest.TestCase):
         self.assertIn(-1.0, [x["EUR"] for x in w])
         flat = month_end_fixing(dates, prices, falling, umbral=0.5)
         self.assertFalse(any(x["EUR"] for x in flat))
+
+
+class BondMonthEndTests(unittest.TestCase):
+    def test_long_last_sessions_short_first(self):
+        dates = business_days("2026-01-01", 45)
+        w = bond_month_end(dates, [100.0] * 45, fin=2, corto=1)
+        first, last = month_ranks(dates)
+        held = [0.0] + w[:-1]                       # w[t] se aplica a t+1
+        for i in range(1, 45):
+            expected = 1.0 if last[i] <= 2 else (-1.0 if first[i] <= 1 else 0.0)
+            self.assertEqual(held[i], expected, dates[i])
+
+    def test_long_only_by_default(self):
+        dates = business_days("2026-01-01", 45)
+        w = bond_month_end(dates, [100.0] * 45)
+        self.assertNotIn(-1.0, w)
+        held = [0.0] + w[:-1]
+        febrero = [h for d, h in zip(dates, held) if d[:7] == "2026-02"]
+        self.assertEqual(febrero, [0.0] * (len(febrero) - 3) + [1.0] * 3)
 
 
 if __name__ == "__main__":

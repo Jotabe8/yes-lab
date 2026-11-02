@@ -25,6 +25,10 @@ Estrategias:
   con la divisa cubierta tiene que vender más dólares en el fixing de Londres del último día
   hábil, y el dólar baja; si ha caído, sube. El penúltimo cierre del mes se compran las 6
   divisas frente al dólar (o se venden) con exposición bruta 1, y se cierra el último día.
+- bonos-fin-de-mes: compras de duración de fin de mes en bonos del Tesoro (Hartley & Schwarz,
+  2019). Los gestores indexados alargan la duración cuando el índice incorpora las emisiones
+  del mes, y los bonos suben en las últimas sesiones. Largo las `fin` últimas sesiones del
+  mes y, opcionalmente, corto las `corto` primeras del siguiente. El resto, en liquidez.
 - subastas: ciclo de subastas del Tesoro de EE. UU. (Lou, Yan & Zhang, 2013). Los bonos bajan en
   las `antes` sesiones previas a cada subasta de los `plazos` elegidos y se recuperan en las
   `despues` siguientes. Corto antes y largo después; con --filtro, largo todo el tiempo salvo
@@ -37,6 +41,7 @@ Uso:
     python -m lab.estrategias momentum-divisas fx --cost 0.02 --walk-forward
     python -m lab.estrategias rebalanceo spy --cost 0.05 --walk-forward
     python -m lab.estrategias fixing-fin-de-mes fx --cost 0.02 --walk-forward
+    python -m lab.estrategias bonos-fin-de-mes ief --fin 3 --cost 0.05 --walk-forward
     python -m lab.estrategias subastas tlt --plazos 10,30 --antes 5 --cost 0.05 --walk-forward
 """
 
@@ -287,6 +292,19 @@ def walk_forward_fx(dates, prices, year, cost_pct, train_years=3, test_years=1, 
     return {"windows": len(chosen), "params": chosen, "oos": metrics(oos, year)}
 
 
+# --- Bonos a fin de mes ----------------------------------------------------------------
+
+def bond_month_end(dates: list[str], closes: list[float], fin: int = 3, corto: int = 0) -> list[float]:
+    """Pesos decididos al cierre de t para t+1: +1 en las `fin` últimas sesiones del mes,
+    -1 en las `corto` primeras del siguiente y 0 el resto."""
+    first, last = month_ranks(dates)
+    held = [1.0 if last[i] <= fin else (-1.0 if first[i] <= corto else 0.0) for i in range(len(dates))]
+    return held[1:] + [0.0]
+
+
+BOND_GRID = [{"fin": f, "corto": 0} for f in (1, 2, 3, 4, 5)]   # el paper solo documenta el lado largo
+
+
 # --- Fixing de fin de mes ---------------------------------------------------------------
 
 def month_end_fixing(dates: list[str], prices: dict[str, list[float]], equity: list[float],
@@ -387,7 +405,8 @@ SUB_GRID_FILTRO = [{"antes": a, "despues": 0} for a in (1, 2, 3, 4, 5)]
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description="Estrategias del informe semanal")
     ap.add_argument("estrategia", choices=["cambio-de-mes", "vol-gestionada", "momentum-divisas", "rebalanceo",
-                                                 "subastas", "fixing-fin-de-mes"])
+                                                 "subastas", "fixing-fin-de-mes",
+                                                 "bonos-fin-de-mes"])
     ap.add_argument("serie", help="serie de docs/data (en momentum-divisas se ignora: usa los 6 pares)")
     ap.add_argument("--antes", type=int, default=1, help="sesiones finales del mes invertido")
     ap.add_argument("--despues", type=int, default=3, help="sesiones iniciales del mes siguiente invertido")
@@ -402,6 +421,8 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--plazos", default="10,30", help="subastas: plazos que cuentan (2,3,5,7,10,20,30)")
     ap.add_argument("--despues-sub", type=int, default=0, help="subastas: sesiones largas tras la subasta")
     ap.add_argument("--filtro", action="store_true", help="subastas: largo salvo antes de la subasta")
+    ap.add_argument("--fin", type=int, default=3, help="bonos-fin-de-mes: últimas sesiones del mes largo")
+    ap.add_argument("--corto", type=int, default=0, help="bonos-fin-de-mes: primeras sesiones del mes corto")
     ap.add_argument("--walk-forward", action="store_true")
     a = ap.parse_args(argv)
 
@@ -415,6 +436,8 @@ def main(argv: list[str] | None = None) -> None:
         return _main_sub(a)
     if a.estrategia == "fixing-fin-de-mes":
         return _main_fix(a)
+    if a.estrategia == "bonos-fin-de-mes":
+        return _main_bond(a)
 
     dates, closes, year = load_dated(a.serie)
     sig = turn_of_month(dates, a.antes, a.despues)
@@ -534,6 +557,31 @@ def _main_fx(a) -> None:
             o = wf["oos"]
             print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
                   f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | meses: {', '.join(map(str, wf['params']))}")
+
+
+def _main_bond(a) -> None:
+    dates, closes, year = load_dated(a.serie)
+    w = bond_month_end(dates, closes, a.fin, a.corto)
+    rets = [closes[i] / closes[i - 1] - 1 for i in range(1, len(closes))]
+    inside = [r for r, x in zip(rets, w[:-1]) if x > 0]
+    print(f"{a.serie} {dates[0]} → {dates[-1]} | largo las {a.fin} últimas sesiones"
+          + (f", corto las {a.corto} primeras" if a.corto else "")
+          + f" | media en la ventana {sum(inside) / len(inside) * 100:+.3f}% frente a {sum(rets) / len(rets) * 100:+.3f}% de todos los días")
+    bh = metrics([c / closes[0] for c in closes], year)
+    print(f"[comprar y mantener] CAGR {_pct(bh['cagr'])} | caída máx {_pct(bh['max_drawdown'])} | Sharpe {bh['sharpe']:.2f}")
+    for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+        s = metrics(run_weights(closes, w, cost), year)
+        print(f"[{label}] CAGR {_pct(s['cagr'])} | caída máx {_pct(s['max_drawdown'])} | Sharpe {s['sharpe']:.2f}")
+    if a.walk_forward:
+        for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+            wf = walk_forward_weights(dates, closes, year, cost, bond_month_end, BOND_GRID)
+            o = wf["oos"]
+            params = ", ".join(f"{p['fin']}/{p['corto']}" for p in wf["params"])
+            print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
+                  f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | fin/corto: {params}")
+        start = 3 * year
+        o = metrics([c / closes[start - 1] for c in closes[start - 1:start + wf["windows"] * year]], year)
+        print(f"[B&H en los mismos años] CAGR {_pct(o['cagr'])} | caída máx {_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f}")
 
 
 def _main_fix(a) -> None:
