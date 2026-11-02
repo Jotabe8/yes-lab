@@ -11,12 +11,73 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-02 | Bonos a fin de mes (compras de duración) | IEF, TLT | Prometedora: positiva en 8-9 de 10 años, pero muy sensible a los costes |
 | 2026-10-26 | Fixing de divisas de fin de mes | 6 divisas frente al USD | Descartada con datos diarios: −5 pb por operación; queda pendiente probarla con datos intradía |
 | 2026-10-26 | Ciclo de subastas del Tesoro | TLT, IEF | Descartada: la caída previa existe (−0,24% en 5 sesiones), pero depende de 2022 y pierde en el walk-forward |
 | 2026-10-25 | Rebalanceo de fin de mes (60/40) | SPY con TLT | Prometedora pero frágil: el efecto aparece, el walk-forward es inestable |
 | 2026-10-25 | Volatilidad gestionada | SPY, IBEX, SAN, BTC, ETH | Sin ventaja en Sharpe fuera de muestra; solo reduce caídas |
 | 2026-10-25 | Momentum de divisas | 6 divisas G10 frente al USD | Descartada: pierde con todos los horizontes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-11-02 · Bonos a fin de mes
+
+**Hipótesis.** A fin de mes, los índices de bonos del Tesoro incorporan las emisiones nuevas y
+su duración se alarga. Los gestores indexados compran bonos largos para seguirlo, y los
+gestores activos maquillan carteras. Hartley & Schwarz (2019), con datos de 1990 a 2018,
+encuentran rentabilidad positiva y significativa en las últimas 3-5 sesiones del mes: unos
+25 pb en las 3 últimas para el bono a 10 años y un Sharpe bruto cercano a 1. La semana
+pasada salió una pista en el mismo sentido: IEF subía +0,22% tras las subastas de 5 y 7
+años, que caen a final de mes.
+
+**Regla.** Largo en el ETF de bonos las `fin` últimas sesiones del mes y en liquidez el resto.
+Opcionalmente, corto las `corto` primeras sesiones del mes siguiente, como propone un blog
+de practicantes. El paper no documenta ese lado.
+
+```bash
+python -m lab.estrategias bonos-fin-de-mes ief --fin 3 --cost 0.05 --walk-forward
+```
+
+**Estudio por sesión (2016-2026, rentabilidad media diaria).** Media de todos los días en IEF:
++0,003%.
+
+| Sesión | IEF | TLT |
+| --- | --- | --- |
+| Antepenúltima | +0,096% (t = 2,5) | +0,130% (t = 1,6) |
+| Penúltima | +0,051% (t = 1,5) | +0,098% (t = 1,6) |
+| Última | +0,070% (t = 2,0) | +0,056% (t = 0,8) |
+| Tres primeras del mes siguiente | sin efecto | sin efecto |
+| 3 últimas, 2016-2020 | +0,083% (t = 3,5) | +0,132% (t = 2,4) |
+| 3 últimas, 2021-2026 | +0,064% (t = 2,0) | +0,067% (t = 1,2) |
+
+En SPY no hay nada parecido en esas sesiones, así que no es un efecto general de fin de mes.
+
+**Estrategia, 3 últimas sesiones, 0,05% por lado.**
+
+| Variante | IEF Sharpe (costes normales / al doble) | TLT Sharpe |
+| --- | --- | --- |
+| Todo el periodo | 0,61 / 0,09 | 0,45 / 0,21 |
+| Walk-forward (6 años), solo lado largo | 0,40 / −0,07 | 0,30 / 0,26 |
+| Walk-forward con el corto de inicio de mes en la rejilla | −0,07 / −0,53 | −0,09 / −0,20 |
+| Comprar y mantener en los mismos años | 0,02 | −0,17 |
+| IEF con 0,01% por lado (horquilla real de IEF) | 1,03 / 0,92 | |
+
+**Por años** (regla fija de 3 sesiones, IEF, 0,05% por lado): positiva en 8 de 10 años, también
+en 2022 (+3,2%, cuando IEF perdió más del 15%). Las pérdidas son pequeñas (2017 −0,3% y
+2021 −0,5%; 2026 va en −0,9%). Sin costes, positiva todos los años.
+
+**Conclusión: prometedora.** El efecto aparece con el signo del paper, en las mismas sesiones,
+en las dos mitades del periodo y en dos ETF. La ventaja es pequeña, unos 22 pb al mes en IEF,
+así que todo depende del coste. Con 0,05% por lado se come la mitad, y con 0,10% casi toda.
+Con la horquilla real de IEF (alrededor de 0,01%) o con futuros del 10 años, el Sharpe ronda 1.
+El corto de inicio de mes no tiene respaldo: con él en la rejilla, el walk-forward elige mal y
+pierde. Aquí queda descartado.
+
+**Límites.** Son 120 meses y el walk-forward solo tiene 6 ventanas. En la muestra, la regla
+está fija en 3 sesiones, el valor que da el paper, y no se optimizó aquí. La rentabilidad del
+fondo incluye el cupón, que se cobra a principio de mes en los ETF y podría mover algo los
+primeros días. Falta probarla con futuros (ZN) y en CFD de bonos, si el broker los ofrece.
 
 ---
 
