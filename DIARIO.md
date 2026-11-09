@@ -11,6 +11,8 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-09 | Rebalanceo por umbral de carteras 60/40 | SPY con IEF/TLT | Pendiente: la versión del paper no aguanta los costes; comprar cuando las acciones están infraponderadas gana todos los años, pero el walk-forward (Sharpe 0,50) no supera a comprar y mantener |
+| 2026-11-09 | Bonos a fin de mes, solo meses de refinanciación | IEF, TLT | Prometedora: aguanta costes de 0,10% por lado (walk-forward Sharpe 0,65), pero son solo 40 operaciones |
 | 2026-11-02 | Bonos a fin de mes (compras de duración) | IEF, TLT | Prometedora: positiva en 8-9 de 10 años, pero muy sensible a los costes |
 | 2026-10-26 | Fixing de divisas de fin de mes | 6 divisas frente al USD | Descartada con datos diarios: −5 pb por operación; queda pendiente probarla con datos intradía |
 | 2026-10-26 | Ciclo de subastas del Tesoro | TLT, IEF | Descartada: la caída previa existe (−0,24% en 5 sesiones), pero depende de 2022 y pierde en el walk-forward |
@@ -18,6 +20,100 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 | 2026-10-25 | Volatilidad gestionada | SPY, IBEX, SAN, BTC, ETH | Sin ventaja en Sharpe fuera de muestra; solo reduce caídas |
 | 2026-10-25 | Momentum de divisas | 6 divisas G10 frente al USD | Descartada: pierde con todos los horizontes |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
+
+---
+
+## 2026-11-09 · Bonos a fin de mes, solo en meses de refinanciación
+
+**Hipótesis.** La semana pasada el efecto de fin de mes en bonos salió real pero pequeño, y
+desaparecía con costes de 0,10% por lado. La extensión de duración del índice del Tesoro es
+casi el doble en los meses de refinanciación trimestral (febrero, mayo, agosto y noviembre:
+0,11-0,12 años frente a 0,06-0,07, según ITC Markets), así que las compras forzadas deberían
+ser mayores justo esos meses. Operar solo 4 veces al año reduce además los costes a un tercio.
+
+**Regla.** La de la semana pasada (largo las `fin` últimas sesiones del mes), solo en febrero,
+mayo, agosto y noviembre.
+
+```bash
+python -m lab.estrategias bonos-fin-de-mes ief --refinanciacion --fin 5 --cost 0.05 --walk-forward
+```
+
+**Resultados (2016-2026, rentabilidad media diaria en la ventana).**
+
+| Variante | IEF media | IEF Sharpe (0,05% / 0,10% por lado) | TLT media |
+| --- | --- | --- | --- |
+| Todos los meses, 3 últimas | +0,072% | 0,61 / 0,09 | +0,095% |
+| Resto de meses, 3 últimas | +0,066% (t = 2,8) | | +0,075% (t = 1,5) |
+| Refinanciación, 3 últimas | +0,085% (t = 2,3) | 0,44 / 0,15 | +0,135% (t = 1,7) |
+| Todos los meses, 5 últimas | +0,050% | 0,62 / 0,21 | |
+| Refinanciación, 5 últimas | +0,093% | 0,85 / 0,61 | |
+
+La diferencia entre los meses de refinanciación y el resto va en la dirección esperada, pero
+no es significativa por sí sola (40 ventanas frente a 81).
+
+**Walk-forward (3+1 años, elige 1-5 sesiones).**
+
+| Serie y coste | Solo refinanciación | Todos los meses (semana pasada) | Comprar y mantener |
+| --- | --- | --- | --- |
+| IEF, 0,01% / 0,02% | 0,95 / 0,91 | 0,92 / 0,82 | 0,02 |
+| IEF, 0,05% / 0,10% | 0,77 / 0,65 | 0,40 / −0,07 | 0,02 |
+| TLT, 0,02% / 0,04% | 0,73 / 0,69 | | −0,17 |
+
+Con costes muy bajos las dos versiones rinden igual. Con costes realistas de CFD o de un
+bróker caro, la versión de solo 4 operaciones al año es la que sobrevive. La caída máxima
+es del 2-4% frente al 24% de IEF.
+
+**Conclusión: prometedora.** Es la versión más robusta a costes del efecto de fin de mes en
+bonos. Gana unos 1,5-2% al año con un 2% del tiempo invertido, así que, sola, solo tiene
+sentido apalancada (futuros del 10 años) o como complemento de otra estrategia.
+
+**Límites.** Solo 40 operaciones en 10 años; el mes de refinanciación es una elección a priori
+documentada, pero el número de sesiones (5) lo elige el walk-forward. No incluye el interés de
+la liquidez el resto del tiempo.
+
+---
+
+## 2026-11-09 · Rebalanceo por umbral de las carteras 60/40
+
+**Hipótesis.** Harvey, Mazzoleni & Melone (working paper de enero de 2026) sostienen que los
+fondos mixtos no solo rebalancean a fin de mes, sino también cuando su peso en acciones se
+aleja de un umbral. Simulan carteras 60/40 con umbrales de 0% a 2,5% y promedian la
+desviación pendiente: si las acciones están sobreponderadas, al día siguiente rinden menos que
+los bonos (unos −16 pb por desviación típica). Su estrategia largo/corto S&P 500 contra bonos
+a 10 años tiene un Sharpe de 1,1 en 1997-2023, muy concentrado en crisis (asimetría de 5,2).
+
+**Regla.** Dos versiones, con señal al cierre y ejecución al día siguiente:
+1. La del paper: largo/corto diario SPY contra IEF con peso −señal/1,5%.
+2. Solo largo: comprar SPY para el día siguiente cuando la señal está por debajo de −`entrada`
+   (acciones infraponderadas: los fondos tendrán que comprar). El resto, en liquidez.
+
+```bash
+python -m lab.estrategias rebalanceo-umbral spy --bonos ief --cost 0.02 --walk-forward
+```
+
+**Resultados (2016-2026).**
+- La señal predice: −12 pb del diferencial SPY−IEF por desviación típica (t = −3,6), y más
+  fuerte en 2021-2026 (t = −3,8), en parte fuera de la muestra del paper. Se mantiene sin el
+  covid y recortando extremos (t ≈ −3,4). Viene casi toda de las acciones, no de los bonos.
+- Pero casi todo está en el lado infraponderado: el quintil con acciones infraponderadas da
+  +21 pb al día al diferencial y los otros cuatro, entre −1 y +5 pb. Como en 2016-2026 las
+  acciones subieron casi siempre, la versión del paper pasa la mayor parte del tiempo corta en
+  SPY y pierde: Sharpe 0,17 con 0,02% por lado y −0,02 con 0,04%.
+- Solo largo con entrada 0,1%: 323 días (13% del tiempo) con +0,315% de media frente al
+  +0,063% de un día cualquiera. Mejor que comprar tras caídas de 1-10 días (+0,07% a +0,13%),
+  así que no es solo reversión a corto plazo. Gana todos los años de 2016 a 2026 (sin el covid,
+  +0,265% al día). Sharpe 0,91 con 0,02% y 0,87 con 0,04%, frente al 0,88 de comprar y
+  mantener, con la mitad de caída máxima (−15% frente a −34%).
+- Walk-forward (elige la entrada entre 0% y 0,3%): Sharpe 0,50 con 0,02% y 0,46 con 0,04%,
+  frente al 0,83 de comprar y mantener en los mismos años. Con TLT como bono, 0,13.
+
+**Conclusión: pendiente.** El efecto existe y es estable año a año, pero estar fuera del mercado
+el 87% del tiempo cuesta más de lo que aporta, y la elección del bono pesa mucho. Su uso más
+probable es como filtro o como capa de apalancamiento sobre una cartera larga, no sola.
+
+**Límites.** SPY e IEF son aproximaciones del S&P 500 y del futuro a 10 años del paper. No se
+ha probado la parte de calendario del paper (ya probada el 2026-10-25 como rebalanceo de fin de
+mes). La liquidez no cobra interés.
 
 ---
 

@@ -4,7 +4,7 @@ import random
 import unittest
 
 from lab.backtest import run
-from lab.estrategias import (auction_bucket, auction_cycle, bond_month_end, fx_momentum_weights, month_end_fixing, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
+from lab.estrategias import (REFUNDING, auction_bucket, auction_cycle, bond_month_end, threshold_rebalance, threshold_signal, fx_momentum_weights, month_end_fixing, month_end_rebalance, month_ranks, run_portfolio, run_weights, turn_of_month,
                              vol_managed, walk_forward_tom, walk_forward_weights, window_stats)
 
 
@@ -190,6 +190,36 @@ class BondMonthEndTests(unittest.TestCase):
         held = [0.0] + w[:-1]
         febrero = [h for d, h in zip(dates, held) if d[:7] == "2026-02"]
         self.assertEqual(febrero, [0.0] * (len(febrero) - 3) + [1.0] * 3)
+
+    def test_refunding_months_only(self):
+        dates = business_days("2026-01-01", 45)
+        w = bond_month_end(dates, [100.0] * 45, meses=REFUNDING)
+        held = [0.0] + w[:-1]
+        for d, h in zip(dates, held):
+            if d[:7] == "2026-01":
+                self.assertEqual(h, 0.0, d)         # enero no es mes de refinanciación
+        self.assertEqual(sum(h for d, h in zip(dates, held) if d[:7] == "2026-02"), 3.0)
+
+
+class ThresholdRebalanceTests(unittest.TestCase):
+    def test_flat_markets_give_zero_signal(self):
+        self.assertEqual(threshold_signal([100.0] * 10, [50.0] * 10), [0.0] * 10)
+
+    def test_sign_and_reset(self):
+        # acciones +1% un día: la cartera queda sobreponderada (señal > 0)
+        sig = threshold_signal([100.0, 101.0], [100.0, 100.0])
+        self.assertGreater(sig[1], 0)
+        # con un solo umbral pequeño, una desviación mayor rebalancea y la señal vuelve a 0
+        self.assertEqual(threshold_signal([100.0, 110.0], [100.0, 100.0], deltas=(0.01,))[1], 0.0)
+        self.assertLess(threshold_signal([100.0, 99.0], [100.0, 100.0], deltas=(0.01,))[1], 0)
+
+    def test_buys_only_when_underweight(self):
+        acc = [100.0, 99.0, 99.0, 101.0]
+        w = threshold_rebalance(["d"] * 4, acc, [100.0] * 4, entrada=0.001)
+        sig = threshold_signal(acc, [100.0] * 4)
+        self.assertEqual(w, [1.0 if x < -0.001 else 0.0 for x in sig])
+        self.assertEqual(w[1], 1.0)
+        self.assertEqual(w[0], 0.0)
 
 
 if __name__ == "__main__":

@@ -29,6 +29,11 @@ Estrategias:
   2019). Los gestores indexados alargan la duración cuando el índice incorpora las emisiones
   del mes, y los bonos suben en las últimas sesiones. Largo las `fin` últimas sesiones del
   mes y, opcionalmente, corto las `corto` primeras del siguiente. El resto, en liquidez.
+- rebalanceo-umbral: rebalanceo por umbral de las carteras 60/40 (Harvey, Mazzoleni & Melone,
+  2026). Simula carteras que vuelven al 60% cuando se desvían más de δ (0% a 2,5%) y promedia
+  la desviación pendiente. Cuando las acciones están infraponderadas más de `entrada`, compra el
+  índice para el día siguiente (los fondos tendrán que comprar). También muestra la versión del
+  paper: largo/corto diario acciones contra bonos.
 - subastas: ciclo de subastas del Tesoro de EE. UU. (Lou, Yan & Zhang, 2013). Los bonos bajan en
   las `antes` sesiones previas a cada subasta de los `plazos` elegidos y se recuperan en las
   `despues` siguientes. Corto antes y largo después; con --filtro, largo todo el tiempo salvo
@@ -42,6 +47,8 @@ Uso:
     python -m lab.estrategias rebalanceo spy --cost 0.05 --walk-forward
     python -m lab.estrategias fixing-fin-de-mes fx --cost 0.02 --walk-forward
     python -m lab.estrategias bonos-fin-de-mes ief --fin 3 --cost 0.05 --walk-forward
+    python -m lab.estrategias bonos-fin-de-mes ief --refinanciacion --cost 0.01 --walk-forward
+    python -m lab.estrategias rebalanceo-umbral spy --bonos ief --cost 0.02 --walk-forward
     python -m lab.estrategias subastas tlt --plazos 10,30 --antes 5 --cost 0.05 --walk-forward
 """
 
@@ -294,15 +301,58 @@ def walk_forward_fx(dates, prices, year, cost_pct, train_years=3, test_years=1, 
 
 # --- Bonos a fin de mes ----------------------------------------------------------------
 
-def bond_month_end(dates: list[str], closes: list[float], fin: int = 3, corto: int = 0) -> list[float]:
+def bond_month_end(dates: list[str], closes: list[float], fin: int = 3, corto: int = 0,
+                   meses: tuple[int, ...] | None = None) -> list[float]:
     """Pesos decididos al cierre de t para t+1: +1 en las `fin` últimas sesiones del mes,
-    -1 en las `corto` primeras del siguiente y 0 el resto."""
+    -1 en las `corto` primeras del siguiente y 0 el resto. Con `meses`, solo esos meses
+    (p. ej. (2, 5, 8, 11), los de refinanciación trimestral, con extensiones mayores)."""
     first, last = month_ranks(dates)
-    held = [1.0 if last[i] <= fin else (-1.0 if first[i] <= corto else 0.0) for i in range(len(dates))]
+    ok = lambda i: meses is None or int(dates[i][5:7]) in meses
+    held = [1.0 if last[i] <= fin and ok(i) else (-1.0 if first[i] <= corto else 0.0) for i in range(len(dates))]
     return held[1:] + [0.0]
 
 
+REFUNDING = (2, 5, 8, 11)
+
+
 BOND_GRID = [{"fin": f, "corto": 0} for f in (1, 2, 3, 4, 5)]   # el paper solo documenta el lado largo
+
+
+# --- Rebalanceo por umbral ---------------------------------------------------------------
+
+UMBRAL_DELTAS = tuple(k / 1000 for k in range(26))   # 0% a 2,5% en pasos de 0,1%, como el paper
+
+
+def threshold_signal(acciones: list[float], bonos: list[float], deltas=UMBRAL_DELTAS) -> list[float]:
+    """Señal de rebalanceo por umbral (Harvey, Mazzoleni & Melone, 2026), al cierre de cada día.
+
+    Para cada umbral δ simula una cartera 60/40 que vuelve al 60% cuando su peso en acciones se
+    aleja más de δ; la señal de ese δ es la desviación pendiente (0 el día que se rebalancea).
+    Devuelve la media sobre todos los δ: positiva = acciones sobreponderadas (los fondos venderán),
+    negativa = infraponderadas (comprarán).
+    """
+    n = len(acciones)
+    out = [0.0] * n
+    for de in deltas:
+        w = 0.6
+        for i in range(1, n):
+            gs, gb = acciones[i] / acciones[i - 1], bonos[i] / bonos[i - 1]
+            w = w * gs / (w * gs + (1 - w) * gb)
+            dev = w - 0.6
+            if abs(dev) > de + 1e-12:
+                w, dev = 0.6, 0.0
+            out[i] += dev / len(deltas)
+    return out
+
+
+def threshold_rebalance(dates: list[str], closes: list[float], bonos: list[float],
+                        entrada: float = 0.001) -> list[float]:
+    """Largo en el índice (decidido al cierre de t, para t+1) cuando la señal está por debajo de
+    -`entrada`: las acciones están infraponderadas y los fondos con umbral tendrán que comprar."""
+    return [1.0 if x < -entrada else 0.0 for x in threshold_signal(closes, bonos)]
+
+
+THR_GRID = [{"entrada": e} for e in (0.0, 0.001, 0.002, 0.003)]
 
 
 # --- Fixing de fin de mes ---------------------------------------------------------------
@@ -406,7 +456,7 @@ def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description="Estrategias del informe semanal")
     ap.add_argument("estrategia", choices=["cambio-de-mes", "vol-gestionada", "momentum-divisas", "rebalanceo",
                                                  "subastas", "fixing-fin-de-mes",
-                                                 "bonos-fin-de-mes"])
+                                                 "bonos-fin-de-mes", "rebalanceo-umbral"])
     ap.add_argument("serie", help="serie de docs/data (en momentum-divisas se ignora: usa los 6 pares)")
     ap.add_argument("--antes", type=int, default=1, help="sesiones finales del mes invertido")
     ap.add_argument("--despues", type=int, default=3, help="sesiones iniciales del mes siguiente invertido")
@@ -423,6 +473,10 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--filtro", action="store_true", help="subastas: largo salvo antes de la subasta")
     ap.add_argument("--fin", type=int, default=3, help="bonos-fin-de-mes: últimas sesiones del mes largo")
     ap.add_argument("--corto", type=int, default=0, help="bonos-fin-de-mes: primeras sesiones del mes corto")
+    ap.add_argument("--refinanciacion", action="store_true",
+                    help="bonos-fin-de-mes: solo febrero, mayo, agosto y noviembre")
+    ap.add_argument("--entrada", type=float, default=0.001,
+                    help="rebalanceo-umbral: señal mínima (en peso) por debajo de la que se compra")
     ap.add_argument("--walk-forward", action="store_true")
     a = ap.parse_args(argv)
 
@@ -438,6 +492,8 @@ def main(argv: list[str] | None = None) -> None:
         return _main_fix(a)
     if a.estrategia == "bonos-fin-de-mes":
         return _main_bond(a)
+    if a.estrategia == "rebalanceo-umbral":
+        return _main_thr(a)
 
     dates, closes, year = load_dated(a.serie)
     sig = turn_of_month(dates, a.antes, a.despues)
@@ -561,11 +617,13 @@ def _main_fx(a) -> None:
 
 def _main_bond(a) -> None:
     dates, closes, year = load_dated(a.serie)
-    w = bond_month_end(dates, closes, a.fin, a.corto)
+    meses = REFUNDING if a.refinanciacion else None
+    w = bond_month_end(dates, closes, a.fin, a.corto, meses)
     rets = [closes[i] / closes[i - 1] - 1 for i in range(1, len(closes))]
     inside = [r for r, x in zip(rets, w[:-1]) if x > 0]
     print(f"{a.serie} {dates[0]} → {dates[-1]} | largo las {a.fin} últimas sesiones"
           + (f", corto las {a.corto} primeras" if a.corto else "")
+          + (" (solo meses de refinanciación)" if meses else "")
           + f" | media en la ventana {sum(inside) / len(inside) * 100:+.3f}% frente a {sum(rets) / len(rets) * 100:+.3f}% de todos los días")
     bh = metrics([c / closes[0] for c in closes], year)
     print(f"[comprar y mantener] CAGR {_pct(bh['cagr'])} | caída máx {_pct(bh['max_drawdown'])} | Sharpe {bh['sharpe']:.2f}")
@@ -574,11 +632,50 @@ def _main_bond(a) -> None:
         print(f"[{label}] CAGR {_pct(s['cagr'])} | caída máx {_pct(s['max_drawdown'])} | Sharpe {s['sharpe']:.2f}")
     if a.walk_forward:
         for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
-            wf = walk_forward_weights(dates, closes, year, cost, bond_month_end, BOND_GRID)
+            build = lambda d, c, **p: bond_month_end(d, c, meses=meses, **p)
+            wf = walk_forward_weights(dates, closes, year, cost, build, BOND_GRID)
             o = wf["oos"]
             params = ", ".join(f"{p['fin']}/{p['corto']}" for p in wf["params"])
             print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
                   f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | fin/corto: {params}")
+        start = 3 * year
+        o = metrics([c / closes[start - 1] for c in closes[start - 1:start + wf["windows"] * year]], year)
+        print(f"[B&H en los mismos años] CAGR {_pct(o['cagr'])} | caída máx {_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f}")
+
+
+def _main_thr(a) -> None:
+    dates, closes, year = load_dated(a.serie)
+    bd, bc, _ = load_dated(a.bonos or "ief")
+    common = sorted(set(dates) & set(bd))
+    cmap, bmap = dict(zip(dates, closes)), dict(zip(bd, bc))
+    dates, closes, bonos = common, [cmap[d] for d in common], [bmap[d] for d in common]
+    sig = threshold_signal(closes, bonos)
+    w = threshold_rebalance(dates, closes, bonos, a.entrada)
+    rets = [closes[i] / closes[i - 1] - 1 for i in range(1, len(closes))]
+    inside = [r for r, x in zip(rets, w[:-1]) if x > 0]
+    print(f"{a.serie} frente a {a.bonos or 'ief'} {dates[0]} → {dates[-1]} | largo si la señal < -{a.entrada:.1%} | "
+          f"{len(inside)} días ({len(inside) / len(rets):.0%}), media {sum(inside) / len(inside) * 100:+.3f}% "
+          f"frente a {sum(rets) / len(rets) * 100:+.3f}% de todos los días")
+    # versión del paper: largo/corto acciones contra bonos con peso -señal/1,5%, a diario
+    prices = {"acc": closes, "bon": bonos}
+    pw = [max(-1.0, min(1.0, -x / 0.015)) for x in sig]
+    for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+        m = metrics(run_portfolio(prices, [{"acc": x, "bon": -x} for x in pw], cost), year)
+        print(f"[paper: largo/corto diario, {label}] CAGR {_pct(m['cagr'])} | caída máx {_pct(m['max_drawdown'])} | "
+              f"Sharpe {m['sharpe']:.2f}")
+    bh = metrics([c / closes[0] for c in closes], year)
+    print(f"[comprar y mantener] CAGR {_pct(bh['cagr'])} | caída máx {_pct(bh['max_drawdown'])} | Sharpe {bh['sharpe']:.2f}")
+    for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+        s = metrics(run_weights(closes, w, cost), year)
+        print(f"[solo largo, {label}] CAGR {_pct(s['cagr'])} | caída máx {_pct(s['max_drawdown'])} | Sharpe {s['sharpe']:.2f}")
+    if a.walk_forward:
+        build = lambda d, c, **p: threshold_rebalance(d, c, [bmap[x] for x in d], **p)
+        for label, cost in (("costes normales", a.cost), ("costes al doble", a.cost * 2)):
+            wf = walk_forward_weights(dates, closes, year, cost, build, THR_GRID)
+            o = wf["oos"]
+            params = ", ".join(f"{p['entrada']:.1%}" for p in wf["params"])
+            print(f"[walk-forward, {label}, {wf['windows']} años] CAGR {_pct(o['cagr'])} | caída máx "
+                  f"{_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f} | entrada: {params}")
         start = 3 * year
         o = metrics([c / closes[start - 1] for c in closes[start - 1:start + wf["windows"] * year]], year)
         print(f"[B&H en los mismos años] CAGR {_pct(o['cagr'])} | caída máx {_pct(o['max_drawdown'])} | Sharpe {o['sharpe']:.2f}")
