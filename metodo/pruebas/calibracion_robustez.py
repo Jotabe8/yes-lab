@@ -3,13 +3,18 @@
 # US100 NY, GER40 Europa y US500 NY superan al placebo. Se espera:
 #   - real: SPA p ≤ 0,05 y StepM con alguna de esas tres; PBO bajo.
 #   - placebo (dirección al azar, mismas salidas): SPA p > 0,05 y PBO ≈ 0,5.
-# Uso en el PC (Python con arch): python calibracion_robustez.py <carpeta con b30_*.pkl>
+# Uso en el PC (Python con arch): python calibracion_robustez.py <carpeta b30_*.pkl> [desde] [hasta]
+# Por defecto 2018-01-01 a 2023-01-01 (ajuste). P3 usa todo el periodo: 2018-01-01 2027-01-01.
+# PLACEBO BRUTO (sin costes) es el control limpio del PBO: con costes, las variantes caras
+# quedan siempre abajo y el ranking es estable aunque no haya edge.
 import os, sys
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 from metodo.robustez import matriz_diaria, spa, pbo
 
 CARPETA = sys.argv[1] if len(sys.argv) > 1 else "."
+DESDE = sys.argv[2] if len(sys.argv) > 2 else "2018-01-01"
+HASTA = sys.argv[3] if len(sys.argv) > 3 else "2023-01-01"
 MERC = "US100,US500,US30,US2000,GER40,UK100,FRA40,EU50,JP225,XAUUSD,USOIL".split(",")
 HORAS = {"Tokio": ("02:00", "08:30"), "Europa": ("10:00", "22:30"),
          "Datos": ("15:30", "22:30"), "NY": ("16:30", "22:30")}
@@ -42,11 +47,11 @@ def ops(k, h0, h1):  # misma regla que distinta-orb/orb_horas.py
         filas.append(dict(fecha=dia, r=s * (salida(s) - ent) / dist,
                           r_contra=-s * (salida(-s) - ent) / dist, coste=f.spread / dist))
     o = pd.DataFrame(filas, columns=["fecha", "r", "r_contra", "coste"])
-    return o[(o.fecha >= "2018-01-01") & (o.fecha < "2023-01-01")]
+    return o[(o.fecha >= DESDE) & (o.fecha < HASTA)]
 
 
 rng = np.random.default_rng(7)
-real, placebo = {}, {}
+real, placebo, placebo_bruto = {}, {}, {}
 for k in MERC:
     if not os.path.exists(os.path.join(CARPETA, f"b30_{k}.pkl")): continue
     for nom, (h0, h1) in HORAS.items():
@@ -55,9 +60,11 @@ for k in MERC:
         real[f"{k} {nom}"] = pd.DataFrame({"fecha": o.fecha, "r": o.r - o.coste})
         azar = np.where(rng.random(len(o)) < 0.5, o.r, o.r_contra)
         placebo[f"{k} {nom}"] = pd.DataFrame({"fecha": o.fecha, "r": azar - o.coste})
+        placebo_bruto[f"{k} {nom}"] = pd.DataFrame({"fecha": o.fecha, "r": azar})
         print(f"{k:7} {nom:7} {len(o):5} ops neto {(o.r - o.coste).mean():+.3f}", flush=True)
 
-for nombre, dic in (("REAL", real), ("PLACEBO", placebo)):
+print(f"\nPeriodo {DESDE} a {HASTA}")
+for nombre, dic in (("REAL", real), ("PLACEBO", placebo), ("PLACEBO BRUTO", placebo_bruto)):
     m = matriz_diaria(dic)
     sp, pb = spa(m), pbo(m)
     print(f"\n== {nombre}: {m.shape[1]} variantes, {m.shape[0]} días")
