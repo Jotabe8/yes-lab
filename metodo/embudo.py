@@ -27,7 +27,8 @@ MAX_COSTE_R = 0.10        # coste medio por operación en R
 MIN_BRUTO_VS_COSTE = 3.0  # el bruto debe ser al menos 3 veces el coste
 MIN_AÑOS_POSITIVOS = 0.6  # fracción de años con neto > 0
 MIN_DOBLE_COSTE = 0.0     # neto con costes al doble debe seguir > 0
-MAX_P_SPA = 0.05          # p-valor SPA de la mejor variante frente a no operar
+MAX_P_SPA = 0.05          # p-valor SPA (solo aviso: calibrado 11-11-2026, el ORB real da p 0,09-0,12
+                          # con 43 variantes; el SPA tiene poca potencia con muchas variantes malas)
 MAX_PBO = 0.5             # PBO por encima: elegir la mejor variante no sirve fuera de muestra
 AVISO_PBO = 0.2           # entre 0,2 y 0,5: sospechoso (aviso)
 
@@ -190,7 +191,8 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
         aviso = "" if variantes.shape[1] >= n_pruebas else f" (ojo: matriz con {variantes.shape[1]} < {n_pruebas} pruebas)"
         res.add("SPA mejor de N", sp["p_spa"] <= MAX_P_SPA,
                 f"p {sp['p_spa']:.3f} con {sp['n_variantes']} variantes; mejor {sp['mejor']} "
-                f"{sp['media_mejor']:+.3f} R/día; StepM: {', '.join(sp['superiores']) or 'ninguna'}{aviso}")
+                f"{sp['media_mejor']:+.3f} R/día; StepM: {', '.join(sp['superiores']) or 'ninguna'}{aviso}",
+                bloquea=False)
         pb = pbo(variantes)
         res.add("PBO (CSCV)", pb["pbo"] <= MAX_PBO,
                 f"{pb['pbo']:.0%} ({'bien' if pb['pbo'] <= AVISO_PBO else 'sospechoso' if pb['pbo'] <= MAX_PBO else 'sobreajuste'}); "

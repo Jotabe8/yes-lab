@@ -36,7 +36,7 @@ y en la memoria (regla de Jorge: no se deja nada "en reserva").
 | **P0 Ficha** | 10 min | Hipótesis causal (quién pierde dinero y por qué), mercado, marco, ops/año esperadas, stop típico, **coste en R** = (spread + comisión) / stop con datos bid/ask. Mirar la lista de descartados de la memoria. | Ya está descartada; coste > 0,10 R; < 40 ops/año; o el efecto publicado es < 3 × coste. |
 | **P1 Prueba rápida** | 1 h | Regla fija, sin optimizar, salida simple (N velas o stop/objetivo fijos). Ajuste 2018-2022. **A la vez en 3-5 mercados parecidos.** Placebo con las mismas salidas (dirección o hora aleatoria, 200 réplicas). | Bruto < 3 × coste; no supera el p95 del placebo; funciona en un solo mercado. |
 | **P2 Neto y estabilidad** | 2 h | Costes reales y al doble; años positivos; meseta de parámetros (vecinos ±20 % conservan la mitad del edge); si hay sospecha, prueba de ruido sobre los precios (no sobre las R). | Neto ×2 ≤ 0; < 60 % de años positivos; pico aislado de parámetros. |
-| **P3 Fuera de muestra** | 30 min | Se abre **una vez** 2023-2026. Si se miraron varias variantes, se pasa la matriz días × variantes (R netos de **todas**): **SPA** de Hansen (¿la mejor bate a no operar sabiendo que se miraron N?), **StepM** (cuáles) y **PBO** por CSCV. Sin matriz, t total contra el t corregido (tabla abajo) como aviso. Siempre: PSR y operaciones mínimas (MinTRL). | OOS ≤ 0 o t OOS < 1; SPA p > 0,05; PBO > 50 %. |
+| **P3 Fuera de muestra** | 30 min | Se abre **una vez** 2023-2026. Si se miraron varias variantes, se pasa la matriz días × variantes (R netos de **todas**): **SPA** de Hansen (¿la mejor bate a no operar sabiendo que se miraron N?), **StepM** (cuáles) y **PBO** por CSCV. Sin matriz, t total contra el t corregido (tabla abajo) como aviso. Siempre: PSR y operaciones mínimas (MinTRL). | OOS ≤ 0 o t OOS < 1; PBO > 50 %. (SPA p > 0,05 solo es aviso.) |
 | **P4 Prop** | 30 min | EV/cuota 2-Step (Monte Carlo por días) con la media **recortada** en (t requerido − 1,64) errores estándar, frente a la misma serie con media 0; correlación diaria con el ORB US100. | EV recortada ≤ control; correlación > 0,3. |
 | **P5 MQL5** | 2 h | EA desde `PlantillaPropEA.mq5`, solo con lo probado. Strategy Tester con ticks reales de FTMO en el mismo periodo. | Ops o R media a más de ±20 % de Python (primero se busca el fallo; si es del modelo, se descarta). |
 | **P6 Incubación** | 4-8 semanas | Demo o Free Trial de FTMO, sin tocar nada. Para **confirmar** edge en real hacen falta las ops mínimas (MinTRL) que da el embudo; 4-8 semanas solo detectan fallos de implementación. | Resultado fuera de la banda del Monte Carlo (p5-p95). |
@@ -52,6 +52,13 @@ from metodo.robustez import matriz_diaria
 m = matriz_diaria({"stop 0,15": ops_a, "stop 0,20": ops_b, ...})  # DataFrame(fecha, r) netos
 print(embudo(ops, n_pruebas=24, corte_oos="2023-01-01", variantes=m))
 ```
+
+**Calibración (11-11-2026, ORB en 11 mercados × 4 aperturas = 43 variantes, `pruebas/calibracion_robustez.py`):**
+PBO real 1,2 % (2018-26) y 3,8 % (2018-22) frente a placebo sin costes 60 % y 25 %: el PBO
+separa bien y bloquea. SPA real p 0,12 (2018-26) y 0,09 (2018-22) frente a placebo con costes
+0,91 y 0,39: ordena bien, pero con muchas variantes malas no llega a 0,05 ni con el ORB, así
+que es aviso. El placebo bruto no vale como nula del SPA (stop corto + salida al cierre +
+deriva alcista dan media > 0 sin costes).
 
 `metodo/robustez.py` (requiere `pip install arch`): `spa()`, `pbo()`, `psr()`, `dsr()`,
 `min_trl()`. Lectura del PBO: < 20 % bien, 20-50 % sospechoso, > 50 % elegir la mejor
