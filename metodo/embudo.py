@@ -19,12 +19,17 @@ from statistics import NormalDist
 import numpy as np
 import pandas as pd
 
+from metodo.robustez import dsr, min_trl, pbo, psr, spa
+
 # Umbrales de las puertas. Cambiarlos aquí, nunca a mitad de una prueba.
 MIN_OPS_AÑO = 40          # menos operaciones no sirven para pasar un reto en semanas
 MAX_COSTE_R = 0.10        # coste medio por operación en R
 MIN_BRUTO_VS_COSTE = 3.0  # el bruto debe ser al menos 3 veces el coste
 MIN_AÑOS_POSITIVOS = 0.6  # fracción de años con neto > 0
 MIN_DOBLE_COSTE = 0.0     # neto con costes al doble debe seguir > 0
+MAX_P_SPA = 0.05          # p-valor SPA de la mejor variante frente a no operar
+MAX_PBO = 0.5             # PBO por encima: elegir la mejor variante no sirve fuera de muestra
+AVISO_PBO = 0.2           # entre 0,2 y 0,5: sospechoso (aviso)
 
 
 def t_stat(r: np.ndarray) -> float:
@@ -124,13 +129,15 @@ class Resultado:
 
 def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
            n_placebo: int = 200, riesgo: float = 0.01, cuota: float = 540.0,
-           ev_control: float | None = None) -> Resultado:
+           ev_control: float | None = None, variantes: pd.DataFrame | None = None) -> Resultado:
     """Aplica las puertas P0-P4 de METODO.md y devuelve el veredicto.
 
     ops: columnas fecha (datetime), r_bruto (R antes de costes), coste_r (R por operación).
     ev_control: EV/cuota de un control externo (opcional). Siempre se compara además con la
     misma serie con media 0, simulada igual. La EV se calcula con la media recortada en
     (t_requerido - 1,64) errores estándar: lo que queda tras descontar la suerte de buscar.
+    variantes: matriz días × variantes con los R NETOS diarios de TODAS las variantes miradas
+    (ver robustez.matriz_diaria). Si se pasa, P3 añade SPA/StepM, PBO y Deflated Sharpe.
     """
     ops = ops.sort_values("fecha").reset_index(drop=True)
     ops["fecha"] = pd.to_datetime(ops["fecha"])
@@ -172,6 +179,24 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
     res.add("t total corregido", t_stat(neto) >= t_req,
             f"t {t_stat(neto):.2f} vs {t_req:.2f} ({n_pruebas} pruebas); aviso, lo decide la EV recortada",
             bloquea=False)
+
+    # P3 (robustez): PSR y operaciones mínimas siempre; SPA, PBO y DSR si hay matriz de variantes
+    trl = min_trl(neto)
+    res.add("PSR / ops mínimas", psr(neto) >= 0.95,
+            f"PSR {psr(neto):.1%}; hacen falta {trl:.0f} ops ({trl / ops_año * 12:.0f} meses) para fiarse"
+            if np.isfinite(trl) else f"PSR {psr(neto):.1%}; Sharpe ≤ 0", bloquea=False)
+    if variantes is not None and variantes.shape[1] >= 2:
+        sp = spa(variantes)
+        aviso = "" if variantes.shape[1] >= n_pruebas else f" (ojo: matriz con {variantes.shape[1]} < {n_pruebas} pruebas)"
+        res.add("SPA mejor de N", sp["p_spa"] <= MAX_P_SPA,
+                f"p {sp['p_spa']:.3f} con {sp['n_variantes']} variantes; mejor {sp['mejor']} "
+                f"{sp['media_mejor']:+.3f} R/día; StepM: {', '.join(sp['superiores']) or 'ninguna'}{aviso}")
+        pb = pbo(variantes)
+        res.add("PBO (CSCV)", pb["pbo"] <= MAX_PBO,
+                f"{pb['pbo']:.0%} ({'bien' if pb['pbo'] <= AVISO_PBO else 'sospechoso' if pb['pbo'] <= MAX_PBO else 'sobreajuste'}); "
+                f"Sharpe/día de la elegida {pb['metrica_in_mejor']:.3f} dentro → {pb['metrica_oos_mejor']:.3f} fuera")
+        res.add("Deflated Sharpe", dsr(neto, n_pruebas, matriz=variantes) >= 0.95,
+                f"{dsr(neto, n_pruebas, matriz=variantes):.1%} (≥ 95 % deseable)", bloquea=False)
 
     # P4: Monte Carlo y EV por cuota con la media recortada por el número de pruebas (haircut),
     # frente al control: la misma serie con media 0 (misma frecuencia y volatilidad, sin edge).
