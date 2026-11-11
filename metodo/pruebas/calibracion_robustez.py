@@ -41,7 +41,7 @@ def ops(k, h0, h1):  # misma regla que distinta-orb/orb_horas.py
             return resto.close.iloc[-1]
         filas.append(dict(fecha=dia, r=s * (salida(s) - ent) / dist,
                           r_contra=-s * (salida(-s) - ent) / dist, coste=f.spread / dist))
-    o = pd.DataFrame(filas)
+    o = pd.DataFrame(filas, columns=["fecha", "r", "r_contra", "coste"])
     return o[(o.fecha >= "2018-01-01") & (o.fecha < "2023-01-01")]
 
 
