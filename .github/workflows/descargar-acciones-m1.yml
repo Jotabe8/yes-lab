@@ -9,6 +9,10 @@ on:
       - .github/workflows/descargar-acciones-m1.yml
       - orb_acciones/procesar.py
 
+concurrency:
+  group: acciones-m1
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -39,7 +43,7 @@ jobs:
           for Y in 2018 2019 2020 2021 2022 2023 2024 2025 2026; do
             HASTA=$((Y+1))-01-01; [ $Y = 2026 ] && HASTA=2026-11-13
             for P in bid ask; do
-              npx dukascopy-node -i $INS -from $Y-01-01 -to $HASTA -t m1 -p $P -v -f csv -dir . -r 5 -bs 20 -bp 300 -fr false >/dev/null 2>&1 || echo "falla $Y $P"
+              npx dukascopy-node -i $INS -from $Y-01-01 -to $HASTA -t m1 -p $P -v -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo "falla $Y $P"
             done
           done
           ls -la *.csv | head -30
