@@ -1,0 +1,12 @@
+mercado                                                     lugar  coste_R   neto     t  neto_2024_26  t_2024_26                                                      nota
+    BTC                     FTMO CFD (0,065 % + horquilla medida)    0.154  0.081  1.12        -0.031      -0.32                                              medido 13-11
+    BTC FundingPips CFD (0,04 % ida y vuelta + horquilla ~0,03 %)    0.163  0.072  1.00        -0.040      -0.42 comisión publicada; horquilla BTC 15-40 $ según agregador
+    BTC                   Topstep MBT (2,82 $ i/v + 1 tick 0,5 $)    0.181  0.054  0.74         0.027       0.28                                       risk/contrato ~40 $
+    BTC         Topstep BTC estándar 5 BTC (aprox. 2×8,77 + 25 $)    0.046  0.189  2.60         0.106       1.10                risk/contrato ~2.000 $: no cabe en 50-150K
+    ETH                     FTMO CFD (0,065 % + horquilla medida)    0.161  0.092  1.28         0.064       0.65                                              medido 13-11
+    ETH FundingPips CFD (0,04 % ida y vuelta + horquilla ~0,03 %)    0.125  0.128  1.77         0.100       1.02 comisión publicada; horquilla BTC 15-40 $ según agregador
+    ETH                  Topstep MET (0,72 $ i/v + 1 tick 0,05 $)    0.626 -0.373 -5.12        -0.301      -3.04                                      risk/contrato ~1,7 $
+  JP225                      FTMO CFD (horquilla 0,0157 % medida)    0.089  0.077  1.50         0.009       0.10                                              medido 13-11
+  JP225                        Topstep NKD (5,32 $ + 1 tick 25 $)    0.121  0.045  0.88         0.016       0.19                    risk/contrato = 5 $ × stop ≈ 550-600 $
+  JP225                                   Topstep NKD con 2 ticks    0.222 -0.055 -1.09        -0.039      -0.47  apertura de Tokio en Globex: horquilla puede ser 2 ticks
+riesgo NKD por contrato $ (2024-26): 568 | MBT: 34.7

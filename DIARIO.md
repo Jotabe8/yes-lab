@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-13 | Lugares para las ventajas de clase B (FundingPips, Topstep MBT/MET/NKD, CME estándar) con costes publicados (v3) | BTC, ETH, JP225 | Ningún lugar accesible las hace operables (t ≤ 1,8; ventaja menor en 2024-26) |
 | 2026-11-13 | Stop ancho (0,30 ATR / extremo del rango) en JP225 y ETH (v3) | JP225, ETH | Descartado: bruto y coste en R bajan a la par (la ventaja es fija en precio); t ≤ 1,7 |
 | 2026-11-13 | ORB apertura propia en Asia, agrupado (v3, horquilla FTMO real) | JP225, HK50, AUS200 | Descartada: cartera neto +0,008 R t 0,3; JP225 bruto real (t 3,3) pero coste 0,09 R (clase B) |
 | 2026-11-13 | Búsqueda v3 (`metodo/BUSQUEDA_V3.md`): potencia del embudo, registro de 60 ideas, triaje T0; ORB cripto en futuros CME | BTC, ETH | Edge real (t 3,0, corr 0,08 con ORB) pero sin lugar operable hoy: clase B con disparador anotado |
