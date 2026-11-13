@@ -58,8 +58,10 @@ Variantes ORB (rango 5-60 / SAR);2026-11-13;mecanismo;volatilidad;3 índices US;
 Sin ventaja + reglas (opción B);2026-11-13;estructura;estructura;US100;250;G;"EV < ORB; FTMO prohíbe audaz"
 ORB US100;2026-10;mecanismo;volatilidad;US100;210;F;"+0,12 R/op 2018-26; bruto +0,13 en 2012-17"
 ORB GER40;2026-11-13;mecanismo;volatilidad;GER40;235;C;"prueba v3 2013-26 precio medio, coste FTMO 0,0052 %: neto +0,069 R t 1,58 (<2,4), ×2 +0,04, supera placebos, corr US100 0,00; 7/13 años +; haría falta ~29 años de historia. Reabrir solo con edge mayor (no hay)"
-ORB cripto (BTC/ETH) 9:30 NY;2026-11-13;mecanismo;volatilidad;BTC ETH;250;B;"precio medio 2021-26 bruto +0,24 R t 3,2; CME estándar neto t 3,0 pero no cabe en FTMO Futures; CFD FTMO (comisión 0,065 %) +0,08 R t 1,2. Reabrir si coste ≤ 0,02 % i/v"
+ORB cripto (BTC/ETH) 9:30 NY;2026-11-13;mecanismo;volatilidad;BTC ETH;250;B;"precio medio 2021-26 bruto +0,24 R t 3,2; CME estándar neto t 3,0 pero no cabe en FTMO Futures; CFD FTMO (comisión 0,065 %) +0,08 R t 1,2. Reabrir si coste ≤ 0,02 % i/v → 13-11 REABIERTA: Darwinex Zero futuros (1 M$, sin pérdida máxima) cumple el disparador"
 ORB apertura propia Asia (JP225 HK50 AUS200);2026-11-13;mecanismo;volatilidad;JP225 HK50 AUS200;230;B;"cartera neto +0,008 R t 0,3 (horquilla FTMO real); JP225 bruto +0,17 R t 3,3 con coste 0,09 R, neto 2023-26 +0,02. Reabrir JP225 si horquilla ≤ 0,005 %"
 Reversión tras choques de 5 min (provisión de liquidez);2026-11-13;publicado;liquidez;US100 US500 US30 GER40;250;A;"3.610 choques k4 2012-26: bruto −0,04 R (t −4 neto); los choques siguen un poco (+0,03 R bruto), no revierten"
 Estacionalidad FX horario propio (Breedon-Ranaldo);2026-11-13;publicado;calendario;6 pares;250;C;T0: >40 años necesarios
 Lead-lag US100→GER40 tras apertura NY;2026-11-13;mecanismo;dirección;GER40;250;C;T0: misma información que el ORB, no descorrelaciona
+Momentum 12 m multiactivo sin swap (Darwinex);2026-11-13;publicado;dirección;25 índices/FX/metales;12;D;"SR 0,51 t 2,37 2005-26; −2,5 %/año frente a siempre comprado"
+Cesta siempre comprada sin swap (Darwinex);2026-11-13;estructura;estructura;25 mercados;continuo;G;"beta SR 0,71; con el ORB solo +0,08 de Sharpe"
