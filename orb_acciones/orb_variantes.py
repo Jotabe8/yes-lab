@@ -54,6 +54,8 @@ for f, g in dias.items():
         r, i = tramo(bb, aa, lado, ent, dist)
         fila[f"r{L}"], fila[f"lado{L}"] = r, lado
         fila[f"spr{L}"] = float(aa.open.iloc[0] - bb.open.iloc[0]) / dist
+        e_c = aa.open.iloc[0] if -lado == 1 else bb.open.iloc[0]
+        fila[f"c{L}"], _ = tramo(bb, aa, -lado, e_c, dist)  # placebo: mismo momento y salidas, lado contrario
         if L == 10:
             fila["sar"] = np.nan
             if i is not None and i + 1 < len(post) - 1:
