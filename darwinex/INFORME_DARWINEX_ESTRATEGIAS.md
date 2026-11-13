@@ -1,5 +1,10 @@
 # Estrategias para Darwinex Zero (13-11-2026)
 
+> **Corrección (13-11, tarde):** la lista real de futuros de Darwinex Zero (`FUTUROS_DZ.md`) **no tiene BTC estándar ni ETH**,
+> solo el micro MBT (3 $ por orden ≈ 0,19 R). El CFD de cripto cobra 0,05 % por orden. **El ORB cripto no es operable en
+> Darwinex** y la recomendación de la cuenta de futuros queda anulada: se usa la cuenta CFD con el ORB US100 solo. Lo demás
+> de este informe (momentum y cesta descartados) sigue igual.
+
 ## Resumen
 
 **Hay un segundo sistema operable, y es Darwinex el que lo hace operable:** el ORB cripto de la apertura de

@@ -1,45 +1,39 @@
-# Plan Darwinex Zero (13-11-2026)
+# Plan Darwinex Zero (13-11-2026, corregido por la tarde)
 
-**Objetivo:** un DARWIN en la cuenta de **futuros** de Darwinex Zero con los dos ORB que tienen ventaja
-(US100 sobre el NQ y cripto sobre BTC + ETH de CME). Va **además** del plan prop de FTMO, no en su lugar.
+> **Corrección (13-11, tarde):** la lista real de futuros de Darwinex Zero **no tiene BTC estándar ni ETH**; solo el micro
+> MBT, cuya comisión se come la ventaja. El ORB cripto no es operable en Darwinex (`FUTUROS_DZ.md`). El plan pasa a la
+> **cuenta CFD con el ORB US100 solo**. Las cifras de abajo ya están corregidas.
 
-**Qué se espera** (media anual de 3 años, cuotas restadas, Monte Carlo 2021-26):
+**Objetivo:** un DARWIN en la cuenta **CFD** de Darwinex Zero (45 €/mes, NDX) con el ORB US100 v018. Va **además** del
+plan prop de FTMO.
+
+**Qué se espera** (media anual de 3 años, cuotas restadas, Monte Carlo 2021-26, ORB US100 solo):
 
 | | Solo DarwinIA SILVER | + GOLD (desde el mes 9) | + permanente 100K (+10 %) | + GOLD + permanente |
 |---|---|---|---|---|
-| Base | +960 € | +3.600 € | +3.900 € | **+6.550 €** |
-| Prudente (costes ×2) | +370 € | +1.800 € | +2.500 € | **+3.900 €** |
+| Base | +550 € | +1.850 € | +2.600 € | **+3.900 €** |
+| Prudente (costes ×2) | +200 € | +950 € | +1.600 € | **+2.300 €** |
 
 Réstale aproximadamente un tercio si el ORB US100 se parece más a 2018-20 que a 2021-26.
 El primer año se parece a la columna sin GOLD: GOLD empieza a pagar en el año 2.
 
-**Coste:** unos 52 €/mes (56 $) más 535 € una sola vez por la permanente. Con el plan FTMO
-(~120 €/mes de media) suma unos 170 €/mes: dentro del presupuesto de 100-200 €/mes.
+**Coste:** 45 €/mes (o 420 €/año) más 535 € una sola vez por la permanente.
 
 ---
 
-## Fase 0. Comprobar antes de pagar (hasta el 30-11)
+## Fase 0. Antes de pagar (hasta el 30-11)
 
-1. Preguntar al soporte de Darwinex Zero, o mirar en la prueba gratuita, estas cuatro cosas:
-   - ¿La cuenta de futuros tiene el **BTC (5 BTC)** y el **ETH (50 ETH)** de CME? Los micros (MBT y MET) **no sirven**.
-   - ¿Tiene el **NQ** (o MNQ)?
-   - ¿Cuánto cobran por contrato? Referencia: hasta unos 15 $ por lado en BTC y ETH sigue siendo rentable.
-   - ¿Hay precio anual para la cuenta de futuros?
-2. **Si no están BTC y ETH estándar**, el plan B es la cuenta CFD (45 €/mes) con solo el ORB US100 (NDX).
-   Rinde menos: +550 €/año solo con SILVER y +3.900 €/año con GOLD y permanente (base).
-3. No pagar nada antes de las compras del Black Friday de FTMO (26-29 de noviembre).
+1. Ya comprobado: NDX en CFD con 0,9 puntos de horquilla y 2,75 $ por orden (coste ≈ FTMO). No hace falta preguntar nada.
+2. No pagar nada antes de las compras del Black Friday de FTMO (26-29 de noviembre). Mirar si Darwinex Zero tiene
+   oferta de Black Friday en el plan anual.
 
 ## Fase 1. Montar el DARWIN (diciembre, mes 2)
 
-1. Contratar la cuenta de **futuros** en MT5: 1 M$ virtuales, sin pérdida máxima ni swap.
-2. Claude escribe dos EAs y los pasa por el Strategy Tester:
-   - **ORB_CRIPTO_v100:** rango 9:30-9:40 NY; se opera el lado de la vela si el cuerpo es ≥ 10 % del rango; entrada a las
-     9:40; stop 0,15 × ATR14 de la sesión 9:30-16:00; salida a las 15:55; de lunes a viernes; BTC y ETH a igual riesgo.
-   - **ORB_US100 v018 para el NQ:** mismas reglas que la cuenta FTMO, con tamaño por contrato de futuro.
-   - Cruce con Python: mismo lado ≥ 95 % de los días y R medio ±20 %.
-3. **Riesgo:** unos **0,35 % por R y estrategia**. En 1 M$ son unos 3.500 $ por R: ~2 contratos BTC, ~4 ETH y 3-4 NQ.
-   Darwinex reescala el riesgo de todas formas. Lo que importa es que las dos estrategias pesen parecido.
-4. Pasar la **calibración**: 25 decisiones en ≥ 15 días de trading. Con 3 operaciones al día, unas 2 semanas.
+1. Contratar la cuenta **CFD** en MT5 (100 K$ virtuales), plan anual si sale más barato.
+2. Cargar el **ORB_US100 v018** sobre el símbolo **NDX** (1 lote = 10 × NDX): mismas reglas que en FTMO, gestión de
+   fondeada (BE a 2R). Comprobar en el Strategy Tester con el NDX de Darwinex que cuadra con la serie de FTMO.
+3. **Riesgo:** ~0,5 % por R. Darwinex reescala el riesgo; basta con que el VaR mensual quede cerca de su banda.
+4. Pasar la **calibración**: 25 decisiones en ≥ 15 días de trading (~5-6 semanas con 1 operación al día).
 
 ## Fase 2. Primeros 6 meses (enero a junio, meses 3-8)
 
@@ -65,13 +59,10 @@ El primer año se parece a la columna sin GOLD: GOLD empieza a pagar en el año 
 
 | Estrategia | Referencia | Alerta | Parada |
 |---|---|---|---|
-| ORB US100 (NQ) | +0,15 R/op con BE a 2R | < +0,10 R tras 100 ops | R medio < 0 tras 100 ops |
-| ORB cripto (BTC + ETH) | +0,15-0,20 R/día | BTC y ETH < +0,05 R tras 120 días | R medio < 0 tras 150 días (~7 meses) |
+| ORB US100 (NDX) | +0,15 R/op con BE a 2R | < +0,10 R tras 100 ops | R medio < 0 tras 100 ops |
 
-- **Si para el ORB cripto,** se sigue solo con el US100 en la misma cuenta. Cambiar de tipo de cuenta reinicia el DARWIN
-  y se pierden las asignaciones.
-- **Riesgo principal:** el ORB cripto apenas ganó en BTC en 2025-26; ETH sí. Si se apaga, el DARWIN se queda en lo
-  que da el US100 solo.
+- **Riesgo principal:** es una sola estrategia. Si aparece un segundo sistema con ventaja y correlación ≈ 0, se añade
+  al mismo DARWIN (sube el Sharpe y el rating). Cambiar de tipo de cuenta reinicia el DARWIN y se pierden las asignaciones.
 - **No reiniciar ni cancelar la suscripción:** se pierde cualquier asignación.
 
 ## Otros puntos
@@ -87,8 +78,8 @@ El primer año se parece a la columna sin GOLD: GOLD empieza a pagar en el año 
 
 | Mes | Fecha | Qué |
 |---|---|---|
-| 1 | nov 2026 | Fase 0: preguntar a Darwinex; compras de FTMO en el Black Friday |
-| 2 | dic 2026 | Contratar futuros; EAs, Strategy Tester y calibración |
+| 1 | nov 2026 | Compras de FTMO en el Black Friday |
+| 2 | dic 2026 | Contratar la cuenta CFD; v018 sobre NDX, Strategy Tester y calibración |
 | 3-5 | ene-mar 2027 | SILVER; revisión mensual; permanente 100K (+10 %) en el mes 4-5 si va bien |
 | 6-8 | abr-jun 2027 | Garantía de 25K si no hubo DarwinIA; aplicar las reglas de parada |
 | 9+ | jul 2027 | GOLD si cumple; revisión anual en noviembre de 2027 |
