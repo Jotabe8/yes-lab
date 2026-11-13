@@ -223,3 +223,38 @@ Registro: clase B (JP225), con disparador: horquilla ≤ 0,005 % en la apertura 
   frente a coste en pb), que no depende del stop.** Cambiar el stop nunca convierte una B en operable; solo lo hace
   un lugar más barato. Ninguna variante pasa (t ≤ 1,7 frente a 2,5).
 - Para BTC/ETH y JP225 solo queda la vía del lugar: comisión cripto ≤ 0,02 % o horquilla JP225 ≤ 0,005 %.
+
+## 8. Dónde operar cada ventaja: costes publicados de otras firmas (13-11-2026)
+
+Jorge pidió usar datos públicos en vez de abrir cuentas demo, y acepta firmas de futuros. Fuentes: Topstep
+(tabla oficial de comisiones TopstepX), Propvator (comisiones de FundingPips, agosto de 2026), PropTradingVibes
+(horquillas de BTC en FundingPips/E8/BrightFunded, noviembre de 2026), TradeTanto (reglas de Apex 2026), tasas
+CME (IBKR). Cálculo en `v3/lugares.py` sobre las simulaciones en precio medio ya hechas (2021-26; JP225 2018-26).
+
+| Ventaja | Lugar | Coste R | Neto R (t) | Neto 2024-26 | Veredicto |
+|---|---|---|---|---|---|
+| ORB BTC 9:30 NY | FTMO CFD (medido) | 0,154 | +0,081 (1,1) | −0,031 | no |
+| | FundingPips CFD (0,04 % + horquilla ~0,03 %) | 0,163 | +0,072 (1,0) | −0,040 | no |
+| | Topstep MBT (2,82 $ + 1 tick) | 0,181 | +0,054 (0,7) | +0,027 | no |
+| | CME BTC estándar (5 BTC) | 0,046 | +0,189 (2,6) | +0,106 (1,1) | no cabe: ~2.000 $ de riesgo por contrato |
+| ORB ETH 9:30 NY | FTMO CFD (medido) | 0,161 | +0,092 (1,3) | +0,064 | no |
+| | FundingPips CFD (horquilla supuesta 0,03 %) | 0,125 | +0,128 (1,8) | +0,100 (1,0) | no (t < 2,5) |
+| | Topstep MET | 0,626 | −0,373 | | no |
+| ORB JP225 Tokio | FTMO CFD (medido) | 0,089 | +0,077 (1,5) | +0,009 | no |
+| | Topstep NKD (5,32 $ + 1 tick de 25 $) | 0,121 | +0,045 (0,9) | +0,016 | no; además ~570 $ de riesgo por contrato |
+
+**Ninguna de las ventajas nuevas es operable en ningún lugar accesible.** Dos motivos que no arregla ningún lugar:
+1. **Las micros de CME son caras en R** porque su tasa fija por contrato pesa mucho frente a un riesgo de 2-40 $.
+   Los contratos estándar sí son baratos, pero un solo contrato arriesga más de lo que permiten las cuentas de
+   50-150K de las firmas de futuros (pérdida máxima 2.000-4.500 $).
+2. **La ventaja se ha encogido en 2024-26** en BTC (bruto +0,13 R) y en JP225 (+0,10 R): incluso con coste casi
+   nulo, el t de los últimos años sería ≤ 1,1.
+
+Reglas de las firmas de futuros, para el ORB US100 (no para estas ventajas): Topstep permite automatizar con su
+API (TopstepX, 29 $/mes, sin VPS, desde el propio equipo); Apex prohíbe el trading totalmente automático en las
+cuentas financiadas. MNQ cuesta 1,22 $ ida y vuelta en Topstep (≈ 0,02 R, igual que el CFD de FTMO): sirve como
+capacidad extra para el ORB US100 si algún día se llena el tope de FTMO, no como ventaja nueva.
+
+**Cierre de la familia "apertura propia + stop corto":** la ventaja existe en US100, GER40, JP225 y BTC/ETH;
+solo US100 y GER40 combinan ventaja actual y coste bajo. Para encontrar un segundo sistema hay que salir de esta
+familia o esperar un lugar con cripto ≤ 0,02 % ida y vuelta.
