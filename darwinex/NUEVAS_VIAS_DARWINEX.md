@@ -89,3 +89,13 @@ Supera al placebo y el signo coincide con el artículo, pero no llega a t 2,4 y 
 
 Código: `bonos_dz.py`, `bonos_futuros.py`, `control_cero.py`. Datos: `datos_bonos/` (FRED, Yahoo y fiscaldata, bajados con
 `datos-bonos-dz.yml`).
+
+## Ronda 13-11 (tarde): oro en horas de Asia con coste de futuros GC
+
+- **Oro largo 19:00-03:00 NY** (reabierta de clase B porque el GC cuesta 0,4-0,8 pb y no 7 pb): con precio medio
+  2012-26 la noche gana +2,1 pb más que su parte de la deriva, t 2,0 (< 2,4); 2019-26 t 0,8; con coste ×2 pierde;
+  queda 10ª de 24 ventanas de 8 h. **No pasa.**
+- **Oro 19:00-22:00 NY** (la mejor franja vista en 2012-26, t ≈ 4) probada en datos sin tocar 2003-2011:
+  +1,3 pb t 1,87, 10ª de 24 ventanas de 3 h, neta 1 pb ≈ 0. **No pasa:** lo de 2012-26 era deriva del oro repartida al azar entre horas.
+- Lección: con 24 franjas horarias, la mejor de una muestra siempre parece fuerte; el control de datos anteriores
+  (2003-11) es barato y debe ir siempre antes de escribir un EA.

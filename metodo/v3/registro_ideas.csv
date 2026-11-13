@@ -69,3 +69,5 @@ Ciclo de subastas del Tesoro;2026-11-13;publicado;calendario;bonos EE. UU.;35;B;
 Rebalanceo de pensiones fin de mes;2026-11-13;publicado;calendario;S&P y bono 10 a;12;D;"neto +18 pb t 2,15; 2023-26 −13 pb"
 Serie sin ventaja en Darwinex (estructura);2026-11-13;estructura;estructura;DARWIN;continuo;A;"media 0: −440 €/año, 93 % negativo"
 Subastas del Tesoro intradía en ZN;2026-11-13;publicado;calendario;ZN;150;B;"T0: tick 1,56 pb + 6 $ ≈ 2,2 pb i/v; ciclo completo en futuros +3 pb; fuera sin datos"
+Oro largo en Asia con coste DZ (GC);2026-11-13;publicado;calendario;oro plata;250;A;"Reabierta por coste GC 0,4-0,8 pb. Precio medio 2012-26: noche−8/15·resto +2,1 pb t 2,0; 2019-26 t 0,8; neta GC ×2 < 0; 10ª de 24 ventanas. Plata ≈ 0"
+Oro en apertura de Asia 19-22 NY;2026-11-13;datos;calendario;oro;250;A;"Hallada en 2012-26 (t≈4), confirmación en 2003-11 sin tocar: +1,3 pb t 1,87, 10ª de 24 ventanas, neta 1 pb ≈ 0. Es deriva del oro, no hora"
