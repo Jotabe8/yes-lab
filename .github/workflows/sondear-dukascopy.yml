@@ -1,0 +1,43 @@
+name: Sondear Dukascopy acciones
+
+on:
+  push:
+    branches: [claude/project-thread-1ei3pv]
+    paths:
+      - .github/workflows/sondear-dukascopy.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sondeo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instrumentos y prueba de descarga
+        run: |
+          mkdir -p orb_acciones/sondeo && cd orb_acciones/sondeo
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          node -e '
+          const m = require("dukascopy-node");
+          const meta = m.instrumentMetaData || require("dukascopy-node/dist/index.js").instrumentMetaData;
+          const keys = Object.keys(meta || {}).filter(k => k.endsWith("ususd"));
+          const out = keys.map(k => [k, meta[k].description, meta[k].startMinuteForPeriod || meta[k].minStartDate || JSON.stringify(meta[k]).slice(0,200)].join(";"));
+          require("fs").writeFileSync("instrumentos_us.txt", out.join("\n"));
+          console.log(keys.length);
+          ' || true
+          npx dukascopy-node -i aaplususd -from 2019-03-04 -to 2019-03-06 -t m1 -p bid -v -f csv -dir . || true
+          npx dukascopy-node -i aaplususd -from 2019-03-04 -to 2019-03-06 -t m1 -p ask -v -f csv -dir . || true
+          npx dukascopy-node -i aaplususd -from 2017-01-03 -to 2017-01-05 -t m1 -p bid -v -f csv -dir . || true
+          ls -la; head -3 *.csv || true
+          rm -rf node_modules package*.json
+      - name: Guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add orb_acciones/sondeo
+          git diff --cached --quiet || git commit -m "Sondeo Dukascopy acciones"
+          git push
