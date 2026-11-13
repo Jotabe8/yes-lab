@@ -1,0 +1,56 @@
+name: Datos oro H1 Darwinex
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-9mmbyu]
+    paths:
+      - .github/workflows/datos-oro-dz.yml
+
+permissions:
+  contents: write
+
+jobs:
+  bajar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        ins: [xauusd, xagusd]
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Descargar
+        run: |
+          mkdir -p velas && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for P in bid ask; do npx dukascopy-node -i ${{ matrix.ins }} -from 2012-01-01 -to 2026-11-13 -t h1 -p $P -f csv -dir . -r 5 -bs 20 -bp 500 -fr || echo falla $P; done
+          ls -la
+          for f in *.csv; do gzip -9 "$f"; done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: oro-${{ matrix.ins }}
+          path: velas/*.gz
+
+  juntar:
+    needs: bajar
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p datos_oro
+          find art -name '*.gz' -exec cp {} datos_oro/ \;
+          ls -la datos_oro
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos_oro
+          git diff --cached --quiet || git commit -m "Datos XAUUSD/XAGUSD H1 2012-2026"
+          git pull --rebase -q || true
+          git push
