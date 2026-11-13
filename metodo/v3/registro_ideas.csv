@@ -60,3 +60,6 @@ ORB US100;2026-10;mecanismo;volatilidad;US100;210;F;"+0,12 R/op 2018-26; bruto +
 ORB GER40;2026-10;mecanismo;volatilidad;GER40;220;F;"+0,07-0,10 R/op; Jorge lo aparcó"
 ORB cripto (BTC/ETH) 9:30 NY;2026-11-13;mecanismo;volatilidad;BTC ETH;250;B;"precio medio 2021-26 bruto +0,24 R t 3,2; CME estándar neto t 3,0 pero no cabe en FTMO Futures; CFD FTMO (comisión 0,065 %) +0,08 R t 1,2. Reabrir si coste ≤ 0,02 % i/v"
 ORB apertura propia Asia (JP225 HK50 AUS200);2026-11-13;mecanismo;volatilidad;JP225 HK50 AUS200;230;B;"cartera neto +0,008 R t 0,3 (horquilla FTMO real); JP225 bruto +0,17 R t 3,3 con coste 0,09 R, neto 2023-26 +0,02. Reabrir JP225 si horquilla ≤ 0,005 %"
+Reversión tras choques de 5 min (provisión de liquidez);2026-11-13;publicado;liquidez;US100 US500 US30 GER40;250;A;"3.610 choques k4 2012-26: bruto −0,04 R (t −4 neto); los choques siguen un poco (+0,03 R bruto), no revierten"
+Estacionalidad FX horario propio (Breedon-Ranaldo);2026-11-13;publicado;calendario;6 pares;250;C;T0: >40 años necesarios
+Lead-lag US100→GER40 tras apertura NY;2026-11-13;mecanismo;dirección;GER40;250;C;T0: misma información que el ORB, no descorrelaciona

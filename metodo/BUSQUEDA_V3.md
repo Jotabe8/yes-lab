@@ -258,3 +258,23 @@ capacidad extra para el ORB US100 si algún día se llena el tope de FTMO, no co
 **Cierre de la familia "apertura propia + stop corto":** la ventaja existe en US100, GER40, JP225 y BTC/ETH;
 solo US100 y GER40 combinan ventaja actual y coste bajo. Para encontrar un segundo sistema hay que salir de esta
 familia o esperar un lugar con cripto ≤ 0,02 % ida y vuelta.
+
+## 9. Una familia distinta: provisión de liquidez (13-11-2026)
+
+Preregistro `v3/PREREGISTRO_CHOQUES.md`. T0 descartó sin datos la estacionalidad de divisas por horario
+(Breedon-Ranaldo; > 40 años necesarios), el lead-lag US100 → GER40 (no descorrelaciona) y el rebalanceo de
+fondos de volatilidad objetivo (~15 ops/año). Pasó la **reversión tras choques de 5 minutos** en los cuatro
+índices más baratos de FTMO (pago cóncavo, opuesto al ORB).
+
+Resultado (M1 en precio medio 2012-2026, 3.610 choques ≥ 4σ, coste FTMO 0,02-0,04 R):
+
+| | Bruto | Neto | t |
+|---|---|---|---|
+| En contra, salida 30 min (principal) | −0,041 R | −0,060 R | −4,2 |
+| En contra, salida 60 min | −0,050 | −0,069 | −3,9 |
+| En contra, choques ≥ 3σ (20.962) | −0,010 | −0,034 | −5,2 |
+| A favor del choque (placebo) | +0,030 | +0,011 | +0,7 |
+
+**Descartada (clase A).** En los índices líquidos los choques de 5 minutos no revierten; si acaso continúan un poco,
+y eso no da para pagar el coste. La prima por dar liquidez a esa escala ya la cobran los creadores de mercado
+de alta frecuencia. Con muestra grande (t −4) es un resultado firme: no hace falta volver a esta familia.
