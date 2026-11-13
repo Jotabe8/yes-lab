@@ -278,3 +278,27 @@ Resultado (M1 en precio medio 2012-2026, 3.610 choques ≥ 4σ, coste FTMO 0,02-
 **Descartada (clase A).** En los índices líquidos los choques de 5 minutos no revierten; si acaso continúan un poco,
 y eso no da para pagar el coste. La prima por dar liquidez a esa escala ya la cobran los creadores de mercado
 de alta frecuencia. Con muestra grande (t −4) es un resultado firme: no hace falta volver a esta familia.
+
+## 10. ORB GER40 con el coste real de FTMO (13-11-2026)
+
+Jorge aprobó repetir la prueba del ORB GER40 (aparcado) con la horquilla real de FTMO en la primera hora de
+Xetra (0,0052 %). Preregistro: `v3/PREREGISTRO_ORB_GER40.md`; simulación `v3/orb_ger40.py` (reglas del EA
+v100: rango 9:00-9:10 Fráncfort, dirección del cuerpo, stop 0,15 ATR, salida 17:25) en M1 Dukascopy, precio
+medio, 2013-2026 (Dukascopy no da 2012 para GER40). La réplica coincide con la referencia Python del EA en el
+lado el 99,9 % de 1.009 días comunes (corr R 0,76).
+
+| Serie | 2013-19/06 | 2019/07-26 | 2023-26 | Total | t total |
+|---|---|---|---|---|---|
+| Bruto | +0,089 | +0,105 | +0,117 | +0,098 | 2,24 |
+| **Neto (coste FTMO, 0,029 R)** | +0,062 | +0,075 | +0,083 | **+0,069** | **1,58** |
+| Neto con costes ×2 | +0,035 | +0,045 | +0,050 | +0,040 | 0,93 |
+| Fondeada (BE a 2 R) neto | +0,070 | +0,084 | +0,119 | +0,078 | 1,87 |
+| Placebo lado contrario | +0,003 | −0,044 | −0,107 | −0,023 | −0,56 |
+| Placebo hora (11:00) | −0,013 | +0,038 | +0,039 | +0,016 | 0,40 |
+
+**Veredicto: NO PASA** (t neto 1,58 < 2,4). Todo lo demás se cumple: segunda mitad > 0, costes ×2 > 0, supera a
+los dos placebos y no se correlaciona con el ORB US100 (0,00). El coste no era el problema (0,029 R, 0,05 R con la
+horquilla de Dukascopy): el bruto es pequeño (+0,10 R, la mitad que el US100) y muy irregular (7 de 13 años
+positivos; 2023 −0,10, 2026 +0,30). Con +0,07 R neto y ~235 operaciones al año harían falta unos 29 años de
+historia para distinguirlo del azar con la potencia de v3. Clase C en el registro. Siguiendo la regla de Jorge,
+se descarta, no queda en reserva: el ORB US100 sigue siendo el único sistema.
