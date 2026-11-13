@@ -33,10 +33,17 @@ def main(sim, d, salida):
     hm = m.index.hour * 60 + m.index.minute
     m = m[(hm >= 570) & (hm < 960)]  # 9:30-16:00 NY
     m["fecha"] = m.index.date
-    filas, diarios = [], []
+    filas, diarios, extra = [], [], []
     for f, g in m.groupby("fecha", sort=True):
         t = g.index.hour * 60 + g.index.minute
         diarios.append((f, g.open.iloc[0], g.high.max(), g.low.min(), g.close.iloc[-1]))
+        def px(minuto, col="open"):
+            x = g[t == minuto]
+            return (x[col].iloc[0], x.spr.iloc[0]) if len(x) else (np.nan, np.nan)
+        (p931, s931), (p935, s935), (p1555, s1555) = px(571), px(575), px(955)
+        extra.append(dict(fecha=f, sim=sim, o930=g.open.iloc[0] if t[0] == 570 else np.nan,
+                          p931=p931, s931=s931, p935=p935, s935=s935, p1555=p1555, s1555=s1555,
+                          c1600=g.close.iloc[-1] if t[-1] >= 958 else np.nan))
         r5 = g[t < 575]
         if len(r5) < 4 or t[0] != 570 or (t >= 955).sum() == 0:
             continue
@@ -94,6 +101,7 @@ def main(sim, d, salida):
             fila[f"dist_A_{lado}"] = dist
         out.append(fila)
     pd.DataFrame(out).to_csv(salida, index=False, float_format="%.6g")
+    pd.DataFrame(extra).to_csv(salida.replace(".csv", "_diario.csv"), index=False, float_format="%.6g")
     print(sim, len(out), "días")
 
 

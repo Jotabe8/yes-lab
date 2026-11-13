@@ -55,7 +55,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: orb-${{ matrix.sim }}
-          path: salida/${{ matrix.sim }}.csv
+          path: salida/
 
   juntar:
     needs: bajar
@@ -74,6 +74,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add orb_acciones/datos
-          git diff --cached --quiet || git commit -m "ORB acciones: resumen diario por acción"
+          git diff --cached --quiet || git commit -m "Acciones: resumen diario por acción (v2 con precios para hueco)"
           git pull --rebase -q || true
           git push
