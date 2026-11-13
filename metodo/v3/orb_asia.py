@@ -50,7 +50,9 @@ def orb(g, t, ini, fin, dist):
     post = g[(t >= ini + 30) & (t < fin)]
     if len(post) < 10: return None
     ent = post.open.iloc[0]
-    return lado, tramo(post, lado, ent, dist), tramo(post, -lado, ent, dist), ent
+    d30 = 2 * dist; dext = max(H - L, dist / 1.5)          # dist = 0,15 ATR -> 0,30 ATR y mínimo 0,10 ATR
+    return (lado, tramo(post, lado, ent, dist), tramo(post, -lado, ent, dist), ent,
+            tramo(post, lado, ent, d30), tramo(post, -lado, ent, d30), tramo(post, lado, ent, dext), tramo(post, -lado, ent, dext), dext)
 
 filas = []
 for f, g in m.groupby(fechas.values):
@@ -59,7 +61,7 @@ for f, g in m.groupby(fechas.values):
     fin = cierre(f); dist = 0.15 * atr[f]
     fila = dict(fecha=f, sim=sim, atr=atr[f], dist=dist)
     x = orb(g, t, a0, fin, dist)
-    if x: fila.update(lado=x[0], r=x[1], r_contra=x[2], px=x[3])
+    if x: fila.update(lado=x[0], r=x[1], r_contra=x[2], px=x[3], r_s30=x[4], c_s30=x[5], r_ext=x[6], c_ext=x[7], dist_ext=x[8])
     y = orb(g, t, a0 + 120, fin, dist)
     if y: fila.update(r_hora=y[1], r_hora_contra=y[2])
     sp = spr.loc[g.index][(t >= a0) & (t < a0 + 60)]
