@@ -145,8 +145,11 @@ BTC + ETH en contratos estándar de CME, 2021-03 → 2026-11.
   comen el edge. En el CFD de FTMO, BTC no da y ETH queda en +0,08-0,12 R con t < 2.
 - **Clase B confirmada, con el disparador exacto para reabrirla:** un lugar con BTC/ETH a coste total
   ≤ 0,02 % ida y vuelta y apalancamiento ≥ 1:2, o una cuenta de futuros con pérdida máxima ≥ 15.000 $.
-  Vale la pena mirar la horquilla real de ETHUSD en el MT5 de FTMO entre 9:30 y 16:00 NY: si fuera
-  ≤ 0,01 %, ETH en el CFD quedaría en +0,12 R, que justificaría una prueba preregistrada propia.
+  **Horquilla real de FTMO medida en el MT5 (21-09 → 12-11-2026, 9:30-16:00 NY, solo lectura):** BTCUSD mediana
+  0,0012 % (p90 0,0031 %), ETHUSD mediana 0,025 % (p90 0,029 %, subiendo). Contrato BTC 1, ETH 10 por lote;
+  apalancamiento 1:3,33. Con la comisión de 0,065 % ida y vuelta: BTC +0,08 R 2021-26 (t 1,2) y −0,03 R
+  2024-26; ETH ≈ +0,09 R (t ≈ 1,3) y +0,06 R 2024-26. **Ninguno llega a t 2,4: no es operable en el CFD de FTMO.**
+  El que manda es la comisión (≈ 0,15 R en BTC), no la horquilla.
 
 ## 6. Qué cambia a partir de ahora
 
