@@ -28,11 +28,12 @@ def tramo(bb, aa, lado, ent, dist):
     return lado * (px - ent) / dist, None
 
 sim, d, anio, salida = sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4]
+S0 = int(os.environ.get('INICIO', 570))  # minuto de inicio de la ventana (570 = 9:30 NY); placebo de hora: 60 = 1:00 NY
 b, a = cargar(d, "bid"), cargar(d, "ask")
 idx = b.index.intersection(a.index); b, a = b.loc[idx], a.loc[idx]
 m = (b + a) / 2
 t = m.index.hour * 60 + m.index.minute
-ses = (t >= 570) & (t < 960)
+ses = (t >= S0) & (t < S0 + 390)
 dias = {f: g for f, g in m[ses].groupby(m[ses].index.date)}
 hl = pd.DataFrame([(f, g.high.max(), g.low.min(), g.close.iloc[-1]) for f, g in dias.items()], columns=["f", "h", "l", "c"]).set_index("f")
 pc = hl.c.shift(1)
@@ -42,17 +43,17 @@ for f, g in dias.items():
     if f.year != anio or not np.isfinite(atr.get(f, np.nan)):
         continue
     tt = g.index.hour * 60 + g.index.minute
-    if tt[0] != 570 or (tt == 955).sum() == 0:
+    if tt[0] != S0 or (tt == S0 + 385).sum() == 0:
         continue
     dist = 0.15 * atr[f]
     fila = dict(fecha=f, sim=sim, atr=atr[f], px=float(g.open.iloc[0]))
     for L in (5, 10, 15, 30, 60):
-        rg = g[tt < 570 + L]
+        rg = g[tt < S0 + L]
         O, C, H, Lo = rg.open.iloc[0], rg.close.iloc[-1], rg.high.max(), rg.low.min()
         if len(rg) < 0.8 * L or H - Lo <= 0 or abs(C - O) < 0.10 * (H - Lo):
             continue
         lado = 1 if C > O else -1
-        post = g.index[(tt >= 570 + L) & (tt <= 955)]
+        post = g.index[(tt >= S0 + L) & (tt <= S0 + 385)]
         bb, aa = m.loc[post], m.loc[post]
         ent = aa.open.iloc[0] if lado == 1 else bb.open.iloc[0]
         r, i = tramo(bb, aa, lado, ent, dist)

@@ -31,13 +31,14 @@ jobs:
       - name: Descargar y resumir
         env:
           PAR: ${{ matrix.par }}
+          INICIO: "60"
         run: |
           SIM=${PAR%%:*}; INS=${PAR##*:}; Y=${{ matrix.y }}
           HASTA=$((Y+1))-01-02; [ $Y = 2026 ] && HASTA=2026-11-13
           mkdir -p velas salida && cd velas
           npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
           for P in bid ask; do npx dukascopy-node -i $INS -from $((Y-1))-11-01 -to $HASTA -t m1 -p $P -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo falla $P; done
-          cd .. && pip install -q pandas numpy && python metodo/v3/orb_cripto_medio.py $SIM velas $Y salida/medio_${SIM}_$Y.csv
+          cd .. && pip install -q pandas numpy && python metodo/v3/orb_cripto_medio.py $SIM velas $Y salida/hora01_${SIM}_$Y.csv
       - uses: actions/upload-artifact@v4
         with:
           name: med-${{ strategy.job-index }}
@@ -54,11 +55,11 @@ jobs:
           path: art
       - name: Guardar
         run: |
-          mkdir -p metodo/v3/orb_cripto_medio
-          find art -name '*.csv' -exec cp {} metodo/v3/orb_cripto_medio/ \;
+          mkdir -p metodo/v3/orb_cripto_hora01
+          find art -name '*.csv' -exec cp {} metodo/v3/orb_cripto_hora01/ \;
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add metodo/v3/orb_cripto_medio
-          git diff --cached --quiet || git commit -m "v3: ORB cripto en precio medio 2018-2026"
+          git add metodo/v3/orb_cripto_hora01
+          git diff --cached --quiet || git commit -m "v3: ORB cripto placebo de hora 01:00 NY"
           git pull --rebase -q || true
           git push
