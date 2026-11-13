@@ -14,14 +14,22 @@ def get(url):
 def listar(prefix):
     out, marker = [], ""
     while True:
-        x = get(f"https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix={prefix}&marker={marker}").decode()
+        x = None
+        for _ in range(5):
+            x = get(f"https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?delimiter=/&prefix={prefix}&marker={marker}")
+            if x: break
+            time.sleep(5)
+        x = x.decode()
         out += re.findall(r"<Prefix>([^<]+)</Prefix>", x)[1:]
         if "<IsTruncated>true</IsTruncated>" not in x: break
         marker = re.findall(r"<NextMarker>([^<]+)</NextMarker>", x)[0]
     return [q.rstrip("/").split("/")[-1] for q in out]
 def meses_de(sym):
-    ks = [q for q in listar(f"data/futures/um/monthly/klines/{sym}/1d/")]
-    x = get(f"https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data/futures/um/monthly/klines/{sym}/1d/")
+    x = None
+    for _ in range(4):
+        x = get(f"https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data/futures/um/monthly/klines/{sym}/1d/")
+        if x: break
+        time.sleep(3)
     fs = sorted(re.findall(r"(\d{4}-\d{2})\.zip</Key>", x.decode())) if x else []
     return fs
 KC = ["open_time","open","high","low","close","volume","close_time","qv","n","tb","tq","ign"]
@@ -31,6 +39,10 @@ def zcsv(b, cols):
 syms = [s for s in listar("data/futures/um/monthly/klines/") if s.endswith("USDT") and not re.match(r".*_\d+$", s)]
 print("símbolos", len(syms), flush=True)
 def uno(sym):
+    try: return uno_(sym)
+    except Exception as e:
+        print("fallo", sym, e, flush=True); return sym, None
+def uno_(sym):
     fs = meses_de(sym)
     if not fs: return sym, None
     sel = fs if sym == "BTCUSDT" else fs[:4]
@@ -45,7 +57,7 @@ def uno(sym):
     if f: pd.concat(f).to_csv(f"{OUT}/{sym}_f.csv.gz", index=False)
     return sym, (fs[0], len(fs))
 filas = []
-with ThreadPoolExecutor(16) as ex:
+with ThreadPoolExecutor(8) as ex:
     for s, r in ex.map(uno, syms):
         if r: filas.append(dict(sym=s, primer_mes=r[0], meses=r[1]))
 pd.DataFrame(filas).to_csv(f"{OUT}/listados.csv", index=False); print("ok", len(filas))
