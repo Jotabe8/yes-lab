@@ -65,3 +65,6 @@ Estacionalidad FX horario propio (Breedon-Ranaldo);2026-11-13;publicado;calendar
 Lead-lag US100→GER40 tras apertura NY;2026-11-13;mecanismo;dirección;GER40;250;C;T0: misma información que el ORB, no descorrelaciona
 Momentum 12 m multiactivo sin swap (Darwinex);2026-11-13;publicado;dirección;25 índices/FX/metales;12;D;"SR 0,51 t 2,37 2005-26; −2,5 %/año frente a siempre comprado"
 Cesta siempre comprada sin swap (Darwinex);2026-11-13;estructura;estructura;25 mercados;continuo;G;"beta SR 0,71; con el ORB solo +0,08 de Sharpe"
+Ciclo de subastas del Tesoro;2026-11-13;publicado;calendario;bonos EE. UU.;35;B;"FRED 2009-26 neto +7 pb t 2,8 (pasa preregistro); en futuros +3 pb bruto, neto ≈ 0. Reabrir con bono recién emitido a ≤ 3 pb/ciclo"
+Rebalanceo de pensiones fin de mes;2026-11-13;publicado;calendario;S&P y bono 10 a;12;D;"neto +18 pb t 2,15; 2023-26 −13 pb"
+Serie sin ventaja en Darwinex (estructura);2026-11-13;estructura;estructura;DARWIN;continuo;A;"media 0: −440 €/año, 93 % negativo"
