@@ -1,0 +1,37 @@
+acciones 71 días 2203
+
+entrada 935 neto por año (pb/día):
+        count   mean
+fecha              
+2018     243  -3.74
+2019     243 -13.11
+2020     247 -19.55
+2021     249 -12.37
+2022     246 -12.81
+
+entrada 931 neto por año (pb/día):
+        count   mean
+fecha              
+2018     243  -1.30
+2019     243 -17.60
+2020     248 -18.36
+2021     249 -20.89
+2022     246 -16.46
+
+AJUSTE 2018-2022
+    variante  dias  bruto_pb  coste_pb  neto_pb  t_neto  neto_x2_pb  sharpe_anual  placebo_p95_pb  placebo_media_pb
+entrada 935  1228    -3.434     8.906  -12.340  -6.072     -21.246        -2.751           1.817            -0.066
+entrada 931  1229    -3.771    11.197  -14.967  -6.783     -26.164        -3.071           1.946             0.020
+
+intradía relativo (pb) por decil de hueco relativo:
+ tramo
+0   -4.2
+1    0.5
+2    0.5
+3    0.4
+4    0.6
+5    1.8
+6   -0.3
+7    0.8
+8    0.1
+9    1.8

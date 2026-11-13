@@ -1,0 +1,39 @@
+celdas 3168; BH 0; BH+coste 0; BH+coste+consistencia 0
+
+Calibración ORB (US100, seguir primera media hora, todos los días):
+ stop    n     r  coste  neto  exceso     t     p    bh
+  15 2937 0.132  0.129 0.003   0.103 3.256 0.001 False
+  30 2937 0.077  0.064 0.013   0.071 3.165 0.002 False
+
+Mejores 30 por p:
+    sim  k stop  regla     cond  nivel    n      r   neto  exceso      t     p  coste    bh  consist
+ US500  6   15 seguir desde_ap      2  990  0.210  0.092   0.180  3.873 0.000  0.118 False        4
+ US500  6   15  largo desde_ap      2  990  0.210  0.092   0.180  3.873 0.000  0.118 False        4
+ US100  5   15 seguir      gap      2 1064  0.288  0.176   0.184  3.797 0.000  0.112 False        4
+ US100  1   30 seguir dia_prev      2 1057  0.114  0.055   0.127  3.667 0.000  0.059 False        4
+US2000 11   30  largo      dow      2  226 -0.167 -0.243  -0.189 -3.713 0.000  0.077 False        4
+ US100  4   30 seguir      gap      2 1064  0.147  0.091   0.118  3.583 0.000  0.057 False        4
+ US100  1   15 seguir dia_prev      2 1057  0.212  0.093   0.181  3.559 0.000  0.119 False        4
+ US100  8   15 seguir      gap      2 1064  0.149  0.035   0.141  3.523 0.000  0.113 False        4
+ US100  1   15 seguir      gap      2 1064  0.358  0.243   0.199  3.452 0.001  0.115 False        4
+ US100  3   30 seguir      gap      2 1064  0.160  0.102   0.118  3.399 0.001  0.057 False        4
+ US100  1   30 seguir      gap      2 1064  0.171  0.114   0.129  3.390 0.001  0.057 False        4
+ US100  4   15 seguir      gap      2 1064  0.230  0.117   0.162  3.322 0.001  0.113 False        4
+ US500  1   15 seguir      VIX      0 1301  0.204  0.016   0.166  3.269 0.001  0.188 False        3
+ US100  1   15 seguir    todos     -1 2937  0.132  0.003   0.103  3.256 0.001  0.129 False        4
+US2000 11   15 seguir dia_prev      2  456  0.186  0.044   0.152  3.254 0.001  0.142 False        4
+US2000  1   30 seguir      VIX      1  308  0.335  0.218   0.245  3.255 0.001  0.117 False        3
+ US100 11   30 seguir      VIX      2 1115  0.087  0.056   0.068  3.222 0.001  0.031 False        4
+ US100  8   15 seguir      VIX      2 1115  0.181  0.119   0.131  3.218 0.001  0.062 False        4
+US2000 11   15 seguir desde_ap      0  497  0.235  0.087   0.176  3.201 0.001  0.148 False        4
+US2000 11   15  largo desde_ap      0  497 -0.117 -0.265  -0.176 -3.201 0.001  0.149 False        4
+ US100  1   30 seguir    todos     -1 2937  0.077  0.013   0.071  3.165 0.002  0.064 False        4
+ US500  3   15  largo      gap      2  920  0.297  0.174   0.172  3.143 0.002  0.123 False        4
+ US100  5   30 seguir      gap      2 1064  0.134  0.077   0.099  3.102 0.002  0.057 False        4
+ US100  5   30 seguir      dow      4  529  0.139  0.082   0.136  3.084 0.002  0.057 False        3
+US2000 11   15 seguir    todos     -1 1293  0.114 -0.028   0.090  3.058 0.002  0.142 False        4
+ US100  1   15 seguir desde_ap      2  901  0.187  0.073   0.175  3.040 0.002  0.114 False        2
+ US100  1   15  largo desde_ap      2  901  0.187  0.073   0.175  3.040 0.002  0.114 False        2
+US2000 11   30  largo desde_ap      0  497 -0.096 -0.170  -0.107 -3.041 0.002  0.075 False        4
+US2000 11   30 seguir desde_ap      0  497  0.119  0.044   0.107  3.041 0.002  0.075 False        4
+ US500 11   15 seguir      dow      2  555  0.240  0.106   0.168  3.039 0.002  0.133 False        4

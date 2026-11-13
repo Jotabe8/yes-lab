@@ -101,6 +101,7 @@ def spa(matriz: pd.DataFrame, reps: int = 2000, bloque: float | None = None,
     if bloque is None:
         bloque = float(optimal_block_length(m.mean(axis=1)).loc[:, "stationary"].iloc[0])
         bloque = max(1.0, bloque)
+    bloque = max(1, int(round(bloque)))  # arch >= 8 exige un entero
     perdidas = -m                       # arch trabaja con pérdidas: menor es mejor
     base = pd.Series(0.0, index=m.index)
     s = SPA(base, perdidas, block_size=bloque, reps=reps, bootstrap="stationary", seed=semilla)

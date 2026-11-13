@@ -1,0 +1,29 @@
+celdas 2112; pasan BH 0; BH+coste 0; BH+coste+consistencia 0
+
+Mejores 25 por p (ajuste 2018-2022):
+   sim  k     hz       cond  nivel    n   media  exceso      t     p  coste    bh  consist
+ US100 11    sig      ratio      0  412  -2.687  -2.506 -2.765 0.006  1.188 False        4
+US2000 11 cierre        dow      2  226 -12.319  -9.777 -2.758 0.006  3.461 False        4
+ US500 11    sig      ratio      0  412  -1.516  -1.796 -2.735 0.007  1.365 False        4
+US2000  8    sig      ratio      1  356   3.161   3.509  2.686 0.008  3.569 False        4
+ US100  8    sig      ratio      1  420   2.803   2.963  2.644 0.008  1.291 False        4
+US2000 10 cierre        dow      4  216  10.325  11.198  2.550 0.011  3.518 False        4
+  US30  3 cierre        gap      1  426  -7.071  -7.926 -2.531 0.012  0.698 False        4
+  US30  4    sig        VIX      0  430  -1.194  -1.721 -2.509 0.012  0.648 False        4
+US2000  9 cierre        dow      4  216  10.627  11.708  2.516 0.013  3.518 False        4
+US2000 11 cierre        dow      4  216   6.857   9.399  2.486 0.014  3.523 False        4
+ US100  5 cierre barra_prev      0  432 -12.338 -12.092 -2.466 0.014  1.289 False        4
+ US500  9 cierre        dow      4  247  10.214   9.868  2.467 0.014  1.475 False        4
+ US500  2 cierre   desde_ap      1  619  -6.170  -6.198 -2.456 0.014  1.463 False        3
+ US500  7    sig   desde_ap      1  473   0.480   1.528  2.442 0.015  1.449 False        4
+ US500  8    sig      ratio      1  420   1.858   2.014  2.435 0.015  1.453 False        4
+ US100  9 cierre        dow      4  246  11.997  10.779  2.363 0.019  1.283 False        4
+ US100 10    sig      todos     -1 1249   2.029   2.029  2.322 0.020  1.283 False        4
+ US500 11 cierre        dow      2  257  -7.830  -7.305 -2.326 0.021  1.457 False        4
+US2000 11    sig      ratio      1  356   2.162   3.273  2.313 0.021  3.566 False        4
+  US30 11    sig        dow      4  247   3.685   3.093  2.257 0.025  0.749 False        4
+  US30  9 cierre        dow      4  247   9.237   8.858  2.256 0.025  0.749 False        4
+  US30 11 cierre        dow      2  257  -6.974  -6.787 -2.254 0.025  0.753 False        4
+  US30  8    sig      ratio      1  420   1.461   1.683  2.228 0.026  0.730 False        4
+ US500  7    sig      ratio      0  412   0.363   1.411  2.210 0.028  1.358 False        4
+  US30 11    sig      ratio      0  412  -0.763  -1.356 -2.198 0.029  0.714 False        4

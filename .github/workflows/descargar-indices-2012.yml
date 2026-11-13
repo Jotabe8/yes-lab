@@ -1,0 +1,69 @@
+name: Descargar M1 índices US Dukascopy 2012-2017
+
+on:
+  push:
+    branches: [claude/project-thread-1ei3pv]
+    paths:
+      - .github/workflows/descargar-indices-2012.yml
+
+
+
+
+permissions:
+  contents: write
+
+jobs:
+  bajar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        par: ["US100:usatechidxusd", "US500:usa500idxusd", "US30:usa30idxusd"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y resumir
+        run: |
+          SIM=${PAR%%:*}; INS=${PAR##*:}
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for Y in ${ANIOS:-2018 2019 2020 2021 2022 2023 2024 2025 2026}; do
+            HASTA=$((Y+1))-01-01; [ $Y = 2026 ] && HASTA=2018-01-01
+            for P in bid ask; do
+              npx dukascopy-node -i $INS -from $Y-01-01 -to $HASTA -t m1 -p $P -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo "falla $Y $P"
+            done
+          done
+          cd .. && pip install -q pandas numpy && python orb_acciones/indice_diario.py $SIM velas salida/$SIM.csv && python orb_acciones/barras30.py $SIM velas salida/${SIM}_b30.csv && python orb_acciones/convexo.py $SIM velas salida/${SIM}_convexo.csv
+        env:
+          PAR: ${{ matrix.par }}
+          ANIOS: "2011 2012 2013 2014 2015 2016 2017"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: idx-${{ strategy.job-index }}
+          path: salida/
+
+  juntar:
+    needs: bajar
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p orb_acciones/indices_2012
+          find art -name '*.csv' -exec cp {} orb_acciones/indices_2012/ \;
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add orb_acciones/indices_2012
+          git diff --cached --quiet || git commit -m "Índices US: precios clave por día barras 30 min y pago convexo 2011-2017"
+          git pull --rebase -q || true
+          git push

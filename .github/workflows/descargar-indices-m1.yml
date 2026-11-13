@@ -1,0 +1,86 @@
+name: Descargar M1 índices US Dukascopy
+
+on:
+  push:
+    branches: [claude/project-thread-1ei3pv]
+    paths:
+      - .github/workflows/descargar-indices-m1.yml
+      - orb_acciones/indice_diario.py
+      - orb_acciones/barras30.py
+      - orb_acciones/convexo.py
+
+permissions:
+  contents: write
+
+jobs:
+  bajar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        par: ["US100:usatechidxusd", "US500:usa500idxusd", "US30:usa30idxusd", "US2000:ussc2000idxusd"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y resumir
+        run: |
+          SIM=${PAR%%:*}; INS=${PAR##*:}
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for Y in 2018 2019 2020 2021 2022 2023 2024 2025 2026; do
+            HASTA=$((Y+1))-01-01; [ $Y = 2026 ] && HASTA=2026-11-13
+            for P in bid ask; do
+              npx dukascopy-node -i $INS -from $Y-01-01 -to $HASTA -t m1 -p $P -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo "falla $Y $P"
+            done
+          done
+          cd .. && pip install -q pandas numpy && python orb_acciones/indice_diario.py $SIM velas salida/$SIM.csv && python orb_acciones/barras30.py $SIM velas salida/${SIM}_b30.csv && python orb_acciones/convexo.py $SIM velas salida/${SIM}_convexo.csv
+        env:
+          PAR: ${{ matrix.par }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: idx-${{ strategy.job-index }}
+          path: salida/
+
+  vix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: VIX, VIX9D, VIX3M diarios (Yahoo)
+        run: |
+          mkdir -p salida && pip install -q yfinance
+          python3 - <<'PY'
+          import yfinance as yf
+          for t, n in {"^VIX": "VIX", "^VIX9D": "VIX9D", "^VIX3M": "VIX3M"}.items():
+              d = yf.download(t, start="2017-01-01", auto_adjust=False, progress=False)
+              d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+              d[["Open", "Close"]].to_csv(f"salida/{n}.csv"); print(n, len(d))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vix
+          path: salida/
+
+  juntar:
+    needs: [bajar, vix]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p orb_acciones/indices
+          find art -name '*.csv' -exec cp {} orb_acciones/indices/ \;
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add orb_acciones/indices
+          git diff --cached --quiet || git commit -m "Índices US: precios clave por día barras 30 min y pago convexo"
+          git pull --rebase -q || true
+          git push
