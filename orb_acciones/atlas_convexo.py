@@ -14,6 +14,7 @@ from scipy import stats
 D = Path(__file__).parent / "indices"
 MERC = ["US100", "US500", "US30", "US2000"]
 CORTE = pd.Timestamp("2023-01-01")
+LARGO = "--largo" in sys.argv  # ajuste 2012-2022 con los datos de 2011-2017; sin VIX (empieza en 2017): volatilidad propia
 OOS = "--oos" in sys.argv
 
 
@@ -23,8 +24,11 @@ def cargar():
     v = v.shift(1)
     xs = []
     for s in MERC:
-        c = pd.read_csv(D / f"{s}_convexo.csv", parse_dates=["fecha"])
-        d = pd.read_csv(D / f"{s}.csv", parse_dates=["fecha"]).set_index("fecha")
+        dirs = [D] + ([D.parent / "indices_2012"] if LARGO else [])
+        c = pd.concat([pd.read_csv(q / f"{s}_convexo.csv", parse_dates=["fecha"]) for q in dirs if (q / f"{s}_convexo.csv").exists()])
+        d = pd.concat([pd.read_csv(q / f"{s}.csv", parse_dates=["fecha"]) for q in dirs if (q / f"{s}.csv").exists()])
+        d = d.drop_duplicates("fecha").sort_values("fecha").set_index("fecha")
+        c = c.drop_duplicates(["fecha", "k"])
         d["gap"] = d.o930 / d.c.shift(1) - 1
         d["dia_prev"] = (d.c / d.o930 - 1).shift(1)
         c = c.join(d[["o930", "gap", "dia_prev"]], on="fecha")
@@ -32,13 +36,17 @@ def cargar():
         xs.append(c)
     x = pd.concat(xs).merge(v[["VIX", "ratio"]], left_on="fecha", right_index=True, how="left")
     x["dow"] = x.fecha.dt.dayofweek
+    x["vol"] = x.atr / x.o930
+    if LARGO:
+        x["VIX"], x["ratio"] = x.vol, 0.0  # sustituto: ATR % propio en lugar de VIX; ratio sin uso
+        x = x[x.fecha >= "2012-01-01"]
     return x.dropna(subset=["gap", "dia_prev", "desde_ap", "VIX", "ratio"])
 
 
 def main():
     x = cargar()
     aj0 = x[x.fecha < CORTE]
-    feats = ["gap", "dia_prev", "desde_ap", "VIX", "ratio"]
+    feats = ["gap", "dia_prev", "desde_ap", "VIX"] + ([] if LARGO else ["ratio"])
     for f in feats:
         x[f + "_t"] = np.digitize(x[f], aj0[f].quantile([1 / 3, 2 / 3]).values)
     conds = [("todos", None, None)] + [(f, f + "_t", v) for f in feats for v in (0, 1, 2)] + [("dow", "dow", v) for v in range(5)]

@@ -62,3 +62,13 @@ son negativos fuera de muestra. Correlación con el ORB baja (0,01-0,16), pero n
    la muestra y permite exigir t ≥ 3 sin matar edges reales.
 4. **Medir siempre con pago convexo y contra dirección al azar con las mismas salidas** (el atlas sin stop no ve el ORB).
 5. El atlas convexo queda como herramienta de **mapa** (`orb_acciones/atlas_convexo.py`), no de selección.
+
+## Con el doble de historia (2012-2022, Dukascopy gratis), 13-11-2026
+
+- ORB US100 réplica 2012-2017: bruto +0,13 R (t 2,0), el mecanismo se confirma fuera de muestra (`orb_acciones/RESULTADOS_ORB_2012.md`).
+- Atlas convexo 2012-2022 (3.168 celdas; ATR % propio en lugar de VIX, que solo hay desde 2017): **0 supervivientes**.
+  La celda del ORB sube a t 3,3 (p 0,001) y sigue sin pasar el FDR (umbral ≈ 3·10⁻⁵). La mejor celda tiene p 0,0001.
+- Único patrón repetido: **seguir el recorrido del día los días de hueco alcista grande** (US100, varias horas).
+  Es el ORB filtrado por hueco, no un sistema nuevo ni descorrelacionado.
+- Conclusión: ni con 11 años aparece en índices US nada nuevo del tamaño del ORB. El mapa queda como herramienta;
+  las ideas nuevas tienen que venir de un mecanismo concreto, probado con pocas variantes.
