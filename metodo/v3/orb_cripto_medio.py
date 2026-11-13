@@ -62,6 +62,11 @@ for f, g in dias.items():
         e_c = aa.open.iloc[0] if -lado == 1 else bb.open.iloc[0]
         fila[f"c{L}"], _ = tramo(bb, aa, -lado, e_c, dist)  # placebo: mismo momento y salidas, lado contrario
         if L == 10:
+            for nom, dd in (("s30", 2 * dist), ("ext", max(H - Lo, dist / 1.5))):
+                fila[f"r10_{nom}"], _ = tramo(bb, aa, lado, ent, dd)
+                fila[f"c10_{nom}"], _ = tramo(bb, aa, -lado, e_c, dd)
+                fila[f"d10_{nom}"] = dd
+        if L == 10:
             fila["sar"] = np.nan
             if i is not None and i + 1 < len(post) - 1:
                 b2, a2 = bb.iloc[i + 1:], aa.iloc[i + 1:]
