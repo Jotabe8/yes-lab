@@ -207,6 +207,19 @@ Registro: clase B (JP225), con disparador: horquilla ≤ 0,005 % en la apertura 
 - La familia "apertura propia + stop corto" es real fuera de EE. UU. y Alemania (JP225, BTC/ETH en la apertura
   de NY), pero en todos los casos nuevos el edge bruto es de 0,15-0,25 R y el coste en la cuenta que tenemos es de
   0,09-0,20 R. **El cuello de botella ya no es encontrar la señal, es el coste por operación en R.**
-- Palanca siguiente con más probabilidad: **subir el stop en R sin cambiar el mecanismo** (rango de apertura
-  más ancho o stop en el otro extremo del rango: el coste en R baja en proporción) en JP225 y ETH, preregistrado
-  con ≤ 3 variantes. Y para BTC/ETH, cualquier firma con comisión cripto ≤ 0,02 %.
+- Palanca probada justo después (`v3/PREREGISTRO_STOP_ANCHO.md`, `v3/stop_ancho_salida.txt`): **ensanchar el stop no sirve.**
+
+| | Coste R | Bruto R | Neto R (t) | 2ª mitad |
+|---|---|---|---|---|
+| JP225 stop 0,15 ATR (base) | 0,089 | 0,166 | +0,077 (1,5) | +0,025 |
+| JP225 stop 0,30 ATR | 0,045 | 0,078 | +0,034 (1,1) | −0,008 |
+| JP225 stop en el extremo del rango | 0,035 | 0,049 | +0,014 (0,6) | +0,016 |
+| ETH stop 0,15 ATR (base) | 0,161 | 0,253 | +0,092 (1,3) | +0,071 |
+| ETH stop 0,30 ATR | 0,080 | 0,125 | +0,045 (1,0) | +0,036 |
+| ETH stop en el extremo del rango | 0,157 | 0,283 | +0,126 (1,7) | +0,094 |
+
+  Al duplicar el stop, el coste en R se divide por dos **y el bruto también**: la ventaja de estas operaciones es
+  una cantidad fija de precio, no de R. **Regla nueva para T0: el margen se calcula en puntos básicos (bruto en pb
+  frente a coste en pb), que no depende del stop.** Cambiar el stop nunca convierte una B en operable; solo lo hace
+  un lugar más barato. Ninguna variante pasa (t ≤ 1,7 frente a 2,5).
+- Para BTC/ETH y JP225 solo queda la vía del lugar: comisión cripto ≤ 0,02 % o horquilla JP225 ≤ 0,005 %.
