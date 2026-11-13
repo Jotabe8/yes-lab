@@ -1,0 +1,61 @@
+familia;fecha;origen;tipo;mercados;ops_año;clase;dato_clave
+Reversión a la media y fade de hueco intradía;2026-10-24;folklore;dirección;GER40 oro FX;250;A;sin bruto
+RSI(2) diario;2026-10-24;publicado;dirección;índices;30;A;sin bruto
+Momentum de cierre / última media hora;2026-10-25;publicado;dirección;US100;250;A;sin bruto (PR #6)
+Cambio de mes;2026-10-01;publicado;calendario;SPY IBEX BTC;12;C;"t 0,2; 12 ops/año"
+Trend following FX D1 (1.968 combos);2026-10-24;folklore;dirección;FX;20;A;minería sin supervivientes
+TSMOM multiactivo;2026-10-24;publicado;dirección;32 mercados;50;A;sin bruto y swap
+Ruptura / fade de noticias US100;2026-10-24;folklore;volatilidad;US100;100;A;sin bruto
+VWAP reversión US100;2026-10-24;folklore;dirección;US100;250;A;sin bruto
+ORB en oro FX y 12 índices;2026-10-24;mecanismo;volatilidad;14 mercados;250;A;solo aperturas propias
+Búsqueda de 25.422 reglas intradía;2026-10-24;minería;dirección;15 mercados;250;A;0 supervivientes
+Pares / valor relativo D1;2026-10-25;publicado;dirección;11 pares;20;A;"sin bruto; financiación 2 patas"
+Momentum intradía BTC 30 min;2026-10-25;publicado;dirección;BTC;250;A;negativo bruto
+Fin de mes en forex;2026-10-25;publicado;calendario;FX;12;B;"bruto ≈ coste; 12 ops/año"
+Prima nocturna US500/US100;2026-10-25;publicado;calendario;US500 US100;250;B;bruto 0,02-0,07 % ≈ coste + swap
+Oro largo en Asia;2026-10-25;publicado;calendario;oro;250;B;bruto ≈ coste
+Halloween;2026-10-25;publicado;calendario;índices;2;C;2 ops/año
+Volatilidad gestionada;2026-10-25;publicado;estructura;índices;12;A;"sin edge; útil para tamaño"
+Zona de ruido Zarattini US100;2026-10-25;publicado;volatilidad;US100;250;D;"+0,10 R que se apaga; colas −7 R"
+Gap de resultados acciones US;2026-10-25;publicado;dirección;71 acciones;300;A;+0,03 R t 0,7
+Carry / COT / estacionalidad forex-oro;2026-10-25;publicado;dirección;FX oro;12;A;sin bruto
+Robot pullback Pons US100;2026-10-25;gurú;dirección;US100;150;A;OOS ≈ 0
+Torneo NNFX VP y 4.960 combos;2026-10-25;gurú;dirección;FX oro D1;30;A;bajo placebo
+Bollinger compresión oro H1;2026-10-25;folklore;volatilidad;oro;60;A;OOS −0,06 R
+Supertrend US500 H1;2026-10-25;folklore;dirección;US500;80;A;OOS −0,13 R
+Entrada aleatoria + gestión NNFX;2026-10-26;gurú;estructura;24 mercados D1;100;A;bruto ≈ 0
+Scalping con gestión NNFX M1-M15;2026-10-26;gurú;dirección;7 mercados;1000;B;spread 0,34-0,42 R en M1
+GER40 retroceso EMA20 M30;2026-10-26;minería;volatilidad;GER40;120;D;no se repite en 14 mercados
+Rebalanceo 60/40 fin de mes;2026-10-26;publicado;calendario;7 índices;12;B;bruto 1,3× coste
+Gotobi yen;2026-10-26;publicado;calendario;USDJPY;70;B;+0,106 R real pero 1,5× coste
+Shock macro 08:30 NY;2026-10-26;mecanismo;volatilidad;índices;100;A;sin bruto
+Lead-lag Asia-Europa;2026-10-26;publicado;dirección;índices;250;A;sin bruto
+Prima nocturna tras día de estrés;2026-10-26;mecanismo;dirección;7 índices;15;E;stop recortado a −1 fabricó +0,18 R
+Ciclo de la Fed (semanas pares);2026-10-26;publicado;calendario;11 índices;25;A;sin bruto
+CO-OC reversión hueco entre índices;2026-10-26;publicado;dirección;índices;250;A;sin bruto
+Cesta índices sin edge (IndexBasket);2026-10-26;estructura;estructura;6 índices;continuo;G;swap FTMO −5,7 %/año
+Tendencia + trailing D1 39 mercados;2026-10-30;folklore;dirección;39 mercados;10;A;"bajo placebo; swap"
+Víspera de festivo;2026-10-30;publicado;calendario;13 índices;9;B;"+0,044 R; 1,8× coste; 9 ops/año"
+Ruptura tras NR7/NR4;2026-10-30;folklore;volatilidad;índices;40;E;"t 9,6 por precios rancios de Yahoo; con futuros ≈ 0"
+Tendencia 100/4 sin swap;2026-10-30;folklore;dirección;39 mercados;10;A;< placebo largos (deriva)
+Periodicidad intradía;2026-10-30;publicado;dirección;10 mercados;250;A;bruto < 0
+Inventario EIA petróleo;2026-10-30;mecanismo;dirección;USOIL;50;D;+33 pb t 2,1 → OOS +0,02 R
+Dirección NY predicha (ridge);2026-10-30;minería;dirección;4 índices US;250;A;≈ placebo
+ORB 11 mercados × 4 aperturas;2026-10-30;mecanismo;volatilidad;11 mercados;250;A;aperturas ajenas sin edge
+ORB acciones en juego;2026-11-13;publicado;volatilidad;71 acciones;500;B;bruto +0,06 R < coste 0,11
+Reversión hueco acciones;2026-11-13;publicado;dirección;71 acciones;250;A;bruto −3,4 pb
+Amplitud de apertura;2026-11-13;mecanismo;dirección;3 índices US;30;A;sin bruto
+Atlas de dirección y convexo;2026-11-13;minería;ambos;4 índices US;250;A;0 supervivientes FDR
+Tendencia de tarde convexa;2026-11-13;minería;volatilidad;4 índices US;250;D;+0,07 R → −0,02 R OOS
+Filtro hueco alcista para ORB;2026-11-13;minería;volatilidad;US100;80;D;sube R/op baja R total
+Deriva nocturna 1-4 NY;2026-11-13;publicado;calendario;3 índices US;250;B;bruto +0,02 R < spread nocturno 0,04-0,10
+Fix de Londres;2026-11-13;publicado;dirección;6 pares;250;A;≈ placebo
+OPEX mensual;2026-11-13;publicado;calendario;3 índices US;12;C;"regla pierde; contraria post hoc 12 ops/año"
+ML LightGBM intradía;2026-11-13;minería;ambos;4 índices US;800;A;−0,07 R OOS
+ORB cripto (BTC/ETH);2026-11-13;mecanismo;volatilidad;BTC ETH;250;B;"lado t 1-2,4; coste CFD FTMO ≈ bruto"
+Números redondos;2026-11-13;publicado;dirección;3 índices US;250;A;≈ placebo
+Rebalanceo ETF apalancados;2026-11-13;publicado;dirección;3 índices US;250;A;signo inestable
+Variantes ORB (rango 5-60 / SAR);2026-11-13;mecanismo;volatilidad;3 índices US;250;D;mismo ORB o exceso solo 2023-26
+Sin ventaja + reglas (opción B);2026-11-13;estructura;estructura;US100;250;G;"EV < ORB; FTMO prohíbe audaz"
+ORB US100;2026-10;mecanismo;volatilidad;US100;210;F;"+0,12 R/op 2018-26; bruto +0,13 en 2012-17"
+ORB GER40;2026-10;mecanismo;volatilidad;GER40;220;F;"+0,07-0,10 R/op; Jorge lo aparcó"

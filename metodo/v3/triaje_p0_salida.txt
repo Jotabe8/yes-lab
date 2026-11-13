@@ -1,0 +1,7 @@
+                                        idea  ops_año  bruto  coste  neto  años_necesarios  historia  R_año potencia margen valor pasa_P0
+         Deriva pre-FOMC (US500, 24 h antes)        8  0.175  0.020 0.155             54.6        15    1.2       NO     sí    NO   fuera
+            Víspera de festivo en futuros ES        9  0.044  0.010 0.034           1009.0        25    0.3       NO     sí    NO   fuera
+                        Gotobi en futuros 6J       70  0.106  0.060 0.046             70.9        14    3.2       NO     NO    NO   fuera
+                    ORB Tokio en futuros NKD      220  0.159  0.100 0.059             44.4        14   13.0       NO     NO    sí   fuera
+                       OPEX seguir la mañana       12  0.100  0.020 0.080            136.7        14    1.0       NO     sí    NO   fuera
+ORB cripto en futuros CME estándar (BTC+ETH)      250  0.200  0.035 0.165              5.0         5   41.2       sí     sí    sí    PASA
