@@ -37,13 +37,13 @@ El primer año se parece a la columna sin GOLD: GOLD empieza a pagar en el año 
 
 ## Fase 2. Primeros 6 meses (enero a junio, meses 3-8)
 
-- **Revisión mensual** junto con la de FTMO: CSV de operaciones de cada EA, R medio por estrategia, rating y ranking.
+- **Revisión mensual** junto con la de FTMO: CSV de operaciones del EA, R medio, rating y ranking.
 - **SILVER:** cada mes con rating ≥ 75 entra una asignación de 30.000 € como mínimo, durante 3 meses.
   Se pueden tener varias a la vez.
 - **Garantía:** si en los 6 primeros meses no llega ninguna DarwinIA, Darwinex da 25.000 €.
 - **Permanente 100K con objetivo +10 % (535 €):** comprarla en el **mes 4-5** si se cumplen dos condiciones:
   - el DARWIN va en positivo desde el inicio;
-  - ninguna de las dos estrategias está por debajo de su referencia.
+  - el ORB US100 no está por debajo de su referencia.
   Solo se activa cuando el DARWIN sube un 10 % desde la compra.
 
 ## Fase 3. GOLD (desde el mes 9, julio de 2027)
