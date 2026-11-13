@@ -1,5 +1,9 @@
 # Método para crear EAs (versión 1, 2026-10-26)
 
+> **13-11-2026: P0-P3 sustituidos por la búsqueda v3** (`BUSQUEDA_V3.md`): triaje aritmético T0, lugar más
+> barato primero, simulación en precio medio, prueba única preregistrada sobre toda la historia y registro de
+> motivos (`v3/registro_ideas.csv`). P4-P6 siguen igual.
+
 Objetivo: decidir en horas, no en días, si una idea merece un EA, y que las que lleguen a MT5
 tengan muchas más probabilidades de sobrevivir. Criterio final: **EV por cuota en FTMO 2-Step
 por encima del control sin edge** y correlación baja con el ORB US100.
