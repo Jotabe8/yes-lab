@@ -20,6 +20,8 @@ jobs:
       matrix:
         par: ["US100:usatechidxusd", "US500:usa500idxusd", "US30:usa30idxusd"]
         y: [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+        exclude:
+          - {par: "US30:usa30idxusd", y: 2012}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
