@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p velas && cd velas
           npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
-          for P in bid ask; do npx dukascopy-node -i ${{ matrix.ins }} -from 2012-01-01 -to 2026-11-13 -t h1 -p $P -f csv -dir . -r 5 -bs 20 -bp 500 -fr || echo falla $P; done
+          for P in bid ask; do npx dukascopy-node -i ${{ matrix.ins }} -from 2003-01-01 -to 2012-01-01 -t h1 -p $P -f csv -dir . -r 5 -bs 20 -bp 500 -fr || echo falla $P; done
           ls -la
           for f in *.csv; do gzip -9 "$f"; done
       - uses: actions/upload-artifact@v4
@@ -45,12 +45,12 @@ jobs:
           path: art
       - name: Guardar
         run: |
-          mkdir -p datos_oro
-          find art -name '*.gz' -exec cp {} datos_oro/ \;
+          mkdir -p datos_oro/antes2012
+          find art -name '*.gz' -exec cp {} datos_oro/antes2012/ \;
           ls -la datos_oro
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add datos_oro
-          git diff --cached --quiet || git commit -m "Datos XAUUSD/XAGUSD H1 2012-2026"
+          git diff --cached --quiet || git commit -m "Datos XAUUSD/XAGUSD H1 2003-2011"
           git pull --rebase -q || true
           git push

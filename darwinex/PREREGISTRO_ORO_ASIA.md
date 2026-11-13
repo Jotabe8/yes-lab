@@ -25,3 +25,24 @@ mecanismo (sin poder de rescate).
 
 **Si pasa:** EA para la cuenta de futuros (GC) o CFD; correlación con el ORB US100 y proyección DZ.
 **Si falla:** se queda en el registro con su clase, sin rescates.
+
+---
+
+## Resultado de la prueba principal (13-11-2026): NO PASA
+
+Salida completa en `oro_asia_salida.txt`. D = +2,1 pb t 2,03 (< 2,4); 2012-18 +3,0 pb t 2,2 pero 2019-26 +1,3 pb t 0,8;
+noche neta con GC ×2 −0,2 pb. La ventana 19:00-03:00 es la 10ª de 24 en el placebo de hora. Plata: D ≈ 0.
+Clase **A** (sin ventaja con coste bajo). Sin rescates.
+
+## Preregistro 2 · Oro en la apertura asiática, 19:00 → 22:00 NY, confirmado en datos sin tocar 2003-2011
+
+**Origen (hallado mirando los datos, por eso NO cuenta 2012-26 como prueba):** el desglose hora a hora de 2012-26
+muestra que la subida del oro se concentra en 17:00-21:00 NY, con las horas 19, 20 y 21 positivas en las dos mitades
+(19:00 NY = 8:00-9:00 de Tokio: apertura de Asia). Las horas 17 y 18 incluyen la pausa y la reapertura (posible
+artefacto de cotización), así que se excluyen. En 2012-26: 19→22 ≈ +1,6 pb/día, t ≈ 4, con el oro bajando de media en el resto del día.
+
+**Prueba única:** largo XAUUSD **19:00 → 22:00 hora de Nueva York**, todas las sesiones de domingo a jueves,
+precio medio Dukascopy H1, **2003-05 → 2011-12** (datos que no se han mirado en este proyecto).
+**Pasa si:** media bruta ≥ +1,0 pb con t ≥ 2,4; ambas mitades (2003-07, 2008-11) > 0; la ventana es mejor que
+la mediana de las 24 ventanas de 3 h en esos años (placebo de hora); y neta con coste GC ×2 (1 pb) > 0.
+**Informativo:** plata, año a año. Si pasa: EA para la cuenta de futuros (GC) y proyección DZ. Si falla: clase A.
