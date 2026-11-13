@@ -1,0 +1,7 @@
+eventos: 877
+V1 30 días: días 2324, media diaria +0.1156% t 2.23 | 1ª +0.1599% 2ª +0.0706%
+   por evento: media +2.00% mediana +4.93% % ganadores 62% peor -494.2% (COAI) mejor +91.9%
+   por año (media por evento %): {2020: 7.1, 2021: 0.6, 2022: 4.3, 2023: 2.7, 2024: 5.0, 2025: -0.1, 2026: 0.8}
+V1 costes ×2: media diaria +0.1104% t 2.13
+V2 14 días: t 1.31, media por evento +0.40%
+V3 60 días: t 0.42, media por evento +3.08%
