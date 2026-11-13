@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-10-26 | Rebalanceo 60/40 de fin de mes (con el embudo de `metodo/`) | US500, US100, US30, US2000, GER40, UK100, EU50 | Descartada en P0/P1: bruto 1,3× coste, bajo el placebo; ver `metodo/METODO.md` §7 |
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
 
 ---

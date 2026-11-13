@@ -1,0 +1,35 @@
+== ORB US100 v018, coste 0.02 R, 50 pruebas
+OK  frecuencia                   208 ops/año (mín 40)
+OK  coste en R                   0.020 R/op (máx 0.1)
+OK  bruto vs coste               bruto +0.124 R = 6.2× coste
+OK  neto ajuste > 0              +0.043 R/op, t 0.78
+OK  coste ×2 > 0                 +0.084 R/op
+OK  años positivos               8/9 años
+OK  fuera de muestra             +0.182 R/op, n 794, t 2.76
+ojo t total corregido            t 2.46 vs 3.09 (50 pruebas); aviso, lo decide la EV recortada
+OK  EV/cuota 2-Step recortada    +3683 € con +0.043 R/op (p pasar 37%) vs control sin edge +1923 €, DD p95 68.1 R
+VEREDICTO: sigue al siguiente paso
+
+== ORB US100 v018, coste 0.05 R, 50 pruebas
+OK  frecuencia                   208 ops/año (mín 40)
+OK  coste en R                   0.050 R/op (máx 0.1)
+OK  bruto vs coste               bruto +0.154 R = 3.1× coste
+OK  neto ajuste > 0              +0.043 R/op, t 0.78
+OK  coste ×2 > 0                 +0.054 R/op
+OK  años positivos               8/9 años
+OK  fuera de muestra             +0.182 R/op, n 794, t 2.76
+ojo t total corregido            t 2.46 vs 3.09 (50 pruebas); aviso, lo decide la EV recortada
+OK  EV/cuota 2-Step recortada    +3683 € con +0.043 R/op (p pasar 37%) vs control sin edge +1923 €, DD p95 68.1 R
+VEREDICTO: sigue al siguiente paso
+
+== GER40 EMA20, 105 pruebas
+OK  frecuencia                   113 ops/año (mín 40)
+OK  coste en R                   0.087 R/op (máx 0.1)
+NO  bruto vs coste               bruto +0.149 R = 1.7× coste
+OK  neto ajuste > 0              +0.009 R/op, t 0.15
+NO  coste ×2 > 0                 -0.025 R/op
+OK  años positivos               7/9 años
+OK  fuera de muestra             +0.134 R/op, n 421, t 1.47
+ojo t total corregido            t 1.17 vs 3.30 (105 pruebas); aviso, lo decide la EV recortada
+NO  EV/cuota 2-Step recortada    +1203 € con -0.026 R/op (p pasar 22%) vs control sin edge +1982 €, DD p95 59.5 R
+VEREDICTO: DESCARTAR

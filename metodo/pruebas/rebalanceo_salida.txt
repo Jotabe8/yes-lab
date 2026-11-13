@@ -1,0 +1,33 @@
+meses con señal: 110 (2016-11-23 → 2025-12-31), señal>0 (corto) 70%
+
+P1 bruto por mercado (ajuste 2016-22 | prueba 2023-25), R/op y t
+  US500   |señal|>0%: n 110  total +0.063 t +0.63 | ajuste +0.085 t +0.62 | prueba +0.020 t +0.15
+  US100   |señal|>0%: n 110  total +0.050 t +0.54 | ajuste +0.090 t +0.74 | prueba -0.031 t -0.23
+  US30    |señal|>0%: n 110  total +0.104 t +0.99 | ajuste +0.151 t +1.06 | prueba +0.008 t +0.06
+  US2000  |señal|>0%: n  78  total +0.092 t +0.81 | ajuste +0.172 t +0.92 | prueba -0.002 t -0.02
+  GER40   |señal|>0%: n 110  total +0.154 t +1.43 | ajuste +0.250 t +1.73 | prueba -0.041 t -0.29
+  UK100   |señal|>0%: n 110  total +0.185 t +1.97 | ajuste +0.195 t +1.58 | prueba +0.163 t +1.21
+  EU50    |señal|>0%: n 110  total +0.161 t +1.47 | ajuste +0.286 t +1.93 | prueba -0.095 t -0.73
+  US500   |señal|>2%: n  74  total +0.183 t +1.36 | ajuste +0.177 t +1.04 | prueba +0.200 t +1.06
+  US100   |señal|>2%: n  74  total +0.135 t +1.16 | ajuste +0.121 t +0.85 | prueba +0.179 t +0.91
+  US30    |señal|>2%: n  74  total +0.255 t +1.81 | ajuste +0.312 t +1.77 | prueba +0.089 t +0.43
+  US2000  |señal|>2%: n  53  total +0.200 t +1.28 | ajuste +0.301 t +1.36 | prueba +0.018 t +0.10
+  GER40   |señal|>2%: n  74  total +0.187 t +1.30 | ajuste +0.306 t +1.72 | prueba -0.156 t -0.73
+  UK100   |señal|>2%: n  74  total +0.186 t +1.50 | ajuste +0.239 t +1.53 | prueba +0.034 t +0.19
+  EU50    |señal|>2%: n  74  total +0.182 t +1.21 | ajuste +0.304 t +1.61 | prueba -0.170 t -0.89
+
+Placebo US500 (500 réplicas dirección aleatoria): p95 +0.129  vs estrategia +0.063
+Solo largo en esos días (deriva): +0.086 R/op
+
+Embudo US500 (todas las señales, 14 pruebas):
+NO  frecuencia                   12 ops/año (mín 40)
+OK  coste en R                   0.050 R/op (máx 0.1)
+NO  bruto vs coste               bruto +0.063 R = 1.3× coste
+NO  supera placebo p95           bruto +0.063 vs p95 +0.134
+OK  neto ajuste > 0              +0.035 R/op, t 0.26
+NO  coste ×2 > 0                 -0.037 R/op
+NO  años positivos               5/10 años
+NO  fuera de muestra             -0.030 R/op, n 36, t -0.23
+ojo t total corregido            t 0.13 vs 2.69 (14 pruebas); aviso, lo decide la EV recortada
+NO  EV/cuota 2-Step recortada    -372 € con -0.092 R/op (p pasar 6%) vs control sin edge +1895 €, DD p95 15.4 R
+VEREDICTO: DESCARTAR
