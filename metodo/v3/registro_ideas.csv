@@ -63,3 +63,8 @@ ORB apertura propia Asia (JP225 HK50 AUS200);2026-11-13;mecanismo;volatilidad;JP
 Reversión tras choques de 5 min (provisión de liquidez);2026-11-13;publicado;liquidez;US100 US500 US30 GER40;250;A;"3.610 choques k4 2012-26: bruto −0,04 R (t −4 neto); los choques siguen un poco (+0,03 R bruto), no revierten"
 Estacionalidad FX horario propio (Breedon-Ranaldo);2026-11-13;publicado;calendario;6 pares;250;C;T0: >40 años necesarios
 Lead-lag US100→GER40 tras apertura NY;2026-11-13;mecanismo;dirección;GER40;250;C;T0: misma información que el ORB, no descorrelaciona
+Prima nocturna en futuros CME (Darwinex Zero);2026-11-13;publicado;calendario;US500 US100 US30;250;A;"2011-26 neto t 2,36, Sharpe 0,61 < siempre comprado 0,89; mezcla con ORB −0,03"
+Gamma Fragility / momentum de cierre con gamma (Barbon);2026-11-13;publicado;dirección;US500;80;C;"T0: >35 años necesarios; dato de gamma no accesible"
+VIX ETNs prima de volatilidad (Zarattini-Aziz-Mele);2026-11-13;publicado;volatilidad;VIX;250;C;"T0: SR publicado 1 → 0,5: t 2,1 en 17 años; sin VIX en FTMO"
+Tendencia BTC lunes apertura Asia (Pagani);2026-11-13;publicado;calendario;BTC;52;C;"T0: ~30 años necesarios"
+Tendencia cripto Donchian rotacional (Zarattini-Pagani-Barbon);2026-11-13;publicado;dirección;cripto;20;C;"T0: alfa sobre BTC no verificable con 8 años; solo BTC/ETH en DZ"
