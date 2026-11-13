@@ -32,3 +32,33 @@ y salida al cierre dan bruto positivo en ventanas volátiles (GER40 EMA20 +0,10 
 
 Ventaja: un lote de miles de celdas cuesta lo mismo que una idea suelta, cubre los efectos condicionales que
 la regla fija diluía y el FDR mantiene honesta la cuenta de pruebas.
+
+## Resultado del primer lote (13-11-2026) y lo que enseña
+
+- **Atlas de dirección** (2.112 celdas, rentabilidad media sin stop): 0 supervivientes; p mínimo 0,006, lo esperable por azar.
+- **Atlas convexo** (3.696 celdas, stop 0,15/0,30 ATR y salida al cierre, recorrido M1): 0 supervivientes con BH.
+  **Calibración:** la celda del ORB (US100, seguir la primera media hora) sale +0,156 R de exceso sobre
+  dirección al azar, t 3,0, neto +0,14 R: el atlas convexo sí ve el ORB; el de dirección no.
+  Pero el ORB **no pasa** el FDR ni con solo las 176 celdas sin condición (p 0,003 frente a 0,0006).
+- **Lección central:** con 5 años de datos, un edge del tamaño del ORB da t ≈ 3. Cualquier búsqueda masiva
+  honesta lo mata. Las búsquedas masivas solo pueden encontrar edges mucho mayores que el ORB, que en
+  índices líquidos no existen. Para edges de tamaño ORB hacen falta (a) una hipótesis de mecanismo fijada
+  antes (pocas pruebas) o (b) más historia (NQ/ES 2010-2017, Databento) o más mercados con el mismo mecanismo.
+- **Patrón de familia:** "seguir el recorrido del día con stop corto hasta el cierre" da exceso positivo en
+  casi todas las horas y mercados. Se fija ANTES de abrir 2023-2026 una sola hipótesis: entrada 13:30 NY
+  (k = 8) a favor del recorrido desde la apertura, stop 0,15 ATR, salida al cierre; principal US100,
+  secundarios US500/US30/US2000 y k = 10, 11.
+
+**Fuera de muestra 2023-2026 (abierto una vez, `orb_acciones/tarde_oos.py`): DESCARTADA.** US100 13:30:
++0,073 R neto en 2018-22 → −0,022 R en 2023-26 (con horquilla FTMO −0,003). Los 12 casos (4 mercados × 3 horas)
+son negativos fuera de muestra. Correlación con el ORB baja (0,01-0,16), pero no hay edge que aprovechar.
+
+## Cómo buscar a partir de ahora (cambios al embudo)
+
+1. **Mecanismo antes que datos.** Solo se prueba una idea si se puede decir quién está obligado a operar y
+   por qué a esa hora (como la apertura propia del ORB). Nada de anomalías publicadas sin ese porqué.
+2. **Pocas pruebas por idea, contadas** (≤ 10). Con 5 años, más pruebas hacen imposible ver un edge de tamaño ORB.
+3. **Más historia antes que más reglas:** conseguir NQ/ES/YM 2010-2017 en M1 (crédito gratis de Databento) duplica
+   la muestra y permite exigir t ≥ 3 sin matar edges reales.
+4. **Medir siempre con pago convexo y contra dirección al azar con las mismas salidas** (el atlas sin stop no ve el ORB).
+5. El atlas convexo queda como herramienta de **mapa** (`orb_acciones/atlas_convexo.py`), no de selección.
