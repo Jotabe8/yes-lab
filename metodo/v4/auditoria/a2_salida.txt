@@ -1,0 +1,9 @@
+R v018: media 0.124, sd 1.80
+edge real +0.12: P(parar tras 100 ops) 25%; P(R media 100 ops < +0,04 'alerta') 33%
+edge real +0.06: P(parar tras 100 ops) 37%; P(R media 100 ops < +0,04 'alerta') 46%
+edge real +0.00: P(parar tras 100 ops) 51%; P(R media 100 ops < +0,04 'alerta') 59%
+edge real -0.06: P(parar tras 100 ops) 63%; P(R media 100 ops < +0,04 'alerta') 72%
+SPRT edge real +0.12: P(parar) 18%, P(confirmar) 76%, ops medianas hasta decidir 686
+SPRT edge real +0.06: P(parar) 58%, P(confirmar) 30%, ops medianas hasta decidir 634
+SPRT edge real +0.00: P(parar) 92%, P(confirmar) 5%, ops medianas hasta decidir 413
+SPRT edge real -0.06: P(parar) 99%, P(confirmar) 0%, ops medianas hasta decidir 265
