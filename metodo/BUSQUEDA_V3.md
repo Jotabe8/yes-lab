@@ -160,3 +160,53 @@ BTC + ETH en contratos estándar de CME, 2021-03 → 2026-11.
    salvo que se miren más de 3 variantes.
 4. Cada lugar nuevo que aparezca (firma, contrato, comisión) se cruza con las B del registro antes que con
    ideas nuevas: es la búsqueda más barata que tenemos.
+
+## 7. Segunda ronda (13-11-2026, tarde): lugar primero y apertura propia en Asia
+
+### 7.1 Horquilla real de FTMO en la primera hora de cada apertura (`v3/spread_aperturas_ftmo.csv`)
+
+Medida en el MT5 de la cuenta (solo lectura, ticks del 14-09 al 12-11-2026). Es la tabla de costes T2 para
+cualquier idea de apertura:
+
+| Símbolo | Ventana local | Mediana | p90 |
+|---|---|---|---|
+| US100.cash | 9:30-10:30 NY | 0,0049 % | 0,0050 % |
+| GER40.cash | 9:00-10:00 Fráncfort | 0,0052 % | 0,0053 % |
+| UK100.cash | 8:00-9:00 Londres | 0,0079 % | 0,0081 % |
+| XAUUSD | 9:30-10:30 NY | 0,0099 % | 0,0105 % |
+| AUS200.cash | 10:00-11:00 Sídney | 0,0115 % | 0,0130 % |
+| JP225.cash | 9:00-10:00 Tokio | 0,0157 % | 0,0183 % |
+| FRA40.cash | 9:00-10:00 Fráncfort | 0,0203 % | 0,0206 % |
+| EU50.cash | 9:00-10:00 Fráncfort | 0,0268 % | 0,0272 % |
+| HK50.cash | 9:30-10:30 HK | 0,0269 % | 0,0291 % |
+| XAGUSD | 9:30-10:30 NY | 0,0832 % | 0,1021 % |
+| BTCUSD / ETHUSD | 9:30-16:00 NY | 0,0012 % / 0,025 % | + comisión 0,065 % ida y vuelta |
+
+Lección: la horquilla de Dukascopy que usábamos como coste exageraba 1,6-1,9 veces en Asia y ~20 veces en BTC.
+Desde ahora el coste de T2 sale de esta tabla (o de una medición nueva en el MT5), no de Dukascopy.
+
+### 7.2 ORB de la apertura propia en Asia, agrupado (preregistro `v3/PREREGISTRO_ORB_ASIA.md`)
+
+Se rehízo en precio medio y en hora local (la prueba anterior ponía la barra de Tokio una hora antes de la
+apertura de marzo a noviembre). M1 Dukascopy 2018-2026 descargado con GitHub Actions; coste = horquilla FTMO real.
+
+| | Bruto | Neto FTMO | Neto 2023-26 | Lado contrario (neto) | 2 h después (neto) |
+|---|---|---|---|---|---|
+| JP225 | +0,166 R (t 3,3) | +0,077 (t 1,5) | +0,019 | −0,096 | +0,007 |
+| HK50 | +0,074 | −0,032 | −0,036 | −0,063 | −0,023 |
+| AUS200 | +0,097 | +0,003 | −0,071 | −0,104 | −0,077 |
+| **Cartera (principal)** | | **+0,008 R/día (t 0,3)** | 2ª mitad −0,024 | −0,091 | −0,043 |
+
+**No pasa.** El mecanismo existe en JP225 (elegir el lado de la primera barra gana claramente al lado contrario y
+a la misma regla 2 h después, t 3,3 bruto), pero la horquilla de FTMO (0,09 R) se come más de la mitad y el
+efecto se ha encogido en 2023-26. HK50 y AUS200 no tienen efecto que agrupar. Correlación con el ORB US100 −0,03.
+Registro: clase B (JP225), con disparador: horquilla ≤ 0,005 % en la apertura de Tokio.
+
+### 7.3 Qué deja esta ronda
+
+- La familia "apertura propia + stop corto" es real fuera de EE. UU. y Alemania (JP225, BTC/ETH en la apertura
+  de NY), pero en todos los casos nuevos el edge bruto es de 0,15-0,25 R y el coste en la cuenta que tenemos es de
+  0,09-0,20 R. **El cuello de botella ya no es encontrar la señal, es el coste por operación en R.**
+- Palanca siguiente con más probabilidad: **subir el stop en R sin cambiar el mecanismo** (rango de apertura
+  más ancho o stop en el otro extremo del rango: el coste en R baja en proporción) en JP225 y ETH, preregistrado
+  con ≤ 3 variantes. Y para BTC/ETH, cualquier firma con comisión cripto ≤ 0,02 %.
