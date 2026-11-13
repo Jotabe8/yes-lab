@@ -1,0 +1,42 @@
+BTCUSD 2025-26: precio medio 89138 stop medio 360.1 (0.40 % del precio)
+ETHUSD 2025-26: precio medio 2700 stop medio 16.8 (0.62 % del precio)
+                                      R_op                               t                        
+periodo                            2018-22 2018-26 2023-26 2024-26 2018-22 2018-26 2023-26 2024-26
+activo lugar                                                                                      
+BTCUSD Bruto (sin coste)             1.664   1.040   0.210   0.195  19.224  16.972   2.754   2.103
+       CFD FTMO (spread + 0,065 %)  -0.737  -0.545  -0.289  -0.149 -16.625 -13.048  -3.780  -1.611
+       Dukascopy (spread real)      -0.607  -0.398  -0.121   0.012 -13.777  -9.559  -1.579   0.133
+       Futuro BTC                    1.487   0.920   0.166   0.167  18.221  15.686   2.175   1.809
+       Futuro BTC costes x2          1.310   0.800   0.121   0.140  17.060  14.250   1.594   1.515
+       Futuro MBT                    0.991   0.583   0.041   0.091  14.458  11.223   0.542   0.982
+       Futuro MBT costes x2          0.318   0.127  -0.128  -0.013   5.912   2.807  -1.670  -0.139
+ETHUSD Bruto (sin coste)             1.946   1.173   0.190   0.211  18.650  17.271   2.892   2.478
+       CFD FTMO (spread + 0,065 %)  -0.747  -0.592  -0.395  -0.229 -18.458 -15.893  -5.924  -2.675
+       Dukascopy (spread real)      -0.657  -0.484  -0.264  -0.111 -16.250 -13.003  -3.970  -1.303
+       Futuro ETH                    1.744   1.040   0.144   0.176  17.590  16.006   2.194   2.067
+       Futuro ETH costes x2          1.542   0.906   0.098   0.141  16.383  14.592   1.496   1.656
+       Futuro MET                   -0.775  -0.622  -0.427  -0.261 -12.535 -13.642  -6.383  -3.041
+       Futuro MET costes x2         -3.497  -2.417  -1.043  -0.733 -31.494 -32.502 -14.892  -8.442
+
+Informativo, rangos 15/30/60, futuro más barato (BTC estándar / ETH estándar), 2018-26 y 2023-26:
+                                  R_op               t        
+periodo                        2018-26 2023-26 2018-26 2023-26
+activo rango lugar                                            
+BTCUSD 15    Bruto (sin coste)   1.035   0.236  16.838   3.094
+             Futuro BTC          0.917   0.192  15.573   2.521
+       30    Bruto (sin coste)   0.933   0.184  16.054   2.521
+             Futuro BTC          0.818   0.141  14.721   1.925
+       60    Bruto (sin coste)   0.964   0.187  16.542   2.589
+             Futuro BTC          0.849   0.144  15.223   1.997
+ETHUSD 15    Bruto (sin coste)   1.223   0.183  17.531   2.650
+             Futuro ETH          1.088   0.137  16.267   1.984
+       30    Bruto (sin coste)   1.213   0.212  17.722   3.087
+             Futuro ETH          1.076   0.167  16.448   2.420
+       60    Bruto (sin coste)   1.275   0.210  18.399   3.138
+             Futuro ETH          1.138   0.165  17.186   2.456
+BTCUSD corr diaria con ORB US100 v018: 0.071 días 1673
+ETHUSD corr diaria con ORB US100 v018: 0.007 días 1630
+corr BTC-ETH 0.78
+cartera BTC+ETH estándar media diaria 2018-22 1.659 t 19.65
+cartera BTC+ETH estándar media diaria 2023-26 0.15 t 2.41
+cartera BTC+ETH estándar media diaria 2018-26 1.004 t 17.6

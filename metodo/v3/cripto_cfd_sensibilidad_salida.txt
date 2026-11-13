@@ -1,0 +1,12 @@
+BTCUSD stop medio % del precio 2024-26: 0.44 | nominal para arriesgar 1 %: 2.27 x capital
+   horquilla 0.00 %: 2021-26 +0.084 R (t 1.16) | 2024-26 -0.028 R (t -0.29)
+   horquilla 0.01 %: 2021-26 +0.061 R (t 0.84) | 2024-26 -0.053 R (t -0.55)
+   horquilla 0.02 %: 2021-26 +0.038 R (t 0.52) | 2024-26 -0.078 R (t -0.80)
+   horquilla 0.03 %: 2021-26 +0.014 R (t 0.20) | 2024-26 -0.102 R (t -1.06)
+   horquilla 0.05 %: 2021-26 -0.032 R (t -0.44) | 2024-26 -0.152 R (t -1.57)
+ETHUSD stop medio % del precio 2024-26: 0.61 | nominal para arriesgar 1 %: 1.63 x capital
+   horquilla 0.00 %: 2021-26 +0.137 R (t 1.89) | 2024-26 +0.109 R (t 1.11)
+   horquilla 0.01 %: 2021-26 +0.119 R (t 1.65) | 2024-26 +0.091 R (t 0.93)
+   horquilla 0.02 %: 2021-26 +0.101 R (t 1.40) | 2024-26 +0.073 R (t 0.74)
+   horquilla 0.03 %: 2021-26 +0.083 R (t 1.15) | 2024-26 +0.055 R (t 0.56)
+   horquilla 0.05 %: 2021-26 +0.048 R (t 0.66) | 2024-26 +0.020 R (t 0.20)

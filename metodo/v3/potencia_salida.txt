@@ -1,0 +1,22 @@
+Probabilidad de que un edge REAL pase las puertas (forma de R del ORB, sigma 1,8 R)
+ edge real (R/op)  v1 actual  v1 con 12 ops/año  v3 11 años  v3 11 años, 3 mercados  v3 con 12 ops/año
+             0.05       0.06               0.01        0.13                    0.28               0.01
+             0.08       0.17               0.00        0.38                    0.72               0.02
+             0.10       0.31               0.01        0.62                    0.89               0.02
+             0.12       0.46               0.01        0.81                    0.98               0.03
+             0.15       0.69               0.02        0.96                    1.00               0.05
+             0.20       0.95               0.04        1.00                    1.00               0.10
+
+Falsos positivos (sin edge, se elige la mejor de k variantes)
+ variantes miradas  v1 falso positivo  v3 falso positivo
+                 1              0.004              0.010
+                 3              0.009              0.017
+                10              0.025              0.084
+                30              0.071              0.190
+
+Operaciones necesarias para ver un edge con 80 % de probabilidad (t >= 2,4): n = ((2,4+0,84) sigma / mu)^2, sigma = 1.8
+  mu 0.05 R ->   13539 ops =  64.5 años a 210 ops/año =   1128 años a 12 ops/año
+  mu 0.10 R ->    3385 ops =  16.1 años a 210 ops/año =    282 años a 12 ops/año
+  mu 0.15 R ->    1504 ops =   7.2 años a 210 ops/año =    125 años a 12 ops/año
+  mu 0.20 R ->     846 ops =   4.0 años a 210 ops/año =     71 años a 12 ops/año
+  mu 0.30 R ->     376 ops =   1.8 años a 210 ops/año =     31 años a 12 ops/año

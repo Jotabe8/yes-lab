@@ -1,0 +1,4 @@
+BTCUSD 09:30 NY             bruto lado vela +0.235 (t 3.24) | lado contrario +0.127 (t 1.81) | media de ambos +0.181 (t 4.00) | stop medio 0.50 %
+BTCUSD 01:00 NY (placebo)   bruto lado vela +0.086 (t 1.56) | lado contrario +0.063 (t 1.15) | media de ambos +0.075 (t 2.25) | stop medio 0.43 %
+ETHUSD 09:30 NY             bruto lado vela +0.253 (t 3.49) | lado contrario +0.178 (t 2.46) | media de ambos +0.216 (t 4.72) | stop medio 0.65 %
+ETHUSD 01:00 NY (placebo)   bruto lado vela +0.073 (t 1.38) | lado contrario +0.050 (t 0.92) | media de ambos +0.061 (t 1.92) | stop medio 0.58 %
