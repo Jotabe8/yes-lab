@@ -78,3 +78,4 @@ Corto perpetuos recién listados vs BTC (v4);2026-11-13;mecanismo;prima;877 list
 Ciclo de subastas del Tesoro (v4);2026-11-13;publicado;calendario;IEF TLT ZN;250;D;t 2,62 y ZN t 3,5 pero DD 4,6× y 2016-26 t<0,5; reabrir si 2027 ZN > +3 %/año misma regla
 BAB con ETF sectoriales y de país (v4);2026-11-13;publicado;prima;9 sectores 20 países;12;A;t 0,25, países negativo
 Cambio de año en pequeñas (tax-loss) (v4);2026-11-13;publicado;calendario;IWM SPY RUT;1;D;1988-99 t 3,3, 2000-25 t −0,8
+Reversión nocturna FX en cruces (night scalper/rejilla; fuente historiales reales MQL5);2026-11-14;terceros;liquidez;9 pares + 4 réplica;1925;B;"bruto +0,029 R t 7,3 (≈0,6 pips) ≈ solo la comisión 5 $/lote; neto −0,086 t −23; réplica bruto t 0,7; sin disparador"
