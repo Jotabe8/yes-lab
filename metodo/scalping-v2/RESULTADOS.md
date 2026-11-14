@@ -42,3 +42,28 @@ NNFX M1/M5/M15 (0/105), coste bajo EMA20 GER40, reversión intradía, VWAP, noti
 periodicidad, zona de ruido, scalper nocturno FX y rejillas (v7) y, desde hoy, barridos de liquidez, desvanecer la
 apertura (M1 y ticks) y números redondos intradía. Disparador para reabrir: solo con datos nuevos que no existen
 aquí (libro real de futuros, p. ej. MNQ con profundidad) y un mecanismo publicado con réplica.
+
+---
+
+# Segunda ronda: scalping a favor de tendencia (14-11-2026)
+
+**Veredicto: descartado, 0/24 casillas** (6 variantes de `PREREGISTRO_TENDENCIA.md` × 4 índices). Señales solo
+después de la primera hora (10:30-15:30 NY, 10:00-16:30 Fráncfort), una por día. Código `tendencia.py`, tabla
+`resultados_tendencia.csv`.
+
+| Variante | Prueba 2023-26 (neto, t) por índice | Veredicto |
+|---|---|---|
+| T1 retroceso a EMA20 M5 en día de tendencia (≥ 0,5 ATR), stop 0,15 ATR, 2R | US100 −0,170 (−2,7), GER40 +0,034 (0,4), US30 +0,017 (0,2), US500 −0,054 (−0,7) | No: US100 positivo en ajuste (+0,068) y negativo en prueba |
+| T1 igual con salida a 60 min | US100 −0,175 (−3,3) … | No |
+| T2 ruptura de microrango (30 min ≤ 0,12 ATR) a favor de la tendencia del día, 2R | US100 +0,088 (1,1), GER40 +0,133 (1,1), US30 −0,017, US500 +0,058 (0,6) | No: positivo en 3 de 4, pero t agrupado ≈ 1,3 y el paseo aleatorio da lo mismo (US100 +0,169, t 1,4) |
+| T2 a favor de tendencia, 60 min | GER40 +0,153 (1,5), el resto ≈ 0 | No |
+| T2 ruptura en cualquier dirección (2R / 60 min) | todos entre −0,086 y −0,001 | No |
+
+- Correlación diaria con el ORB v018: entre −0,002 y 0,07 en todas las variantes. La descorrelación existe, lo que
+  falta es la ventaja.
+- El coste aquí ya es bajo (0,01-0,07 R) porque el stop es más ancho que en el scalping clásico; aun así el bruto en
+  la prueba no supera 0,03-0,16 R con t < 1,8 en ninguna casilla.
+- El paseo aleatorio (velas barajadas dentro del día) conserva el sentido final del día, y "seguir la tendencia del
+  día" gana algo incluso ahí. Lo poco positivo de T2 es de ese tamaño, no una ventaja del microrango.
+- Ya cerrado antes y no repetido: EMA20/Donchian M1-M15 (oct), seguir choques de 5 min (+0,011 R t 0,69), momentum de
+  la última media hora, tendencia de tarde.

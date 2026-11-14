@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-14 | Scalping a favor de tendencia fuera de la hora del ORB (`metodo/scalping-v2/PREREGISTRO_TENDENCIA.md`): retroceso EMA20 M5 en día de tendencia, ruptura de microrango | US100, US30, US500, GER40 | Descartado: 0/24; mejor +0,07 R t 1,3 agrupado (igual que el paseo aleatorio); corr ORB ≤ 0,07 |
 | 2026-11-14 | Scalping v2 (`metodo/scalping-v2/`): barridos de liquidez, desvanecer el primer impulso de la apertura (M1 y ticks GER40 30 s), números redondos intradía | US100, US30, US500, GER40 | Descartado: 0/60 casillas; mejor t 1,5 bajo placebo; coste 0,05-0,07 R/op y bruto en prueba −0,04 a +0,03 R |
 | 2026-11-13 | Búsqueda v4 sin restricciones (`metodo/v4/BUSQUEDA_V4.md`): auditoría (8 fallos) + 10 primas con pagador preregistradas | VX, cripto, ETF, bonos, acciones | Ninguna pasa: carry cripto real pero agotado desde 2025; subastas del Tesoro pasan t y réplica pero DD 4,6× y se apagan desde 2016 |
 | 2026-11-13 | Reversión tras choques de 5 min (provisión de liquidez, v3) | US100, US500, US30, GER40 | Descartada: 3.610 choques, neto −0,06 R (t −4,2); los choques no revierten |
