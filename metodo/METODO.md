@@ -38,11 +38,11 @@ y en la memoria (regla de Jorge: no se deja nada "en reserva").
 | Puerta | Tiempo máx. | Qué se hace | Se descarta si |
 | --- | --- | --- | --- |
 | **P0 Ficha** | 10 min | Hipótesis causal (quién pierde dinero y por qué), mercado, marco, ops/año esperadas, stop típico, **coste en R** = (spread + comisión) / stop con datos bid/ask. Mirar la lista de descartados de la memoria. | Ya está descartada; coste > 0,10 R; < 40 ops/año; o el efecto publicado es < 3 × coste. |
-| **P1 Prueba rápida** | 1 h | Regla fija, sin optimizar, salida simple (N velas o stop/objetivo fijos). Ajuste 2018-2022. **A la vez en 3-5 mercados parecidos.** Placebo con las mismas salidas (dirección o hora aleatoria, 200 réplicas). | Bruto < 3 × coste; no supera el p95 del placebo; funciona en un solo mercado. |
+| **P1 Prueba rápida** | 1 h | Regla fija, sin optimizar, salida simple (N velas o stop/objetivo fijos). Ajuste 2018-2022. **A la vez en 3-5 mercados parecidos.** Placebo con las mismas salidas (dirección o hora aleatoria, 200 réplicas). **El mismo backtest sobre velas de paseo aleatorio** (`sinteticos.velas_paseo`, 20 réplicas): debe dar R bruta ≈ 0. | Bruto < 3 × coste; no supera el p95 del placebo; funciona en un solo mercado; el motor saca ventaja (o pérdida) en el paseo aleatorio con \|t\| ≥ 2. |
 | **P2 Neto y estabilidad** | 2 h | Costes reales y al doble; años positivos; meseta de parámetros (vecinos ±20 % conservan la mitad del edge); si hay sospecha, prueba de ruido sobre los precios (no sobre las R). | Neto ×2 ≤ 0; < 60 % de años positivos; pico aislado de parámetros. |
 | **P3 Fuera de muestra** | 30 min | Se abre **una vez** 2023-2026. Si se miraron varias variantes, se pasa la matriz días × variantes (R netos de **todas**): **SPA** de Hansen (¿la mejor bate a no operar sabiendo que se miraron N?), **StepM** (cuáles) y **PBO** por CSCV. Sin matriz, t total contra el t corregido (tabla abajo) como aviso. Siempre: PSR y operaciones mínimas (MinTRL). | OOS ≤ 0 o t OOS < 1; PBO > 50 %. (SPA p > 0,05 solo es aviso.) |
 | **P4 Prop** | 30 min | EV/cuota 2-Step (Monte Carlo por días) con la media **recortada** en (t requerido − 1,64) errores estándar, frente a la misma serie con media 0; correlación diaria con el ORB US100. | EV recortada ≤ control; correlación > 0,3. |
-| **P5 MQL5** | 2 h | EA desde `PlantillaPropEA.mq5`, solo con lo probado. Strategy Tester con ticks reales de FTMO en el mismo periodo. | Ops o R media a más de ±20 % de Python (primero se busca el fallo; si es del modelo, se descarta). |
+| **P5 MQL5** | 2 h | EA desde `PlantillaPropEA.mq5`, solo con lo probado; un revisor que solo ve el preregistro y el código comprueba que dicen lo mismo **antes** del Strategy Tester. Strategy Tester con ticks reales de FTMO en el mismo periodo. **Comparación operación a operación** con `comparar_ops.py` (CSV del EA contra las ops de Python). | Menos del 90 % de ops emparejadas, R media a más de ±20 %, corr de R < 0,9 o < 90 % de pares con \|ΔR\| ≤ 0,1 (primero se busca el fallo en la lista de diferencias; si es del modelo, se descarta). |
 | **P6 Incubación** | 4-8 semanas | Demo o Free Trial de FTMO, sin tocar nada. Para **confirmar** edge en real hacen falta las ops mínimas (MinTRL) que da el embudo; 4-8 semanas solo detectan fallos de implementación. | Resultado fuera de la banda del Monte Carlo (p5-p95). |
 
 `metodo/embudo.py` automatiza P0-P4 (salvo multi-mercado y meseta) con una tabla de operaciones (fecha, R bruta, coste en R):
@@ -56,6 +56,18 @@ from metodo.robustez import matriz_diaria
 m = matriz_diaria({"stop 0,15": ops_a, "stop 0,20": ops_b, ...})  # DataFrame(fecha, r) netos
 print(embudo(ops, n_pruebas=24, corte_oos="2023-01-01", variantes=m))
 ```
+
+**Prueba del motor (14-11-2026, `sinteticos.py`).** Baraja las velas reales entre días dentro de cada minuto del día y centra los rendimientos: conserva la forma de las velas, los huecos y la estacionalidad de la volatilidad, pero no hay nada que ganar. En el test, un ORB simulado bien da +0,008 R (t 0,4) y el mismo ORB con el fallo de la prima nocturna (`max(R, −1)` sin recorrer el stop) da +0,088 R (t 4,1). Un sesgo **negativo** también es un fallo: suele ser una regla pesimista para velas ambiguas (stop y entrada en la misma vela), que esconde ventaja.
+
+```python
+from metodo.sinteticos import velas_paseo
+print(embudo(ops, n_pruebas=24, corte_oos="2023-01-01", placebo=sim_aleatoria,
+             paseo=lambda s: mi_backtest(velas_paseo(velas_m1, s)).r_bruto))
+```
+
+**P5 operación a operación (14-11-2026, `comparar_ops.py`).** `python -m metodo.comparar_ops ops_python.csv EA_US100_ops.csv --desfase 7h` empareja por lado y hora (±5 min) y lista las ops que solo están en un lado y las 10 de mayor ΔR. La plantilla escribe ya apertura, precio de entrada, stop inicial y R bruta en su CSV; también lee los `ORB_*.csv` del EA en real (allí la hora es la de salida).
+
+**Compilar al editar (14-11-2026, `hooks/compilar_mq5.py` + `.claude/settings.json`).** En el PC, cada vez que Claude edita un `.mq5` lo compila con el MetaEditor del laboratorio (`C:\MT5_Lab`, variable `MT5_LAB_METAEDITOR`), lee el log UTF-16LE y le devuelve errores y warnings para que los corrija. En la nube no hace nada. Nunca compila dentro de `MetaQuotes\Terminal` (la cuenta real: reescribir el `.ex5` reinicia el EA en sus gráficos). A mano: `python metodo/hooks/compilar_mq5.py EA.mq5` o `--log archivo.log`.
 
 **Calibración (11-11-2026, ORB en 11 mercados × 4 aperturas = 43 variantes, `pruebas/calibracion_robustez.py`):**
 PBO real 1,2 % (2018-26) y 3,8 % (2018-22) frente a placebo sin costes 60 % y 25 %: el PBO

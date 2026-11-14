@@ -260,17 +260,43 @@ void OnTradeTransaction(const MqlTradeTransaction &trans, const MqlTradeRequest 
    if(!HistoryDealSelect(trans.deal)) return;
    if(HistoryDealGetInteger(trans.deal, DEAL_MAGIC) != InpMagic) return;
    if(HistoryDealGetInteger(trans.deal, DEAL_ENTRY) != DEAL_ENTRY_OUT) return;
+   // Datos de la salida antes de HistorySelectByPosition (cambia la selección del historial)
+   datetime cierre = (datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME);
+   long     pos    = HistoryDealGetInteger(trans.deal, DEAL_POSITION_ID);
+   bool     largo  = HistoryDealGetInteger(trans.deal, DEAL_TYPE) == DEAL_TYPE_SELL;
+   double   vol    = HistoryDealGetDouble(trans.deal, DEAL_VOLUME);
+   double   precio = HistoryDealGetDouble(trans.deal, DEAL_PRICE);
+   double   benef  = HistoryDealGetDouble(trans.deal, DEAL_PROFIT);
+   double   comi   = HistoryDealGetDouble(trans.deal, DEAL_COMMISSION);
+   double   swap   = HistoryDealGetDouble(trans.deal, DEAL_SWAP);
+   // Entrada de la misma posición: hora, precio y stop inicial, para calcular R igual que Python
+   // (metodo/comparar_ops.py empareja operación a operación con esto)
+   datetime apertura = 0;
+   double   p_ent = 0, sl_ini = 0;
+   if(HistorySelectByPosition(pos))
+      for(int i = 0; i < HistoryDealsTotal(); i++)
+        {
+         ulong d = HistoryDealGetTicket(i);
+         if(HistoryDealGetInteger(d, DEAL_ENTRY) != DEAL_ENTRY_IN) continue;
+         apertura = (datetime)HistoryDealGetInteger(d, DEAL_TIME);
+         p_ent    = HistoryDealGetDouble(d, DEAL_PRICE);
+         sl_ini   = HistoryDealGetDouble(d, DEAL_SL);
+         break;
+        }
+   double riesgo = (sl_ini > 0 && p_ent > 0) ? MathAbs(p_ent - sl_ini) : 0;
+   double r = (riesgo > 0) ? (largo ? precio - p_ent : p_ent - precio) / riesgo : 0;
+   if(riesgo <= 0) PrintFormat("CSV: posición %I64d sin stop en la entrada, r_bruto = 0", pos);
    string nombre = MQLInfoString(MQL_PROGRAM_NAME) + "_" + _Symbol + "_ops.csv";
    int f = FileOpen(nombre, FILE_READ | FILE_WRITE | FILE_CSV | FILE_COMMON | FILE_ANSI, ';');
    if(f == INVALID_HANDLE) return;
-   if(FileSize(f) == 0) FileWrite(f, "cierre", "posicion", "tipo", "volumen", "precio", "beneficio", "comision", "swap");
+   // Columnas nuevas al final (14-11-2026): borra un CSV antiguo antes de un backtest nuevo
+   if(FileSize(f) == 0) FileWrite(f, "cierre", "posicion", "tipo", "volumen", "precio", "beneficio", "comision", "swap",
+                                  "apertura", "precio_entrada", "sl_inicial", "r_bruto");
    FileSeek(f, 0, SEEK_END);
-   FileWrite(f, TimeToString((datetime)HistoryDealGetInteger(trans.deal, DEAL_TIME), TIME_DATE | TIME_SECONDS),
-             HistoryDealGetInteger(trans.deal, DEAL_POSITION_ID),
-             HistoryDealGetInteger(trans.deal, DEAL_TYPE) == DEAL_TYPE_SELL ? "cierra_largo" : "cierra_corto",
-             HistoryDealGetDouble(trans.deal, DEAL_VOLUME), HistoryDealGetDouble(trans.deal, DEAL_PRICE),
-             HistoryDealGetDouble(trans.deal, DEAL_PROFIT), HistoryDealGetDouble(trans.deal, DEAL_COMMISSION),
-             HistoryDealGetDouble(trans.deal, DEAL_SWAP));
+   FileWrite(f, TimeToString(cierre, TIME_DATE | TIME_SECONDS), pos, largo ? "cierra_largo" : "cierra_corto",
+             vol, precio, benef, comi, swap,
+             TimeToString(apertura, TIME_DATE | TIME_SECONDS), DoubleToString(p_ent, _Digits),
+             DoubleToString(sl_ini, _Digits), DoubleToString(r, 3));
    FileClose(f);
   }
 //+------------------------------------------------------------------+
