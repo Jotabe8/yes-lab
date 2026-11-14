@@ -1,0 +1,14 @@
+monedas nuevas: 131 con contado: 126
+elegibles medios por día: 9.8
+== Candidato 6: momentum transversal semanal (universo nuevo)
+V1 28 días             anual +4.2% vol 37.8% Sharpe 0.11 t 0.29 | 1ª +22.6% 2ª -14.1%
+V2 7 días              anual +5.3% vol 39.1% Sharpe 0.13 t 0.35 | 1ª +31.1% 2ª -20.0%
+V3 sin financiación    anual -1.5% vol 37.8% Sharpe -0.04 t -0.10 | 1ª +22.2% 2ª -25.1%
+V1 costes ×2           anual +1.8% vol 37.8% Sharpe 0.05 t 0.12 | 1ª +21.0% 2ª -17.3%
+por año V1 %: {2020: 24.7, 2021: 24.6, 2022: 6.2, 2023: 50.3, 2024: -41.2, 2025: -24.4, 2026: -9.6}
+placebo p95 +17.2% vs V1 +4.2%
+DD máx (suma simple) 109%; peor semana -22.8%
+== Réplica carry (regla V1 del candidato 2) en universo nuevo
+carry nuevo: monedas 126, anual +11.7% t 3.40; exceso sobre letras +8.77% t 2.55
+  exceso por año %: {2020: 18.91, 2021: 38.1, 2022: -7.0, 2023: 8.82, 2024: 14.77, 2025: 2.23, 2026: -17.13}
+  exceso últimos 12 meses -13.47%; días con posición 100%

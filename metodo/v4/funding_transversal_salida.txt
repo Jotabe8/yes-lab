@@ -1,0 +1,6 @@
+V1 tercios, precio+financiación  anual +19.1% vol 20.7% Sharpe 0.92 t 2.38 | 1ª +29.8% 2ª +8.3%
+V2 solo precio                   anual +11.7% vol 20.6% Sharpe 0.57 t 1.47 | 1ª +19.5% 2ª +3.9%
+V3 quintiles                     anual +21.1% vol 26.7% Sharpe 0.79 t 2.05 | 1ª +29.6% 2ª +12.6%
+V1 costes ×2                     anual +16.3% vol 20.7% Sharpe 0.79 t 2.04 | 1ª +27.1% 2ª +5.5%
+por año V1 %: {2020: -8.4, 2021: 93.3, 2022: 2.4, 2023: 1.5, 2024: 16.3, 2025: 7.6, 2026: 16.0}
+placebo ordenación aleatoria p95 +7.8% (media -5.4%) vs V1 +19.1%

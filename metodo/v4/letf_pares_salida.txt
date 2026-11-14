@@ -1,0 +1,13 @@
+V1 todos, mensual                  anual +76.3% vol 284.3% Sharpe 0.27 t 1.03 | 1ª -0.6% 2ª +153.1% | vol15: DD 1% DD/anual 0.3
+V1 costes ×2 (préstamo 8 %)        anual +71.1% vol 284.3% Sharpe 0.25 t 0.96 | 1ª -5.8% 2ª +147.9% | vol15: DD 3% DD/anual 0.7
+V2 índices amplios                 anual -1.1% vol 10.2% Sharpe -0.11 t -0.41 | 1ª -2.7% 2ª +0.5% | vol15: DD 44% DD/anual inf
+   resto (sectoriales)             anual +131.6% vol 486.5% Sharpe 0.27 t 1.04 | 1ª +1.0% 2ª +262.0% | vol15: DD 1% DD/anual 0.2
+V3 semanal                         anual -5.3% vol 5.9% Sharpe -0.90 t -3.47 | 1ª -5.4% 2ª -5.1% | vol15: DD 203% DD/anual inf
+control: solo corto del alcista    anual -51.9% vol 132.1% Sharpe -0.39 t -1.51 | 1ª -8.8% 2ª -95.1% | vol15: DD 124% DD/anual inf
+control: solo corto del bajista    anual -166.0% vol 1257.9% Sharpe -0.13 t -0.51 | 1ª +101.2% 2ª -433.1% | vol15: DD 57% DD/anual inf
+por par V1 (anual %, t): {'TQQQ': (np.float64(-0.3), np.float64(-0.11)), 'UPRO': (np.float64(-2.0), np.float64(-0.86)), 'SPXL': (np.float64(-1.7), np.float64(-0.73)), 'UDOW': (np.float64(-2.4), np.float64(-0.91)), 'TNA': (np.float64(1.0), np.float64(0.23)), 'SOXL': (np.float64(6.1), np.float64(0.89)), 'FAS': (np.float64(-0.4), np.float64(-0.11)), 'TECL': (np.float64(1.1), np.float64(0.37)), 'LABU': (np.float64(10.2), np.float64(1.38)), 'ERX': (np.float64(895.2), np.float64(1.01)), 'NUGT': (np.float64(5.5), np.float64(0.7)), 'YINN': (np.float64(5.4), np.float64(0.89))}
+por año V1 %: {2012: 1.9, 2013: 2.0, 2014: -0.6, 2015: 4.3, 2016: -2.8, 2017: -2.3, 2018: 1.6, 2019: -8.4, 2020: 1131.1, 2021: 5.1, 2022: 5.0, 2023: -11.7, 2024: -0.5, 2025: 5.5, 2026: -10.0}
+peor día -0.1216 2020-03-18 | peor mes -0.0805 2026-04-30
+  2020-02-15→2020-04-30: +1135.0%
+  2022-01-01→2022-12-31: +4.9%
+  2025-03-25→2025-04-30: +8.3%
