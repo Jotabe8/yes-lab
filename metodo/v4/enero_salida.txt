@@ -1,0 +1,12 @@
+V1 IWM−SPY 2000-2025: inviernos 26, días 260, media por invierno -0.33% t(días) -0.81 | 1ª mitad -0.42% 2ª -0.23% | % inviernos + 46%
+   por invierno %: {2000: 1.63, 2001: 1.46, 2002: -1.71, 2003: 1.12, 2004: -3.91, 2005: 1.35, 2006: -0.26, 2007: -4.79, 2008: 1.21, 2009: -0.18, 2010: -1.52, 2011: -1.04, 2012: 1.14, 2013: -0.55, 2014: 0.23, 2015: -2.52, 2016: -0.92, 2017: -1.41, 2018: 3.35, 2019: -1.69, 2020: 0.59, 2021: -1.79, 2022: 0.52, 2023: -1.87, 2024: 0.94, 2025: 2.15}
+   a vol 15 % (en días de ventana): -0.5%/año, DD -21.2% (212298020.2× beneficio anual)
+V1 costes ×2: inviernos 26, días 260, media por invierno -0.41% t(días) -1.00 | 1ª mitad -0.50% 2ª -0.31% | % inviernos + 46%
+placebo (otro mes al azar): p95 +0.55% por año (media -0.08%) vs V1 -0.33%
+Réplica ^RUT−^GSPC 1988-1999: inviernos 12, días 120, media por invierno +2.03% t(días) 3.27 | 1ª mitad +2.93% 2ª +1.13% | % inviernos + 83%
+   (^RUT−^GSPC 2000-2025, control): inviernos 26, días 260, media por invierno -0.25% t(días) -0.61 | 1ª mitad -0.31% 2ª -0.19% | % inviernos + 46%
+V2 solo diciembre: inviernos 26, días 130, media por invierno -0.17% t(días) -0.64 | 1ª mitad +0.06% 2ª -0.39% | % inviernos + 38%
+V3 solo enero: inviernos 26, días 130, media por invierno -0.24% t(días) -0.77 | 1ª mitad -0.56% 2ª +0.09% | % inviernos + 42%
+
+VEREDICTO (PREREGISTRO_V4_R8): NO PASA. 2000-2025 −0,33 % por invierno t −0,81, bajo placebo. La réplica 1988-1999
+sí da +2,0 % t 3,3: el efecto existió y desapareció tras publicarse (clase D).

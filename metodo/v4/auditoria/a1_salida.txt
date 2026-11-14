@@ -1,0 +1,9 @@
+ORB v018: días 1810 media 0.124 autocorr |R| lag1 -0.032 autocorr R lag1 -0.044
+riesgo 1% bloque  1: p pasar 54% EV   +9603 € | control media 0: p 31% EV  +1923 €
+riesgo 1% bloque  5: p pasar 53% EV   +9715 € | control media 0: p 30% EV  +2031 €
+riesgo 1% bloque 21: p pasar 55% EV   +9410 € | control media 0: p 29% EV  +1725 €
+riesgo 1% bloque 63: p pasar 55% EV   +8727 € | control media 0: p 31% EV  +1310 €
+riesgo 2% bloque  1: p pasar 38% EV   +6175 € | control media 0: p 25% EV  +1932 €
+riesgo 2% bloque  5: p pasar 39% EV   +6257 € | control media 0: p 27% EV  +1706 €
+riesgo 2% bloque 21: p pasar 39% EV   +5631 € | control media 0: p 25% EV  +1447 €
+riesgo 2% bloque 63: p pasar 38% EV   +5844 € | control media 0: p 26% EV  +1611 €

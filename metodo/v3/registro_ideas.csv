@@ -63,3 +63,13 @@ ORB apertura propia Asia (JP225 HK50 AUS200);2026-11-13;mecanismo;volatilidad;JP
 Reversión tras choques de 5 min (provisión de liquidez);2026-11-13;publicado;liquidez;US100 US500 US30 GER40;250;A;"3.610 choques k4 2012-26: bruto −0,04 R (t −4 neto); los choques siguen un poco (+0,03 R bruto), no revierten"
 Estacionalidad FX horario propio (Breedon-Ranaldo);2026-11-13;publicado;calendario;6 pares;250;C;T0: >40 años necesarios
 Lead-lag US100→GER40 tras apertura NY;2026-11-13;mecanismo;dirección;GER40;250;C;T0: misma información que el ORB, no descorrelaciona
+Prima de volatilidad corto VX en contango (v4);2026-11-13;publicado;prima;VX VXX SVXY;250;D;t 0,79, DD 12× beneficio, −127 % feb-2018
+Carry financiación cripto contado/perpetuo (v4);2026-11-13;publicado;prima;20 cripto + 126 no vistas;365;D;t 18 y réplica t 2,55 pero exceso sobre letras ≈ 0 desde 2025; reabrir si financiación 30d > 0,03 %/8h con letras < 3 %
+Financiación transversal cripto (v4);2026-11-13;publicado;prima;20 cripto;365;C;t 2,38 < 2,4
+ETF 3x por pares (v4);2026-11-13;mecanismo;prima;12 pares ETF;250;E;≈ 0 salvo artefacto Yahoo ERY 2020
+Reversión semanal cripto (v4);2026-11-13;publicado;dirección;20 cripto;52;A;−17 %/año t −1,8
+Momentum transversal cripto universo no visto (v4);2026-11-13;publicado;dirección;131 perpetuos;52;A;t 0,29 bajo placebo
+Corto perpetuos recién listados vs BTC (v4);2026-11-13;mecanismo;prima;877 listados Binance;130;C;t 2,23, mediana +4,9 %, peor −494 %
+Ciclo de subastas del Tesoro (v4);2026-11-13;publicado;calendario;IEF TLT ZN;250;D;t 2,62 y ZN t 3,5 pero DD 4,6× y 2016-26 t<0,5; reabrir si 2027 ZN > +3 %/año misma regla
+BAB con ETF sectoriales y de país (v4);2026-11-13;publicado;prima;9 sectores 20 países;12;A;t 0,25, países negativo
+Cambio de año en pequeñas (tax-loss) (v4);2026-11-13;publicado;calendario;IWM SPY RUT;1;D;1988-99 t 3,3, 2000-25 t −0,8

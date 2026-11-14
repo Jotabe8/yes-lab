@@ -1,0 +1,51 @@
+name: v4 datos enero
+
+on:
+  push:
+    branches: [claude/project-thread-1r605s]
+    paths:
+      - .github/workflows/v4-enero.yml
+      - metodo/v4/descargar_enero.py
+
+permissions:
+  contents: write
+
+jobs:
+  bajar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        que: [ene]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q pandas yfinance
+      - run: python metodo/v4/descargar_enero.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: d-${{ matrix.que }}
+          path: metodo/v4/datos/
+
+  juntar:
+    needs: bajar
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p metodo/v4/datos
+          find art -type f -exec cp {} metodo/v4/datos/ \;
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metodo/v4/datos
+          git diff --cached --quiet || git commit -m "v4: datos enero"
+          git pull --rebase -q || true
+          git push

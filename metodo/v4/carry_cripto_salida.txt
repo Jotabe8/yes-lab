@@ -1,0 +1,14 @@
+monedas: ['ADA', 'ATOM', 'AVAX', 'BCH', 'BNB', 'BTC', 'DOGE', 'DOT', 'EOS', 'ETC', 'ETH', 'FIL', 'LINK', 'LTC', 'NEAR', 'SOL', 'TRX', 'UNI', 'XLM', 'XRP'] desde 2020-03-01
+V1 principal (20 monedas)    días con posición 71% | anual +11.8% vol 1.7% Sharpe 7.03 t 18.15 | 1ª +17.9% 2ª +5.6% | ×2 +10.7% t 15.74 | a vol 15 % DD 14.1% DD/anual 0.1
+V2 siempre abierto           días con posición 100% | anual +8.9% vol 2.1% Sharpe 4.18 t 10.81 | 1ª +12.9% 2ª +4.8% | ×2 +8.8% t 10.60 | a vol 15 % DD 64.7% DD/anual 1.0
+V3 solo BTC+ETH              días con posición 53% | anual +9.8% vol 1.4% Sharpe 6.99 t 18.07 | 1ª +15.0% 2ª +4.7% | ×2 +9.5% t 16.76 | a vol 15 % DD 17.3% DD/anual 0.2
+Réplicas obligatorias de V1:
+  (a) BTC+ETH                días con posición 53% | anual +9.8% vol 1.4% Sharpe 6.99 t 18.07 | 1ª +15.0% 2ª +4.7% | ×2 +9.5% t 16.76 | a vol 15 % DD 17.3% DD/anual 0.2
+  (b) resto                  días con posición 69% | anual +11.9% vol 1.7% Sharpe 6.90 t 17.82 | 1ª +18.2% 2ª +5.6% | ×2 +10.8% t 15.35 | a vol 15 % DD 11.9% DD/anual 0.1
+por año V1 (%): {2020: 16.6, 2021: 37.9, 2022: 2.3, 2023: 6.2, 2024: 12.6, 2025: 2.1, 2026: 0.9}
+peor día V1 -0.0131 2020-03-13 | peor mes -0.0066
+  choque 2021-05-10→2021-05-31: +0.09%
+  choque 2022-05-05→2022-05-20: -0.06%
+  choque 2022-11-05→2022-11-20: +0.00%
+  choque 2020-03-08→2020-03-20: -0.97%
+placebo tiempo p95 +9.4%/año vs V1 +11.8%

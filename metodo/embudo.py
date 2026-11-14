@@ -197,8 +197,13 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
         res.add("PBO (CSCV)", pb["pbo"] <= MAX_PBO,
                 f"{pb['pbo']:.0%} ({'bien' if pb['pbo'] <= AVISO_PBO else 'sospechoso' if pb['pbo'] <= MAX_PBO else 'sobreajuste'}); "
                 f"Sharpe/día de la elegida {pb['metrica_in_mejor']:.3f} dentro → {pb['metrica_oos_mejor']:.3f} fuera")
-        res.add("Deflated Sharpe", dsr(neto, n_pruebas, matriz=variantes) >= 0.95,
-                f"{dsr(neto, n_pruebas, matriz=variantes):.1%} (≥ 95 % deseable)", bloquea=False)
+        # DSR en la MISMA unidad que la matriz (días del calendario común, 0 sin operar). Antes se pasaba la
+        # serie por operación contra la varianza de Sharpe diarios: con estrategias que no operan cada día
+        # el listón quedaba ~sqrt(fracción de días operados) más bajo (auditoría v4, 13-11-2026).
+        neto_dia = (pd.Series(neto, index=ops.fecha.dt.normalize()).groupby(level=0).sum()
+                    .reindex(variantes.index).fillna(0.0).to_numpy())
+        d = dsr(neto_dia, n_pruebas, matriz=variantes)
+        res.add("Deflated Sharpe", d >= 0.95, f"{d:.1%} (≥ 95 % deseable, en días)", bloquea=False)
 
     # P4: Monte Carlo y EV por cuota con la media recortada por el número de pruebas (haircut),
     # frente al control: la misma serie con media 0 (misma frecuencia y volatilidad, sin edge).
