@@ -12,6 +12,10 @@ def cargar(f):
     for c in d.columns[1:]:
         d[c] = d[c] / esc
     t = pd.to_datetime(d.t, unit="ms", utc=True).dt.tz_convert("America/New_York")
+    # limpieza (no cambia la regla): fuera barras de fin de semana y barras planas de Dukascopy
+    mm = t.dt.hour * 60 + t.dt.minute; wd = t.dt.dayofweek
+    fuera = (wd == 5) | ((wd == 4) & (mm >= 17 * 60)) | ((wd == 6) & (mm < 17 * 60)) | (d.high_b == d.low_b)
+    d, t = d[~fuera].reset_index(drop=True), t[~fuera].reset_index(drop=True)
     d["min"] = t.dt.hour * 60 + t.dt.minute          # minuto de APERTURA de la barra
     d["ts"] = t
     d["mc"] = (d.close_b + d.close_a) / 2

@@ -68,3 +68,7 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 **Pendiente del mismo informe.** El momentum intradía (la primera media hora predice la
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
+
+## 2026-11-14 — v7: fuente alternativa (historiales reales de terceros)
+- Fuente: supervivientes largos de MQL5 Signals → rejillas en cruces, EAs de oro y scalpers nocturnos. Probada la señal común (reversión nocturna M15, Bollinger 20,2, 18:30-23:00 NY) preregistrada en 9 pares + 4 de réplica, Dukascopy M15 bid/ask 2010-26.
+- Bruto real (+0,029 R, t 7,3, por encima del placebo de dirección, nulo a las 08-12) pero ≈ 0,6 pips = la comisión sola. Neto −0,086 R t −23, todos los años negativos; réplica sin bruto. DESCARTADA la familia (scalper y rejilla). metodo/v7/INFORME_V7.md.
