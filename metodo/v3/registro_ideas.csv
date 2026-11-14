@@ -27,7 +27,7 @@ Entrada aleatoria + gestión NNFX;2026-10-26;gurú;estructura;24 mercados D1;100
 Scalping con gestión NNFX M1-M15;2026-10-26;gurú;dirección;7 mercados;1000;B;spread 0,34-0,42 R en M1
 GER40 retroceso EMA20 M30;2026-10-26;minería;volatilidad;GER40;120;D;no se repite en 14 mercados
 Rebalanceo 60/40 fin de mes;2026-10-26;publicado;calendario;7 índices;12;B;bruto 1,3× coste
-Gotobi yen;2026-10-26;publicado;calendario;USDJPY;70;B;+0,106 R real pero 1,5× coste
+Gotobi yen;2026-10-26;publicado;calendario;USDJPY;70;B;"Re-probado 14-11 con 2003-26: bruto +0,110 R t 5,4, igual en 2003-17 nunca visto (t 4,4); 2,2 pips brutos; neto con 1,4 pips t 1,56. Reabrir si coste total ≤ 0,8 pips a las 08:00 JST"
 Shock macro 08:30 NY;2026-10-26;mecanismo;volatilidad;índices;100;A;sin bruto
 Lead-lag Asia-Europa;2026-10-26;publicado;dirección;índices;250;A;sin bruto
 Prima nocturna tras día de estrés;2026-10-26;mecanismo;dirección;7 índices;15;E;stop recortado a −1 fabricó +0,18 R
@@ -39,7 +39,7 @@ Víspera de festivo;2026-10-30;publicado;calendario;13 índices;9;B;"+0,044 R; 1
 Ruptura tras NR7/NR4;2026-10-30;folklore;volatilidad;índices;40;E;"t 9,6 por precios rancios de Yahoo; con futuros ≈ 0"
 Tendencia 100/4 sin swap;2026-10-30;folklore;dirección;39 mercados;10;A;< placebo largos (deriva)
 Periodicidad intradía;2026-10-30;publicado;dirección;10 mercados;250;A;bruto < 0
-Inventario EIA petróleo;2026-10-30;mecanismo;dirección;USOIL;50;D;+33 pb t 2,1 → OOS +0,02 R
+Inventario EIA petróleo;2026-10-30;mecanismo;dirección;USOIL;50;A;"Re-probado 14-11 con 2011-26: bruto +0,045 R t 1,4, bajo placebo; 2011-20 nunca visto t 1,2. Era ruido de 2022"
 Dirección NY predicha (ridge);2026-10-30;minería;dirección;4 índices US;250;A;≈ placebo
 ORB 11 mercados × 4 aperturas;2026-10-30;mecanismo;volatilidad;11 mercados;250;A;aperturas ajenas sin edge
 ORB acciones en juego;2026-11-13;publicado;volatilidad;71 acciones;500;B;bruto +0,06 R < coste 0,11
