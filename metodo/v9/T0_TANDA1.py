@@ -32,3 +32,7 @@ for n, ops, mb, c, s, hist, fu in ideas:
 t = pd.DataFrame(f); t["T0"] = (t[["potencia", "margen", "valor"]] == "sí").all(axis=1).map({True: "PASA", False: "fuera"})
 pd.set_option("display.width", 250); pd.set_option("display.max_colwidth", 58)
 print(t.drop(columns="fuente").to_string(index=False)); t.to_csv("T0_tanda1.csv", index=False, sep=";")
+# Añadidas en la tanda 2 (literatura reciente, 14-11-2026 noche), solo para el registro:
+#  - Reversión al cierre transversal en acciones (Baltussen-Da-Soebhag, EOD reversal): acciones sueltas, no operable en FTMO/DZ.
+#  - Estacionalidad intradía/nocturna en opciones (Bali-Goyal-Mörke-Weigert): opciones, no operable.
+#  - USD alrededor de los fixes (Krohn-Mueller-Whelan): ~2,5 pb por ventana, apagándose; probada en v9-B.
