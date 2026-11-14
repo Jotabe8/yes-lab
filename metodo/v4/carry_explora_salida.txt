@@ -1,0 +1,9 @@
+últimos 12 meses: +0.90%, días con posición 20%
+financiación media 12 meses (%/año) por moneda: {'ATOM': -10.5, 'TRX': -8.7, 'DOT': -4.9, 'BCH': -3.8, 'FIL': -1.7, 'XLM': -0.5, 'SOL': -0.3, 'AVAX': -0.2, 'XRP': 0.1, 'ADA': 1.9, 'BNB': 2.5, 'ETH': 2.5, 'ETC': 2.7, 'DOGE': 3.1, 'LTC': 3.2, 'BTC': 3.5, 'NEAR': 3.7, 'UNI': 4.4, 'LINK': 4.6, 'EOS': nan}
+umbral 0.02 %/8h: total +10.9%/año, últimos 12 meses +0.00%, días con posición 0% (rendimiento en los días con posición +0.0%/año)
+umbral 0.03 %/8h: total +10.9%/año, últimos 12 meses +0.00%, días con posición 0% (rendimiento en los días con posición +0.0%/año)
+umbral 0.05 %/8h: total +10.9%/año, últimos 12 meses +0.00%, días con posición 0% (rendimiento en los días con posición +0.0%/año)
+V1 anual % vs letras: {2020: '+19.8 vs 0.4 → exceso +19.4', 2021: '+37.9 vs 0.1 → exceso +37.9', 2022: '+2.3 vs 2.0 → exceso +0.3', 2023: '+6.2 vs 5.1 → exceso +1.1', 2024: '+12.6 vs 5.0 → exceso +7.6', 2025: '+2.1 vs 4.2 → exceso -2.1', 2026: '+1.1 vs 3.8 → exceso -2.7'}
+EXCESO SOBRE LETRAS (solo días con posición): +9.76%/año t 14.92 | 1ª +16.85% 2ª +2.64%
+  por año (%): {2020: 19.37, 2021: 37.85, 2022: 1.56, 2023: 2.15, 2024: 7.59, 2025: -0.52, 2026: 0.28}
+  últimos 12 meses +0.14%

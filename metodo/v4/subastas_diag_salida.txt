@@ -1,0 +1,8 @@
+posición media -0.11 (largo 37%, corto 48%); IEF comprado siempre +3.59%/año
+vol 6.2%; a 15 % vol: +8.0%/año, DD máx -36.6% (= 4.6× el beneficio anual), Sharpe 0.53
+   2002-2008: +5.44%/año t 2.33
+   2009-2015: +4.82%/año t 1.94
+   2016-2020: +0.73%/año t 0.32
+   2021-2026: +1.26%/año t 0.45
+pata posterior (largo) vs su placebo de rotación: +3.39% vs p95 +2.93% (media +1.60%)
+largo el resto de días: -0.23%/año t -0.26

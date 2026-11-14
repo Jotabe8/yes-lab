@@ -1,0 +1,19 @@
+subastas: 1588 por plazo: {2.0: 292, 3.0: 233, 4.0: 1, 5.0: 282, 6.0: 3, 7.0: 212, 9.0: 167, 10.0: 97, 19.0: 53, 20.0: 26, 29.0: 148, 30.0: 74}
+V1 IEF 2002-07-31→2026-11-13: +3.28%/año t 2.62 | 1ª +5.54% 2ª +0.99% | días con posición 85%
+   por año: {2002: 7.68, 2003: -0.86, 2004: 4.73, 2005: 2.11, 2006: 1.41, 2007: 2.67, 2008: 17.17, 2009: 18.87, 2010: 4.01, 2011: 8.08, 2012: -1.11, 2013: 5.96, 2014: 0.24, 2015: -2.37, 2016: -0.19, 2017: 2.2, 2018: 5.42, 2019: -7.27, 2020: 3.48, 2021: 0.35, 2022: 8.01, 2023: -1.79, 2024: 4.99, 2025: -1.25, 2026: -2.93}
+V1 costes ×2: +2.35%/año t 1.87
+placebo rotación: p95 +0.91%/año (media -1.45%) vs V1 +3.28%
+V2 solo 10 y 30 años: -0.20%/año t -0.37
+V3 solo pata previa (corto): -0.28%/año t -0.25 | solo posterior (largo): +3.39%/año t 3.26
+Réplicas (informativas hasta que pase V1):
+   TLT: +6.54%/año t 2.44 | 2009+ +5.98% t 1.79
+   ZN_F: +3.69%/año t 3.53 | 2009+ +2.81% t 2.23
+   ZB_F: +4.91%/año t 2.62 | 2009+ +4.39% t 1.80
+   ZF_F: +1.58%/año t 2.31 | 2009+ +0.55% t 0.69
+   IEI: +1.85%/año t 2.19 | 2009+ +1.22% t 1.44
+   IEF 2009+: +2.51%/año t 1.69
+
+VEREDICTO (PREREGISTRO_V4_R6 + reglas comunes de PREREGISTRO_V4): NO PASA.
+Cumple t 2,62, 2ª mitad +0,99 %, costes ×2 +2,35 %, placebo p95 +0,91 %, réplica ZN t 3,5 / TLT t 2,4.
+Falla la regla común de cola: DD máx a vol 15 % = 4,6 × el beneficio anual (> 3). Además 2016-2026 ≈ +1 %/año t < 0,5
+(el efecto se apaga), V2 solo 10 y 30 años ≈ 0 (contra el mecanismo) y toda la ganancia es la pata larga posterior.
