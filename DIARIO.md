@@ -11,6 +11,8 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-14 | Zona de ruido Zarattini en Europa (`metodo/v8/PREREGISTRO_ZONA_RUIDO.md`), M1 Dukascopy 2013-26, coste FTMO | GER40, UK100 (EU50 réplica) | No pasa: cartera neto +0,002 R t 0,16; GER40 solo neto t 1,61 (×2 t 0,86); UK100 y EU50 sin bruto; corr ORB 0,03 |
+| 2026-11-14 | Búsqueda en internet (`metodo/v8/INFORME_BUSQUEDA_INTERNET.md`): rebalanceo por umbral 60/40 (Harvey-Mazzoleni-Melone 2025) | US500, ZN | No pasa: replica el paper (neto t 3,3 en 2000-26) pero tramo no visto 2023-26 −9,7 pb/op, 25 ops/año; intradía sin swap t 1,8 |
 | 2026-11-13 | Búsqueda v4 sin restricciones (`metodo/v4/BUSQUEDA_V4.md`): auditoría (8 fallos) + 10 primas con pagador preregistradas | VX, cripto, ETF, bonos, acciones | Ninguna pasa: carry cripto real pero agotado desde 2025; subastas del Tesoro pasan t y réplica pero DD 4,6× y se apagan desde 2016 |
 | 2026-11-13 | Reversión tras choques de 5 min (provisión de liquidez, v3) | US100, US500, US30, GER40 | Descartada: 3.610 choques, neto −0,06 R (t −4,2); los choques no revierten |
 | 2026-11-13 | ORB GER40 con coste real FTMO 0,0052 % (v3, 2013-26, precio medio) | GER40 | No pasa: neto +0,069 R t 1,58 (<2,4); supera placebos, corr US100 0,00, pero edge demasiado pequeño e irregular (7/13 años +) |

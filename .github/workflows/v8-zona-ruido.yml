@@ -1,0 +1,66 @@
+name: v8 zona de ruido
+
+on:
+  push:
+    branches: [claude/project-thread-39z1kx]
+    paths:
+      - .github/workflows/v8-zona-ruido.yml
+      - metodo/v8/zona_ruido.py
+
+permissions:
+  contents: write
+
+jobs:
+  anio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        par: ["GER40:deuidxeur", "UK100:gbridxgbp", "EU50:eusidxeur"]
+        y: [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y simular
+        env:
+          PAR: ${{ matrix.par }}
+        run: |
+          SIM=${PAR%%:*}; INS=${PAR##*:}; Y=${{ matrix.y }}
+          HASTA=$((Y+1))-01-02; [ $Y = 2026 ] && HASTA=2026-11-14
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for P in bid ask; do npx dukascopy-node -i $INS -from $((Y-1))-11-01 -to $HASTA -t m1 -p $P -v -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo falla $P; done
+          ls | head; head -2 *-bid-*.csv | head -3
+          cd .. && pip install -q pandas numpy && python metodo/v8/zona_ruido.py velas $SIM $Y salida/${SIM}_dias_$Y.csv salida/${SIM}_ops_$Y.csv || echo sin datos
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zr-${{ strategy.job-index }}
+          path: salida/
+          if-no-files-found: ignore
+
+  juntar:
+    needs: anio
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p metodo/v8/zona_ruido
+          find art -name '*.csv' -exec cp {} metodo/v8/zona_ruido/ \;
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metodo/v8/zona_ruido
+          git diff --cached --quiet || git commit -m "v8: datos zona de ruido 2013-2026"
+          git pull --rebase -q || true
+          git push
