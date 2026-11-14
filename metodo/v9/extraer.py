@@ -6,7 +6,7 @@ import numpy as np, pandas as pd
 def cargar(d, lado):
     fs = [f for f in sorted(glob.glob(f"{d}/*-m1-{lado}-*.csv")) if os.path.getsize(f) > 0]
     df = pd.concat([pd.read_csv(f) for f in fs]).drop_duplicates("timestamp").sort_values("timestamp")
-    df.index = pd.to_datetime(df.timestamp, unit="ms", utc=True).tz_convert("America/New_York")
+    df.index = pd.to_datetime(df.timestamp, unit="ms", utc=True).dt.tz_convert("America/New_York")
     return df[["open", "high", "low", "close"]]
 
 sim, d, sal = sys.argv[1:4]
