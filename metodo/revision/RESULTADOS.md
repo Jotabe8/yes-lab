@@ -79,3 +79,11 @@ semana). Descartado del todo, sin disparador.
   esperan lo mismo: un lugar con coste bajo. Es el único hilo pendiente que sale de esta revisión.
 - Se han hecho 2 re-pruebas. No hay más candidatas que cumplan el triaje; repetir con otras variantes sería
   justo el sesgo que se quería evitar.
+
+## 5. Coste real medido en FTMO (14-11-2026, 11:54): el disparador no se cumple
+
+`MedirCosteGotobi.mq5` en la cuenta FTMO, ticks de USDJPY de 134 días (12-05 → 13-11-2026, 37 gotobi):
+horquilla mediana **0,60 pips** a las 08:00 JST y **0,90** a las 09:50; con la comisión (5 $ por lote ida y vuelta
+≈ 0,79 pips) el **coste total mediano es 1,52 pips** (igual en días gotobi), por encima del 1,41 supuesto y del
+umbral de 0,8. Solo la horquilla ya gasta 0,73 de los 2,2 pips de ventaja. **Gotobi cerrado en FTMO.** Solo se
+reabriría en un lugar con comisión ≈ 0 y horquilla ≤ 0,8 pips a esa hora.

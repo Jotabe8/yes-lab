@@ -27,7 +27,7 @@ Entrada aleatoria + gestión NNFX;2026-10-26;gurú;estructura;24 mercados D1;100
 Scalping con gestión NNFX M1-M15;2026-10-26;gurú;dirección;7 mercados;1000;B;spread 0,34-0,42 R en M1
 GER40 retroceso EMA20 M30;2026-10-26;minería;volatilidad;GER40;120;D;no se repite en 14 mercados
 Rebalanceo 60/40 fin de mes;2026-10-26;publicado;calendario;7 índices;12;B;bruto 1,3× coste
-Gotobi yen;2026-10-26;publicado;calendario;USDJPY;70;B;"Re-probado 14-11 con 2003-26: bruto +0,110 R t 5,4, igual en 2003-17 nunca visto (t 4,4); 2,2 pips brutos; neto con 1,4 pips t 1,56. Reabrir si coste total ≤ 0,8 pips a las 08:00 JST"
+Gotobi yen;2026-10-26;publicado;calendario;USDJPY;70;B;"Re-probado 14-11 con 2003-26: bruto +0,110 R t 5,4, igual en 2003-17 nunca visto (t 4,4); 2,2 pips brutos; neto con 1,4 pips t 1,56. Coste real FTMO medido 14-11: 1,52 pips (0,73 horquilla + 0,79 comisión) > 0,8 → cerrado en FTMO; reabrir solo en lugar sin comisión y horquilla ≤ 0,8"
 Shock macro 08:30 NY;2026-10-26;mecanismo;volatilidad;índices;100;A;sin bruto
 Lead-lag Asia-Europa;2026-10-26;publicado;dirección;índices;250;A;sin bruto
 Prima nocturna tras día de estrés;2026-10-26;mecanismo;dirección;7 índices;15;E;stop recortado a −1 fabricó +0,18 R
