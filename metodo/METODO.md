@@ -44,6 +44,7 @@ y en la memoria (regla de Jorge: no se deja nada "en reserva").
 | **P4 Prop** | 30 min | EV/cuota 2-Step (Monte Carlo por días) con la media **recortada** en (t requerido − 1,64) errores estándar, frente a la misma serie con media 0; correlación diaria con el ORB US100. | EV recortada ≤ control; correlación > 0,3. |
 | **P5 MQL5** | 2 h | EA desde `PlantillaPropEA.mq5`, solo con lo probado. Strategy Tester con ticks reales de FTMO en el mismo periodo. | Ops o R media a más de ±20 % de Python (primero se busca el fallo; si es del modelo, se descarta). |
 | **P6 Incubación** | 4-8 semanas | Demo o Free Trial de FTMO, sin tocar nada. Para **confirmar** edge en real hacen falta las ops mínimas (MinTRL) que da el embudo; 4-8 semanas solo detectan fallos de implementación. | Resultado fuera de la banda del Monte Carlo (p5-p95). |
+| **Real** | continuo | `python -m metodo.vigilancia real.csv replica.csv` (14-11-2026, sustituye "parar si R < 0 tras 100 ops", fallo 1 de la auditoría v4): (a) cruce diario real vs réplica (día, lado, R ±0,25); (b) SPRT de Wald H1 +0,12 R / H0 0, α 5 %, β 20 %, que equivale a parar si la suma de R ≤ −42,1 + 0,06·n. | Cruce: > 10 % de días distintos en los últimos 20 → revisar ejecución. SPRT "parar" → se para la estrategia. |
 
 `metodo/embudo.py` automatiza P0-P4 (salvo multi-mercado y meseta) con una tabla de operaciones (fecha, R bruta, coste en R):
 
