@@ -1,0 +1,60 @@
+name: v7 datos M15 bid/ask cruces FX (scalper nocturno)
+
+on:
+  push:
+    branches: [claude/project-thread-iz306q]
+    paths:
+      - .github/workflows/v7-noche-fx.yml
+
+permissions:
+  contents: write
+
+jobs:
+  bajar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        par: [eurusd, gbpusd, usdcad, usdchf, eurcad, audcad, eurchf, euraud, chfjpy, audnzd, nzdcad, gbpchf, eurnzd]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y juntar
+        run: |
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for Y in $(seq 2010 2026); do
+            HASTA=$((Y+1))-01-01; [ $Y = 2026 ] && HASTA=2026-11-01
+            for P in bid ask; do
+              npx dukascopy-node -i ${{ matrix.par }} -from $Y-01-01 -to $HASTA -t m15 -p $P -f csv -dir . -fn ${{ matrix.par }}_${P}_$Y -r 5 -bs 20 -bp 200 >/dev/null 2>&1 || echo "falla $Y $P"
+            done
+          done
+          ls -la | head -40
+          cd .. && pip install -q pandas numpy pyarrow && python metodo/v7/juntar_m15.py ${{ matrix.par }} velas salida/${{ matrix.par }}.parquet
+      - uses: actions/upload-artifact@v4
+        with:
+          name: m15-${{ matrix.par }}
+          path: salida/
+
+  juntar:
+    needs: [bajar]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar en la rama
+        run: |
+          mkdir -p metodo/v7/datos
+          find art -name '*.parquet' -exec cp {} metodo/v7/datos/ \;
+          ls -la metodo/v7/datos
+          git config user.name "github-actions" && git config user.email "actions@github.com"
+          git add metodo/v7/datos && git commit -m "v7: datos M15 bid/ask cruces FX" && git pull --rebase && git push
