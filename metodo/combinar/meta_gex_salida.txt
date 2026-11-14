@@ -1,0 +1,9 @@
+=== Réplica Python 2012-2026, neto FTMO ===
+TODO: n 3335 R +0.140 | terciles bajo/medio/alto +0.180 +0.250 +0.023 | dif +0.157 t +1.47 | pendiente -0.150 t -1.06 | Sharpe 1x 0.0551 con tamaño 0.0599 mejora +0.0048
+2012-2018: n 1499 R +0.095 | terciles bajo/medio/alto +0.247 +0.203 -0.126 | dif +0.373 t +2.47 | pendiente -0.411 t -2.08 | Sharpe 1x 0.0386 con tamaño 0.0561 mejora +0.0175
+2019-2026: n 1836 R +0.177 | terciles bajo/medio/alto +0.117 +0.289 +0.133 | dif -0.016 t -0.11 | pendiente +0.067 t +0.34 | Sharpe 1x 0.0678 con tamaño 0.0632 mejora -0.0046
+BRUTO: n 3335 R +0.196 | terciles bajo/medio/alto +0.225 +0.307 +0.086 | dif +0.139 t +1.31 | pendiente -0.125 t -0.89 | Sharpe 1x 0.0770 con tamaño 0.0783 mejora +0.0013
+COSTES x2: n 3335 R +0.084 | terciles bajo/medio/alto +0.134 +0.194 -0.040 | dif +0.174 t +1.64 | pendiente -0.174 t -1.24 | Sharpe 1x 0.0332 con tamaño 0.0414 mejora +0.0082
+placebo mejora Sharpe p95 +0.0042 | real +0.0048 | p-valor 0.038
+=== Serie real v018 2018-2026 ===
+v018: n 1810 R +0.124 | terciles bajo/medio/alto +0.115 +0.230 +0.052 | dif +0.063 t +0.59 | pendiente -0.102 t -0.73 | Sharpe 1x 0.0690 con tamaño 0.0699 mejora +0.0010
