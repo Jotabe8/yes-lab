@@ -1,0 +1,8 @@
+GER40: real 2013-10-21→2026-11-12 3047 ops, bruto +0.098 (t 2.24), neto +0.069 (t 1.58), coste 0.029 R
+   paseo regla:     R bruta en paseo aleatorio -0.001 (t -0.16, 60852 ops, 0.0× coste; debe ser ≈ 0) -> pasa
+   paseo contraria: R bruta en paseo aleatorio +0.025 (t 2.89, 60852 ops, 0.9× coste; debe ser ≈ 0) -> NO PASA
+   paseo por año: {2013: -0.013, 2014: 0.061, 2015: -0.02, 2016: -0.024, 2017: 0.008, 2018: -0.007, 2019: -0.0, 2020: -0.026, 2021: 0.018, 2022: -0.026, 2023: -0.028, 2024: 0.026, 2025: -0.02, 2026: 0.029}
+JP225: real 2018-04-13→2026-11-11 1989 ops, bruto +0.166 (t 3.26), neto +0.077 (t 1.50), coste 0.089 R
+   paseo regla:     R bruta en paseo aleatorio +0.017 (t 1.81, 41544 ops, 0.2× coste; debe ser ≈ 0) -> pasa
+   paseo contraria: R bruta en paseo aleatorio +0.001 (t 0.15, 41544 ops, 0.0× coste; debe ser ≈ 0) -> pasa
+   paseo por año: {2018: -0.017, 2019: -0.008, 2020: 0.058, 2021: 0.063, 2022: -0.008, 2023: 0.024, 2024: 0.017, 2025: 0.028, 2026: -0.01}
