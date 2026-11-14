@@ -1,0 +1,74 @@
+name: v5 gamma y última media hora
+
+on:
+  push:
+    branches: [claude/project-thread-h5a7xz]
+    paths:
+      - .github/workflows/v5-gamma.yml
+
+permissions:
+  contents: write
+
+jobs:
+  barras:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        par: ["US500:usa500idxusd", "US100:usatechidxusd"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar M1 2018-2026 y hacer barras de 30 min
+        run: |
+          SIM=${PAR%%:*}; INS=${PAR##*:}
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for Y in 2018 2019 2020 2021 2022 2023 2024 2025 2026; do
+            HASTA=$((Y+1))-01-01; [ $Y = 2026 ] && HASTA=$(date -u +%F)
+            for P in bid ask; do
+              npx dukascopy-node -i $INS -from $Y-01-01 -to $HASTA -t m1 -p $P -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo "falla $Y $P"
+            done
+          done
+          cd .. && pip install -q pandas numpy && python orb_acciones/barras30.py $SIM velas salida/${SIM}_b30_2018.csv
+        env:
+          PAR: ${{ matrix.par }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: b30-${{ strategy.job-index }}
+          path: salida/
+
+  analizar:
+    needs: barras
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Gamma y prueba
+        run: |
+          pip install -q pandas numpy
+          find art -name '*.csv' -exec cp {} metodo/v5/datos/ \;
+          curl -sSL -A "Mozilla/5.0" -o metodo/v5/datos/DIX.csv https://squeezemetrics.com/monitor/static/DIX.csv
+          head -3 metodo/v5/datos/DIX.csv
+          python metodo/v5/gamma.py | tee metodo/v5/gamma_salida.txt
+      - name: Guardar
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metodo/v5
+          git diff --cached --quiet || git commit -m "v5: datos gamma, barras 2018-26 y salida de la prueba"
+          git pull --rebase -q || true
+          git push
