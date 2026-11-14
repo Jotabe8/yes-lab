@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-14 | Tendencia de largo plazo con gestión NNFX (Donchian 55/100, cruce 50/200; stop 1,5 ATR, mitad a 1 ATR, BE, salida canal), preregistrada, 2005-26 (`tendencia_nnfx/`) | 11 pares forex D1 | Descartada: V1 neto −0,001 R t −0,04 (bruto +0,049, swap −0,039); 2016-26 negativo en las 3 variantes (t ≈ −2); bajo p95 del placebo |
 | 2026-11-13 | Búsqueda v4 sin restricciones (`metodo/v4/BUSQUEDA_V4.md`): auditoría (8 fallos) + 10 primas con pagador preregistradas | VX, cripto, ETF, bonos, acciones | Ninguna pasa: carry cripto real pero agotado desde 2025; subastas del Tesoro pasan t y réplica pero DD 4,6× y se apagan desde 2016 |
 | 2026-11-13 | Reversión tras choques de 5 min (provisión de liquidez, v3) | US100, US500, US30, GER40 | Descartada: 3.610 choques, neto −0,06 R (t −4,2); los choques no revierten |
 | 2026-11-13 | ORB GER40 con coste real FTMO 0,0052 % (v3, 2013-26, precio medio) | GER40 | No pasa: neto +0,069 R t 1,58 (<2,4); supera placebos, corr US100 0,00, pero edge demasiado pequeño e irregular (7/13 años +) |
