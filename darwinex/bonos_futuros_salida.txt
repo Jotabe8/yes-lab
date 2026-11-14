@@ -1,0 +1,24 @@
+IDEA 1: CICLO DE SUBASTAS (pb a riesgo del 5 años; coste 3 pb)
+2009-2026 (principal, fuera de la muestra publicada) n  624 | bruto  10.26 pb (t  3.94) | neto   7.26 (t  2.79) | 1ª mitad  10.21 2ª   4.31 | costes x2   4.26
+   placebo dos semanas después                       n  622 | bruto   0.61 pb (t  0.23) | neto  -2.39 (t -0.89) | 1ª mitad   1.21 2ª  -5.99 | costes x2  -5.39
+1990-2008 (réplica del artículo)                     n  389 | bruto  18.54 pb (t  3.92) | neto  15.54 (t  3.28) | 1ª mitad  19.69 2ª  11.41 | costes x2  12.54
+   placebo dos semanas después                       n  396 | bruto  -1.35 pb (t -0.29) | neto  -4.35 (t -0.93) | 1ª mitad  -3.36 2ª  -5.34 | costes x2  -7.35
+Por plazo, 2009-2026 (cada subasta):
+   2 años                                            n  367 | bruto  13.78 pb (t  3.98) | neto  10.78 (t  3.11) | 1ª mitad  19.86 2ª   1.75 | costes x2   7.78
+   3 años                                            n  214 | bruto   2.29 pb (t  0.38) | neto  -0.71 (t -0.12) | 1ª mitad   6.51 2ª  -7.93 | costes x2  -3.71
+   5 años                                            n  273 | bruto  16.07 pb (t  3.61) | neto  13.07 (t  2.94) | 1ª mitad  12.91 2ª  13.22 | costes x2  10.07
+   7 años                                            n  212 | bruto  12.24 pb (t  2.31) | neto   9.24 (t  1.74) | 1ª mitad   9.50 2ª   8.99 | costes x2   6.24
+   10 años                                           n  319 | bruto  10.01 pb (t  2.23) | neto   7.01 (t  1.56) | 1ª mitad  12.54 2ª   1.51 | costes x2   4.01
+   20 años                                           n   81 | bruto   6.75 pb (t  0.74) | neto   3.75 (t  0.41) | 1ª mitad   5.81 2ª   1.75 | costes x2   0.75
+   30 años                                           n  254 | bruto   8.78 pb (t  1.78) | neto   5.78 (t  1.17) | 1ª mitad   9.84 2ª   1.73 | costes x2   2.78
+Por año, 2009-2026, media neta pb: {2009: 59.5, 2010: 4.2, 2011: 6.5, 2012: 3.1, 2013: 2.9, 2014: 17.6, 2015: -2.5, 2016: 14.1, 2017: -0.3, 2018: 11.9, 2019: -4.5, 2020: 12.8, 2021: -0.4, 2022: 24.1, 2023: -4.5, 2024: -4.2, 2025: -4.0, 2026: 11.1}
+FRED 2 años (sin días de roll)                       n  244 | bruto   9.79 pb (t  2.32) | neto   6.79 (t  1.61) | 1ª mitad  19.48 2ª  -5.90 | costes x2   3.79
+FRED 5 años (sin días de roll)                       n  194 | bruto  16.39 pb (t  2.96) | neto  13.39 (t  2.41) | 1ª mitad  17.19 2ª   9.59 | costes x2  10.39
+FRED 10 años (sin días de roll)                      n  273 | bruto  10.46 pb (t  2.13) | neto   7.46 (t  1.52) | 1ª mitad  13.99 2ª   0.98 | costes x2   4.46
+FRED 30 años (sin días de roll)                      n  219 | bruto   5.72 pb (t  1.05) | neto   2.72 (t  0.50) | 1ª mitad   7.48 2ª  -2.00 | costes x2  -0.28
+FRED todos                                           n  930 | bruto  10.40 pb (t  4.15) | neto   7.40 (t  2.95) | 1ª mitad  14.46 2ª   0.35 | costes x2   4.40
+futuro 2 años (sin días de roll)                     n  243 | bruto   0.85 pb (t  0.21) | neto  -2.15 (t -0.54) | 1ª mitad  -3.45 2ª  -0.86 | costes x2  -5.15
+futuro 5 años (sin días de roll)                     n  193 | bruto   6.31 pb (t  1.32) | neto   3.31 (t  0.69) | 1ª mitad  -0.59 2ª   7.16 | costes x2   0.31
+futuro 10 años (sin días de roll)                    n  265 | bruto   5.68 pb (t  1.49) | neto   2.68 (t  0.70) | 1ª mitad   4.36 2ª   1.02 | costes x2  -0.32
+futuro 30 años (sin días de roll)                    n  213 | bruto  -0.20 pb (t -0.05) | neto  -3.20 (t -0.78) | 1ª mitad  -4.05 2ª  -2.35 | costes x2  -6.20
+futuro todos                                         n  914 | bruto   3.16 pb (t  1.53) | neto   0.16 (t  0.08) | 1ª mitad  -0.60 2ª   0.92 | costes x2  -2.84

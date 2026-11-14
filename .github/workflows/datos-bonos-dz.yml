@@ -1,0 +1,55 @@
+name: Datos bonos Darwinex
+
+# FRED, Yahoo y fiscaldata están bloqueados desde el entorno de Claude: la descarga corre aquí.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-9mmbyu]
+    paths:
+      - .github/workflows/datos-bonos-dz.yml
+
+permissions:
+  contents: write
+
+jobs:
+  datos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar
+        run: |
+          mkdir -p datos_bonos
+          pip install -q yfinance pandas requests
+          python3 - <<'PY'
+          import requests, pandas as pd, yfinance as yf, json
+          for s in ["DGS2", "DGS5", "DGS7", "DGS10", "DGS30", "DTB3"]:
+              try:
+                  r = requests.get(f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={s}", timeout=60)
+                  open(f"datos_bonos/{s}.csv", "w").write(r.text); print(s, len(r.text))
+              except Exception as e: print("falla", s, e)
+          for t, n in {"^GSPC": "GSPC", "ES=F": "ES", "ZN=F": "ZN", "ZF=F": "ZF", "ZT=F": "ZT", "ZB=F": "ZB"}.items():
+              try:
+                  d = yf.download(t, start="1990-01-01", auto_adjust=False, progress=False)
+                  d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+                  d[["Open", "High", "Low", "Close"]].to_csv(f"datos_bonos/{n}.csv"); print(n, len(d))
+              except Exception as e: print("falla", n, e)
+          url = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+          filas, p = [], 1
+          while True:
+              try:
+                  r = requests.get(url, params={"fields": "auction_date,issue_date,security_type,security_term,cusip,reopening,offering_amt",
+                                                "filter": "auction_date:gte:1985-01-01", "page[size]": 10000, "page[number]": p}, timeout=120).json()
+              except Exception as e: print("falla fiscaldata", e); break
+              filas += r.get("data", []); print("pagina", p, len(r.get("data", [])))
+              if p >= r.get("meta", {}).get("total-pages", 1): break
+              p += 1
+          pd.DataFrame(filas).to_csv("datos_bonos/subastas.csv", index=False); print("subastas", len(filas))
+          PY
+      - name: Guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos_bonos
+          git diff --cached --quiet || git commit -m "Datos de bonos para Darwinex $(date -u +%F)"
+          git pull --rebase -q || true
+          git push

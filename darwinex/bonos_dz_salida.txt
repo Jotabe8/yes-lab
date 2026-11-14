@@ -1,0 +1,21 @@
+IDEA 1: CICLO DE SUBASTAS (pb a riesgo del 5 años; coste 3 pb)
+2009-2026 (principal, fuera de la muestra publicada) n  624 | bruto  10.26 pb (t  3.94) | neto   7.26 (t  2.79) | 1ª mitad  10.21 2ª   4.31 | costes x2   4.26
+   placebo dos semanas después                       n  622 | bruto   0.61 pb (t  0.23) | neto  -2.39 (t -0.89) | 1ª mitad   1.21 2ª  -5.99 | costes x2  -5.39
+1990-2008 (réplica del artículo)                     n  389 | bruto  18.54 pb (t  3.92) | neto  15.54 (t  3.28) | 1ª mitad  19.69 2ª  11.41 | costes x2  12.54
+   placebo dos semanas después                       n  396 | bruto  -1.35 pb (t -0.29) | neto  -4.35 (t -0.93) | 1ª mitad  -3.36 2ª  -5.34 | costes x2  -7.35
+Por plazo, 2009-2026 (cada subasta):
+   2 años                                            n  367 | bruto  13.78 pb (t  3.98) | neto  10.78 (t  3.11) | 1ª mitad  19.86 2ª   1.75 | costes x2   7.78
+   3 años                                            n  214 | bruto   2.29 pb (t  0.38) | neto  -0.71 (t -0.12) | 1ª mitad   6.51 2ª  -7.93 | costes x2  -3.71
+   5 años                                            n  273 | bruto  16.07 pb (t  3.61) | neto  13.07 (t  2.94) | 1ª mitad  12.91 2ª  13.22 | costes x2  10.07
+   7 años                                            n  212 | bruto  12.24 pb (t  2.31) | neto   9.24 (t  1.74) | 1ª mitad   9.50 2ª   8.99 | costes x2   6.24
+   10 años                                           n  319 | bruto  10.01 pb (t  2.23) | neto   7.01 (t  1.56) | 1ª mitad  12.54 2ª   1.51 | costes x2   4.01
+   20 años                                           n   81 | bruto   6.75 pb (t  0.74) | neto   3.75 (t  0.41) | 1ª mitad   5.81 2ª   1.75 | costes x2   0.75
+   30 años                                           n  254 | bruto   8.78 pb (t  1.78) | neto   5.78 (t  1.17) | 1ª mitad   9.84 2ª   1.73 | costes x2   2.78
+Por año, 2009-2026, media neta pb: {2009: 59.5, 2010: 4.2, 2011: 6.5, 2012: 3.1, 2013: 2.9, 2014: 17.6, 2015: -2.5, 2016: 14.1, 2017: -0.3, 2018: 11.9, 2019: -4.5, 2020: 12.8, 2021: -0.4, 2022: 24.1, 2023: -4.5, 2024: -4.2, 2025: -4.0, 2026: 11.1}
+
+IDEA 2: REBALANCEO DE PENSIONES A FIN DE MES (pb; coste 3 pb)
+1999-2026 (principal)                                n  334 | bruto  21.24 pb (t  2.50) | neto  18.24 (t  2.15) | 1ª mitad  30.19 2ª   6.29 | costes x2  15.24
+   placebo mitad de mes                              n  334 | bruto  -7.70 pb (t -0.85) | neto -10.70 (t -1.17) | 1ª mitad -10.78 2ª -10.62 | costes x2 -13.70
+2023-04 → 2026-10 (fuera de la muestra publicada)    n   43 | bruto -10.23 pb (t -0.72) | neto -13.23 (t -0.93) | 1ª mitad   9.35 2ª -34.77 | costes x2 -16.23
+Trimestres (3.er mes)                                n  111 | bruto  15.59 pb (t  1.09) | neto  12.59 (t  0.88) | 1ª mitad  25.65 2ª  -0.24 | costes x2   9.59
+Sharpe anual neto: 0.41

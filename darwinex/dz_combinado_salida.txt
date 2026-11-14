@@ -1,0 +1,6 @@
+ORB US100 solo (CFD, 35 €/mes)             SR mensual 1.33 | permanente no    | DARWIN/año  19.8 % | asignaciones 36 m 14.7 | neto €/año     554 | mediana 36 m    1340 | P(neg) 22.7 %
+ORB US100 solo (CFD, 35 €/mes)             SR mensual 1.33 | permanente obj10 | DARWIN/año  19.8 % | asignaciones 36 m 14.7 | neto €/año    2620 | mediana 36 m    7442 | P(neg)  3.9 %
+ORB US100 + cripto (futuros, 50 €/mes)     SR mensual 1.72 | permanente no    | DARWIN/año  27.4 % | asignaciones 36 m 17.8 | neto €/año     962 | mediana 36 m    2718 | P(neg) 10.1 %
+ORB US100 + cripto (futuros, 50 €/mes)     SR mensual 1.72 | permanente obj10 | DARWIN/año  27.4 % | asignaciones 36 m 17.8 | neto €/año    3934 | mediana 36 m   11656 | P(neg)  0.5 %
+ORB US100 solo en futuros (50 €/mes)       SR mensual 1.33 | permanente no    | DARWIN/año  19.8 % | asignaciones 36 m 14.7 | neto €/año     374 | mediana 36 m     800 | P(neg) 33.6 %
+ORB US100 solo en futuros (50 €/mes)       SR mensual 1.33 | permanente obj10 | DARWIN/año  19.8 % | asignaciones 36 m 14.7 | neto €/año    2440 | mediana 36 m    6902 | P(neg)  5.5 %
