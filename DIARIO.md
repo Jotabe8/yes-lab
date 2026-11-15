@@ -77,6 +77,20 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
 
+## 2026-11-14 — Algoritmo desde cero: estudio y gamma de opciones (v5-1)
+
+**Estudio.** Crear desde cero solo tiene opciones partiendo de un flujo forzado medido con un dato nuevo; búsqueda
+de patrones, ML sobre precio y microestructura en CFD descartados por el historial (0/28 reglas de precio, atlas sin
+supervivientes, LightGBM −0,07 R).
+
+**Prueba preregistrada** (`metodo/v5/PREREGISTRO_GAMMA.md`, subido antes de bajar datos): US500, si la GEX de
+SqueezeMetrics del día anterior es negativa, seguir el movimiento 9:30→15:30 en la barra 15:30-15:59, coste 1 pb.
+2011-09 → 2026-11, 372 operaciones (25/año): bruto +4,4 pb, neto +3,4 pb, **t 1,11** (listón 2,4), costes ×2 +2,4,
+por encima del placebo (p95 +2,1), 2ª mitad +2,4, 2023-26 +2,4. **Cola: caída máxima 60 % a vol 15 % frente a 3×
+beneficio anual 12 %.** Réplica US100: +3,7 pb t 1,06, no llega a 1,5. Días de GEX ≥ 0: −0,45 pb bruto.
+**NO PASA.** El mecanismo apunta en la dirección correcta, pero los días de gamma negativa son tan volátiles
+(σ ≈ 58 pb por media hora) que 25 operaciones al año no dan potencia y la cola es enorme. No se rescata con otros
+umbrales (I1 percentil bajo: t 0,5 y 2ª mitad negativa). Corr con el ORB −0,02.
 ## 2026-11-14 — v7: fuente alternativa (historiales reales de terceros)
 - Fuente: supervivientes largos de MQL5 Signals → rejillas en cruces, EAs de oro y scalpers nocturnos. Probada la señal común (reversión nocturna M15, Bollinger 20,2, 18:30-23:00 NY) preregistrada en 9 pares + 4 de réplica, Dukascopy M15 bid/ask 2010-26.
 - Bruto real (+0,029 R, t 7,3, por encima del placebo de dirección, nulo a las 08-12) pero ≈ 0,6 pips = la comisión sola. Neto −0,086 R t −23, todos los años negativos; réplica sin bruto. DESCARTADA la familia (scalper y rejilla). metodo/v7/INFORME_V7.md.
