@@ -1,0 +1,52 @@
+name: v6 réplica ORB cripto (Binance M1)
+
+on:
+  push:
+    branches: [claude/project-thread-wrf62a]
+    paths:
+      - .github/workflows/v6-orb-cripto-replica.yml
+      - metodo/v6/orb_cripto_replica.py
+
+permissions:
+  contents: write
+
+jobs:
+  moneda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        sym: [SOLUSDT, XRPUSDT, BNBUSDT, DOGEUSDT, ADAUSDT, LINKUSDT, LTCUSDT, AVAXUSDT, ETHUSDT, BTCUSDT]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          pip install -q pandas numpy
+          mkdir -p salida
+          python metodo/v6/orb_cripto_replica.py ${{ matrix.sym }} salida/replica_${{ matrix.sym }}.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rep-${{ matrix.sym }}
+          path: salida/
+
+  juntar:
+    needs: moneda
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - run: |
+          mkdir -p metodo/v6/replica
+          find art -name '*.csv' -exec cp {} metodo/v6/replica/ \;
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metodo/v6/replica
+          git diff --cached --quiet || git commit -m "v6: réplica ORB cripto en Binance M1"
+          git pull --rebase -q || true
+          git push

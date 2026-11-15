@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/metodo/hooks/compilar_mq5.py\"",
+            "timeout": 150
+          }
+        ]
+      }
+    ]
+  }
+}
