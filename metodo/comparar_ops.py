@@ -140,6 +140,7 @@ def comparar(py: pd.DataFrame, mt5: pd.DataFrame, tolerancia: str = "5min",
     a["lado"] = a.lado.map(_lado)
     b = mt5.copy()
     b["hora"] = pd.to_datetime(b.hora)
+    b["lado"] = b.lado.map(_lado)          # también acepta "LONG"/"SHORT" sin pasar por cargar_mt5
     a = a.sort_values("hora").reset_index(drop=True)
     b = b.sort_values("hora").reset_index(drop=True)
     tol = pd.Timedelta(tolerancia)

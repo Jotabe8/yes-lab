@@ -78,3 +78,11 @@ Corto perpetuos recién listados vs BTC (v4);2026-11-13;mecanismo;prima;877 list
 Ciclo de subastas del Tesoro (v4);2026-11-13;publicado;calendario;IEF TLT ZN;250;D;t 2,62 y ZN t 3,5 pero DD 4,6× y 2016-26 t<0,5; reabrir si 2027 ZN > +3 %/año misma regla
 BAB con ETF sectoriales y de país (v4);2026-11-13;publicado;prima;9 sectores 20 países;12;A;t 0,25, países negativo
 Cambio de año en pequeñas (tax-loss) (v4);2026-11-13;publicado;calendario;IWM SPY RUT;1;D;1988-99 t 3,3, 2000-25 t −0,8
+Ruptura en el instante del dato (NFP/IPC/FOMC) 6 mercados (v9);2026-11-14;mecanismo;volatilidad;oro EURUSD GBPUSD USDJPY US100 US500;180;A;"2011-26 2.801 ops bruto +0,000 R t 0,00, neto −0,12; evento − placebo t 0,15; ningún mercado ni evento con t > 1,1"
+Dólar tras el fix del BCE (Krohn-Mueller-Whelan) (v9);2026-11-14;publicado;liquidez;EURUSD GBPUSD USDJPY oro;250;A;"bruto +0,04 pb t 0,07; 2020-26 −0,43 pb; EURUSD +1,1 pb ≈ coste"
+Prima del día de anuncio macro intradía (v9 T0);2026-11-14;publicado;calendario;US500 US100;36;C;T0: 182 años necesarios
+Subasta del Tesoro 13:00 en ZN / US100 (v9 T0);2026-11-14;publicado;calendario;ZN US100;150;C;"T0: efecto ≈ coste 2,2 pb (ZN); US100 24 ops/año"
+Día de la semana / quincena / sol / ciclo lunar (v9 T0);2026-11-14;publicado;calendario;índices US;250;C;T0: efectos 1-3 pb/día
+Hueco BTC-CME / prima Coinbase / Tether (v9 T0);2026-11-14;folklore;dirección;BTC;52;C;T0: coste cripto ≥ efecto
+Estacionalidad transversal materias primas Darwinex (v9 T0);2026-11-14;publicado;calendario;futuros DZ;12;C;T0: 66 años necesarios
+Liquidez Fed TGA/RRP, put/call, gas EIA, NISA, ETF BoJ (v9 T0);2026-11-14;varios;dirección;varios;50;C;T0: potencia o programa terminado

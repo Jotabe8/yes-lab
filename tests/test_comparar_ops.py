@@ -26,6 +26,15 @@ class TestComparar(unittest.TestCase):
         self.assertTrue(c.pasa, str(c))
         self.assertEqual(len(c.pares), 200)
 
+    def test_lado_en_texto_en_mt5(self):
+        # un DataFrame de MT5 con "LONG"/"SHORT" (sin pasar por cargar_mt5) debe emparejar igual
+        py = _py()
+        mt = py.copy()
+        mt["lado"] = np.where(mt.lado > 0, "LONG", "SHORT")
+        c = comparar(py, mt)
+        self.assertTrue(c.pasa, str(c))
+        self.assertEqual(len(c.pares), 200)
+
     def test_desfase_horario_no_empareja(self):
         py = _py()
         mt = py.copy()
