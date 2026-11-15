@@ -1,0 +1,99 @@
+Test ORB_US100_AGR_v019 (tope de pausa, ea_v019\ORB_US100_AGR_v019.mq5) - modo R puro
+Terminal laboratorio C:\MT5_Lab (demo 5058724257). Binario Lab\ORB_US100_AGR_v019.ex5 ejecutado en el hueco Lab\ORB_GER40_v100.ex5.
+US100_FTMO M5, 2022.01.03-2026.11.07, M1 OHLC, deposito 1.000.000 USD 1:50
+Entradas: v019_tope21 (= cuenta_real.set salvo InpPush/InpSimFee, sin efecto en tester) + InpAutoStages=false, InpTargetP1/P2Pct=1000, InpFirmMaxLossPct=100, InpMaxLossPct=99, InpExhaustPct=0, InpNearTargetPct=0
+Resultado: 986 operaciones, beneficio 16834.26, PF 1.2591
+
+==== Lineas 'volatilidad extrema ... opera con el 25%' (7) ====
+Core 1	2022.02.10 16:40:00   ORB: volatilidad extrema (percentil 95, limite 90) pero 21 dias sin abrir operacion (tope 21): opera con el 25% del riesgo.
+Core 1	2022.03.15 16:40:00   ORB: volatilidad extrema (percentil 100, limite 90) pero 21 dias sin abrir operacion (tope 21): opera con el 25% del riesgo.
+Core 1	2022.03.16 16:40:00   ORB: volatilidad extrema (percentil 99, limite 90) pero 22 dias sin abrir operacion (tope 21): opera con el 25% del riesgo.
+Core 1	2022.05.25 16:40:00   ORB: volatilidad extrema (percentil 97, limite 90) pero 21 dias sin abrir operacion (tope 21): opera con el 25% del riesgo.
+Core 1	2024.08.15 16:40:00   ORB: volatilidad extrema (percentil 97, limite 90) pero 21 dias sin abrir operacion (tope 21): opera con el 25% del riesgo.
+Core 1	2025.04.24 16:40:00   ORB: volatilidad extrema (percentil 98, limite 90) pero 21 dias sin abrir operacion (tope 21): opera con el 25% del riesgo.
+Core 1	2026.07.01 16:40:00   ORB: volatilidad extrema (percentil 96, limite 90) pero 21 dias sin abrir operacion (tope 21): opera con el 25% del riesgo.
+
+==== Inputs y resumen del log ====
+Tester	US100_FTMO,M5 (MetaQuotes-Demo): testing of Experts\Lab\ORB_GER40_v100.ex5 from 2022.01.03 00:00 to 2026.11.07 00:00
+Core 1	43204 bytes of input parameters loaded
+Core 1	expert file added: Experts\Lab\ORB_GER40_v100.ex5. 98566 bytes loaded
+Core 1	initial deposit 1000000.00 USD, leverage 1:50
+Core 1	US100_FTMO,M5: testing of Experts\Lab\ORB_GER40_v100.ex5 from 2022.01.03 00:00 to 2026.11.07 00:00 started with inputs:
+Core 1	  InpModel=1
+Core 1	  InpStage=0
+Core 1	  InpAccountSize=10000.0
+Core 1	  InpRiskP1Pct=1.0
+Core 1	  InpRiskP2Pct=0.75
+Core 1	  InpRiskFundedPct=1.5
+Core 1	  InpTargetP1Pct=1000.0
+Core 1	  InpTargetP2Pct=1000.0
+Core 1	  InpMinTradingDays=4
+Core 1	  InpRiskAfterTargetPct=0.25
+Core 1	  InpFirmDaily1StepPct=3.0
+Core 1	  InpBestDayPct=50.0
+Core 1	  InpFirmMaxLossPct=100.0
+Core 1	  InpCushionPct=0.5
+Core 1	  InpMaxNotionalX=20.0
+Core 1	  InpTargetR=0.0
+Core 1	  InpBreakevenR=0.0
+Core 1	  InpTrailChallenge=true
+Core 1	  InpTrailFunded=true
+Core 1	  InpTrailActR=3.0
+Core 1	  InpTrailDistR=1.0
+Core 1	  InpTrailStepR=0.1
+Core 1	  InpNearTargetPct=0.0
+Core 1	  InpNearTargetRiskPct=1.0
+Core 1	  InpExhaustPct=0.0
+Core 1	  InpPush=false
+Core 1	  InpFundedBreakevenR=2.0
+Core 1	  InpORMinutes=10
+Core 1	  InpEntryMode=0
+Core 1	  InpMinBodyPct=10.0
+Core 1	  InpBreakBufferPts=0.0
+Core 1	  InpStopMode=1
+Core 1	  InpStopDailyAtrPct=15.0
+Core 1	  InpMinRangeAtrPct=0.0
+Core 1	  InpMaxRangeAtrPct=0.0
+Core 1	  InpVolFilter=true
+Core 1	  InpVolPct=90.0
+Core 1	  InpVolLookback=252
+Core 1	  InpTrendFilter=false
+Core 1	  InpTrendEmaPeriod=200
+Core 1	  InpAllowLong=true
+Core 1	  InpAllowShort=true
+Core 1	  InpSessionStart=1630
+Core 1	  InpTradeEnd=2200
+Core 1	  InpFlatTime=2230
+Core 1	  InpMaxEntryDelayMin=5
+Core 1	  InpDailyLossPct=4.5
+Core 1	  InpMaxLossPct=99.0
+Core 1	  InpDailyProfitCapPct=0.0
+Core 1	  InpStopAtTargetPct=0.0
+Core 1	  InpMaxTradesDay=1
+Core 1	  InpMaxSpreadPoints=0
+Core 1	  InpFirmDailyLossPct=5.0
+Core 1	  InpNewsFilter=false
+Core 1	  InpNewsPreSessionMin=5
+Core 1	  InpNewsPostEntryMin=10
+Core 1	  InpNewsExclude=EIA;Crude;Natural Gas;Baker Hughes;Member
+Core 1	  InpNewsExit=false
+Core 1	  InpNewsExitMinBefore=5
+Core 1	  InpFomcClose=true
+Core 1	  InpFomcServerHHMM=2100
+Core 1	  InpExtraDates=
+Core 1	  InpPfControl=false
+Core 1	  InpPfWindow=60
+Core 1	  InpPfMinTrades=40
+Core 1	  InpPfReduceBelow=1.0
+Core 1	  InpRiskReducedPct=0.3
+Core 1	  InpPfHaltBelow=0.9
+Core 1	  InpCommInTester=false
+Core 1	  InpMagic=261018
+Core 1	  InpLogCsv=true
+Core 1	  InpAutoStages=false
+Core 1	  InpSimFee=89.0
+Core 1	  InpPayoutDays=14
+Core 1	  InpPayoutSplit=80.0
+Core 1	  InpPayoutSplit1Step=90.0
+Core 1	2022.01.03 00:00:00   *** BUILD 13/10/2026-I: riesgo challenge 1.8% | cuenta agotada = perdida (InpExhaustPct) | avisos push al movil + FOMC y festivos 2027 | trailing en el challenge + stop a entrada en la fondeada | modo FTMO 1-Step (trailing, diaria 3%, Best Day Rule) o 2-Step, riesgo reducido tras objetivo en vez de lote minimo, cierre FOMC, filtro de noticias desactivado ***
+Core 1	final balance 1016834.26 USD
