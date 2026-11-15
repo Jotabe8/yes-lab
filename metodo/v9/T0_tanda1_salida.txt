@@ -1,0 +1,19 @@
+                                                          idea  ops_año  bruto  coste   neto  años_necesarios  historia  R_año potencia margen valor    T0
+      Ruptura en el dato programado (NFP/IPC/FOMC, 6 mercados)      150  0.200   0.04  0.160              8.9        15   24.0       sí     sí    sí  PASA
+        Prima del día de anuncio macro (Savor-Wilson) intradía       36  0.050   0.01  0.040            182.2        15    1.4       NO     sí    NO fuera
+                   Subasta del Tesoro 13:00 en futuros ZN (DZ)      150  0.400   0.35  0.050             28.0        15    7.5       NO     NO    NO fuera
+                 Reacción del US100 a la subasta de 10/30 años       24  0.030   0.01  0.020           1093.5        15    0.5       NO     sí    NO fuera
+               Día de la semana / lunes (French 1980) intradía      250  0.010   0.01  0.000              inf        15    0.0       NO     NO    NO fuera
+                      Quincena / día de paga (día 15) intradía       24  0.050   0.01  0.040            273.4        15    1.0       NO     sí    NO fuera
+                  Sol en Nueva York (Hirshleifer-Shumway 2003)      250  0.015   0.01  0.005           1679.6        15    1.2       NO     NO    NO fuera
+                             Ciclo lunar (Yuan-Zheng-Zhu 2006)      250  0.010   0.01  0.000              inf        15    0.0       NO     NO    NO fuera
+                          Liquidación VIX (miércoles) en US500       12  0.100   0.01  0.090            108.0        15    1.1       NO     sí    NO fuera
+      Hueco de fin de semana BTC vs CME (folklore 'se cierra')       52  0.050   0.05  0.000              inf         9    0.0       NO     NO    NO fuera
+                      Prima Coinbase/Kimchi como dirección BTC      250  0.030   0.05 -0.020              inf         8   -5.0       NO     NO    NO fuera
+                      Emisiones de Tether (Griffin-Shams 2020)       50  0.050   0.05  0.000              inf         8    0.0       NO     NO    NO fuera
+Estacionalidad transversal materias primas (Keloharju 2016) DZ       12  0.125   0.01  0.115             66.1        26    1.4       NO     sí    NO fuera
+                    Almacén de gas EIA jueves 10:30 (NG en DZ)       52  0.050   0.03  0.020           1635.2        15    1.0       NO     NO    NO fuera
+             Liquidez neta Fed (TGA/RRP) → US500 día siguiente      250  0.020   0.01  0.010            419.9        10    2.5       NO     sí    NO fuera
+                      Put/call CBOE contrario → US500 intradía      250  0.020   0.01  0.010            419.9        15    2.5       NO     sí    NO fuera
+                       Flujos NISA a principio de mes → USDJPY       24  0.100   0.03  0.070             89.3         2    1.7       NO     sí    NO fuera
+     Compras de ETF del BoJ (tarde JP225 tras mañana < −0,5 %)       40  0.200   0.09  0.110             21.7         0    4.4       NO     sí    NO fuera

@@ -1,0 +1,43 @@
+name: v10 Databento (desequilibrios Nasdaq y flujo NQ)
+
+on:
+  push:
+    branches: [claude/project-thread-4zk8lb]
+    paths:
+      - .github/workflows/v10-databento.yml
+      - metodo/v10/descargar_databento.py
+      - metodo/v10/MODO
+
+permissions:
+  contents: write
+
+jobs:
+  databento:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q databento pandas numpy
+      - name: Comprobar clave
+        id: clave
+        run: |
+          if [ -z "$DATABENTO_API_KEY" ]; then
+            echo "Falta el secreto DATABENTO_API_KEY (Settings > Secrets and variables > Actions): no se hace nada."
+            echo "hay=no" >> $GITHUB_OUTPUT; else echo "hay=si" >> $GITHUB_OUTPUT; fi
+        env:
+          DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+      - name: Ejecutar
+        if: steps.clave.outputs.hay == 'si'
+        run: python metodo/v10/descargar_databento.py $(cat metodo/v10/MODO) | tee metodo/v10/databento_salida.txt
+        env:
+          DATABENTO_API_KEY: ${{ secrets.DATABENTO_API_KEY }}
+          TOPE_USD: ${{ github.event.inputs.tope || '100' }}
+      - name: Guardar
+        if: always() && steps.clave.outputs.hay == 'si'
+        run: |
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add metodo/v10/ && git commit -m "v10: salida Databento ($(cat metodo/v10/MODO))" && \
+          git pull --rebase && git push || echo "nada que guardar"
