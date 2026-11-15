@@ -27,7 +27,7 @@ Entrada aleatoria + gestión NNFX;2026-10-26;gurú;estructura;24 mercados D1;100
 Scalping con gestión NNFX M1-M15;2026-10-26;gurú;dirección;7 mercados;1000;B;spread 0,34-0,42 R en M1
 GER40 retroceso EMA20 M30;2026-10-26;minería;volatilidad;GER40;120;D;no se repite en 14 mercados
 Rebalanceo 60/40 fin de mes;2026-10-26;publicado;calendario;7 índices;12;B;bruto 1,3× coste
-Gotobi yen;2026-10-26;publicado;calendario;USDJPY;70;B;+0,106 R real pero 1,5× coste
+Gotobi yen;2026-10-26;publicado;calendario;USDJPY;70;B;"Re-probado 14-11 con 2003-26: bruto +0,110 R t 5,4, igual en 2003-17 nunca visto (t 4,4); 2,2 pips brutos; neto con 1,4 pips t 1,56. Coste real FTMO medido 14-11: 1,52 pips (0,73 horquilla + 0,79 comisión) > 0,8 → cerrado en FTMO; reabrir solo en lugar sin comisión y horquilla ≤ 0,8"
 Shock macro 08:30 NY;2026-10-26;mecanismo;volatilidad;índices;100;A;sin bruto
 Lead-lag Asia-Europa;2026-10-26;publicado;dirección;índices;250;A;sin bruto
 Prima nocturna tras día de estrés;2026-10-26;mecanismo;dirección;7 índices;15;E;stop recortado a −1 fabricó +0,18 R
@@ -39,7 +39,7 @@ Víspera de festivo;2026-10-30;publicado;calendario;13 índices;9;B;"+0,044 R; 1
 Ruptura tras NR7/NR4;2026-10-30;folklore;volatilidad;índices;40;E;"t 9,6 por precios rancios de Yahoo; con futuros ≈ 0"
 Tendencia 100/4 sin swap;2026-10-30;folklore;dirección;39 mercados;10;A;< placebo largos (deriva)
 Periodicidad intradía;2026-10-30;publicado;dirección;10 mercados;250;A;bruto < 0
-Inventario EIA petróleo;2026-10-30;mecanismo;dirección;USOIL;50;D;+33 pb t 2,1 → OOS +0,02 R
+Inventario EIA petróleo;2026-10-30;mecanismo;dirección;USOIL;50;A;"Re-probado 14-11 con 2011-26: bruto +0,045 R t 1,4, bajo placebo; 2011-20 nunca visto t 1,2. Era ruido de 2022"
 Dirección NY predicha (ridge);2026-10-30;minería;dirección;4 índices US;250;A;≈ placebo
 ORB 11 mercados × 4 aperturas;2026-10-30;mecanismo;volatilidad;11 mercados;250;A;aperturas ajenas sin edge
 ORB acciones en juego;2026-11-13;publicado;volatilidad;71 acciones;500;B;bruto +0,06 R < coste 0,11
@@ -63,6 +63,11 @@ ORB apertura propia Asia (JP225 HK50 AUS200);2026-11-13;mecanismo;volatilidad;JP
 Reversión tras choques de 5 min (provisión de liquidez);2026-11-13;publicado;liquidez;US100 US500 US30 GER40;250;A;"3.610 choques k4 2012-26: bruto −0,04 R (t −4 neto); los choques siguen un poco (+0,03 R bruto), no revierten"
 Estacionalidad FX horario propio (Breedon-Ranaldo);2026-11-13;publicado;calendario;6 pares;250;C;T0: >40 años necesarios
 Lead-lag US100→GER40 tras apertura NY;2026-11-13;mecanismo;dirección;GER40;250;C;T0: misma información que el ORB, no descorrelaciona
+Prima nocturna en futuros CME (Darwinex Zero);2026-11-13;publicado;calendario;US500 US100 US30;250;A;"2011-26 neto t 2,36, Sharpe 0,61 < siempre comprado 0,89; mezcla con ORB −0,03"
+Gamma Fragility / momentum de cierre con gamma (Barbon);2026-11-13;publicado;dirección;US500;80;C;"T0: >35 años necesarios; dato de gamma no accesible"
+VIX ETNs prima de volatilidad (Zarattini-Aziz-Mele);2026-11-13;publicado;volatilidad;VIX;250;C;"T0: SR publicado 1 → 0,5: t 2,1 en 17 años; sin VIX en FTMO"
+Tendencia BTC lunes apertura Asia (Pagani);2026-11-13;publicado;calendario;BTC;52;C;"T0: ~30 años necesarios"
+Tendencia cripto Donchian rotacional (Zarattini-Pagani-Barbon);2026-11-13;publicado;dirección;cripto;20;C;"T0: alfa sobre BTC no verificable con 8 años; solo BTC/ETH en DZ"
 Prima de volatilidad corto VX en contango (v4);2026-11-13;publicado;prima;VX VXX SVXY;250;D;t 0,79, DD 12× beneficio, −127 % feb-2018
 Carry financiación cripto contado/perpetuo (v4);2026-11-13;publicado;prima;20 cripto + 126 no vistas;365;D;t 18 y réplica t 2,55 pero exceso sobre letras ≈ 0 desde 2025; reabrir si financiación 30d > 0,03 %/8h con letras < 3 %
 Financiación transversal cripto (v4);2026-11-13;publicado;prima;20 cripto;365;C;t 2,38 < 2,4
@@ -74,3 +79,14 @@ Ciclo de subastas del Tesoro (v4);2026-11-13;publicado;calendario;IEF TLT ZN;250
 BAB con ETF sectoriales y de país (v4);2026-11-13;publicado;prima;9 sectores 20 países;12;A;t 0,25, países negativo
 Cambio de año en pequeñas (tax-loss) (v4);2026-11-13;publicado;calendario;IWM SPY RUT;1;D;1988-99 t 3,3, 2000-25 t −0,8
 Gamma negativa SqueezeMetrics + última media hora (v5-1);2026-11-14;publicado;flujo forzado;US500 US100;25;C;t 1,11, +3,4 pb neto, DD 5× beneficio anual
+Reversión nocturna FX en cruces (night scalper/rejilla; fuente historiales reales MQL5);2026-11-14;terceros;liquidez;9 pares + 4 réplica;1925;B;"bruto +0,029 R t 7,3 (≈0,6 pips) ≈ solo la comisión 5 $/lote; neto −0,086 t −23; réplica bruto t 0,7; sin disparador"
+Rebalanceo por umbral 60/40 (v8);2026-11-14;publicado;flujo;US500;25;D;"t 3,3 hasta 2023, −9,7 pb tras publicarse"
+Zona de ruido Zarattini GER40/UK100 (v8);2026-11-14;publicado;volatilidad;GER40 UK100 EU50;165;C;"cartera t 0,16; GER40 t 1,61; réplica EU50 sin bruto"
+Ruptura en el instante del dato (NFP/IPC/FOMC) 6 mercados (v9);2026-11-14;mecanismo;volatilidad;oro EURUSD GBPUSD USDJPY US100 US500;180;A;"2011-26 2.801 ops bruto +0,000 R t 0,00, neto −0,12; evento − placebo t 0,15; ningún mercado ni evento con t > 1,1"
+Dólar tras el fix del BCE (Krohn-Mueller-Whelan) (v9);2026-11-14;publicado;liquidez;EURUSD GBPUSD USDJPY oro;250;A;"bruto +0,04 pb t 0,07; 2020-26 −0,43 pb; EURUSD +1,1 pb ≈ coste"
+Prima del día de anuncio macro intradía (v9 T0);2026-11-14;publicado;calendario;US500 US100;36;C;T0: 182 años necesarios
+Subasta del Tesoro 13:00 en ZN / US100 (v9 T0);2026-11-14;publicado;calendario;ZN US100;150;C;"T0: efecto ≈ coste 2,2 pb (ZN); US100 24 ops/año"
+Día de la semana / quincena / sol / ciclo lunar (v9 T0);2026-11-14;publicado;calendario;índices US;250;C;T0: efectos 1-3 pb/día
+Hueco BTC-CME / prima Coinbase / Tether (v9 T0);2026-11-14;folklore;dirección;BTC;52;C;T0: coste cripto ≥ efecto
+Estacionalidad transversal materias primas Darwinex (v9 T0);2026-11-14;publicado;calendario;futuros DZ;12;C;T0: 66 años necesarios
+Liquidez Fed TGA/RRP, put/call, gas EIA, NISA, ETF BoJ (v9 T0);2026-11-14;varios;dirección;varios;50;C;T0: potencia o programa terminado

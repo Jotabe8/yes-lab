@@ -1,0 +1,32 @@
+ADAUSDT   n 1328 stop 0.82 % | bruto +0.093 t  1.27 | neto +0.051 t  0.70 | 24-26 +0.059 | x2 +0.010 | contrario +0.024 | exc +0.035 t  0.68 | ambos 9:30 +0.058 vs 01:00 +0.065
+AVAXUSDT  n 1333 stop 0.96 % | bruto +0.052 t  0.85 | neto +0.014 t  0.23 | 24-26 -0.041 | x2 -0.023 | contrario +0.005 | exc +0.023 t  0.51 | ambos 9:30 +0.028 vs 01:00 +0.009
+BNBUSDT   n 1343 stop 0.58 % | bruto +0.031 t  0.51 | neto -0.034 t -0.55 | 24-26 -0.106 | x2 -0.099 | contrario +0.080 | exc -0.024 t -0.51 | ambos 9:30 +0.056 vs 01:00 +0.081
+BTCUSDT   n 1346 stop 0.51 % | bruto +0.171 t  2.47 | neto +0.103 t  1.48 | 24-26 +0.050 | x2 +0.034 | contrario +0.071 | exc +0.050 t  0.93 | ambos 9:30 +0.121 vs 01:00 +0.050
+DOGEUSDT  n 1337 stop 0.90 % | bruto +0.125 t  1.95 | neto +0.085 t  1.33 | 24-26 +0.003 | x2 +0.045 | contrario +0.000 | exc +0.063 t  1.31 | ambos 9:30 +0.063 vs 01:00 +0.025
+ETHUSDT   n 1339 stop 0.67 % | bruto +0.189 t  2.70 | neto +0.137 t  1.96 | 24-26 +0.103 | x2 +0.085 | contrario +0.110 | exc +0.039 t  0.72 | ambos 9:30 +0.149 vs 01:00 +0.013
+LINKUSDT  n 1319 stop 0.88 % | bruto +0.083 t  1.28 | neto +0.044 t  0.68 | 24-26 +0.043 | x2 +0.005 | contrario -0.008 | exc +0.046 t  0.96 | ambos 9:30 +0.038 vs 01:00 +0.047
+LTCUSDT   n 1340 stop 0.75 % | bruto +0.117 t  1.80 | neto +0.070 t  1.07 | 24-26 -0.004 | x2 +0.022 | contrario -0.015 | exc +0.066 t  1.37 | ambos 9:30 +0.051 vs 01:00 -0.043
+SOLUSDT   n 1347 stop 0.95 % | bruto +0.020 t  0.34 | neto -0.017 t -0.29 | 24-26 -0.047 | x2 -0.055 | contrario +0.135 | exc -0.058 t -1.19 | ambos 9:30 +0.078 vs 01:00 -0.007
+XRPUSDT   n 1352 stop 0.76 % | bruto +0.192 t  1.26 | neto +0.145 t  0.95 | 24-26 +0.014 | x2 +0.098 | contrario +0.086 | exc +0.053 t  0.63 | ambos 9:30 +0.139 vs 01:00 -0.008
+
+CARTERA 8 monedas (coste 0,03 %): días 1480
+ 1 neto R/día +0.039 t 0.76
+ 2 2024-26 -0.016 t -0.24 | 1ª mitad +0.093 2ª -0.016
+ 3 costes x2 -0.006 t -0.12
+ 4 H1 exceso sobre contrario +0.021 t 0.59 | H2 ambos 9:30 - 01:00 +0.038 t 1.03
+ 5 monedas con neto > 0: 6 de 8
+ 6 corr diaria con v018 0.090 (1164 días comunes)
+
+Por año (cartera neta):
+fecha     2021     2022     2023     2024     2025     2026
+mean    -0.005    0.143    0.127    0.010    0.022   -0.093
+count  220.000  260.000  260.000  262.000  261.000  217.000
+sum     -1.130   37.083   33.088    2.668    5.803  -20.204
+ETHUSDT coste 0.02 %: neto +0.154 t 2.21 | 2024-26 +0.120 t 1.26
+ETHUSDT coste 0.03 %: neto +0.137 t 1.96 | 2024-26 +0.103 t 1.08
+ETHUSDT coste 0.04 %: neto +0.120 t 1.71 | 2024-26 +0.085 t 0.89
+   corr ETHUSDT con v018 0.098
+BTCUSDT coste 0.02 %: neto +0.125 t 1.81 | 2024-26 +0.075 t 0.80
+BTCUSDT coste 0.03 %: neto +0.103 t 1.48 | 2024-26 +0.050 t 0.53
+BTCUSDT coste 0.04 %: neto +0.080 t 1.15 | 2024-26 +0.026 t 0.27
+   corr BTCUSDT con v018 0.148

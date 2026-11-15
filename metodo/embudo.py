@@ -10,6 +10,9 @@ Entrada mínima: una serie de operaciones con su fecha de cierre y su resultado 
 
 `placebo(semilla)` debe devolver las R brutas de la misma estrategia con la dirección
 (o la hora de entrada) aleatoria y las mismas salidas; si no se pasa, se omite esa puerta.
+
+`paseo(semilla)` debe devolver las R brutas del MISMO backtest corrido sobre velas de paseo
+aleatorio (`metodo.sinteticos.velas_paseo`). Si sale ventaja ahí, la fabrica el motor.
 """
 from __future__ import annotations
 
@@ -20,6 +23,7 @@ import numpy as np
 import pandas as pd
 
 from metodo.robustez import dsr, min_trl, pbo, psr, spa
+from metodo.sinteticos import prueba_motor
 
 # Umbrales de las puertas. Cambiarlos aquí, nunca a mitad de una prueba.
 MIN_OPS_AÑO = 40          # menos operaciones no sirven para pasar un reto en semanas
@@ -130,13 +134,16 @@ class Resultado:
 
 def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
            n_placebo: int = 200, riesgo: float = 0.01, cuota: float = 540.0,
-           ev_control: float | None = None, variantes: pd.DataFrame | None = None) -> Resultado:
+           ev_control: float | None = None, variantes: pd.DataFrame | None = None,
+           paseo=None, n_paseo: int = 20) -> Resultado:
     """Aplica las puertas P0-P4 de METODO.md y devuelve el veredicto.
 
     ops: columnas fecha (datetime), r_bruto (R antes de costes), coste_r (R por operación).
     ev_control: EV/cuota de un control externo (opcional). Siempre se compara además con la
     misma serie con media 0, simulada igual. La EV se calcula con la media recortada en
     (t_requerido - 1,64) errores estándar: lo que queda tras descontar la suerte de buscar.
+    paseo: función semilla -> R brutas del mismo backtest sobre velas de paseo aleatorio
+    (metodo.sinteticos.velas_paseo). Puerta P1 "motor sin sesgo": R media ≈ 0.
     variantes: matriz días × variantes con los R NETOS diarios de TODAS las variantes miradas
     (ver robustez.matriz_diaria). Si se pasa, P3 añade SPA/StepM, PBO y Deflated Sharpe.
     """
@@ -161,6 +168,11 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
         medias = np.array([np.mean(placebo(s)) for s in range(n_placebo)])
         p95 = float(np.percentile(medias, 95))
         res.add("supera placebo p95", bruto > p95, f"bruto {bruto:+.3f} vs p95 {p95:+.3f}")
+
+    # P1: el motor no fabrica ventaja en un paseo aleatorio (mismo código, velas sintéticas)
+    if paseo is not None:
+        pm = prueba_motor([paseo(s) for s in range(n_paseo)], coste_r=coste)
+        res.add("motor en paseo aleatorio", pm["pasa"], pm["detalle"])
 
     # P2: neto, costes al doble, estabilidad por años
     dentro = ops.fecha < pd.Timestamp(corte_oos)

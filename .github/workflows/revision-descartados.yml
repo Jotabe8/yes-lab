@@ -1,0 +1,68 @@
+name: Revisión descartados (gotobi 2003-26, EIA 2011-26)
+
+on:
+  push:
+    branches: [claude/project-thread-gpiyvs]
+    paths:
+      - .github/workflows/revision-descartados.yml
+      - metodo/revision/extraer.py
+
+permissions:
+  contents: write
+
+jobs:
+  anio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        par: ["USDJPY:usdjpy:gotobi", "EURJPY:eurjpy:gotobi", "GBPJPY:gbpjpy:gotobi", "USOIL:lightcmdusd:eia"]
+        y: [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y extraer
+        env:
+          PAR: ${{ matrix.par }}
+        run: |
+          IFS=: read SIM INS TIPO <<< "$PAR"; Y=${{ matrix.y }}
+          if [ $TIPO = eia ] && [ $Y -lt 2011 ]; then echo "sin datos antes de 2011"; exit 0; fi
+          HASTA=$((Y+1))-01-02; [ $Y = 2026 ] && HASTA=2026-11-14
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for P in bid ask; do npx dukascopy-node -i $INS -from $((Y-1))-12-29 -to $HASTA -t m1 -p $P -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo falla $P; done
+          ls | head
+          cd .. && pip install -q pandas numpy && python metodo/revision/extraer.py $SIM velas $Y $TIPO salida || echo sin datos
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rev-${{ strategy.job-index }}
+          path: salida/
+          if-no-files-found: ignore
+
+  juntar:
+    needs: anio
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p metodo/revision/datos
+          find art -type f -exec cp {} metodo/revision/datos/ \;
+          ls metodo/revision/datos | wc -l
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metodo/revision/datos
+          git diff --cached --quiet || git commit -m "revisión: datos gotobi y EIA"
+          git pull --rebase -q || true
+          git push
