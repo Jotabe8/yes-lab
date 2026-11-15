@@ -2,12 +2,13 @@
 Uso: python descargar_alpaca.py AÑO  (secretos ALPACA_KEY_ID y ALPACA_SECRET). Salida: datos/qqq_delta_AÑO.csv
 Regla del tick: precio > anterior = comprador, < = vendedor, igual = el lado anterior. Sin la subasta de apertura
 (condiciones Q/O) ni lotes impares (I)."""
-import os, sys, time, json, urllib.request, urllib.parse
+import os, sys, time, json, urllib.request, urllib.parse, urllib.error
 import pandas as pd
 
 Y = int(sys.argv[1]); OUT = os.path.join(os.path.dirname(__file__), "datos"); os.makedirs(OUT, exist_ok=True)
 H = {"APCA-API-KEY-ID": os.environ["ALPACA_KEY_ID"], "APCA-API-SECRET-KEY": os.environ["ALPACA_SECRET"]}
 EXCL = {"Q", "O", "I", "M", "6", "9"}
+FEED = ["sip"]
 
 
 def get(params):
@@ -16,6 +17,11 @@ def get(params):
         try:
             with urllib.request.urlopen(urllib.request.Request(url, headers=H), timeout=60) as r:
                 return json.load(r)
+        except urllib.error.HTTPError as e:
+            if e.code == 403 and params.get("feed") == "sip":
+                print("SIP no permitido: paso a IEX"); params["feed"] = "iex"; FEED[0] = "iex"
+                url = "https://data.alpaca.markets/v2/stocks/trades?" + urllib.parse.urlencode(params); continue
+            print("reintento", k, e, e.read()[:200]); time.sleep(5 * (k + 1))
         except Exception as e:
             print("reintento", k, e); time.sleep(5 * (k + 1))
     raise RuntimeError(url)
@@ -25,7 +31,7 @@ filas = []
 for d in pd.bdate_range(f"{Y}-01-01", min(pd.Timestamp(f"{Y}-12-31"), pd.Timestamp("2026-11-13"))):
     a = pd.Timestamp(d.year, d.month, d.day, 9, 30, tz="America/New_York").tz_convert("UTC")
     p = dict(symbols="QQQ", start=a.isoformat().replace("+00:00", "Z"),
-             end=(a + pd.Timedelta(minutes=10)).isoformat().replace("+00:00", "Z"), limit=10000, feed="sip")
+             end=(a + pd.Timedelta(minutes=10)).isoformat().replace("+00:00", "Z"), limit=10000, feed=FEED[0])
     tr = []
     while True:
         j = get(p); tr += j.get("trades", {}).get("QQQ", []) or []
@@ -43,4 +49,4 @@ for d in pd.bdate_range(f"{Y}-01-01", min(pd.Timestamp(f"{Y}-12-31"), pd.Timesta
                       vol5=x.s[m5].sum(), delta5=(lado[m5] * x.s[m5]).sum(), n=len(x)))
     if len(filas) % 20 == 0:
         print(d.date(), len(filas), flush=True)
-pd.DataFrame(filas).to_csv(f"{OUT}/qqq_delta_{Y}.csv", index=False); print("días", len(filas))
+pd.DataFrame(filas).assign(feed=FEED[0]).to_csv(f"{OUT}/qqq_delta_{Y}.csv", index=False); print("días", len(filas), "feed", FEED[0])
