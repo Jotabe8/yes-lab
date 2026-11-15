@@ -1,0 +1,19 @@
+idea;ops_año;bruto;coste;neto;años_necesarios;historia;R_año;potencia;margen;valor;fuente;T0
+Ruptura en el dato programado (NFP/IPC/FOMC, 6 mercados);150;0.2;0.04;0.16;8.9;15;24.0;sí;sí;sí;"sin artículo; análogo al ORB en días de información máxima; ops correlacionadas (~100 indep.)";PASA
+Prima del día de anuncio macro (Savor-Wilson) intradía;36;0.05;0.01;0.04;182.2;15;1.4;NO;sí;NO;11 pb/día vs σ 110 pb 1958-2009;fuera
+Subasta del Tesoro 13:00 en futuros ZN (DZ);150;0.4;0.35;0.05;28.0;15;7.5;NO;NO;NO;concesión ~0,5 pb de rendimiento ≈ 3 pb precio vs coste 2,2 pb;fuera
+Reacción del US100 a la subasta de 10/30 años;24;0.03;0.01;0.02;1093.5;15;0.5;NO;sí;NO;"sin artículo; efecto en acciones mínimo";fuera
+Día de la semana / lunes (French 1980) intradía;250;0.01;0.01;0.0;inf;15;0.0;NO;NO;NO;efecto desaparecido tras 1987;fuera
+Quincena / día de paga (día 15) intradía;24;0.05;0.01;0.04;273.4;15;1.0;NO;sí;NO;"Lakonishok-Smidt; cambio de mes ya t 0,2";fuera
+Sol en Nueva York (Hirshleifer-Shumway 2003);250;0.015;0.01;0.005;1679.6;15;1.2;NO;NO;NO;~3 pb/día de diferencia;fuera
+Ciclo lunar (Yuan-Zheng-Zhu 2006);250;0.01;0.01;0.0;inf;15;0.0;NO;NO;NO;3-5 %/año entre fases;fuera
+Liquidación VIX (miércoles) en US500;12;0.1;0.01;0.09;108.0;15;1.1;NO;sí;NO;"Griffin-Shams 2018; 12 ops";fuera
+Hueco de fin de semana BTC vs CME (folklore 'se cierra');52;0.05;0.05;0.0;inf;9;0.0;NO;NO;NO;coste CFD cripto 0,15 % ida y vuelta;fuera
+Prima Coinbase/Kimchi como dirección BTC;250;0.03;0.05;-0.02;inf;8;-5.0;NO;NO;NO;"folklore; coste ≈ efecto";fuera
+Emisiones de Tether (Griffin-Shams 2020);50;0.05;0.05;0.0;inf;8;0.0;NO;NO;NO;efecto de 2017-18;fuera
+Estacionalidad transversal materias primas (Keloharju 2016) DZ;12;0.125;0.01;0.115;66.1;26;1.4;NO;sí;NO;SR mensual publicado ~0,5 anual;fuera
+Almacén de gas EIA jueves 10:30 (NG en DZ);52;0.05;0.03;0.02;1635.2;15;1.0;NO;NO;NO;Gay et al. 2009: incorporación rápida;fuera
+Liquidez neta Fed (TGA/RRP) → US500 día siguiente;250;0.02;0.01;0.01;419.9;10;2.5;NO;sí;NO;folklore;fuera
+Put/call CBOE contrario → US500 intradía;250;0.02;0.01;0.01;419.9;15;2.5;NO;sí;NO;Pan-Poteshman es de acciones;fuera
+Flujos NISA a principio de mes → USDJPY;24;0.1;0.03;0.07;89.3;2;1.7;NO;sí;NO;desde 2024;fuera
+Compras de ETF del BoJ (tarde JP225 tras mañana < −0,5 %);40;0.2;0.09;0.11;21.7;0;4.4;NO;sí;NO;terminaron en marzo de 2024: no operable;fuera

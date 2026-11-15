@@ -1,0 +1,10 @@
+subastas: 1588 por plazo: {2.0: 292, 3.0: 233, 4.0: 1, 5.0: 282, 6.0: 3, 7.0: 212, 9.0: 167, 10.0: 97, 19.0: 53, 20.0: 26, 29.0: 148, 30.0: 74}
+Prueba del motor sobre paseo aleatorio (revisión 2)
+
+caso                                               R real    ops | paseo: R media   t      ops   ×coste  ¿pasa?
+Gotobi USDJPY (días gotobi)                        +0.110   1691 |        +0.0159   1.71   33820   0.20  sí
+Gotobi USDJPY (todos los días, misma hora)         +0.021   6114 |        +0.0063   1.22  122280   0.08  sí
+EIA USOIL (miércoles)                              +0.045    747 |        -0.0074  -0.93   15180   0.17  sí
+EIA USOIL (todos los días)                         +0.008   3714 |        +0.0024   0.66   75480   0.06  sí
+
+Subastas IEF: real bruto +4.21%/año | paseo (200 barajados) media +0.115%/año, t de la media 1.22, p95 +2.32%/año

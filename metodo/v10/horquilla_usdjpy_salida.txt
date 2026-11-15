@@ -1,0 +1,20 @@
+07:55 mediana pips 0.8 media 1.272
+08:00 mediana pips 0.8 media 0.991
+08:01 mediana pips 0.7 media 0.914
+08:05 mediana pips 0.7 media 0.827
+09:30 mediana pips 0.4 media 0.535
+09:54 mediana pips 0.4 media 0.493
+09:55 mediana pips 0.4 media 0.524
+10:00 mediana pips 0.4 media 0.534
+16:00 mediana pips 0.4 media 0.486
+hm    08:00  09:55
+y
+2018    0.5    0.3
+2019    0.4    0.3
+2020    0.6    0.3
+2021    0.5    0.3
+2022    1.1    0.8
+2023    1.1    0.7
+2024    1.1    0.7
+2025    1.0    0.6
+2026    0.7    0.5
