@@ -78,6 +78,12 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
 
+## 2026-11-14 — Revisión de la búsqueda y combinación de indicadores
+
+Informe en `metodo/combinar/INFORME.md`. El ORB v018 real da t 1,15 en 2018-2022: con 5 años el listón lo habría
+descartado; las pruebas que deciden deben usar toda la historia. 40 de 79 familias sin bruto: el fallo está en el
+origen de las ideas. Meta-etiquetado del ORB con GEX (tamaño por tercil) DESCARTADO: t 2,47 en 2012-2018, nada en
+2019-2026.
 ## 2026-11-14 — Algoritmo desde cero: estudio y gamma de opciones (v5-1)
 
 **Estudio.** Crear desde cero solo tiene opciones partiendo de un flujo forzado medido con un dato nuevo; búsqueda
