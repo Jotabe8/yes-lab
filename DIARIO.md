@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-14 | Tendencia de largo plazo con gestión NNFX (Donchian 55/100, cruce 50/200; stop 1,5 ATR, mitad a 1 ATR, BE, salida canal), preregistrada, 2005-26 (`tendencia_nnfx/`) | 11 pares forex D1 | Descartada: V1 neto −0,001 R t −0,04 (bruto +0,049, swap −0,039); 2016-26 negativo en las 3 variantes (t ≈ −2); bajo p95 del placebo |
 | 2026-11-14 | Revisión de descartados con historia larga (`metodo/revision/`): triaje de 72 familias → 2 re-pruebas preregistradas (t ≥ 2,64) | USDJPY/EURJPY/GBPJPY 2003-26, USOIL 2011-26 | Ninguna revive. Gotobi: efecto real (bruto +0,11 R, t 4,4 en 2003-17 nunca visto) pero neto t 1,56; reabrir si coste ≤ 0,8 pips. EIA: ruido (t bruto 1,4, bajo placebo) |
 | 2026-11-14 | Zona de ruido Zarattini en Europa (`metodo/v8/PREREGISTRO_ZONA_RUIDO.md`), M1 Dukascopy 2013-26, coste FTMO | GER40, UK100 (EU50 réplica) | No pasa: cartera neto +0,002 R t 0,16; GER40 solo neto t 1,61 (×2 t 0,86); UK100 y EU50 sin bruto; corr ORB 0,03 |
 | 2026-11-14 | Búsqueda en internet (`metodo/v8/INFORME_BUSQUEDA_INTERNET.md`): rebalanceo por umbral 60/40 (Harvey-Mazzoleni-Melone 2025) | US500, ZN | No pasa: replica el paper (neto t 3,3 en 2000-26) pero tramo no visto 2023-26 −9,7 pb/op, 25 ops/año; intradía sin swap t 1,8 |
