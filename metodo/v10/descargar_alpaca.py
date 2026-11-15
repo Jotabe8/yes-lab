@@ -41,7 +41,7 @@ for d in pd.bdate_range(f"{Y}-01-01", min(pd.Timestamp(f"{Y}-12-31"), pd.Timesta
     time.sleep(0.31)
     if len(tr) < 50:
         continue
-    x = pd.DataFrame(tr); x["t"] = pd.to_datetime(x.t)
+    x = pd.DataFrame(tr); x["t"] = pd.to_datetime(x.t, format="ISO8601", utc=True)
     x = x[~x.c.apply(lambda c: bool(set(c or []) & EXCL))].sort_values("t")
     dp = x.p.diff(); lado = dp.apply(lambda v: 1 if v > 0 else (-1 if v < 0 else 0)).replace(0, pd.NA).ffill().fillna(0)
     m5 = x.t < a + pd.Timedelta(minutes=5)
