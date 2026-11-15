@@ -1,3 +1,3 @@
-Días QQQ 971 (2023-01-03 -> 2026-11-13), con ORB v018 771
-H2a: acuerdo 479 R +0.267 | desacuerdo 292 R +0.317 | dif -0.050 t -0.29 | mitades +nan -0.050 | placebo p95 +0.282 | réplica 9:30-9:35 t -0.74 -> NO PASA
-H2b: tercio alto +0.396 (n 160) bajo +0.129 (n 159) dif +0.267 t 1.04
+Días QQQ 2230 (2018-01-02 -> 2026-11-13), con ORB v018 1763
+H2a: acuerdo 1149 R +0.223 | desacuerdo 614 R +0.191 | dif +0.032 t 0.29 | mitades +0.190 -0.085 | placebo p95 +0.185 | réplica 9:30-9:35 t -0.22 -> NO PASA
+H2b: tercio alto +0.340 (n 383) bajo +0.188 (n 383) dif +0.151 t 0.92
