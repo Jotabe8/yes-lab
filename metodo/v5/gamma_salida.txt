@@ -1,0 +1,19 @@
+GEX: 2011-05-02 → 2026-11-13, 3909 días; días GEX<0: 347
+
+=== US500: 2011-09-19 → 2026-11-13, 4273 días ===
+PRINCIPAL GEX<0 seguir: n 372 (24.6/año) bruto +4.41 pb neto +3.41 t +1.11 | x2 +2.41 | 1ª mitad +4.42 2ª mitad +2.41 | 2023-26 +2.38 (n 52)
+placebo p95 bruto +2.12 pb (real +4.41) | cola: DD 60.3 % vs 3×anual 12.2 % | corr ORB v018 -0.016
+LISTÓN US500 (t≥2,4, 2ª mitad>0, ×2>0, >placebo, cola, n≥150): [np.False_, np.True_, np.True_, np.True_, np.False_, True] → NO PASA
+info GEX≥0 seguir: n 3901 (257.5/año) bruto -0.45 pb neto -1.45 t -4.43 | x2 -2.45 | 1ª mitad -0.93 2ª mitad -1.96 | 2023-26 -2.81 (n 1144)
+I1 GEX 20 % bajo seguir: n 809 (53.4/año) bruto +1.83 pb neto +0.83 t +0.51 | x2 -0.17 | 1ª mitad +3.11 2ª mitad -1.45 | 2023-26 -2.59 (n 174)
+I2 GEX 20 % alto contra: n 1143 (75.4/año) bruto +0.31 pb neto -0.69 t -1.67 | x2 -1.69 | 1ª mitad -1.27 2ª mitad -0.11 | 2023-26 +1.26 (n 381)
+info todos los días seguir: n 4273 (282.0/año) bruto -0.02 pb neto -1.02 t -2.55 | x2 -2.02 | 1ª mitad -0.53 2ª mitad -1.52 | 2023-26 -2.58 (n 1196)
+
+=== US100: 2011-09-19 → 2026-11-13, 4255 días ===
+PRINCIPAL GEX<0 seguir: n 372 (24.6/año) bruto +4.67 pb neto +3.67 t +1.06 | x2 +2.67 | 1ª mitad +4.08 2ª mitad +3.26 | 2023-26 +0.56 (n 52)
+placebo p95 bruto +2.49 pb (real +4.67) | cola: DD 67.3 % vs 3×anual 11.6 % | corr ORB v018 -0.015
+RÉPLICA US100 (neto>0 y t≥1,5): False
+info GEX≥0 seguir: n 3883 (256.3/año) bruto -0.34 pb neto -1.34 t -3.58 | x2 -2.34 | 1ª mitad -1.00 2ª mitad -1.69 | 2023-26 -2.65 (n 1144)
+I1 GEX 20 % bajo seguir: n 806 (53.2/año) bruto +3.39 pb neto +2.39 t +1.31 | x2 +1.39 | 1ª mitad +5.09 2ª mitad -0.30 | 2023-26 -2.02 (n 174)
+I2 GEX 20 % alto contra: n 1132 (74.7/año) bruto +0.65 pb neto -0.35 t -0.70 | x2 -1.35 | 1ª mitad -0.69 2ª mitad -0.00 | 2023-26 +1.04 (n 381)
+info todos los días seguir: n 4255 (280.8/año) bruto +0.10 pb neto -0.90 t -1.98 | x2 -1.90 | 1ª mitad -0.49 2ª mitad -1.32 | 2023-26 -2.51 (n 1196)

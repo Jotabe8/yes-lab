@@ -1,0 +1,6 @@
+ORB US100+cripto real        perm no    | media    3643 €/año | mediana    3369 | P(neg)  4.3 % | GOLD 10.1 SILVER 5.4
+ORB US100+cripto real        perm obj10 | media    6628 €/año | mediana    6370 | P(neg)  0.4 % | GOLD 10.1 SILVER 5.4
+misma serie con media 0      perm no    | media    -438 €/año | mediana    -550 | P(neg) 93.3 % | GOLD 0.7 SILVER 4.3
+misma serie con media 0      perm obj10 | media    -356 €/año | mediana    -675 | P(neg) 80.7 % | GOLD 0.7 SILVER 4.3
+media 0 y vol x1,5           perm no    | media    -259 €/año | mediana    -504 | P(neg) 83.3 % | GOLD 1.4 SILVER 4.8
+media 0 y vol x1,5           perm obj10 | media      57 €/año | mediana    -521 | P(neg) 67.0 % | GOLD 1.4 SILVER 4.8

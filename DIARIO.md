@@ -12,6 +12,8 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
 | 2026-11-15 | v10-bis: volumen con signo de QQQ 9:30-9:40 (Alpaca SIP, regla del tick) como filtro del ORB v018 (`metodo/v10/RESULTADOS_V10_BIS.md`) | QQQ/US100 | Descartado: dif acuerdo − desacuerdo +0,03 R (t 0,29), 2022-26 negativa, bajo el placebo |
+| 2026-11-14 | Tendencia de largo plazo con gestión NNFX (Donchian 55/100, cruce 50/200; stop 1,5 ATR, mitad a 1 ATR, BE, salida canal), preregistrada, 2005-26 (`tendencia_nnfx/`) | 11 pares forex D1 | Descartada: V1 neto −0,001 R t −0,04 (bruto +0,049, swap −0,039); 2016-26 negativo en las 3 variantes (t ≈ −2); bajo p95 del placebo |
+| 2026-11-14 | Revisión de descartados con historia larga (`metodo/revision/`): triaje de 72 familias → 2 re-pruebas preregistradas (t ≥ 2,64) | USDJPY/EURJPY/GBPJPY 2003-26, USOIL 2011-26 | Ninguna revive. Gotobi: efecto real (bruto +0,11 R, t 4,4 en 2003-17 nunca visto) pero neto t 1,56; reabrir si coste ≤ 0,8 pips. EIA: ruido (t bruto 1,4, bajo placebo) |
 | 2026-11-14 | Zona de ruido Zarattini en Europa (`metodo/v8/PREREGISTRO_ZONA_RUIDO.md`), M1 Dukascopy 2013-26, coste FTMO | GER40, UK100 (EU50 réplica) | No pasa: cartera neto +0,002 R t 0,16; GER40 solo neto t 1,61 (×2 t 0,86); UK100 y EU50 sin bruto; corr ORB 0,03 |
 | 2026-11-14 | Búsqueda en internet (`metodo/v8/INFORME_BUSQUEDA_INTERNET.md`): rebalanceo por umbral 60/40 (Harvey-Mazzoleni-Melone 2025) | US500, ZN | No pasa: replica el paper (neto t 3,3 en 2000-26) pero tramo no visto 2023-26 −9,7 pb/op, 25 ops/año; intradía sin swap t 1,8 |
 | 2026-11-14 | Revisión 2 de descartados con el motor nuevo (paseo aleatorio en gotobi, EIA, ORB GER40, ORB JP225 y subastas; auditoría de código de las clases B y D) | varios | **Ninguna revive**: motores limpios (sesgo ≈ 0, ninguno negativo); la única regla pesimista (ORB acciones) no pudo esconder ventaja. `metodo/revision2/` |
@@ -77,6 +79,26 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
 
+## 2026-11-14 — Revisión de la búsqueda y combinación de indicadores
+
+Informe en `metodo/combinar/INFORME.md`. El ORB v018 real da t 1,15 en 2018-2022: con 5 años el listón lo habría
+descartado; las pruebas que deciden deben usar toda la historia. 40 de 79 familias sin bruto: el fallo está en el
+origen de las ideas. Meta-etiquetado del ORB con GEX (tamaño por tercil) DESCARTADO: t 2,47 en 2012-2018, nada en
+2019-2026.
+## 2026-11-14 — Algoritmo desde cero: estudio y gamma de opciones (v5-1)
+
+**Estudio.** Crear desde cero solo tiene opciones partiendo de un flujo forzado medido con un dato nuevo; búsqueda
+de patrones, ML sobre precio y microestructura en CFD descartados por el historial (0/28 reglas de precio, atlas sin
+supervivientes, LightGBM −0,07 R).
+
+**Prueba preregistrada** (`metodo/v5/PREREGISTRO_GAMMA.md`, subido antes de bajar datos): US500, si la GEX de
+SqueezeMetrics del día anterior es negativa, seguir el movimiento 9:30→15:30 en la barra 15:30-15:59, coste 1 pb.
+2011-09 → 2026-11, 372 operaciones (25/año): bruto +4,4 pb, neto +3,4 pb, **t 1,11** (listón 2,4), costes ×2 +2,4,
+por encima del placebo (p95 +2,1), 2ª mitad +2,4, 2023-26 +2,4. **Cola: caída máxima 60 % a vol 15 % frente a 3×
+beneficio anual 12 %.** Réplica US100: +3,7 pb t 1,06, no llega a 1,5. Días de GEX ≥ 0: −0,45 pb bruto.
+**NO PASA.** El mecanismo apunta en la dirección correcta, pero los días de gamma negativa son tan volátiles
+(σ ≈ 58 pb por media hora) que 25 operaciones al año no dan potencia y la cola es enorme. No se rescata con otros
+umbrales (I1 percentil bajo: t 0,5 y 2ª mitad negativa). Corr con el ORB −0,02.
 ## 2026-11-14 — v7: fuente alternativa (historiales reales de terceros)
 - Fuente: supervivientes largos de MQL5 Signals → rejillas en cruces, EAs de oro y scalpers nocturnos. Probada la señal común (reversión nocturna M15, Bollinger 20,2, 18:30-23:00 NY) preregistrada en 9 pares + 4 de réplica, Dukascopy M15 bid/ask 2010-26.
 - Bruto real (+0,029 R, t 7,3, por encima del placebo de dirección, nulo a las 08-12) pero ≈ 0,6 pips = la comisión sola. Neto −0,086 R t −23, todos los años negativos; réplica sin bruto. DESCARTADA la familia (scalper y rejilla). metodo/v7/INFORME_V7.md.

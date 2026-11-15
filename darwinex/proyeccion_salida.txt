@@ -1,0 +1,12 @@
+base                           CFD ORB US100              perm no    | DARWIN  19.8 %/año | media    554 €/año | mediana    447 | p10 3a    -700 | p90 3a    4453 | P(neg 3a) 22.7 %
+base                           CFD ORB US100              perm obj10 | DARWIN  19.8 %/año | media   2620 €/año | mediana   2481 | p10 3a    1656 | p90 3a   14550 | P(neg 3a)  3.9 %
+base                           Futuros ORB US100+cripto   perm no    | DARWIN  27.4 %/año | media    962 €/año | mediana    906 | p10 3a     -11 | p90 3a    6000 | P(neg 3a) 10.1 %
+base                           Futuros ORB US100+cripto   perm obj10 | DARWIN  27.4 %/año | media   3934 €/año | mediana   3885 | p10 3a    5390 | p90 3a   18415 | P(neg 3a)  0.5 %
+prudente (costes x2)           CFD ORB US100              perm no    | DARWIN  14.4 %/año | media    206 €/año | mediana     76 | p10 3a   -1126 | p90 3a    2910 | P(neg 3a) 44.4 %
+prudente (costes x2)           CFD ORB US100              perm obj10 | DARWIN  14.4 %/año | media   1605 €/año | mediana   1412 | p10 3a    -670 | p90 3a   10974 | P(neg 3a) 14.3 %
+prudente (costes x2)           Futuros ORB US100+cripto   perm no    | DARWIN  20.1 %/año | media    373 €/año | mediana    288 | p10 3a   -1173 | p90 3a    3711 | P(neg 3a) 31.8 %
+prudente (costes x2)           Futuros ORB US100+cripto   perm obj10 | DARWIN  20.1 %/año | media   2473 €/año | mediana   2386 | p10 3a    1637 | p90 3a   13521 | P(neg 3a)  4.2 %
+pesimista (edges a la mitad)   CFD ORB US100              perm no    | DARWIN   9.4 %/año | media    -34 €/año | mediana   -165 | p10 3a   -1260 | p90 3a    1652 | P(neg 3a) 65.5 %
+pesimista (edges a la mitad)   CFD ORB US100              perm obj10 | DARWIN   9.4 %/año | media    792 €/año | mediana    525 | p10 3a   -1704 | p90 3a    7636 | P(neg 3a) 33.3 %
+pesimista (edges a la mitad)   Futuros ORB US100+cripto   perm no    | DARWIN  20.3 %/año | media    369 €/año | mediana    288 | p10 3a   -1156 | p90 3a    3654 | P(neg 3a) 31.6 %
+pesimista (edges a la mitad)   Futuros ORB US100+cripto   perm obj10 | DARWIN  20.3 %/año | media   2485 €/año | mediana   2403 | p10 3a    1731 | p90 3a   13509 | P(neg 3a)  4.1 %

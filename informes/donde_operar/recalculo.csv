@@ -1,0 +1,27 @@
+estrategia;sitio;coste;neto_R;t;neto_2024_26;R_anio;nota
+Gotobi USDJPY;FTMO (medido);1.52 pips (horquilla 0,75 media + comisión 0,79);0.023;1.14;0.026;1.7;costes x2: -0.063 R
+Gotobi USDJPY;IBKR spot (0,2 pb/lado);0.90 pips (comisión 0,60 + horquilla ~0,3 (supuesta));0.059;2.88;0.052;4.2;costes x2: +0.007 R
+Gotobi USDJPY;IBKR spot, horquilla 0,5;1.10 pips (comisión 0,60 + horquilla 0,5);0.047;2.32;0.044;3.4;costes x2: -0.015 R
+Gotobi USDJPY;Darwinex (0,005 % i/v);1.25 pips (comisión 0,75 + horquilla ~0,5 (supuesta));0.039;1.9;0.038;2.8;costes x2: -0.032 R
+Gotobi USDJPY;Tickmill / IC cTrader (6 $);1.30 pips (comisión 0,90 + horquilla ~0,4);0.036;1.76;0.036;2.6;costes x2: -0.038 R
+Gotobi USDJPY;IC MT5 / Pepperstone (7 $);1.45 pips (comisión 1,05 + horquilla ~0,4);0.027;1.34;0.029;2.0;costes x2: -0.055 R
+Gotobi USDJPY;CME 6J (1 tick + 5 $);2.02 pips (tick 6,25 $ = 1,1 pips + comisión ~0,9);-0.005;-0.25;0.005;-0.4;costes x2: -0.120 R
+Gotobi USDJPY;Umbral del disparador;0.80 pips ();0.064;3.16;0.057;4.6;costes x2: +0.019 R
+ORB JP225;FTMO CFD (medido);0,0157 % = 9,4 pts;0.077;1.5;0.009;17.8;
+ORB JP225;CFD ECN (IC/Pepperstone, ~8-10 pts);9 pts supuestos;0.081;1.58;0.012;18.7;
+ORB JP225;CME NKD vía IBKR (1 tick + 4,7 $);5,9 pts = 0,0099 %;0.11;2.15;0.036;25.4;
+ORB JP225;OSE mini vía IBKR (1 tick + ~¥160);6,6 pts = 0,011 %;0.104;2.03;0.031;24.0;
+ORB JP225;Topstep NKD (1 tick + 5,32 $);6,1 pts = 0,010 %;0.109;2.13;0.035;25.2;
+ORB JP225;NKD con 2 ticks (horquilla abierta);11 pts = 0,018 %;0.062;1.21;-0.004;14.3;
+ORB BTC 9:30 NY;FTMO CFD (medido);0,065 % + horquilla;0.081;1.12;-0.031;19.4;
+ORB BTC 9:30 NY;Darwinex CFD (0,05 %/orden);0,10 % + horquilla;-0.044;-0.6;-0.164;-10.4;
+ORB BTC 9:30 NY;Pepperstone CFD sin comisión (horquilla ~0,04 %);supuesta;0.142;1.96;0.034;34.0;
+ORB BTC 9:30 NY;Perpetuos Hyperliquid/Binance (taker 0,045 %/lado);0,09 % i/v;0.021;0.29;-0.095;5.1;
+ORB BTC 9:30 NY;Umbral del disparador;0,02 % i/v;0.189;2.6;0.083;45.1;
+ORB ETH 9:30 NY;FTMO CFD (medido);0,065 % + horquilla;0.092;1.28;0.064;22.0;
+ORB ETH 9:30 NY;Darwinex CFD (0,05 %/orden);0,10 % + horquilla;0.039;0.54;0.011;9.2;
+ORB ETH 9:30 NY;Pepperstone CFD sin comisión (horquilla ~0,04 %);supuesta;0.182;2.51;0.154;43.3;
+ORB ETH 9:30 NY;Perpetuos Hyperliquid/Binance (taker 0,045 %/lado);0,09 % i/v;0.089;1.23;0.061;21.2;
+ORB ETH 9:30 NY;Umbral del disparador;0,02 % i/v;0.218;3.0;0.19;51.8;
+Víspera festivo US (3 índices, por fecha);FTMO CFD (horquilla medida);c_cfd;0.082;1.78;0.002;0.7;"bruto +0.082 R = +7.7 pb; día normal +0.012 R"
+Víspera festivo US (3 índices, por fecha);Futuros ES/NQ/YM (1 tick + comisión);c_fut;0.083;1.81;0.004;0.8;"bruto +0.082 R = +7.7 pb; día normal +0.012 R"
