@@ -1,0 +1,13 @@
+mercado           variante periodo  ops_anio  bruto   neto  neto_x2  coste_R  t_neto  t_bruto  corr_ORB
+  US100    T1_retroceso_2R  ajuste    40.196  0.009 -0.069   -0.132    0.078  -0.772    0.096     0.034
+  US100    T1_retroceso_2R  prueba    51.093  0.062  0.032    0.005    0.030   0.364    0.700     0.034
+  US100   T1_retroceso_60m  ajuste    40.196 -0.009 -0.089   -0.171    0.080  -1.084   -0.107     0.032
+  US100   T1_retroceso_60m  prueba    51.093  0.019 -0.000   -0.026    0.019  -0.000    0.227     0.032
+  US100   T2_micro_tend_2R  ajuste    23.525  0.009 -0.046   -0.110    0.055  -0.457    0.085     0.002
+  US100   T2_micro_tend_2R  prueba    33.130  0.199  0.169    0.140    0.031   1.400    1.655     0.002
+  US100  T2_micro_tend_60m  ajuste    23.525  0.147  0.082    0.021    0.064   0.740    1.308    -0.012
+  US100  T2_micro_tend_60m  prueba    33.130  0.121  0.085    0.045    0.035   0.811    1.140    -0.012
+  US100  T2_micro_libre_2R  ajuste   186.829  0.044 -0.019   -0.082    0.064  -0.437    0.982     0.020
+  US100  T2_micro_libre_2R  prueba   210.611 -0.050 -0.087   -0.127    0.037  -1.832   -1.038     0.020
+  US100 T2_micro_libre_60m  ajuste   186.829  0.034 -0.035   -0.094    0.069  -1.008    0.975     0.011
+  US100 T2_micro_libre_60m  prueba   210.611 -0.008 -0.044   -0.076    0.036  -1.093   -0.206     0.011

@@ -12,6 +12,13 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
 | 2026-11-14 | Revisión de descartados con historia larga (`metodo/revision/`): triaje de 72 familias → 2 re-pruebas preregistradas (t ≥ 2,64) | USDJPY/EURJPY/GBPJPY 2003-26, USOIL 2011-26 | Ninguna revive. Gotobi: efecto real (bruto +0,11 R, t 4,4 en 2003-17 nunca visto) pero neto t 1,56; reabrir si coste ≤ 0,8 pips. EIA: ruido (t bruto 1,4, bajo placebo) |
+| 2026-11-14 | Zona de ruido Zarattini en Europa (`metodo/v8/PREREGISTRO_ZONA_RUIDO.md`), M1 Dukascopy 2013-26, coste FTMO | GER40, UK100 (EU50 réplica) | No pasa: cartera neto +0,002 R t 0,16; GER40 solo neto t 1,61 (×2 t 0,86); UK100 y EU50 sin bruto; corr ORB 0,03 |
+| 2026-11-14 | Búsqueda en internet (`metodo/v8/INFORME_BUSQUEDA_INTERNET.md`): rebalanceo por umbral 60/40 (Harvey-Mazzoleni-Melone 2025) | US500, ZN | No pasa: replica el paper (neto t 3,3 en 2000-26) pero tramo no visto 2023-26 −9,7 pb/op, 25 ops/año; intradía sin swap t 1,8 |
+| 2026-11-14 | Revisión 2 de descartados con el motor nuevo (paseo aleatorio en gotobi, EIA, ORB GER40, ORB JP225 y subastas; auditoría de código de las clases B y D) | varios | **Ninguna revive**: motores limpios (sesgo ≈ 0, ninguno negativo); la única regla pesimista (ORB acciones) no pudo esconder ventaja. `metodo/revision2/` |
+| 2026-11-14 | Scalping a favor de tendencia fuera de la hora del ORB (`metodo/scalping-v2/PREREGISTRO_TENDENCIA.md`): retroceso EMA20 M5 en día de tendencia, ruptura de microrango | US100, US30, US500, GER40 | Descartado: 0/24; mejor +0,07 R t 1,3 agrupado (igual que el paseo aleatorio); corr ORB ≤ 0,07 |
+| 2026-11-14 | Scalping v2 (`metodo/scalping-v2/`): barridos de liquidez, desvanecer el primer impulso de la apertura (M1 y ticks GER40 30 s), números redondos intradía | US100, US30, US500, GER40 | Descartado: 0/60 casillas; mejor t 1,5 bajo placebo; coste 0,05-0,07 R/op y bruto en prueba −0,04 a +0,03 R |
+| 2026-11-15 | v10 datos nuevos y sitio barato (`metodo/v10/INFORME_V10.md`): horquilla real USDJPY medida para gotobi; 3 hipótesis preregistradas con desequilibrios de subasta Nasdaq y delta NQ (Databento) | USDJPY, NQ, QQQ | Gotobi cerrado (horquilla 0,76 pips sola, IBKR ≈ 1,35 total); H1-H3 pendientes de la clave de Databento |
+| 2026-11-14 | Búsqueda v9 (`metodo/v9/INFORME_V9.md`): ruptura en el dato programado (NFP/IPC/FOMC) y dólar tras el fix del BCE, preregistradas; 18 familias más en T0 | Oro, EURUSD, GBPUSD, USDJPY, US100, US500 | Ninguna pasa: ruptura bruto +0,000 R (evento − placebo t 0,15); fix BCE bruto +0,04 pb; el resto cae en T0 |
 | 2026-11-13 | Búsqueda v4 sin restricciones (`metodo/v4/BUSQUEDA_V4.md`): auditoría (8 fallos) + 10 primas con pagador preregistradas | VX, cripto, ETF, bonos, acciones | Ninguna pasa: carry cripto real pero agotado desde 2025; subastas del Tesoro pasan t y réplica pero DD 4,6× y se apagan desde 2016 |
 | 2026-11-13 | Reversión tras choques de 5 min (provisión de liquidez, v3) | US100, US500, US30, GER40 | Descartada: 3.610 choques, neto −0,06 R (t −4,2); los choques no revierten |
 | 2026-11-13 | ORB GER40 con coste real FTMO 0,0052 % (v3, 2013-26, precio medio) | GER40 | No pasa: neto +0,069 R t 1,58 (<2,4); supera placebos, corr US100 0,00, pero edge demasiado pequeño e irregular (7/13 años +) |
@@ -69,3 +76,7 @@ esperar un sesgo alcista especial a fin de mes en el US100.
 **Pendiente del mismo informe.** El momentum intradía (la primera media hora predice la
 última) necesita las velas M1 de US100 del PC de Jorge y el módulo `lab/us100.py` de la
 rama `us100-orb-vwap`. Se probará cuando esa rama esté en `main`.
+
+## 2026-11-14 — v7: fuente alternativa (historiales reales de terceros)
+- Fuente: supervivientes largos de MQL5 Signals → rejillas en cruces, EAs de oro y scalpers nocturnos. Probada la señal común (reversión nocturna M15, Bollinger 20,2, 18:30-23:00 NY) preregistrada en 9 pares + 4 de réplica, Dukascopy M15 bid/ask 2010-26.
+- Bruto real (+0,029 R, t 7,3, por encima del placebo de dirección, nulo a las 08-12) pero ≈ 0,6 pips = la comisión sola. Neto −0,086 R t −23, todos los años negativos; réplica sin bruto. DESCARTADA la familia (scalper y rejilla). metodo/v7/INFORME_V7.md.
