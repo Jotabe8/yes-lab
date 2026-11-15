@@ -66,3 +66,13 @@ haría posible para H2a porque el delta sale del propio feed de futuros sin cost
 
 ## Tope de gasto
 El workflow pide primero el coste a la API (`metadata.get_cost`, gratis) y no baja nada si el total supera 100 $.
+
+## Anexo v10-bis (15-11-2026, antes de bajar datos): sin Databento
+Jorge no abre cuenta en Databento. El desequilibrio de subasta (H1, H3) no tiene fuente alternativa: **cerradas
+sin probar**. NinjaTrader solo da 1 año de ticks: con la dispersión de v018 (σ 2,19 R, 208 ops/año) la diferencia
+mínima detectable a t 2,4 sería 0,73 R. Sin potencia: descartado como fuente.
+H2 se prueba con **QQQ en lugar de NQ** (Alpaca, cuenta de papel gratis, SIP 2016-26): Delta = volumen con signo por la
+regla del tick (sin la subasta de apertura ni lotes impares) entre 9:30:00 y 9:39:59 ET; dirección = signo del
+último menos el primer precio de esa ventana. Mitades 2018-21 y 2022-26. Mismo listón de filtro (puntos 1-5) con la
+réplica en 9:30-9:35. `descargar_alpaca.py`, `analizar_alpaca.py`, workflow `v10-alpaca.yml`
+(secretos `ALPACA_KEY_ID` y `ALPACA_SECRET`).
