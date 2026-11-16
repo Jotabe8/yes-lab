@@ -101,3 +101,6 @@ umbrales (I1 percentil bajo: t 0,5 y 2ª mitad negativa). Corr con el ORB −0,0
 ## 2026-11-14 — v7: fuente alternativa (historiales reales de terceros)
 - Fuente: supervivientes largos de MQL5 Signals → rejillas en cruces, EAs de oro y scalpers nocturnos. Probada la señal común (reversión nocturna M15, Bollinger 20,2, 18:30-23:00 NY) preregistrada en 9 pares + 4 de réplica, Dukascopy M15 bid/ask 2010-26.
 - Bruto real (+0,029 R, t 7,3, por encima del placebo de dirección, nulo a las 08-12) pero ≈ 0,6 pips = la comisión sola. Neto −0,086 R t −23, todos los años negativos; réplica sin bruto. DESCARTADA la familia (scalper y rejilla). metodo/v7/INFORME_V7.md.
+## 2026-11-16 — v14: matemática fractal (Hurst DFA) como selector de los ORB
+- Preregistro metodo/v14/PREREGISTRO_FRACTALES.md: H por DFA de las 5 sesiones previas y de los 390 min antes de la entrada, régimen persistente = H ≥ mediana de 250 días; bases ORB US100 (réplica 2012-26) y ORB en juego (GER40/UK100/JP225/oro). 4 pruebas.
+- US100: persistente +0,23 R vs antipersistente +0,09, coherente en mitades y en v018 real, pero placebo p ≈ 0,05 (p99 no) y Sharpe filtrado < base (0,94-0,98 vs 1,00). En juego: sin efecto o al revés. NINGUNA PASA → DESCARTADO (clase C). metodo/v14/RESULTADOS_V14.md.
