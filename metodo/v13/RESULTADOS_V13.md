@@ -37,3 +37,16 @@ GER40 0,0051 % · UK100 0,0079 · JP225 0,0155 · XAUUSD 0,0099 · **USOIL 0,089
 Con el coste real: cartera de 5 neto +0,178 R t 2,97 (×2 +0,08); **el crudo queda en +0,02 R neto: fuera en CFD**.
 **Cartera recomendada para MT5: GER40 + UK100 + JP225 + XAUUSD** → neto +0,218 R t 3,24, 2.ª mitad +0,15, ×2 +0,16,
 ~116 ops/año. (Quitar el crudo es una decisión de lugar, no de muestra: su bruto +0,27 R sigue ahí para MCL en futuros.)
+
+## P5 (16-11, MT5 de laboratorio; informe completo en el PC: segundo_sistema_v13\P5_PARIDAD.md)
+- Compila 0 errores / 0 avisos.
+- **GER40 con ticks FTMO 2022-01 → 2026-05: EA 134 ops vs Python 138, 129 comunes, mismo lado 100 %, corr R 0,999,
+  R media +0,018 vs +0,019.** Los 14 desparejados están en el borde del umbral 1,5. Paridad muy buena.
+- XAUUSD (demo MetaQuotes, no FTMO): 129 comunes, mismo lado 100 %, corr R 0,898 (1,000 sin el 04-04-2025); R media
+  EA +0,24 vs Python +0,59. Causas: servidor de la demo con verano UE (19 de 35 desparejados), días en el borde, y el
+  04-04-2025 (Python +15 R, EA −1 R: stop de 4,9 $ saltado a los 30 s).
+- **Aviso oro:** la entrada es a las 8:30 NY, el minuto de NFP/IPC. En Python el oro gana +0,84 R en esos 58 días y
+  +0,18 R (t 1,4) el resto: parte de su resultado depende de llenar justo en el dato. Sin el oro en días de dato la
+  cartera de 4 sigue en +0,197 R t 2,94 (2018+ +0,13 t 1,67). Solo índices (GER40+UK100+JP225): +0,203 R t 2,58.
+- Pendiente: XAUUSD_FTMO con ticks FTMO; desfase del servidor automático si se usa fuera de FTMO (ServidorAUtc
+  supone NY+7); P6 en demo.
