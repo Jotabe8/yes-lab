@@ -62,4 +62,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add metodo/v13/datos
           git diff --cached --quiet || git commit -m "v13: ORB en juego 2012-2026"
+          git pull --rebase -q || true
           git push
