@@ -31,3 +31,9 @@ Riesgos que quedan: (1) es una prueba en Python (P3); falta paridad MQL5 y Strat
 estimado); (3) 2018-26 más débil (t 1,95); (4) DD largo en R: con 5 mercados a la vez el riesgo por operación tiene
 que ser bajo (≈ 0,25-0,35 %).
 Registro: clase F provisional (pendiente P4-P6).
+
+## Horquillas reales FTMO (16-11, script MedirHorquillasEnJuego, 60 días, 1.ª hora de cada apertura)
+GER40 0,0051 % · UK100 0,0079 · JP225 0,0155 · XAUUSD 0,0099 · **USOIL 0,089 %** (el preregistro suponía 0,05).
+Con el coste real: cartera de 5 neto +0,178 R t 2,97 (×2 +0,08); **el crudo queda en +0,02 R neto: fuera en CFD**.
+**Cartera recomendada para MT5: GER40 + UK100 + JP225 + XAUUSD** → neto +0,218 R t 3,24, 2.ª mitad +0,15, ×2 +0,16,
+~116 ops/año. (Quitar el crudo es una decisión de lugar, no de muestra: su bruto +0,27 R sigue ahí para MCL en futuros.)
