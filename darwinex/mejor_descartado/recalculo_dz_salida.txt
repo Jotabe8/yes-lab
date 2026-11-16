@@ -1,0 +1,31 @@
+=== GOTOBI USDJPY 2003-08 -> 2026 ( 1691 ops, 73 /año)
+bruto +0.110 R t 5.39 | 2.20 pips
+                        lugar  pips  neto_R      t  2003-17  2018-26  t_18-26     x2  placebo_neto  R_año
+DZ CFD optimista (0,40 horq.)  1.15   0.044  2.178    0.046    0.043    1.218 -0.021        -0.079  3.238
+        DZ CFD central (0,55)  1.30   0.036  1.759    0.037    0.034    0.964 -0.038        -0.088  2.616
+      DZ CFD como FTMO (0,80)  1.55   0.022  1.061    0.023    0.019    0.541 -0.067        -0.102  1.578
+                DZ futuros 6J  2.00  -0.004 -0.194   -0.002   -0.008   -0.220 -0.118        -0.128 -0.290
+   referencia: disparador 0,8  0.80   0.064  3.155    0.065    0.063    1.810  0.019        -0.059  4.691
+
+=== ORB GER40 2013-26 ( 3047 ops)
+sin coste                                neto +0.098 R t 2.24  x2 +0.098
+DZ FDAX (1 tick + 3 €x2 ≈ 0,0031 %)      neto +0.081 R t 1.85  x2 +0.064
+DZ CFD GDAXI (≈ 0,0055 %)                neto +0.068 R t 1.54  x2 +0.037
+FTMO 0,0052 %                            neto +0.069 R t 1.58  x2 +0.040
+
+=== DARWIN mensual 2018-02 -> 2026-10 (Sharpe anual de meses)
+corr mensual:
+          orb  gotobi  ger40
+orb     1.00    0.03  -0.12
+gotobi  0.03    1.00  -0.11
+ger40  -0.12   -0.11   1.00
+orb      Sharpe 1.38
+gotobi   Sharpe 0.39
+ger40    Sharpe 0.56
+orb+gotobi         igual riesgo Sharpe 1.24
+orb+ger40          igual riesgo Sharpe 1.46
+orb+gotobi+ger40   igual riesgo Sharpe 1.45
+peso óptimo gotobi 0.25 -> Sharpe 1.43
+
+MC 36 meses gotobi (coste 1,30): mediana +7.8 R, p10 -7.2, P(<0) 25%
+ventanas 6 m positivas 60%  (ORB v018: 88%)
