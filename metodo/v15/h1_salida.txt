@@ -1,0 +1,17 @@
+principal z2 {'ops': 5231, 'dias': 2615, 'bruto': np.float64(-0.028), 'neto': np.float64(-0.083), 't': np.float64(-2.828), 'm1': np.float64(-0.054), 'm2': np.float64(-0.032), 'x2': np.float64(-0.1), 'coste': np.float64(0.055), 'corr_orb': np.float64(-0.143)}
+    US100/US30 {'ops': 1805, 'bruto': np.float64(-0.046), 'neto': np.float64(-0.074), 't': np.float64(-3.479), 'coste': np.float64(0.028)}
+    US500/US100 {'ops': 1782, 'bruto': np.float64(0.013), 'neto': np.float64(-0.048), 't': np.float64(-2.258), 'coste': np.float64(0.061)}
+    US500/US30 {'ops': 1644, 'bruto': np.float64(-0.053), 'neto': np.float64(-0.131), 't': np.float64(-5.897), 'coste': np.float64(0.078)}
+  placebo 1 seguir {'bruto': np.float64(0.028), 'neto': np.float64(-0.027), 't': np.float64(-4.576)}
+  placebo 2 día anterior {'ops': 5231, 'bruto': np.float64(-0.029), 'neto': np.float64(-0.084), 't': np.float64(-5.334)}
+  por año neto: {2012: -0.032, 2013: -0.026, 2014: -0.07, 2015: -0.102, 2016: -0.062, 2017: -0.147, 2018: -0.173, 2019: -0.059, 2020: -0.189, 2021: -0.091, 2022: -0.025, 2023: -0.074, 2024: -0.021, 2025: -0.006, 2026: -0.107}
+  coste R mediana 0.05 | |S0| mediana pb 23.0
+z2,5 {'ops': 3551, 'dias': 1918, 'bruto': np.float64(-0.027), 'neto': np.float64(-0.072), 't': np.float64(-2.66), 'm1': np.float64(-0.057), 'm2': np.float64(-0.032), 'x2': np.float64(-0.092), 'coste': np.float64(0.046), 'corr_orb': np.float64(-0.18)}
+    US100/US30 {'ops': 1270, 'bruto': np.float64(-0.05), 'neto': np.float64(-0.074), 't': np.float64(-3.142), 'coste': np.float64(0.024)}
+    US500/US100 {'ops': 1185, 'bruto': np.float64(0.026), 'neto': np.float64(-0.027), 't': np.float64(-1.098), 'coste': np.float64(0.052)}
+    US500/US30 {'ops': 1096, 'bruto': np.float64(-0.056), 'neto': np.float64(-0.12), 't': np.float64(-4.847), 'coste': np.float64(0.064)}
+sin objetivo {'ops': 5231, 'dias': 2615, 'bruto': np.float64(-0.037), 'neto': np.float64(-0.092), 't': np.float64(-2.938), 'm1': np.float64(-0.061), 'm2': np.float64(-0.041), 'x2': np.float64(-0.108), 'coste': np.float64(0.055), 'corr_orb': np.float64(-0.126)}
+    US100/US30 {'ops': 1805, 'bruto': np.float64(-0.057), 'neto': np.float64(-0.085), 't': np.float64(-3.545), 'coste': np.float64(0.028)}
+    US500/US100 {'ops': 1782, 'bruto': np.float64(-0.015), 'neto': np.float64(-0.076), 't': np.float64(-3.184), 'coste': np.float64(0.061)}
+    US500/US30 {'ops': 1644, 'bruto': np.float64(-0.038), 'neto': np.float64(-0.117), 't': np.float64(-4.342), 'coste': np.float64(0.078)}
+MOTOR barajado: ops 51107 bruto -0.0042 t -1.04
