@@ -1,0 +1,75 @@
+Limpieza de rolls
+  ES: 395 días sustituidos, suma de saltos quitados +3.7 %, corr diaria futuro-sustituto 0.974
+  ZN: 192 días sustituidos, suma de saltos quitados -51.0 %, corr diaria futuro-sustituto 0.932
+  GC: 259 días sustituidos, suma de saltos quitados +43.1 %, corr diaria futuro-sustituto 0.942
+
+1) Pata sola (mensual, neto)
+  P  ES+ZN+GC              2003-2026: ret/año  9.24 %  vol 10.42 %  SR  0.89  t  4.33  peor DD  19.1 %
+  P  ES+ZN+GC              2003-2011: ret/año 13.36 %  vol 10.46 %  SR  1.28  t  3.83  peor DD  13.6 %
+  P  ES+ZN+GC              2012-2017: ret/año  7.22 %  vol 10.09 %  SR  0.72  t  1.75  peor DD  12.4 %
+  P  ES+ZN+GC              2018-2026: ret/año  6.42 %  vol 10.59 %  SR  0.61  t  1.80  peor DD  19.1 %
+   por año: 03:+22 04:+9 05:+8 06:+8 07:+17 08:+1 09:+12 10:+25 11:+18 12:+10 13:-4 14:+12 15:-5 16:+8 17:+22 18:-4 19:+25 20:+12 21:+5 22:-15 23:+11 24:+9 25:+20 26:-8
+  P4 +CL+HG (informativa)  2003-2026: ret/año  8.70 %  vol 10.22 %  SR  0.85  t  4.16  peor DD  17.3 %
+  P4 +CL+HG (informativa)  2003-2011: ret/año 13.36 %  vol 10.48 %  SR  1.27  t  3.82  peor DD  17.3 %
+  P4 +CL+HG (informativa)  2012-2017: ret/año  5.06 %  vol 10.07 %  SR  0.50  t  1.23  peor DD  17.1 %
+  P4 +CL+HG (informativa)  2018-2026: ret/año  6.42 %  vol  9.99 %  SR  0.64  t  1.91  peor DD  16.8 %
+   por año: 03:+31 04:+15 05:+11 06:+8 07:+16 08:-6 09:+14 10:+22 11:+9 12:+7 13:-4 14:+3 15:-11 16:+12 17:+25 18:-6 19:+25 20:+2 21:+8 22:-13 23:+9 24:+10 25:+18 26:-1
+
+2-4) DARWIN 2018-01 → 2026-10 (todo en R del ORB, mezcla a la volatilidad del ORB)
+ P: correlación mensual con el ORB +0.015; peso 143.7 R por unidad de rendimiento
+  ORB solo                                     SR  1.04  peor DD  27.3 R  6 m positivas  73.3 %  peor mes -12.7 R  VaR95 mensual 10.3 R
+  ORB + P (peso fijo 0,5)                      SR  1.20  peor DD  30.5 R  6 m positivas  80.0 %  peor mes -12.0 R  VaR95 mensual  9.8 R
+  ORB + P con prima a la mitad                 SR  1.06  peor DD  32.2 R  6 m positivas  77.1 %  peor mes -12.3 R  VaR95 mensual 10.2 R
+  placebo: ORB + P con media cero              SR  0.93  peor DD  33.9 R  6 m positivas  73.3 %  peor mes -12.7 R  VaR95 mensual 10.5 R
+     (informativo) peso 0.25                   SR  1.15  peor DD  29.1 R  6 m positivas  78.1 %  peor mes -11.4 R  VaR95 mensual  9.6 R
+     (informativo) peso 0.75                   SR  1.19  peor DD  32.9 R  6 m positivas  81.0 %  peor mes -15.6 R  VaR95 mensual  9.5 R
+     (informativo) peso 1.0                    SR  1.16  peor DD  38.6 R  6 m positivas  80.0 %  peor mes -18.1 R  VaR95 mensual 10.6 R
+ P4: correlación mensual con el ORB +0.004; peso 152.5 R por unidad de rendimiento
+  ORB solo                                     SR  1.04  peor DD  27.3 R  6 m positivas  73.3 %  peor mes -12.7 R  VaR95 mensual 10.3 R
+  ORB + P4 (peso fijo 0,5)                     SR  1.22  peor DD  23.9 R  6 m positivas  79.0 %  peor mes -11.6 R  VaR95 mensual  9.3 R
+  ORB + P4 con prima a la mitad                SR  1.07  peor DD  25.8 R  6 m positivas  75.2 %  peor mes -12.0 R  VaR95 mensual  9.6 R
+  placebo: ORB + P4 con media cero             SR  0.93  peor DD  29.6 R  6 m positivas  72.4 %  peor mes -12.3 R  VaR95 mensual 10.0 R
+     (informativo) peso 0.25                   SR  1.16  peor DD  25.5 R  6 m positivas  76.2 %  peor mes -10.8 R  VaR95 mensual  9.6 R
+     (informativo) peso 0.75                   SR  1.21  peor DD  30.0 R  6 m positivas  79.0 %  peor mes -15.5 R  VaR95 mensual  9.1 R
+     (informativo) peso 1.0                    SR  1.19  peor DD  35.3 R  6 m positivas  80.0 %  peor mes -18.2 R  VaR95 mensual 10.4 R
+
+5) Bootstrap por bloques de 3 meses (10.000) y desfases aleatorios, pata P
+  ΔSharpe real +0.154; bootstrap mediana +0.175, p10 -0.007, P(Δ>0) 89.0 %
+  desfases circulares (104): mediana +0.165; el real queda en el percentil 42
+
+   Control 2012-02 → 2026-10 con la réplica del ORB (bruto − 0,05 R)
+  P: corr -0.061
+  réplica ORB solo                             SR  0.85  peor DD  38.0 R  6 m positivas  79.1 %  peor mes -19.0 R  VaR95 mensual 12.2 R
+  réplica ORB + P                              SR  1.06  peor DD  34.0 R  6 m positivas  80.2 %  peor mes -17.6 R  VaR95 mensual 12.1 R
+     2012-2017: ORB SR  0.49  mezcla SR  0.79
+     2018-2026: ORB SR  1.07  mezcla SR  1.23
+  P4: corr -0.060
+  réplica ORB solo                             SR  0.85  peor DD  38.0 R  6 m positivas  79.1 %  peor mes -19.0 R  VaR95 mensual 12.2 R
+  réplica ORB + P4                             SR  1.03  peor DD  41.3 R  6 m positivas  80.8 %  peor mes -28.2 R  VaR95 mensual 11.5 R
+     2012-2017: ORB SR  0.49  mezcla SR  0.71
+     2018-2026: ORB SR  1.07  mezcla SR  1.23
+
+   Meses malos del ORB (peor 20 %) y qué hizo la pata P ese mes
+  ORB medio -8.29 R; pata +0.53 % (resto de meses +0.54 %)
+
+6) Monte Carlo 36 meses (dz_sim de los informes anteriores)
+  ORB solo, cuenta CFD (35 €/mes)                perm no    DARWIN/año  14.8 %  asign. 12.4  neto €/año    312  mediana 36 m    506  P(neg) 38.2 %
+  ORB solo, cuenta CFD (35 €/mes)                perm obj10 DARWIN/año  14.8 %  asign. 12.4  neto €/año   1807  mediana 36 m   4758  P(neg) 13.1 %
+  ORB solo, cuenta futuros (50 €/mes)            perm no    DARWIN/año  14.8 %  asign. 12.4  neto €/año    132  mediana 36 m    -34  P(neg) 50.7 %
+  ORB solo, cuenta futuros (50 €/mes)            perm obj10 DARWIN/año  14.8 %  asign. 12.4  neto €/año   1627  mediana 36 m   4218  P(neg) 16.5 %
+  ORB + P, cuenta futuros (50 €/mes)             perm no    DARWIN/año  17.5 %  asign. 14.2  neto €/año    378  mediana 36 m    697  P(neg) 36.9 %
+  ORB + P, cuenta futuros (50 €/mes)             perm obj10 DARWIN/año  17.5 %  asign. 14.2  neto €/año   2221  mediana 36 m   6034  P(neg)  9.7 %
+  ORB + P prima a la mitad, futuros (50 €/mes)   perm no    DARWIN/año  15.4 %  asign. 13.3  neto €/año    254  mediana 36 m    300  P(neg) 44.2 %
+  ORB + P prima a la mitad, futuros (50 €/mes)   perm obj10 DARWIN/año  15.4 %  asign. 13.3  neto €/año   1842  mediana 36 m   4808  P(neg) 14.4 %
+
+Tamaño en la cuenta de futuros (1 M$): contratos de la pata P a 10 % de vol con los precios y pesos del último mes
+  ES: peso 0.39 × 1 M$ = 387,751 $ → 1.0 contratos (1 contrato 376,700 $)
+  ZN: peso 0.82 × 1 M$ = 823,059 $ → 7.8 contratos (1 contrato 105,312 $)
+  GC: peso 0.21 × 1 M$ = 208,549 $ → 0.5 contratos (1 contrato 387,430 $)
+
+Sensibilidad (informativa): pata P con el sustituto al contado en todos los días (sin limpiar rolls)
+  pata 2018-26 SR 0.56; 2003-26 SR 0.76
+  ORB solo                                     SR  1.04  peor DD  27.3 R  6 m positivas  73.3 %  peor mes -12.7 R  VaR95 mensual 10.3 R
+  ORB + P (sustituto)                          SR  1.17  peor DD  31.0 R  6 m positivas  80.0 %  peor mes -12.0 R  VaR95 mensual 10.2 R
+
+Referencia: SR del ORB 2018-26 con Rbe sin coste 1.38; con R − 0,05 0.65
