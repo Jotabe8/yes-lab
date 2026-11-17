@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-16 | Mejor descartado recalculado para Darwinex Zero (`darwinex/mejor_descartado/`): gotobi USDJPY (CFD DZ 1,15-1,55 pips, 6J) y ORB GER40 (FDAX) | USDJPY, GER40 | Ninguno revive: gotobi neto t 1,1-2,2 y ×2 < 0 (la comisión DZ sola son 0,75 pips); ORB GER40 t 2,24 incluso sin coste |
 | 2026-11-16 | Compras de duración de fin de mes en bonos (Hartley-Schwarz), preregistrada (`darwinex/PREREGISTRO_BONOS_FIN_DE_MES.md`), 1990-2026 | 10 años (ZN), 5 y 30 años informativos | **Pasa** la principal: neto +21,6 pb/op t 5,6; 2019-26 t 2,5; placebo mitad de mes t 1,3; futuro ZN real neto t 4,1. Falla la secundaria: los meses de refinanciación no rinden más en 1990-2015. Solo Darwinex Zero (FTMO no tiene bonos); 12 ops/año |
 | 2026-11-15 | v10-bis: volumen con signo de QQQ 9:30-9:40 (Alpaca SIP, regla del tick) como filtro del ORB v018 (`metodo/v10/RESULTADOS_V10_BIS.md`) | QQQ/US100 | Descartado: dif acuerdo − desacuerdo +0,03 R (t 0,29), 2022-26 negativa, bajo el placebo |
 | 2026-11-17 | Mejoras del embudo tras investigar evaluación honesta (`metodo/METODO.md` §3): t por semana, libro de pruebas, nulos GARCH/régimen, prueba de fuga, ventajas plantadas | Reversión DZ, ORB en juego, sintéticos | Reversión DZ t 9,42 → 5,70 (sigue pasando); ORB en juego 3,35 → 3,25; P1 con 2018-22 solo detecta el 25 % de ventajas +0,10 R a 80 ops/año (45 % con 2011-22): P1 pasa a toda la historia |
