@@ -1,0 +1,84 @@
+Cobertura de medidas (fracción de días con señal con H y mediana):
+  h5 {'GER40': 0.991, 'JP225': 0.984, 'UK100': 0.99, 'US100': 0.991, 'USOIL': 0.0, 'XAUUSD': 0.996}
+  hhoy {'GER40': 0.99, 'JP225': 0.985, 'UK100': 0.991, 'US100': 0.991, 'USOIL': 0.0, 'XAUUSD': 0.996}
+Media de H por mercado: {'h5': {'GER40': 0.529, 'JP225': 0.533, 'UK100': 0.532, 'US100': 0.533, 'USOIL': nan, 'XAUUSD': 0.526}, 'hhoy': {'GER40': 0.537, 'JP225': 0.538, 'UK100': 0.542, 'US100': 0.539, 'USOIL': nan, 'XAUUSD': 0.542}}
+
+===== A. ORB US100 (réplica 2012-26) · medida h5 =====
+  Base (régimen definido)        n  3341 | bruto +0.190 | neto +0.164 (t  3.89) | x2 +0.139
+  PERSISTENTE (filtrado)         n  1665 | bruto +0.256 | neto +0.231 (t  3.66) | x2 +0.206
+  Antipersistente                n  1676 | bruto +0.124 | neto +0.098 (t  1.75) | x2 +0.073
+    US100: base +0.164 (n 3341) | pers +0.231 (n 1665) | anti +0.098
+  Tercios de H (bajo→alto) neto: {0: 0.038, 1: 0.211, 2: 0.245}
+  SÍ  1 t neto filtrado >= 2,4
+  NO  2 placebo (p99 +0.261, p50 +0.166)
+  SÍ  3 mejora en las 2 mitades (+0.058 / +0.073)
+  SÍ  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.94 vs 1.00)
+  SÍ  6 tercio alto > tercio bajo
+  VEREDICTO: NO PASA
+  Inf. tamaño 1,5/0,5: Sharpe 1.03 (base 1.00)
+  MC filtrado: P(media<=0) 0.000 | DD p95 70.9 R | R/año +25.5
+
+===== B. ORB en juego GER40+UK100+JP225+oro · medida h5 =====
+  Base (régimen definido)        n  1686 | bruto +0.266 | neto +0.209 (t  3.09) | x2 +0.152
+  PERSISTENTE (filtrado)         n   871 | bruto +0.264 | neto +0.208 (t  2.17) | x2 +0.152
+  Antipersistente                n   815 | bruto +0.269 | neto +0.210 (t  2.21) | x2 +0.152
+    GER40: base +0.292 (n 399) | pers +0.334 (n 221) | anti +0.240
+    UK100: base +0.143 (n 428) | pers +0.241 (n 223) | anti +0.036
+    JP225: base +0.128 (n 346) | pers +0.139 (n 165) | anti +0.118
+    XAUUSD: base +0.254 (n 513) | pers +0.116 (n 262) | anti +0.398
+  Tercios de H (bajo→alto) neto: {0: 0.253, 1: 0.231, 2: 0.144}
+  NO  1 t neto filtrado >= 2,4
+  NO  2 placebo (p99 +0.364, p50 +0.210)
+  NO  3 mejora en las 2 mitades (-0.042 / +0.033)
+  SÍ  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.55 vs 0.74)
+  NO  6 tercio alto > tercio bajo
+  VEREDICTO: NO PASA
+  Inf. tamaño 1,5/0,5: Sharpe 0.68 (base 0.74)
+  MC filtrado: P(media<=0) 0.011 | DD p95 80.3 R | R/año +12.0
+  Inf. v018 real 2018-26 (1782 ops): pers +0.140 (t 2.30) | anti +0.111 (t 1.87)
+
+===== A. ORB US100 (réplica 2012-26) · medida hhoy =====
+  Base (régimen definido)        n  3343 | bruto +0.189 | neto +0.164 (t  3.87) | x2 +0.139
+  PERSISTENTE (filtrado)         n  1697 | bruto +0.261 | neto +0.236 (t  3.82) | x2 +0.211
+  Antipersistente                n  1646 | bruto +0.115 | neto +0.090 (t  1.56) | x2 +0.064
+    US100: base +0.164 (n 3343) | pers +0.236 (n 1697) | anti +0.090
+  Tercios de H (bajo→alto) neto: {0: 0.05, 1: 0.098, 2: 0.344}
+  SÍ  1 t neto filtrado >= 2,4
+  NO  2 placebo (p99 +0.255, p50 +0.165)
+  SÍ  3 mejora en las 2 mitades (+0.057 / +0.085)
+  SÍ  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.98 vs 1.00)
+  SÍ  6 tercio alto > tercio bajo
+  VEREDICTO: NO PASA
+  Inf. tamaño 1,5/0,5: Sharpe 1.06 (base 1.00)
+  MC filtrado: P(media<=0) 0.000 | DD p95 73.2 R | R/año +26.5
+
+===== B. ORB en juego GER40+UK100+JP225+oro · medida hhoy =====
+  Base (régimen definido)        n  1687 | bruto +0.269 | neto +0.212 (t  3.14) | x2 +0.155
+  PERSISTENTE (filtrado)         n  1131 | bruto +0.206 | neto +0.150 (t  1.89) | x2 +0.095
+  Antipersistente                n   556 | bruto +0.398 | neto +0.337 (t  2.67) | x2 +0.277
+    GER40: base +0.296 (n 398) | pers +0.255 (n 302) | anti +0.423
+    UK100: base +0.151 (n 430) | pers +0.187 (n 307) | anti +0.064
+    JP225: base +0.128 (n 346) | pers -0.001 (n 218) | anti +0.348
+    XAUUSD: base +0.254 (n 513) | pers +0.117 (n 304) | anti +0.453
+  Tercios de H (bajo→alto) neto: {0: 0.285, 1: 0.1, 2: 0.25}
+  NO  1 t neto filtrado >= 2,4
+  NO  2 placebo (p99 +0.317, p50 +0.213)
+  NO  3 mejora en las 2 mitades (-0.026 / -0.080)
+  SÍ  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.47 vs 0.75)
+  NO  6 tercio alto > tercio bajo
+  VEREDICTO: NO PASA
+  Inf. tamaño 1,5/0,5: Sharpe 0.61 (base 0.75)
+  MC filtrado: P(media<=0) 0.029 | DD p95 105.8 R | R/año +11.2
+  Inf. v018 real 2018-26 (1782 ops): pers +0.161 (t 2.68) | anti +0.087 (t 1.45)
+
+== Informativas (no deciden) ==
+  hrs5 A US100: alto +0.202 (n 1633) | bajo +0.129 (n 1708)
+  hrs5 B en juego: alto +0.091 (n 847) | bajo +0.328 (n 839)
+  dh5 A US100: alto +0.109 (n 1618) | bajo +0.216 (n 1723)
+  dh5 B en juego: alto +0.213 (n 833) | bajo +0.205 (n 853)
+
+RESUMEN: {'A-h5': 'no', 'B-h5': 'no', 'A-hhoy': 'no', 'B-hhoy': 'no'}

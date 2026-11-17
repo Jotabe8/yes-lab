@@ -1,0 +1,36 @@
+
+===== 1. ORB sin condición GER40+UK100+JP225+oro · h5 =====
+  Base             n 12307 | bruto +0.120 | neto +0.064 (t  3.07) | x2 +0.009
+  Persistente      n  6039 | bruto +0.126 | neto +0.070 (t  2.27) | x2 +0.015
+  Antipersistente  n  6268 | bruto +0.114 | neto +0.059 (t  2.06) | x2 +0.003
+    GER40: base neto +0.070 | pers neto +0.060 (t 1.00, n 1488) | anti +0.078 | mejora bruta -0.009
+    UK100: base neto -0.023 | pers neto +0.044 (t 0.68, n 1624) | anti -0.088 | mejora bruta +0.067
+    JP225: base neto +0.108 | pers neto +0.109 (t 1.78, n 1218) | anti +0.106 | mejora bruta +0.002
+    XAUUSD: base neto +0.111 | pers neto +0.076 (t 1.30, n 1709) | anti +0.147 | mejora bruta -0.036
+  NO  1 t neto filtrado >= 2,4 (2.27)
+  NO  2 placebo p99 +0.114 (p-valor 0.391)
+  NO  3 mejora en las 2 mitades (-0.036 / +0.038)
+  SÍ  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.55 vs 0.73)
+  SÍ  6 mercados + (4/4)
+  SÍ  7 corr v018 (+0.03) < 0,3
+  VEREDICTO: NO PASA
+
+===== 1. ORB sin condición GER40+UK100+JP225+oro · hhoy =====
+  Base             n 12310 | bruto +0.120 | neto +0.064 (t  3.07) | x2 +0.009
+  Persistente      n  6243 | bruto +0.087 | neto +0.033 (t  1.11) | x2 -0.022
+  Antipersistente  n  6067 | bruto +0.154 | neto +0.097 (t  3.23) | x2 +0.041
+    GER40: base neto +0.070 | pers neto +0.061 (t 1.01, n 1583) | anti +0.079 | mejora bruta -0.009
+    UK100: base neto -0.022 | pers neto -0.071 (t -1.26, n 1684) | anti +0.029 | mejora bruta -0.050
+    JP225: base neto +0.107 | pers neto +0.065 (t 1.10, n 1251) | anti +0.146 | mejora bruta -0.043
+    XAUUSD: base neto +0.111 | pers neto +0.084 (t 1.47, n 1725) | anti +0.139 | mejora bruta -0.027
+  NO  1 t neto filtrado >= 2,4 (1.11)
+  NO  2 placebo p99 +0.113 (p-valor 0.930)
+  NO  3 mejora en las 2 mitades (-0.033 / -0.031)
+  NO  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.27 vs 0.73)
+  SÍ  6 mercados + (3/4)
+  SÍ  7 corr v018 (-0.00) < 0,3
+  VEREDICTO: NO PASA
+
+RESUMEN: {'ORB-h5': 'no', 'ORB-hhoy': 'no'}

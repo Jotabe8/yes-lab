@@ -1,0 +1,70 @@
+
+===== Conmutador h5 · GER40+UK100+JP225+XAUUSD =====
+  n 12307 | neto -0.025 (t -1.22) | x2 -0.080
+  pata sigue (persistente): +0.070 (n 6039, t 2.27) | pata contra (antipers.): -0.116 (n 6268, t -4.44)
+  referencia: ORB siempre +0.064 | contra siempre -0.098
+    GER40: neto +0.022 (n 2997) | sigue +0.060 | contra -0.016
+    UK100: neto -0.073 (n 3297) | sigue +0.044 | contra -0.187
+    JP225: neto -0.039 (n 2591) | sigue +0.109 | contra -0.169
+    XAUUSD: neto -0.008 (n 3422) | sigue +0.076 | contra -0.092
+  NO  1 t neto >= 2.64
+  NO  2 placebo permutación (p99 +0.018, p50 -0.020)
+  SÍ  3 2.ª mitad > 0 (+0.002)
+  NO  4 costes x2 > 0
+  NO  5 mercados + (1/4)
+  NO  6 las dos patas > 0
+  SÍ  7 corr v018 (+0.05) < 0,3
+  VEREDICTO: NO PASA
+  MC: P(media<=0) 0.903 | DD p95 822.0 R | R/año -20.0 | Sharpe -0.30
+
+===== Conmutador hhoy · GER40+UK100+JP225+XAUUSD =====
+  n 12310 | neto -0.037 (t -1.85) | x2 -0.093
+  pata sigue (persistente): +0.033 (n 6243, t 1.11) | pata contra (antipers.): -0.108 (n 6067, t -4.03)
+  referencia: ORB siempre +0.064 | contra siempre -0.098
+    GER40: neto +0.025 (n 2994) | sigue +0.061 | contra -0.016
+    UK100: neto -0.101 (n 3301) | sigue -0.071 | contra -0.131
+    JP225: neto -0.033 (n 2593) | sigue +0.065 | contra -0.124
+    XAUUSD: neto -0.032 (n 3422) | sigue +0.084 | contra -0.151
+  NO  1 t neto >= 2.64
+  NO  2 placebo permutación (p99 +0.019, p50 -0.016)
+  NO  3 2.ª mitad > 0 (-0.020)
+  NO  4 costes x2 > 0
+  NO  5 mercados + (1/4)
+  NO  6 las dos patas > 0
+  SÍ  7 corr v018 (-0.01) < 0,3
+  VEREDICTO: NO PASA
+  MC: P(media<=0) 0.965 | DD p95 978.1 R | R/año -29.9 | Sharpe -0.45
+
+== Informativo US100 (no decide) ==
+
+===== Conmutador h5 · US100 =====
+  n 3341 | neto +0.122 (t 2.86) | x2 +0.096
+  pata sigue (persistente): +0.231 (n 1665, t 3.66) | pata contra (antipers.): +0.013 (n 1676, t 0.23)
+  referencia: ORB siempre +0.164 | contra siempre -0.038
+    US100: neto +0.122 (n 3341) | sigue +0.231 | contra +0.013
+  SÍ  1 t neto >= 2.64
+  NO  2 placebo permutación (p99 +0.136, p50 +0.064)
+  SÍ  3 2.ª mitad > 0 (+0.172)
+  SÍ  4 costes x2 > 0
+  SÍ  5 mercados + (1/1)
+  SÍ  6 las dos patas > 0
+  SÍ  7 corr v018 (+0.29) < 0,3
+  VEREDICTO: NO PASA
+  MC: P(media<=0) 0.002 | DD p95 119.1 R | R/año +27.0 | Sharpe 0.74
+
+===== Conmutador hhoy · US100 =====
+  n 3343 | neto +0.102 (t 2.42) | x2 +0.077
+  pata sigue (persistente): +0.236 (n 1697, t 3.82) | pata contra (antipers.): -0.035 (n 1646, t -0.62)
+  referencia: ORB siempre +0.164 | contra siempre -0.039
+    US100: neto +0.102 (n 3343) | sigue +0.236 | contra -0.035
+  NO  1 t neto >= 2.64
+  NO  2 placebo permutación (p99 +0.136, p50 +0.064)
+  SÍ  3 2.ª mitad > 0 (+0.126)
+  SÍ  4 costes x2 > 0
+  SÍ  5 mercados + (1/1)
+  NO  6 las dos patas > 0
+  NO  7 corr v018 (+0.35) < 0,3
+  VEREDICTO: NO PASA
+  MC: P(media<=0) 0.005 | DD p95 132.8 R | R/año +22.7 | Sharpe 0.62
+
+RESUMEN: {'h5': 'no', 'hhoy': 'no'}
