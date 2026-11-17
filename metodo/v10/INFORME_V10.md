@@ -53,3 +53,8 @@ Lo que haría falta para operarlas si pasan:
 ## Archivos
 `PREREGISTRO_V10.md`, `descargar_databento.py`, `analizar.py`, `MODO`, `serie_v018_be.csv`,
 `horquilla_usdjpy.py` y `horquilla_usdjpy_salida.txt`; workflow `.github/workflows/v10-databento.yml`.
+
+## Actualización 15-11-2026 (tarde): resultado final
+Jorge no abrió Databento: H1 y H3 quedan cerradas sin fuente. H2 se probó con QQQ vía Alpaca (2.230 días, 1.763
+operaciones del ORB): **no pasa** (diferencia +0,03 R, t 0,29; 2022-26 negativa; bajo el placebo). Detalle en
+`RESULTADOS_V10_BIS.md`. Las dos vías de la v9 (datos nuevos y sitio barato) quedan agotadas.
