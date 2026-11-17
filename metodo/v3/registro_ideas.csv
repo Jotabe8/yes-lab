@@ -99,5 +99,6 @@ Día de la semana / quincena / sol / ciclo lunar (v9 T0);2026-11-14;publicado;ca
 Hueco BTC-CME / prima Coinbase / Tether (v9 T0);2026-11-14;folklore;dirección;BTC;52;C;T0: coste cripto ≥ efecto
 Estacionalidad transversal materias primas Darwinex (v9 T0);2026-11-14;publicado;calendario;futuros DZ;12;C;T0: 66 años necesarios
 Liquidez Fed TGA/RRP, put/call, gas EIA, NISA, ETF BoJ (v9 T0);2026-11-14;varios;dirección;varios;50;C;T0: potencia o programa terminado
+ORB en juego (rango ≥ 1,5) en aperturas propias GER40 UK100 JP225 oro crudo (v13);2026-11-16;publicado;volatilidad;GER40 UK100 JP225 XAUUSD USOIL;147;F;"V2 rango: neto +0,200 R t 3,35, pasa 7/7 criterios, corr v018 −0,01; V1 volumen t 2,27 no pasa; 2018-26 t 1,95; pendiente P4-P6"
 Gotobi USDJPY con costes Darwinex Zero;2026-11-16;publicado;calendario;USDJPY;73;B;"DZ CFD 1,15-1,55 pips (comisión 0,75 sola): neto t 1,1-2,2, ×2 < 0; 6J ≈ 0; Sharpe DARWIN 0,39; con ORB baja 1,38→1,24. Cerrado en DZ (disparador 0,8 imposible)"
 ORB GER40 en FDAX (Darwinex Zero);2026-11-16;mecanismo;volatilidad;GER40;235;C;"coste 0,0031 %: neto +0,081 t 1,85; sin coste t 2,24 < 2,4; DARWIN con ORB 1,38→1,46 (+0,08)"
