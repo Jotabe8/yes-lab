@@ -1,0 +1,35 @@
+Gotobi bruto por par (todos los días gotobi): {'EURJPY': 0.015, 'GBPJPY': -0.036, 'USDJPY': 0.038} | neto USDJPY 0.012 t 0.53
+
+===== 2. Gotobi (decide USDJPY) · h5 =====
+  Base             n  3153 | bruto +0.006 | neto -0.014 (t -1.16) | x2 -0.079
+  Persistente      n  1591 | bruto +0.021 | neto +0.002 (t  0.09) | x2 -0.059
+  Antipersistente  n  1562 | bruto -0.009 | neto -0.030 (t -1.77) | x2 -0.098
+    USDJPY: base neto +0.012 | pers neto +0.016 (t 0.51, n 537) | anti +0.007 | mejora bruta +0.003
+    EURJPY: base neto -0.004 | pers neto +0.038 (t 1.25, n 524) | anti -0.046 | mejora bruta +0.041
+    GBPJPY: base neto -0.050 | pers neto -0.049 (t -1.81, n 530) | anti -0.051 | mejora bruta -0.000
+  NO  1 t neto filtrado >= 2,4 (0.51)
+  NO  2 placebo p99 +0.062 (p-valor 0.424)
+  NO  3 mejora en las 2 mitades (+0.060 / -0.052)
+  NO  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.13 vs 0.13)
+  NO  6 réplicas con mejora bruta > 0 (+0.041, -0.000)
+  SÍ  7 corr v018 (-0.00) < 0,3
+  VEREDICTO: NO PASA
+
+===== 2. Gotobi (decide USDJPY) · hhoy =====
+  Base             n  3153 | bruto +0.006 | neto -0.014 (t -1.16) | x2 -0.079
+  Persistente      n  1604 | bruto +0.026 | neto +0.006 (t  0.34) | x2 -0.058
+  Antipersistente  n  1549 | bruto -0.014 | neto -0.035 (t -2.11) | x2 -0.101
+    USDJPY: base neto +0.012 | pers neto +0.005 (t 0.14, n 537) | anti +0.019 | mejora bruta -0.007
+    EURJPY: base neto -0.004 | pers neto +0.040 (t 1.26, n 512) | anti -0.046 | mejora bruta +0.044
+    GBPJPY: base neto -0.050 | pers neto -0.024 (t -0.87, n 555) | anti -0.079 | mejora bruta +0.026
+  NO  1 t neto filtrado >= 2,4 (0.14)
+  NO  2 placebo p99 +0.066 (p-valor 0.616)
+  NO  3 mejora en las 2 mitades (-0.002 / -0.012)
+  NO  4 costes x2 > 0
+  NO  5 Sharpe filtrado > base (0.04 vs 0.13)
+  SÍ  6 réplicas con mejora bruta > 0 (+0.044, +0.026)
+  SÍ  7 corr v018 (-0.02) < 0,3
+  VEREDICTO: NO PASA
+
+RESUMEN: {'GOTOBI-h5': 'no', 'GOTOBI-hhoy': 'no'}

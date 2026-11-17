@@ -1,0 +1,37 @@
+name: v14 seguimiento Hurst US100
+
+on:
+  schedule:
+    - cron: "0 7 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  us100:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y calcular H del año en curso
+        run: |
+          Y=$(date -u +%Y); HASTA=$(date -u +%F)
+          mkdir -p velas && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for P in bid ask; do npx dukascopy-node -i usatechidxusd -from $((Y-1))-11-01 -to $HASTA -t m1 -p $P -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo falla $P; done
+          cd .. && pip install -q pandas numpy && python metodo/v14/fractales.py US100 velas $Y metodo/v14/datos/US100_$Y.csv
+      - name: Guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metodo/v14/datos
+          git diff --cached --quiet || git commit -m "v14c: Hurst US100 actualizado"
+          git pull --rebase -q || true
+          git push

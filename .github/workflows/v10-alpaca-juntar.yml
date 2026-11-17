@@ -1,0 +1,28 @@
+name: v10-bis juntar artefactos QQQ y analizar
+
+on:
+  push:
+    branches: [claude/project-thread-4zk8lb]
+    paths:
+      - .github/workflows/v10-alpaca-juntar.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  juntar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+          run-id: 43708406616
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Guardar y analizar
+        run: |
+          mkdir -p metodo/v10/datos && cp art/*/*.csv metodo/v10/datos/ && ls -la metodo/v10/datos
+          pip install -q pandas numpy && python metodo/v10/analizar_alpaca.py
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add metodo/v10/ && git commit -m "v10-bis: datos QQQ 2018-2026 y análisis completo" && git push

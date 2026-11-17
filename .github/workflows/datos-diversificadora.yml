@@ -1,0 +1,41 @@
+name: Datos diversificadora Darwinex
+
+# Yahoo está bloqueado desde el entorno de Claude: la descarga corre aquí.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-tvx5ml]
+    paths:
+      - .github/workflows/datos-diversificadora.yml
+
+permissions:
+  contents: write
+
+jobs:
+  datos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar
+        run: |
+          mkdir -p datos_diversificadora
+          pip install -q yfinance pandas
+          python3 - <<'PY'
+          import yfinance as yf
+          tick = ["ES", "NQ", "RTY", "YM", "ZN", "GC", "SI", "HG", "PL", "CL", "BZ", "HO", "RB", "NG",
+                  "ZC", "ZS", "ZL", "ZM", "KE", "HE", "LE", "6A", "6B", "6C", "6E", "6J", "6N", "6S"]
+          for t in tick:
+              try:
+                  d = yf.download(t + "=F", start="1999-01-01", auto_adjust=False, progress=False)
+                  d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+                  d[["Open", "High", "Low", "Close"]].to_csv(f"datos_diversificadora/{t}.csv"); print(t, len(d))
+              except Exception as e: print("falla", t, e)
+          PY
+      - name: Guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos_diversificadora
+          git diff --cached --quiet || git commit -m "Datos diversificadora Darwinex $(date -u +%F)"
+          git pull --rebase -q || true
+          git push
