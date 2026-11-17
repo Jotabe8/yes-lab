@@ -1,0 +1,30 @@
+=== P1: 2003-2022, regla principal ===
+ES: n=592 (30/año) bruto +0.310 R t 5.65 | coste 0.037 R | neto +0.273 | placebo media +0.086 p95 +0.182 | días 3.1
+NQ: n=592 (30/año) bruto +0.337 R t 6.31 | coste 0.022 R | neto +0.315 | placebo media +0.112 p95 +0.194 | días 3.0
+RTY: n=659 (33/año) bruto +0.190 R t 3.33 | coste 0.027 R | neto +0.162 | placebo media +0.061 p95 +0.160 | días 3.1
+YM: n=581 (29/año) bruto +0.214 R t 3.63 | coste 0.014 R | neto +0.200 | placebo media +0.088 p95 +0.177 | días 3.2
+AGREGADO US: n=2424 bruto +0.261 R t 9.29, coste 0.025 R (×10.4), placebo media +0.086 p95 +0.128, exceso +0.175, mercados >0: 4/4
+P1 PASA
+
+=== P2: 2003-2022 ===
+neto +0.236 R t 8.39 | neto coste×2 +0.210 R t 7.50
+años positivos 18/20 (90 %)   2003:+44.2 2004:+34.9 2005:+32.0 2006:+38.3 2007:+12.0 2008:+34.9 2009:+47.4 2010:+4.7 2011:+35.0 2012:+8.4 2013:+58.4 2014:+11.6 2015:-3.3 2016:+53.4 2017:+45.8 2018:-20.9 2019:+36.1 2020:+39.1 2021:+36.1 2022:+22.8
+meseta {'ibs': 0.15}: n=2174 neto +0.251 R t 8.36
+meseta {'ibs': 0.25}: n=2685 neto +0.214 R t 8.04
+meseta {'maxd': 4}: n=2487 neto +0.198 R t 7.37
+meseta {'maxd': 6}: n=2361 neto +0.265 R t 9.33
+réplica FDAX: n=535 bruto +0.075 neto +0.052 t 0.81
+réplica FESX: n=446 bruto +0.012 neto -0.039 t -0.53
+réplica Europa: neto +0.011 R t 0.22
+control entrada apertura siguiente: n=2424 bruto +0.236 R t 8.62
+variante corta (informativa): n=2946 bruto -0.040 neto -0.065 t -2.52
+P2 PASA
+
+=== P3: fuera de muestra 2023-2026 (se abre una vez) ===
+ES: n=106 neto +0.275 t 2.16
+NQ: n=108 neto +0.364 t 3.07
+RTY: n=124 neto +0.137 t 1.07
+YM: n=109 neto +0.321 t 2.80
+OOS US: n=447 bruto +0.277 neto +0.270 R t 4.38 (placebo exposición ≈ +0.151)
+TOTAL 2003-26: n=2871 neto +0.241 R t 9.42 vs requerido 2.58
+P3 PASA

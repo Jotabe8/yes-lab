@@ -1,0 +1,11 @@
+=== Cuenta CFD de DZ: horquilla 0,9 pt + 2×2,75 $ (10 $/pt) y swap largo 6,5 %/año por noche natural ===
+NQ: coste fijo 0.031 R + swap 0.053 R → neto +0.258 R t 5.23; 2023-26 +0.309
+ES: coste fijo 0.072 R + swap 0.072 R → neto +0.162 R t 3.16; 2023-26 +0.188
+
+=== Monte Carlo 36 meses (dz_sim, 1 R ≈ 0,45 % del DARWIN) ===
+ORB solo, cuenta CFD (35 €/mes)                      permanente no   : DARWIN  14.8 %/año, asignaciones 12.4, neto    +312 €/año, p10 36m   -1067
+ORB solo, cuenta CFD (35 €/mes)                      permanente obj10: DARWIN  14.8 %/año, asignaciones 12.4, neto   +1807 €/año, p10 36m    -547
+ORB + reversión, cuenta futuros (50 €/mes)           permanente no   : DARWIN  26.4 %/año, asignaciones 19.1, neto   +1085 €/año, p10 36m    -145
+ORB + reversión, cuenta futuros (50 €/mes)           permanente obj10: DARWIN  26.4 %/año, asignaciones 19.1, neto   +3992 €/año, p10 36m   +4575
+ORB + reversión con la prima a la mitad (50 €/mes)   permanente no   : DARWIN  18.3 %/año, asignaciones 15.5, neto    +477 €/año, p10 36m   -1276
+ORB + reversión con la prima a la mitad (50 €/mes)   permanente obj10: DARWIN  18.3 %/año, asignaciones 15.5, neto   +2408 €/año, p10 36m    +593

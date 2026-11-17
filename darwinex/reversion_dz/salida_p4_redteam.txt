@@ -1,0 +1,23 @@
+=== Red team 1: dependencia entre mercados (t por fecha de señal) ===
+fechas únicas 1338; neto medio por fecha +0.206 R t 5.75
+  2003-2022: n=1103 t 5.07
+  2023-2026: n=235 t 2.78
+
+=== Red team 2: futuros (instrumento real). Señal del contado, entrada en la apertura Globex siguiente (después de la señal) ===
+ES: n=677 neto +0.284 R t 5.82
+NQ: n=679 neto +0.275 R t 5.53
+YM: n=670 neto +0.236 R t 4.61
+RTY: n=294 neto +0.086 R t 1.06
+futuros US por fecha: n=1151 neto +0.216 R t 5.88; 2023-26 +0.202 t 2.51
+
+=== Red team 3: colas (sin stop) ===
+peor op -10.63 R, p1 -4.15 R; 5 peores: 2018-01-29 YM -10.6, 2018-01-29 ES -10.1, 2018-01-29 RTY -7.6, 2015-08-18 RTY -7.2, 2010-04-30 NQ -6.0
+
+=== P4: Sharpe frente a comprar y mantener, y DARWIN con el ORB ===
+ES: exposición 36 % días | Sharpe estrategia 0.85 vs comprar y mantener 0.57 | 2023-26 0.87 vs 1.22
+NQ: exposición 36 % días | Sharpe estrategia 1.13 vs comprar y mantener 0.73 | 2023-26 1.14 vs 1.25
+RTY: exposición 41 % días | Sharpe estrategia 0.66 vs comprar y mantener 0.46 | 2023-26 0.68 vs 0.66
+YM: exposición 37 % días | Sharpe estrategia 0.77 vs comprar y mantener 0.51 | 2023-26 1.10 vs 0.92
+cesta 4 US (igual vol): Sharpe 0.96; peor DD 2.04 años de vol
+2018-26 mensual: corr -0.02 | Sharpe ORB 1.04, reversión 1.37, mezcla 50/50 1.72 | peor DD (R) ORB 27.3, mezcla 20.6
+con la media de la reversión a la mitad: Sharpe mezcla 1.23
