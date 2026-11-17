@@ -38,7 +38,7 @@ y en la memoria (regla de Jorge: no se deja nada "en reserva").
 | Puerta | Tiempo máx. | Qué se hace | Se descarta si |
 | --- | --- | --- | --- |
 | **P0 Ficha** | 10 min | Hipótesis causal (quién pierde dinero y por qué), mercado, marco, ops/año esperadas, stop típico, **coste en R** = (spread + comisión) / stop con datos bid/ask. Mirar la lista de descartados de la memoria. | Ya está descartada; coste > 0,10 R; < 40 ops/año; o el efecto publicado es < 3 × coste. |
-| **P1 Prueba rápida** | 1 h | Regla fija, sin optimizar, salida simple (N velas o stop/objetivo fijos). Ajuste 2018-2022. **A la vez en 3-5 mercados parecidos.** Placebo con las mismas salidas (dirección o hora aleatoria, 200 réplicas). **El mismo backtest sobre velas de paseo aleatorio** (`sinteticos.velas_paseo`, 20 réplicas): debe dar R bruta ≈ 0. | Bruto < 3 × coste; no supera el p95 del placebo; funciona en un solo mercado; el motor saca ventaja (o pérdida) en el paseo aleatorio con \|t\| ≥ 2. |
+| **P1 Prueba rápida** | 1 h | Regla fija, sin optimizar, salida simple (N velas o stop/objetivo fijos). Ajuste **2011-2022 en índices y 2003-2022 en forex** (con 2018-22 la potencia para una ventaja tipo ORB es la mitad, ver calibración del 17-11). **A la vez en 3-5 mercados parecidos.** Placebo con las mismas salidas (dirección o hora aleatoria, 200 réplicas). **El mismo backtest sobre velas de paseo aleatorio** (`sinteticos.velas_paseo`, 20 réplicas): debe dar R bruta ≈ 0. | Bruto < 3 × coste; no supera el p95 del placebo; funciona en un solo mercado; el motor saca ventaja (o pérdida) en el paseo aleatorio con \|t\| ≥ 2. |
 | **P2 Neto y estabilidad** | 2 h | Costes reales y al doble; años positivos; meseta de parámetros (vecinos ±20 % conservan la mitad del edge); si hay sospecha, prueba de ruido sobre los precios (no sobre las R). | Neto ×2 ≤ 0; < 60 % de años positivos; pico aislado de parámetros. |
 | **P3 Fuera de muestra** | 30 min | Se abre **una vez** 2023-2026. Si se miraron varias variantes, se pasa la matriz días × variantes (R netos de **todas**): **SPA** de Hansen (¿la mejor bate a no operar sabiendo que se miraron N?), **StepM** (cuáles) y **PBO** por CSCV. Sin matriz, t total contra el t corregido (tabla abajo) como aviso. Siempre: PSR y operaciones mínimas (MinTRL). | OOS ≤ 0 o t OOS < 1; PBO > 50 %. (SPA p > 0,05 solo es aviso.) |
 | **P4 Prop** | 30 min | EV/cuota 2-Step (Monte Carlo por días) con la media **recortada** en (t requerido − 1,64) errores estándar, frente a la misma serie con media 0; correlación diaria con el ORB US100. | EV recortada ≤ control; correlación > 0,3. |
@@ -64,6 +64,27 @@ from metodo.sinteticos import velas_paseo
 print(embudo(ops, n_pruebas=24, corte_oos="2023-01-01", placebo=sim_aleatoria,
              paseo=lambda s: mi_backtest(velas_paseo(velas_m1, s)).r_bruto))
 ```
+
+**Mejoras del 17-11-2026 (investigación de evaluación honesta: arXiv 2608.27734, 2605.16895, 2604.15531).**
+
+- **t agrupado por semana.** `embudo(..., agrupar="W")` (por defecto) calcula todos los t con error estándar de clúster por semana (`t_agrupado`), y con él el recorte de la EV de P4 y el MinTRL. Operaciones de mercados correlacionados del mismo día o semana no cuentan como independientes. `agrupar=None` vuelve al t por operación. Reversión DZ (ES/NQ/RTY/YM): t 9,42 → 5,70, OOS 4,39 → 3,17; ORB en juego v13: 3,35 → 3,25. Los dos siguen pasando.
+- **Libro de pruebas** (`libro_pruebas.py`). `embudo(..., familia="nombre", regla={...})` apunta cada evaluación en `metodo/libro/` y usa como `n_pruebas` el máximo entre el dado y las reglas distintas del libro. `libro_pruebas.matriz(familia)` da la matriz días × reglas para SPA/PBO/DSR. Toda familia nueva se prueba con `familia=`.
+- **Nulos con volatilidad agrupada** (`sinteticos.velas_nulo`, tipo `"garch"` o `"regimen"`). Como el paseo aleatorio, pero con rachas de días tranquilos y agitados. Obligatorio en P1 para reglas que filtran por volatilidad o dimensionan con ATR.
+- **Prueba de truncado contra el lookahead** (`sinteticos.sin_fuga(senal, velas)`). La señal de cada vela no puede cambiar al borrar el futuro. El DSR no detecta fugas (un oráculo con lookahead da DSR 1,00), así que esta prueba es estructural y va en P1.
+- **Calibración con ventajas plantadas** (`pruebas/calibrar_plantadas.py`, salida en `pruebas/calibrar_plantadas_salida.txt`): potencia y falsos positivos del embudo según tamaño de la ventaja y frecuencia. Al descartar en P1 por "no significativo", citar la potencia de esa tabla para el tamaño y frecuencia de la idea.
+
+  Resultado (150-300 réplicas por celda, forma de ORB: −1 R el 62 %, coste 0,03 R, n_pruebas 10):
+
+  | R neta | ops/año | Embudo completo | P1 2018-22 | P1 2011-22 |
+  | --- | --- | --- | --- | --- |
+  | 0 (nulo) | 40 / 80 / 250 | 6 % / 5 % / 1 % | 4 % / 4 % / 4 % | 4 % / 3 % / 2 % |
+  | +0,05 | 40 / 80 / 250 | 11 % / 17 % / 21 % | 7 % / 11 % / 27 % | 9 % / 16 % / 38 % |
+  | +0,10 | 40 / 80 / 250 | 31 % / 40 % / 75 % | 14 % / 25 % / 59 % | 27 % / 45 % / 89 % |
+  | +0,20 | 40 / 80 / 250 | 53 % / 77 % / 96 % | 39 % / 57 % / 98 % | 67 % / 93 % / 100 % |
+
+  Lectura: los falsos positivos están controlados (≤ 6 %), pero la potencia para ventajas del tamaño del ORB (+0,05 a +0,10 R, ~80-100 ops/año) es baja: P1 con 2018-22 mata 3 de cada 4. Con 2011-22 la potencia casi se duplica sin más falsos positivos, por eso P1 pasa a usar toda la historia. Un descarte en P1 de una ventaja pequeña y poco frecuente no demuestra que no exista: hay que decir "sin potencia" si la tabla da < 50 %. Con 4 mercados correlacionados (rho 0,6), el P1 por operación da 11 % de falsos positivos frente al 5 % por semana.
+- **Origen de ideas.** Claude no propone ideas de su memoria (contaminación temporal y sesgo hacia lo que ya funcionó). Entran trabajos posteriores a la fecha de corte del modelo, o con ≥ 2 años de datos tras su publicación, con un mecanismo de flujo y una variable de estado medible. La tarea programada "Vigía semanal de literatura" (lunes 19:17 Madrid) deja la lista en `/mnt/project-files/vigia/`.
+- **Variable de estado de cada sistema en real**: ver `VARIABLES_DE_ESTADO.md`.
 
 **P5 operación a operación (14-11-2026, `comparar_ops.py`).** `python -m metodo.comparar_ops ops_python.csv EA_US100_ops.csv --desfase 7h` empareja por lado y hora (±5 min) y lista las ops que solo están en un lado y las 10 de mayor ΔR. La plantilla escribe ya apertura, precio de entrada, stop inicial y R bruta en su CSV; también lee los `ORB_*.csv` del EA en real (allí la hora es la de salida).
 

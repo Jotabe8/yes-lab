@@ -67,6 +67,84 @@ def velas_paseo(velas: pd.DataFrame, semilla: int = 0, por_minuto: bool = True) 
     return sal.rename(columns={b: a for a, b in mapa.items()})
 
 
+def velas_nulo(velas: pd.DataFrame, semilla: int = 0, tipo: str = "garch", por_minuto: bool = True,
+               alfa: float = 0.08, beta: float = 0.90, p_cambio: float = 0.02, ratio: float = 2.5) -> pd.DataFrame:
+    """Paseo aleatorio con la volatilidad AGRUPADA por días: nulo más duro que `velas_paseo`.
+
+    `velas_paseo` rompe toda dependencia, también la de la volatilidad, y una regla que filtra por
+    volatilidad o dimensiona el stop con ATR puede "ganar" solo porque la volatilidad se agrupa en
+    el mercado real y no en el paseo (Nikolopoulos, arXiv 2604.15531: falsar el proceso con nulos de
+    ruido blanco, GARCH y cambio de régimen). Aquí cada día se escala por un factor de volatilidad
+    que solo depende del pasado, así el precio sigue siendo una martingala (R bruta ≈ 0 para
+    cualquier regla) pero hay rachas de días tranquilos y agitados.
+
+    tipo "garch": factor de un GARCH(1,1) diario (alfa, beta). tipo "regimen": dos estados de
+    volatilidad (alta = ratio × baja) con probabilidad diaria de cambio p_cambio.
+    """
+    base = velas_paseo(velas, semilla, por_minuto)
+    mapa = {c: c.lower() for c in base.columns if c.lower() in ("open", "high", "low", "close")}
+    v = base.rename(columns=mapa)
+    o, h, l, c = (v[k].to_numpy(float) for k in ("open", "high", "low", "close"))
+    cierre_prev = np.concatenate([[o[0]], c[:-1]])
+    hueco = np.log(o / cierre_prev)
+    lh, ll, lc = np.log(h / o), np.log(l / o), np.log(c / o)
+
+    dias = pd.DatetimeIndex(v.index).normalize() if isinstance(v.index, pd.DatetimeIndex) else np.zeros(len(v))
+    cod, unicos = pd.factorize(dias)
+    nd = len(unicos)
+    rng = np.random.default_rng(10_000 + semilla)
+    if tipo == "garch":
+        w = 1.0 - alfa - beta
+        s2 = np.empty(nd); s2[0] = 1.0
+        for d in range(1, nd):
+            eps2 = s2[d - 1] * rng.standard_normal() ** 2
+            s2[d] = w + alfa * eps2 + beta * s2[d - 1]
+        f = np.sqrt(s2)
+    elif tipo == "regimen":
+        estado = np.empty(nd, dtype=int); estado[0] = 0
+        cambios = rng.random(nd) < p_cambio
+        for d in range(1, nd):
+            estado[d] = 1 - estado[d - 1] if cambios[d] else estado[d - 1]
+        f = np.where(estado == 1, ratio, 1.0)
+    else:
+        raise ValueError("tipo debe ser 'garch' o 'regimen'")
+    f = f / np.sqrt(np.mean(f ** 2))          # misma volatilidad media que el original
+    k = f[cod]
+    hueco, lh, ll, lc = hueco * k, lh * k, ll * k, lc * k
+    log_o = np.log(o[0]) + np.cumsum(hueco) + np.concatenate([[0.0], np.cumsum(lc)[:-1]])
+    sal = v.copy()
+    sal["open"] = np.exp(log_o)
+    sal["high"] = np.exp(log_o + lh)
+    sal["low"] = np.exp(log_o + ll)
+    sal["close"] = np.exp(log_o + lc)
+    return sal.rename(columns={b: a for a, b in mapa.items()})
+
+
+def sin_fuga(senal, velas: pd.DataFrame, cortes: int = 20, semilla: int = 0) -> dict:
+    """Prueba de truncado contra el lookahead: la señal de cada vela no puede cambiar si se borra
+    el futuro.
+
+    senal(velas) -> Serie/array con una señal por vela (mismo índice). Se calcula con todas las
+    velas y luego, en `cortes` puntos al azar, solo con las velas hasta ese punto; la señal de las
+    velas anteriores al corte debe coincidir. El Deflated Sharpe no detecta una fuga (arXiv
+    2608.27734: un oráculo con lookahead daba DSR 1,00), por eso esta prueba es estructural.
+    """
+    completa = pd.Series(np.asarray(senal(velas), float), index=velas.index)
+    rng = np.random.default_rng(semilla)
+    n = len(velas)
+    malos = []
+    for k in np.sort(rng.integers(n // 10, n - 1, cortes)):
+        parcial = pd.Series(np.asarray(senal(velas.iloc[:k]), float), index=velas.index[:k])
+        a, b = completa.iloc[:k].to_numpy(), parcial.to_numpy()
+        dif = ~((a == b) | (np.isnan(a) & np.isnan(b)))
+        if dif.any():
+            malos.append((velas.index[k - 1], int(dif.sum()), velas.index[np.flatnonzero(dif)[0]]))
+    detalle = ("sin fuga: la señal no cambia al borrar el futuro" if not malos else
+               f"FUGA: en {len(malos)}/{cortes} cortes la señal cambia; primer caso corte {malos[0][0]}, "
+               f"{malos[0][1]} velas distintas desde {malos[0][2]}")
+    return {"pasa": not malos, "cortes_malos": malos, "detalle": detalle}
+
+
 def prueba_motor(r_brutas: list[np.ndarray], coste_r: float | None = None) -> dict:
     """Junta las R brutas de varias réplicas sobre paseo aleatorio y mide el sesgo del motor.
 

@@ -1,0 +1,24 @@
+
+===== W1 =====
+  US500: 521 eventos, 40.7/año, bruto +1.29 pb, sigma 88.1
+  US100: 476 eventos, 37.3/año, bruto -6.20 pb, sigma 115.8
+  PRINCIPAL: días 821, bruto -3.86 pb, neto -4.66 pb t -1.32; 2019-26 -7.35 (t -1.43); coste x2 -5.46; placebo azar p95 +5.45 (bruto <=); menos clon momentum -2.51 t -1.17
+    2014:  61 días  -1.53    2015: 114 días  +1.95    2016:  86 días -10.34    2017:  23 días +13.89    2018:  70 días  +0.68    2019:  51 días  +5.03    2020:  66 días -33.17    2021:  59 días -25.53    2022:  63 días +11.54    2023:  59 días  +1.96    2024:  49 días  -3.81    2025:  50 días -17.40    2026:  70 días  +3.15
+  EURUSD: 727 eventos, 52.3/año, bruto +0.55 pb, sigma 34.3
+  GBPUSD: 702 eventos, 50.4/año, bruto +0.56 pb, sigma 33.8
+  USDJPY: 724 eventos, 53.2/año, bruto +0.31 pb, sigma 38.2
+  XAUUSD: 622 eventos, 44.9/año, bruto +2.70 pb, sigma 77.8
+  REPLICA: días 1992, bruto +0.95 pb, neto +0.06 pb t 0.06; 2019-26 -1.54 (t -1.18); coste x2 -0.83; placebo azar p95 +1.56 (bruto <=); menos clon momentum +1.55 t 1.47
+    2012:   5 días  +7.01    2013: 141 días  +0.67    2014: 136 días  +4.24    2015: 147 días  +1.71    2016: 148 días  +7.46    2017: 153 días  -1.98    2018: 128 días  +0.86    2019: 157 días  -1.65    2020: 164 días  -2.37    2021: 151 días  -5.47    2022: 119 días  -0.70    2023: 111 días  -0.19    2024: 151 días  +1.10    2025: 145 días  -5.19    2026: 136 días  +3.07
+
+===== W2 =====
+  US500: 521 eventos, 40.7/año, bruto -0.41 pb, sigma 38.8
+  US100: 476 eventos, 37.3/año, bruto -1.05 pb, sigma 60.3
+  PRINCIPAL: días 821, bruto -1.19 pb, neto -1.99 pb t -1.09; 2019-26 -3.69 (t -1.30); coste x2 -2.79; placebo azar p95 +3.01 (bruto <=); menos clon momentum -0.85 t -0.94
+    2014:  61 días  +6.01    2015: 114 días  +0.40    2016:  86 días  -1.43    2017:  23 días  +0.49    2018:  70 días  -3.07    2019:  51 días  -5.46    2020:  66 días -30.62    2021:  59 días  +5.24    2022:  63 días  +0.86    2023:  59 días  +0.90    2024:  49 días  +1.20    2025:  50 días  -1.88    2026:  70 días  +2.79
+  EURUSD: 727 eventos, 52.3/año, bruto -0.11 pb, sigma 4.9
+  GBPUSD: 702 eventos, 50.4/año, bruto +0.10 pb, sigma 6.0
+  USDJPY: 724 eventos, 53.2/año, bruto +0.10 pb, sigma 7.7
+  XAUUSD: 622 eventos, 44.9/año, bruto -0.68 pb, sigma 12.9
+  REPLICA: días 1992, bruto -0.12 pb, neto -1.01 pb t -6.18; 2019-26 -1.05 (t -4.40); coste x2 -1.90; placebo azar p95 +0.27 (bruto <=); menos clon momentum -0.07 t -0.44
+    2012:   5 días  -0.87    2013: 141 días  -1.06    2014: 136 días  -1.11    2015: 147 días  -0.29    2016: 148 días  -1.45    2017: 153 días  -0.68    2018: 128 días  -1.24    2019: 157 días  -0.70    2020: 164 días  -1.89    2021: 151 días  -0.98    2022: 119 días  -1.41    2023: 111 días  -0.67    2024: 151 días  -0.82    2025: 145 días  -0.47    2026: 136 días  -1.38
