@@ -12,6 +12,9 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
 | 2026-11-16 | Mejor descartado recalculado para Darwinex Zero (`darwinex/mejor_descartado/`): gotobi USDJPY (CFD DZ 1,15-1,55 pips, 6J) y ORB GER40 (FDAX) | USDJPY, GER40 | Ninguno revive: gotobi neto t 1,1-2,2 y ×2 < 0 (la comisión DZ sola son 0,75 pips); ORB GER40 t 2,24 incluso sin coste |
+| 2026-11-16 | Compras de duración de fin de mes en bonos (Hartley-Schwarz), preregistrada (`darwinex/PREREGISTRO_BONOS_FIN_DE_MES.md`), 1990-2026 | 10 años (ZN), 5 y 30 años informativos | **Pasa** la principal: neto +21,6 pb/op t 5,6; 2019-26 t 2,5; placebo mitad de mes t 1,3; futuro ZN real neto t 4,1. Falla la secundaria: los meses de refinanciación no rinden más en 1990-2015. Solo Darwinex Zero (FTMO no tiene bonos); 12 ops/año |
+| 2026-11-15 | v10-bis: volumen con signo de QQQ 9:30-9:40 (Alpaca SIP, regla del tick) como filtro del ORB v018 (`metodo/v10/RESULTADOS_V10_BIS.md`) | QQQ/US100 | Descartado: dif acuerdo − desacuerdo +0,03 R (t 0,29), 2022-26 negativa, bajo el placebo |
+| 2026-11-17 | Mejoras del embudo tras investigar evaluación honesta (`metodo/METODO.md` §3): t por semana, libro de pruebas, nulos GARCH/régimen, prueba de fuga, ventajas plantadas | Reversión DZ, ORB en juego, sintéticos | Reversión DZ t 9,42 → 5,70 (sigue pasando); ORB en juego 3,35 → 3,25; P1 con 2018-22 solo detecta el 25 % de ventajas +0,10 R a 80 ops/año (45 % con 2011-22): P1 pasa a toda la historia |
 | 2026-11-14 | Tendencia de largo plazo con gestión NNFX (Donchian 55/100, cruce 50/200; stop 1,5 ATR, mitad a 1 ATR, BE, salida canal), preregistrada, 2005-26 (`tendencia_nnfx/`) | 11 pares forex D1 | Descartada: V1 neto −0,001 R t −0,04 (bruto +0,049, swap −0,039); 2016-26 negativo en las 3 variantes (t ≈ −2); bajo p95 del placebo |
 | 2026-11-14 | Revisión de descartados con historia larga (`metodo/revision/`): triaje de 72 familias → 2 re-pruebas preregistradas (t ≥ 2,64) | USDJPY/EURJPY/GBPJPY 2003-26, USOIL 2011-26 | Ninguna revive. Gotobi: efecto real (bruto +0,11 R, t 4,4 en 2003-17 nunca visto) pero neto t 1,56; reabrir si coste ≤ 0,8 pips. EIA: ruido (t bruto 1,4, bajo placebo) |
 | 2026-11-14 | Zona de ruido Zarattini en Europa (`metodo/v8/PREREGISTRO_ZONA_RUIDO.md`), M1 Dukascopy 2013-26, coste FTMO | GER40, UK100 (EU50 réplica) | No pasa: cartera neto +0,002 R t 0,16; GER40 solo neto t 1,61 (×2 t 0,86); UK100 y EU50 sin bruto; corr ORB 0,03 |
@@ -32,6 +35,46 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
 
 ---
+
+## 2026-11-16 · Compras de duración de fin de mes en bonos (preregistrada)
+
+**Hipótesis.** El último día hábil del mes los índices del Tesoro incorporan las emisiones nuevas y alargan su
+duración; los fondos indexados compran duración y los bonos suben en las últimas sesiones (Hartley y Schwarz, 2019,
+muestra 1990-2018). La rutina semanal lo vio en 2016-2026 con IEF y TLT, más fuerte en los meses de refinanciación.
+
+**Regla y criterio.** Preregistrados antes de ejecutar (`darwinex/PREREGISTRO_BONOS_FIN_DE_MES.md`): largo del
+10 años las 3 últimas sesiones del mes, coste 3 pb (×2 = 6 pb), precio a partir de FRED como en `bonos_dz.py`.
+
+```bash
+python darwinex/bonos_fin_de_mes.py datos_bonos
+```
+
+**Resultados** (`darwinex/bonos_fin_de_mes_salida.txt`, pb por operación):
+
+| Tramo | n | Bruto (t) | Neto (t) | Costes ×2 |
+| --- | --- | --- | --- | --- |
+| 1990-2026, principal | 442 | +24,6 (6,4) | +21,6 (5,6) | +18,6 |
+| Placebo: 3 sesiones hasta la 12.ª | 442 | +8,1 (2,0) | +5,1 (1,3) | +2,1 |
+| 2019-2026, fuera de la muestra publicada | 94 | +21,2 (2,9) | +18,2 (2,5) | +15,2 |
+| Exceso sobre la letra a 3 meses | 442 | +21,3 (5,5) | +18,3 (4,8) | +15,3 |
+| Futuro ZN continuo real, 2000-2026 | 312 | +17,1 (5,0) | +14,1 (4,1) | +11,1 |
+| 1962-1989 (antes de los índices) | 336 | +10,7 (1,8) | +7,7 (1,3) | +4,7 |
+
+Las dos mitades de 1990-2026 dan lo mismo (+22,9 y +20,3 netos); 76 % de años positivos; todos los meses del
+calendario son positivos. El 5 y el 30 años repiten el efecto a escala de su duración (t neto 6,6 y 5,8).
+El efecto casi no existía antes de 1990, cuando apenas había gestión indexada: encaja con el mecanismo.
+
+**Secundaria: falla.** Los meses de refinanciación no rinden más: en 1990-2015, +22,0 pb netos frente a +22,5
+del resto. Lo que se vio en 2016-2026 con ETF era ruido; se queda la versión de todos los meses.
+
+**Conclusión: pasa.** Es el primer efecto de flujo forzado del proyecto que supera un preregistro con historia
+larga, placebo y tramo fuera de muestra. Rinde unos 2,6 % al año sin apalancar sobre el nominal (Sharpe anual neto
+0,9) con 36 días invertidos al año, así que pide apalancamiento con futuros. **No es operable en FTMO** (no tiene
+bonos) ni pasa el filtro de 40 ops/año del embudo de EAs; su sitio es Darwinex Zero con ZN.
+
+**Límites.** Precio aproximado con rendimientos a plazo constante (el futuro real da algo menos: +14 pb netos).
+No se ha hecho el Monte Carlo de Darwinex ni la correlación con el ORB.
+
 
 ## 2026-10-01 · Efecto cambio de mes
 
