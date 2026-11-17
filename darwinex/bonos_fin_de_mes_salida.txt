@@ -1,0 +1,25 @@
+PRINCIPAL: 10 años, 3 últimas sesiones (pb; coste 3 pb)
+1990-2026 (principal)                          n  442 | bruto  24.57 pb (t  6.38) | neto  21.57 (t  5.60) | 1ª mitad  22.88 2ª  20.26 | x2  18.57
+   placebo: 3 sesiones hasta la 12.ª           n  442 | bruto   8.13 pb (t  2.03) | neto   5.13 (t  1.28) | 1ª mitad  10.15 2ª   0.11 | x2   2.13
+2019-2026 (fuera de la muestra publicada)      n   94 | bruto  21.24 pb (t  2.91) | neto  18.24 (t  2.50) | 1ª mitad  26.66 2ª   9.82 | x2  15.24
+SECUNDARIA: meses de refinanciación (feb, may, ago, nov)
+refinanciación 1990-2026                       n  147 | bruto  25.28 pb (t  3.59) | neto  22.28 (t  3.17) | 1ª mitad  22.83 2ª  21.74 | x2  19.28
+resto de meses 1990-2026                       n  295 | bruto  24.21 pb (t  5.27) | neto  21.21 (t  4.61) | 1ª mitad  23.80 2ª  18.64 | x2  18.21
+refinanciación 1990-2015 (no mirado con ETF)   n  104 | bruto  24.96 pb (t  2.75) | neto  21.96 (t  2.42) | 1ª mitad  19.09 2ª  24.82 | x2  18.96
+resto 1990-2015                                n  208 | bruto  25.48 pb (t  4.40) | neto  22.48 (t  3.89) | 1ª mitad  30.12 2ª  14.84 | x2  19.48
+refinanciación 2016-2026                       n   43 | bruto  26.07 pb (t  2.62) | neto  23.07 (t  2.32) | 1ª mitad  17.97 2ª  27.95 | x2  20.07
+resto 2016-2026                                n   87 | bruto  21.19 pb (t  2.93) | neto  18.19 (t  2.52) | 1ª mitad  24.46 2ª  12.06 | x2  15.19
+INFORMATIVO
+1962-1989 (antes de la muestra publicada)      n  336 | bruto  10.73 pb (t  1.80) | neto   7.73 (t  1.29) | 1ª mitad   1.72 2ª  13.74 | x2   4.73
+5 años 1990-2026                               n  442 | bruto  17.44 pb (t  7.93) | neto  14.44 (t  6.57) | 1ª mitad  15.33 2ª  13.56 | x2  11.44
+30 años 1990-2026                              n  442 | bruto  43.30 pb (t  6.22) | neto  40.30 (t  5.79) | 1ª mitad  45.56 2ª  35.04 | x2  37.30
+Por año (neto pb): {1990: 613.8, 1991: 687.8, 1992: 106.8, 1993: -3.6, 1994: -274.2, 1995: 626.8, 1996: -130.7, 1997: 386.2, 1998: 906.3, 1999: -439.3, 2000: 245.0, 2001: 894.6, 2002: 505.4, 2003: -106.0, 2004: -17.2, 2005: 237.7, 2006: 126.1, 2007: 378.3, 2008: 662.2, 2009: -116.3, 2010: 604.7, 2011: 224.7, 2012: 431.5, 2013: -27.6, 2014: 271.8, 2015: 164.3, 2016: 389.9, 2017: 73.8, 2018: 396.6, 2019: 359.6, 2020: 401.2, 2021: 87.0, 2022: 372.5, 2023: 97.3, 2024: 237.3, 2025: 279.9, 2026: -120.3}
+Años positivos: 76%
+Por mes del calendario (bruto pb, 1990-2026): {1: 36.1, 2: 20.0, 3: 26.7, 4: 1.8, 5: 29.3, 6: 18.2, 7: 32.0, 8: 20.4, 9: 25.2, 10: 28.2, 11: 31.6, 12: 25.5}
+Rentabilidad anual media sin apalancar 258 pb; Sharpe anual neto 0.92
+ROBUSTEZ (no decide)
+exceso sobre la letra a 3 meses, 1990-2026     n  442 | bruto  21.31 pb (t  5.53) | neto  18.31 (t  4.75) | 1ª mitad  18.06 2ª  18.57 | x2  15.31
+   placebo exceso                              n  442 | bruto   4.87 pb (t  1.22) | neto   1.87 (t  0.47) | 1ª mitad   5.33 2ª  -1.58 | x2  -1.13
+exceso 2019-2026                               n   94 | bruto  17.93 pb (t  2.45) | neto  14.93 (t  2.04) | 1ª mitad  25.38 2ª   4.49 | x2  11.93
+futuro ZN continuo (Yahoo) 2000-2026           n  312 | bruto  17.10 pb (t  5.00) | neto  14.10 (t  4.12) | 1ª mitad  17.07 2ª  11.13 | x2  11.10
+   ZN 2019-2026                                n   94 | bruto  13.52 pb (t  2.48) | neto  10.52 (t  1.93) | 1ª mitad  17.23 2ª   3.81 | x2   7.52
