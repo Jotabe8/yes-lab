@@ -44,6 +44,25 @@ def t_stat(r: np.ndarray) -> float:
     return float(r.mean() / r.std(ddof=1) * np.sqrt(len(r)))
 
 
+def t_agrupado(r: np.ndarray, grupos) -> float:
+    """t de la media con error estándar robusto por grupos (semana, fecha...).
+
+    Operaciones del mismo grupo (varios mercados correlacionados que se disparan el mismo día o
+    la misma semana) no son independientes: contarlas como tales infla el t. Error estándar de
+    clúster: sqrt(sum_g (S_g - n_g*m)^2) / N, con S_g la suma de R del grupo. Con un grupo por
+    operación coincide con t_stat. Calibrado 17-11-2026: reversión DZ (ES/NQ/RTY/YM) t 9,42 por
+    operación → 5,67 por semana.
+    """
+    r = np.asarray(r, float)
+    g = pd.Series(np.asarray(grupos))
+    if len(r) < 2 or g.nunique() < 2:
+        return 0.0
+    m = r.mean()
+    dev = pd.Series(r - m).groupby(g.to_numpy()).sum().to_numpy()
+    se = np.sqrt(np.sum(dev ** 2)) / len(r)
+    return float(m / se) if se > 0 else 0.0
+
+
 def t_requerido(n_pruebas: int, alfa: float = 0.05) -> float:
     """t mínimo (una cola) tras corregir por el número de variantes probadas (Bonferroni).
 
@@ -135,7 +154,8 @@ class Resultado:
 def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
            n_placebo: int = 200, riesgo: float = 0.01, cuota: float = 540.0,
            ev_control: float | None = None, variantes: pd.DataFrame | None = None,
-           paseo=None, n_paseo: int = 20) -> Resultado:
+           paseo=None, n_paseo: int = 20, agrupar: str | None = "W",
+           familia: str | None = None, regla: dict | None = None) -> Resultado:
     """Aplica las puertas P0-P4 de METODO.md y devuelve el veredicto.
 
     ops: columnas fecha (datetime), r_bruto (R antes de costes), coste_r (R por operación).
@@ -146,6 +166,11 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
     (metodo.sinteticos.velas_paseo). Puerta P1 "motor sin sesgo": R media ≈ 0.
     variantes: matriz días × variantes con los R NETOS diarios de TODAS las variantes miradas
     (ver robustez.matriz_diaria). Si se pasa, P3 añade SPA/StepM, PBO y Deflated Sharpe.
+    agrupar: frecuencia de pandas para el t robusto por grupos ("W" = semana, "D" = día, None =
+    por operación). Todas las puertas de t y el recorte de la EV usan el t agrupado: así una
+    cartera de mercados correlacionados no cuenta como independientes sus operaciones del mismo día.
+    familia/regla: si se pasa `familia`, la prueba se apunta en el libro de pruebas
+    (metodo/libro_pruebas.py) y n_pruebas pasa a ser el máximo entre el dado y el del libro.
     """
     ops = ops.sort_values("fecha").reset_index(drop=True)
     ops["fecha"] = pd.to_datetime(ops["fecha"])
@@ -153,6 +178,22 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
     neto2 = (ops.r_bruto - 2 * ops.coste_r).to_numpy()
     años = (ops.fecha.iloc[-1] - ops.fecha.iloc[0]).days / 365.25 or 1
     res = Resultado()
+    grupos = (ops.fecha.dt.to_period(agrupar).astype(str).to_numpy() if agrupar
+              else np.arange(len(ops)))
+
+    def tg(mascara=None):
+        if mascara is None:
+            return t_agrupado(neto, grupos)
+        return t_agrupado(neto[mascara], grupos[mascara])
+
+    if familia is not None:
+        from metodo.libro_pruebas import apuntar, contar
+        apuntar(familia, regla or {}, ops.assign(r_neto=neto))
+        n_libro = contar(familia)
+        if n_libro > n_pruebas:
+            res.add("libro de pruebas", True, f"n_pruebas {n_pruebas} → {n_libro} (libro de '{familia}')",
+                    bloquea=False)
+            n_pruebas = n_libro
 
     # P0-P1: frecuencia y coste
     ops_año = len(ops) / años
@@ -177,7 +218,7 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
     # P2: neto, costes al doble, estabilidad por años
     dentro = ops.fecha < pd.Timestamp(corte_oos)
     res.add("neto ajuste > 0", neto[dentro].mean() > 0,
-            f"{neto[dentro].mean():+.3f} R/op, t {t_stat(neto[dentro]):.2f}")
+            f"{neto[dentro].mean():+.3f} R/op, t {tg(dentro.to_numpy()):.2f} (por op {t_stat(neto[dentro]):.2f})")
     res.add("coste ×2 > 0", neto2.mean() > MIN_DOBLE_COSTE, f"{neto2.mean():+.3f} R/op")
     por_año = pd.Series(neto).groupby(ops.fecha.dt.year).sum()
     frac = (por_año > 0).mean()
@@ -186,15 +227,19 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
 
     # P3: fuera de muestra con t corregido por número de pruebas
     oos = neto[~dentro]
+    t_oos = tg((~dentro).to_numpy()) if len(oos) > 1 else 0.0
     t_req = t_requerido(n_pruebas)
-    res.add("fuera de muestra", len(oos) > 30 and oos.mean() > 0 and t_stat(oos) >= 1.0,
-            f"{oos.mean() if len(oos) else 0:+.3f} R/op, n {len(oos)}, t {t_stat(oos):.2f}")
-    res.add("t total corregido", t_stat(neto) >= t_req,
-            f"t {t_stat(neto):.2f} vs {t_req:.2f} ({n_pruebas} pruebas); aviso, lo decide la EV recortada",
+    t_tot, t_op = tg(), t_stat(neto)
+    res.add("fuera de muestra", len(oos) > 30 and oos.mean() > 0 and t_oos >= 1.0,
+            f"{oos.mean() if len(oos) else 0:+.3f} R/op, n {len(oos)}, t {t_oos:.2f}")
+    res.add("t total corregido", t_tot >= t_req,
+            f"t {t_tot:.2f} (por op {t_op:.2f}) vs {t_req:.2f} ({n_pruebas} pruebas); aviso, lo decide la EV recortada",
             bloquea=False)
 
     # P3 (robustez): PSR y operaciones mínimas siempre; SPA, PBO y DSR si hay matriz de variantes
     trl = min_trl(neto)
+    if t_tot > 0 and t_op > t_tot:       # con operaciones agrupadas hacen falta más
+        trl *= (t_op / t_tot) ** 2
     res.add("PSR / ops mínimas", psr(neto) >= 0.95,
             f"PSR {psr(neto):.1%}; hacen falta {trl:.0f} ops ({trl / ops_año * 12:.0f} meses) para fiarse"
             if np.isfinite(trl) else f"PSR {psr(neto):.1%}; Sharpe ≤ 0", bloquea=False)
@@ -221,6 +266,8 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
     # frente al control: la misma serie con media 0 (misma frecuencia y volatilidad, sin edge).
     mc = montecarlo_dd(neto)
     se = neto.std(ddof=1) / np.sqrt(len(neto))
+    if t_tot > 0 and t_op > t_tot:       # error estándar efectivo con operaciones agrupadas
+        se *= t_op / t_tot
     recorte = (t_req - NormalDist().inv_cdf(0.95)) * se
     dias = pd.Series(neto).groupby(ops.fecha.dt.date)
     n_dia = dias.size().to_numpy()

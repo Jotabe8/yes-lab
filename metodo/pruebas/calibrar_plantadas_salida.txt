@@ -1,0 +1,22 @@
+Ventajas plantadas, 150 réplicas por celda, 2011-26, corte OOS 2023, n_pruebas 10, coste 0.03 R
+pasa_W / pasa_op: embudo completo con t por semana / por operación
+p1_W / p1_op: solo P1 rápido 2018-22 (bruto ≥ 3× coste y t ≥ 1,64)
+Con R neta 0 las columnas son FALSOS POSITIVOS; con R > 0, POTENCIA.
+
+ R neta  ops/año  mercados  pasa_W  pasa_op  p1_W  p1_op
+   0.00       40         1    0.06     0.00  0.03   0.00
+   0.00       80         1    0.05     0.00  0.05   0.00
+   0.00      250         1    0.01     0.00  0.05   0.00
+   0.05       40         1    0.11     0.00  0.11   0.00
+   0.05       80         1    0.17     0.00  0.12   0.00
+   0.05      250         1    0.21     0.00  0.19   0.00
+   0.10       40         1    0.31     0.00  0.18   0.00
+   0.10       80         1    0.40     0.00  0.23   0.00
+   0.10      250         1    0.75     0.00  0.57   0.00
+   0.20       40         1    0.53     0.00  0.36   0.00
+   0.20       80         1    0.77     0.00  0.62   0.00
+   0.20      250         1    0.96     0.00  0.97   0.00
+   0.00       80         4    0.05     0.05  0.02   0.05
+   0.00      250         4    0.03     0.03  0.05   0.11
+   0.10       80         4    0.27     0.32  0.18   0.30
+   0.10      250         4    0.58     0.66  0.37   0.53
