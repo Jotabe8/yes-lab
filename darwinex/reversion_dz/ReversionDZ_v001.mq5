@@ -11,7 +11,7 @@
 //| No añadir nada que no se probó en Python.                         |
 //+------------------------------------------------------------------+
 #property copyright "yes-lab"
-#property version   "1.02"
+#property version   "1.03"
 #include <Trade/Trade.mqh>
 
 input double InpRiesgoATRPct  = 0.30;   // % del balance que se pierde si el precio cae 1 ATR20
@@ -20,7 +20,7 @@ input double InpIBS           = 0.20;   // Umbral IBS de entrada
 input int    InpMaxSesiones   = 5;      // Salida por tiempo (sesiones de contado)
 input int    InpATR           = 20;     // Periodo del ATR de sesión
 input int    InpServidorMenosNY = 7;    // Horas servidor - NY. FTMO/Dukascopy: 7 todo el año. Comprobar en DZ (si su servidor sigue el horario de la UE, 6 unas 3 semanas al año)
-input int    InpMinutoSenalNY = 958;    // Hora NY de la señal en HHMM (15:58)
+input int    InpMinutoSenalNY = 1558;   // Hora NY de la señal en HHMM (15:58)
 input long   InpMagic         = 270001; // Número mágico (uno por símbolo)
 input bool   InpRegistrarCSV  = true;   // Guarda cada operación cerrada en Common/Files
 

@@ -40,3 +40,17 @@ a las 5 sesiones. Sin stop. ES, NQ, RTY, YM (señal sobre ^GSPC, ^NDX, ^RUT, ^DJ
 EA MQL5 desde `metodo/PlantillaPropEA.mq5`: señal a las 15:58-15:59 NY con la vela diaria en curso, entrada a mercado,
 salida al cierre; comparación operación a operación con este Python en el Strategy Tester (no en el terminal de la cuenta real);
 luego incubación en demo 4-8 semanas dentro de la banda del Monte Carlo.
+
+## P5 (17-11-2026): PASA
+Strategy Tester del MT5 de laboratorio (C:\MT5_Lab, demo MetaQuotes; nunca el terminal real), símbolos propios US500_DUKA y
+US30_DUKA con el M1 Dukascopy de la referencia, "OHLC en M1", 2022-01 → 2026-10:
+| | US500 | US30 |
+|---|---|---|
+| Ops referencia / EA | 141 / 140 | 137 / 139 |
+| Emparejadas | 98,6 % / 99,3 % | 98,5 % / 97,1 % |
+| R media referencia / EA | +0,221 / +0,219 | +0,280 / +0,280 |
+| Correlación de R | 0,99999 | 0,99999 |
+| Pares con ΔR ≤ 0,1 / misma salida | 100 % / 100 % | 100 % / 100 % |
+No emparejadas: IBS en el borde de 0,20 (precio de las 15:58 frente al cierre de la vela de las 15:57). Fallo encontrado:
+el valor por defecto de la hora de la señal era 958 (9:58) en vez de 1558; corregido en v1.03 (el tester se pasó con 1558).
+Siguiente: P6, demo 4-8 semanas. Antes, comprobar que el servidor de DZ va a NY+7 todo el año.
