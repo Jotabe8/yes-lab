@@ -15,6 +15,7 @@ Laboratorio **simulado** para investigar estrategias en acciones/ETFs, cripto y 
 | `docs/index.html` | Dashboard: backtester en el navegador, calculadora de posición y diario simulado |
 | `.github/workflows/actualizar-datos.yml` | Actualiza los datos de lunes a viernes a las 22:15 UTC |
 | `tests/` | Tests con `unittest`, sin dependencias externas |
+| `referencias/ecc/` | Skills de metodología copiadas del repo ECC (affaan-m) y catálogo de qué sirve para el trading y para otros proyectos |
 
 Instrumentos: SPY, IBEX 35, Banco Santander, BTC, ETH, EUR/USD, GBP/USD, USD/JPY, NZD/USD, USD/CHF, EUR/AUD y GBP/JPY. Los pares forex guardan también apertura, máximo y mínimo.
 
