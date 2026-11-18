@@ -2,7 +2,7 @@
 
 Revisado el 18/11/2026. Repo de origen: <https://github.com/affaan-m/ECC> (antes "everything-claude-code"), versión 2.2.3, commit `3f14a10`, licencia MIT (copia en `LICENSE`). Tiene 327 skills, 72 agentes y 98 comandos.
 
-Esta carpeta es **solo de referencia**. Las skills copiadas no están en `.claude/skills`, así que Claude no las carga automáticamente. Están en inglés y sin adaptar a MQL5.
+Esta carpeta guarda las copias originales sin modificar. Las 5 piezas activadas, adaptadas, están en `.claude/` (ver "Revisión de seguridad e incorporación").
 
 ## Contenido de esta carpeta
 
@@ -16,6 +16,29 @@ Esta carpeta es **solo de referencia**. Las skills copiadas no están en `.claud
 | `skills/cpp-coding-standards/` | `skills/cpp-coding-standards` de ECC |
 | `skills/mle-workflow/` | `skills/mle-workflow` de ECC |
 | `agents/silent-failure-hunter.md` | `agents/silent-failure-hunter.md` de ECC |
+
+## Revisión de seguridad e incorporación (18/11/2026)
+
+Antes de activar nada se revisaron los 8 elementos copiados:
+
+- **Escaneo automático** de todos los ficheros: caracteres Unicode invisibles o de control, comentarios HTML ocultos, bloques base64, comandos de shell (`curl`, `wget`, `eval`, `rm -rf`, `sudo`, `powershell`…), frases típicas de prompt injection ("ignore previous", "system prompt", "do not tell"…), referencias a credenciales (`.env`, `.ssh`, API keys) y URLs. Resultado: **0 caracteres ocultos y 0 hallazgos reales**. Los avisos eran la palabra "token" en el sentido de LLM, "eval" como sustantivo y enlaces a GitHub o a artículos públicos.
+- **Lectura completa** de las 5 piezas activadas: no contienen instrucciones de descargar ni ejecutar nada, ni de leer o enviar datos fuera, ni de cambiar permisos. Solo describen metodología. `recursive-decision-ledger` y `council` piden expresamente que una decisión sobre dinero real la apruebe el humano.
+- **Mínimo privilegio**:
+  - Se quitó la línea `tools: Read, Write, Edit, Bash, Grep, Glob` de `recursive-decision-ledger`, que no es necesaria para una skill.
+  - El agente `silent-failure-hunter` queda solo con lectura (`Read, Grep, Glob`, sin `Bash`).
+  - No se incorporó ningún hook, script ni servidor MCP de ECC.
+
+Activadas en `.claude/` (Claude Code las carga al trabajar en este repo), con una sección "Uso en yes-lab" añadida a cada una:
+
+| Activada | Ruta |
+| --- | --- |
+| `loop-design-check` | `.claude/skills/loop-design-check/` |
+| `benchmark-optimization-loop` | `.claude/skills/benchmark-optimization-loop/` |
+| `recursive-decision-ledger` | `.claude/skills/recursive-decision-ledger/` |
+| `council` | `.claude/skills/council/` |
+| `silent-failure-hunter` (agente, con objetivos MQL5) | `.claude/agents/silent-failure-hunter.md` |
+
+Se quedan solo como referencia en esta carpeta: `santa-method` (caro en tokens), `cpp-coding-standards` (poco aplicable a MQL5) y `mle-workflow` (solo si se usa ML).
 
 ## Veredicto rápido
 
