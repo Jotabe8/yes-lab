@@ -1,0 +1,618 @@
+<title>Formar a Claude en EAs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: cuaderno de laboratorio en una columna; diagramas a todo el ancho de la columna, fichas al margen en pantallas anchas */
+:root{
+  --bg:#F3F5F9; --paper:#FFFFFF; --ink:#141C2B; --muted:#5A6478; --line:#D9DEE8;
+  --human:#2848C9; --human-soft:#E4E9FB;
+  --claude:#B86A12; --claude-soft:#FBEEDC;
+  --gain:#1C8A57; --loss:#C2433A; --grid:#E6EAF1;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141E; --paper:#171E2C; --ink:#E7EBF3; --muted:#9AA4B8; --line:#2A3346;
+  --human:#7D96FF; --human-soft:#1E2846; --claude:#E7A24E; --claude-soft:#33261A;
+  --gain:#4CC58A; --loss:#F07467; --grid:#232C3D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F141E; --paper:#171E2C; --ink:#E7EBF3; --muted:#9AA4B8; --line:#2A3346;
+  --human:#7D96FF; --human-soft:#1E2846; --claude:#E7A24E; --claude-soft:#33261A;
+  --gain:#4CC58A; --loss:#F07467; --grid:#232C3D; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font:400 18px/1.6 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:820px;margin:0 auto;padding-block:40px 80px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:700}
+h3{font-size:1.15rem;font-weight:700}
+p{margin:0;max-width:66ch}
+section{display:flex;flex-direction:column;gap:18px}
+.eyebrow{font:600 .78rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--f-mono);color:var(--human);margin-right:.4em}
+code,.mono{font-family:var(--f-mono);font-size:.86em}
+code{background:var(--grid);padding:.1em .35em;border-radius:4px}
+.lead{font-size:1.2rem;color:var(--muted)}
+a{color:var(--human)}
+:focus-visible{outline:3px solid var(--human);outline-offset:2px}
+
+/* cabecera */
+header{display:flex;flex-direction:column;gap:18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:600 .8rem/1 var(--f-mono);padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--muted)}
+.chip b{color:var(--ink);font-weight:600}
+.toc{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px 20px;padding:18px 20px;background:var(--paper);border:1px solid var(--line);border-radius:10px;margin:0;list-style:none}
+.toc a{color:var(--ink);text-decoration:none;font-size:.98rem}
+.toc a:hover{color:var(--human);text-decoration:underline}
+
+/* figuras */
+figure{margin:0;display:flex;flex-direction:column;gap:10px}
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:520px}
+figcaption{font-size:.9rem;color:var(--muted);max-width:66ch}
+svg text{font-family:var(--f-body);fill:var(--ink)}
+svg .t-muted{fill:var(--muted)} svg .t-mono{font-family:var(--f-mono)}
+svg .t-h{fill:var(--human)} svg .t-c{fill:var(--claude)} svg .t-gain{fill:var(--gain)} svg .t-loss{fill:var(--loss)}
+svg .box-h{fill:var(--human-soft);stroke:var(--human);stroke-width:1.5}
+svg .box-c{fill:var(--claude-soft);stroke:var(--claude);stroke-width:1.5}
+svg .box-n{fill:var(--bg);stroke:var(--line);stroke-width:1.2}
+svg .ln{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .ln-h{stroke:var(--human);stroke-width:2;fill:none}
+svg .ln-c{stroke:var(--claude);stroke-width:2;fill:none}
+svg .grid{stroke:var(--grid);stroke-width:1}
+svg .axis{stroke:var(--line);stroke-width:1.2}
+svg .f-gain{fill:var(--gain)} svg .f-loss{fill:var(--loss)} svg .f-muted{fill:var(--muted)}
+svg .f-h{fill:var(--human)} svg .f-c{fill:var(--claude)} svg .f-paper{fill:var(--paper)}
+svg .ah{fill:var(--muted)}
+
+/* comparación de encargos */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pair>div{min-width:0;padding:16px 18px;border-radius:10px;border:1px solid var(--line);background:var(--paper);display:flex;flex-direction:column;gap:8px}
+.pair .tag{font:600 .75rem/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase}
+.bad .tag{color:var(--loss)} .good .tag{color:var(--gain)}
+.bad{border-left:4px solid var(--loss)!important} .good{border-left:4px solid var(--gain)!important}
+.pair pre{margin:0;white-space:pre-wrap;font:400 .86rem/1.55 var(--f-mono);color:var(--ink)}
+.pair p{font-size:.92rem;color:var(--muted)}
+
+/* plantilla */
+.ficha{border:1.5px dashed var(--human);border-radius:12px;background:var(--human-soft);padding:20px;display:flex;flex-direction:column;gap:10px}
+.ficha ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.ficha li::marker{font-family:var(--f-mono);color:var(--human);font-weight:600}
+
+/* tablas */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:600 .78rem/1.2 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+
+/* nota */
+.nota{display:flex;gap:14px;padding:16px 18px;border-radius:10px;background:var(--claude-soft);border:1px solid var(--claude)}
+.nota strong{color:var(--claude)}
+.nota p{max-width:none}
+
+/* trampas */
+.traps{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.traps>div{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.traps p{font-size:.95rem}
+.traps .fix{color:var(--gain);font-weight:600;font-size:.9rem}
+
+/* quiz */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{all:unset;cursor:pointer;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:.98rem;line-height:1.4}
+.opts button:hover{border-color:var(--human)}
+.opts button:focus-visible{outline:3px solid var(--human);outline-offset:2px}
+.opts button.ok{border-color:var(--gain);background:color-mix(in srgb,var(--gain) 14%,var(--paper))}
+.opts button.ko{border-color:var(--loss);background:color-mix(in srgb,var(--loss) 12%,var(--paper))}
+.why{font-size:.93rem;color:var(--muted)}
+.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.check input{margin-top:.35em;accent-color:var(--human);width:18px;height:18px;flex:none}
+
+footer{border-top:1px solid var(--line);padding-top:20px;color:var(--muted);font-size:.9rem;display:flex;flex-direction:column;gap:8px}
+
+@media (max-width:640px){
+  body{font-size:17px}
+  .pair,.traps{grid-template-columns:1fr}
+  .wrap{gap:44px;padding-block:24px 60px}
+}
+@media (prefers-reduced-motion:no-preference){.opts button{transition:background .15s,border-color .15s}}
+</style>
+
+<main class="wrap">
+
+<header>
+  <span class="eyebrow">Formación · Capítulo 1 de la serie</span>
+  <h1>Formar a Claude para crear EAs y buscar ventajas</h1>
+  <p class="lead">Una introducción para la persona que dirige el trabajo. Aprenderás qué papel te toca a ti, qué papel le toca a Claude y cómo convertir cada prueba en conocimiento que se acumula.</p>
+  <div class="meta">
+    <span class="chip">Nivel <b>intermedio-bajo</b></span>
+    <span class="chip">Lectura <b>25 min</b></span>
+    <span class="chip">Requisitos <b>saber qué es un backtest</b></span>
+  </div>
+  <ol class="toc">
+    <li><a href="#objetivos"><span class="num">1</span>Qué vas a aprender</a></li>
+    <li><a href="#roles"><span class="num">2</span>Tu papel y el de Claude</a></li>
+    <li><a href="#ventaja"><span class="num">3</span>Qué es una ventaja</a></li>
+    <li><a href="#embudo"><span class="num">4</span>El embudo</a></li>
+    <li><a href="#encargo"><span class="num">5</span>Cómo hacer un buen encargo</a></li>
+    <li><a href="#ciclo"><span class="num">6</span>El ciclo de formación</a></li>
+    <li><a href="#trampas"><span class="num">7</span>Cuatro trampas</a></li>
+    <li><a href="#glosario"><span class="num">8</span>Glosario</a></li>
+    <li><a href="#practica"><span class="num">9</span>Comprueba lo aprendido</a></li>
+  </ol>
+</header>
+
+<!-- 1 -->
+<section id="objetivos">
+  <span class="eyebrow">Sección 1</span>
+  <h2>Qué vas a aprender</h2>
+  <p>Claude puede escribir código MQL5, montar un backtest en Python o leer un artículo académico en minutos. Lo que no puede hacer solo es decidir qué merece la pena investigar ni qué cuenta como éxito. Ese criterio lo pones tú, y la calidad de los resultados depende sobre todo de él.</p>
+  <p>Al terminar este capítulo deberías poder:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Objetivo</th><th>En la práctica significa</th></tr></thead>
+    <tbody>
+      <tr><td>Repartir el trabajo</td><td>Saber qué decisiones son tuyas y cuáles delegas.</td></tr>
+      <tr><td>Hablar de ventajas</td><td>Distinguir resultado bruto, coste y neto, medidos en R.</td></tr>
+      <tr><td>Usar el embudo</td><td>Pedir pruebas por etapas para descartar pronto y barato.</td></tr>
+      <tr><td>Escribir encargos</td><td>Dar a Claude una ficha con hipótesis, regla y criterio fijados antes.</td></tr>
+      <tr><td>Acumular memoria</td><td>Hacer que cada sesión deje rastro en el repositorio para la siguiente.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 2 -->
+<section id="roles">
+  <span class="eyebrow">Sección 2</span>
+  <h2>Tu papel y el de Claude</h2>
+  <p>Piensa en un laboratorio. Tú eres la directora o el director de investigación: eliges las preguntas, fijas las reglas del juego y tienes la última palabra. Claude es un equipo técnico muy rápido que busca, programa, prueba e informa. Si el equipo técnico también decide qué es un buen resultado, acabará encontrando "buenos resultados" que no lo son.</p>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 760 360" role="img" aria-label="Reparto de tareas entre la persona y Claude">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs>
+        <!-- humano -->
+        <rect x="20" y="20" width="300" height="320" rx="14" class="box-h"/>
+        <circle cx="62" cy="62" r="20" class="f-h"/>
+        <circle cx="62" cy="55" r="7" class="f-paper"/>
+        <path d="M49 74 q13 -14 26 0" class="f-paper"/>
+        <text x="94" y="58" font-size="20" font-weight="700" class="t-h">Tú decides</text>
+        <text x="94" y="78" font-size="13" class="t-muted">criterio y responsabilidad</text>
+        <g font-size="15">
+          <text x="44" y="128">• Qué hipótesis investigar y por qué</text>
+          <text x="44" y="160">• Mercado, horario y lugar (prop, broker)</text>
+          <text x="44" y="192">• Qué cuenta como éxito, antes de probar</text>
+          <text x="44" y="224">• Cuánto riesgo y coste se aceptan</text>
+          <text x="44" y="256">• Descartar, seguir o pasar a real</text>
+          <text x="44" y="288">• Qué se apunta en la memoria</text>
+        </g>
+        <!-- claude -->
+        <rect x="440" y="20" width="300" height="320" rx="14" class="box-c"/>
+        <g transform="translate(482,62)">
+          <circle r="20" class="f-c"/>
+          <g class="f-paper"><rect x="-2" y="-13" width="4" height="26" rx="2"/><rect x="-2" y="-13" width="4" height="26" rx="2" transform="rotate(60)"/><rect x="-2" y="-13" width="4" height="26" rx="2" transform="rotate(120)"/></g>
+        </g>
+        <text x="514" y="58" font-size="20" font-weight="700" class="t-c">Claude ejecuta</text>
+        <text x="514" y="78" font-size="13" class="t-muted">velocidad y rigor técnico</text>
+        <g font-size="15">
+          <text x="464" y="128">• Busca papers y datos</text>
+          <text x="464" y="160">• Programa backtests en Python</text>
+          <text x="464" y="192">• Corre placebos y controles</text>
+          <text x="464" y="224">• Escribe el EA en MQL5</text>
+          <text x="464" y="256">• Compara Python con el EA</text>
+          <text x="464" y="288">• Redacta el informe y el diario</text>
+        </g>
+        <!-- flechas -->
+        <path d="M325 140 H435" class="ln" marker-end="url(#arr)"/>
+        <text x="380" y="128" font-size="13" text-anchor="middle" class="t-muted">encargo</text>
+        <path d="M435 240 H325" class="ln" marker-end="url(#arr)"/>
+        <text x="380" y="228" font-size="13" text-anchor="middle" class="t-muted">evidencia</text>
+        <text x="380" y="300" font-size="13" text-anchor="middle" class="t-muted">tú revisas</text>
+        <text x="380" y="318" font-size="13" text-anchor="middle" class="t-muted">y decides</text>
+      </svg>
+    </div>
+    <figcaption>Figura 1. El encargo baja de ti a Claude; la evidencia sube de Claude a ti. La decisión nunca cambia de lado.</figcaption>
+  </figure>
+
+  <div class="nota"><p><strong>Idea clave.</strong> Formar a Claude no es cambiar el modelo. Es darle mejores instrucciones, mejores herramientas y una memoria escrita. Todo eso vive en tu repositorio (por ejemplo <code>metodo/METODO.md</code>, <code>DIARIO.md</code> y la plantilla <code>PlantillaPropEA.mq5</code>), así que lo que aprendes tú también lo "aprende" Claude en la siguiente sesión.</p></div>
+</section>
+
+<!-- 3 -->
+<section id="ventaja">
+  <span class="eyebrow">Sección 3</span>
+  <h2>Qué es una ventaja</h2>
+  <p>Un EA (Expert Advisor) es un programa que opera solo en MetaTrader siguiendo reglas fijas. Un EA solo gana dinero a largo plazo si sus reglas explotan una <strong>ventaja</strong>: un patrón del mercado que se repite y que paga más de lo que cuesta operarlo.</p>
+  <p>Para comparar estrategias distintas medimos en <strong>R</strong>: 1 R es lo que pierdes si salta el stop. Una operación que gana el doble de lo arriesgado vale +2 R. La pregunta importante siempre es la misma: <em>después de comisiones y spread, ¿queda algo?</em></p>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 760 330" role="img" aria-label="Bruto, coste y neto por operación en dos estrategias del diario">
+        <!-- ejes: escala y: 0 R en y=200, 1 unidad (0,1 R) = 60 px -->
+        <g class="grid">
+          <line x1="90" x2="740" y1="20" y2="20"/><line x1="90" x2="740" y1="80" y2="80"/>
+          <line x1="90" x2="740" y1="140" y2="140"/><line x1="90" x2="740" y1="260" y2="260"/>
+        </g>
+        <line x1="90" x2="740" y1="200" y2="200" class="axis"/>
+        <g font-size="12" class="t-muted t-mono" text-anchor="end">
+          <text x="80" y="24">+0,30</text><text x="80" y="84">+0,20</text><text x="80" y="144">+0,10</text>
+          <text x="80" y="204">0</text><text x="80" y="264">−0,10</text>
+        </g>
+        <text x="20" y="140" font-size="12" class="t-muted" transform="rotate(-90 20 140)" text-anchor="middle">R por operación</text>
+
+        <!-- Estrategia A: reversión índices: bruto 0,261 coste 0,025 neto 0,236 -->
+        <rect x="130" y="43.4" width="56" height="156.6" class="f-muted" opacity=".55"/>
+        <rect x="200" y="200" width="56" height="15" class="f-loss"/>
+        <rect x="270" y="58.4" width="56" height="141.6" class="f-gain"/>
+        <g font-size="13" text-anchor="middle" class="t-mono">
+          <text x="158" y="36">+0,261</text><text x="228" y="232" class="t-loss">−0,025</text><text x="298" y="51" class="t-gain">+0,236</text>
+        </g>
+        <g font-size="12" text-anchor="middle" class="t-muted">
+          <text x="158" y="290">bruto</text><text x="228" y="290">coste</text><text x="298" y="290">neto</text>
+        </g>
+        <text x="228" y="315" font-size="14" font-weight="700" text-anchor="middle">Reversión en índices</text>
+
+        <!-- Estrategia B: scalping v2: bruto +0,03 coste 0,06 neto -0,03 -->
+        <rect x="490" y="182" width="56" height="18" class="f-muted" opacity=".55"/>
+        <rect x="560" y="200" width="56" height="36" class="f-loss"/>
+        <rect x="630" y="200" width="56" height="18" class="f-loss"/>
+        <g font-size="13" text-anchor="middle" class="t-mono">
+          <text x="518" y="174">+0,03</text><text x="588" y="252" class="t-loss">−0,06</text><text x="658" y="234" class="t-loss">−0,03</text>
+        </g>
+        <g font-size="12" text-anchor="middle" class="t-muted">
+          <text x="518" y="290">bruto</text><text x="588" y="290">coste</text><text x="658" y="290">neto</text>
+        </g>
+        <text x="588" y="315" font-size="14" font-weight="700" text-anchor="middle">Scalping v2 (mejor caso)</text>
+      </svg>
+    </div>
+    <figcaption>Figura 2. Dos casos reales del diario del laboratorio. La reversión en índices conserva casi toda su ventaja tras costes. El scalping tiene un bruto tan pequeño que el coste se lo come entero. Muchas ideas "que funcionan" en un gráfico mueren aquí.</figcaption>
+  </figure>
+
+  <p>Por eso el primer filtro de tu método pide que el bruto sea al menos <strong>3 veces el coste</strong>. Es la regla que más tiempo te ahorra, y es fácil pedírsela a Claude desde el primer mensaje.</p>
+</section>
+
+<!-- 4 -->
+<section id="embudo">
+  <span class="eyebrow">Sección 4</span>
+  <h2>El embudo: descartar pronto y barato</h2>
+  <p>La mayoría de ideas no tienen ventaja. Eso es normal y no es un fracaso. El trabajo consiste en descubrirlo gastando el menor tiempo posible. El embudo ordena las pruebas de la más barata a la más cara, y cada etapa tiene un motivo claro para parar.</p>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 760 450" role="img" aria-label="Embudo de siete etapas, de la ficha a la incubación">
+        <g font-size="14">
+          <!-- trapecios: ancho decreciente -->
+          <path d="M40 20 H720 L690 70 H70 Z" class="box-h"/>
+          <path d="M70 76 H690 L660 126 H100 Z" class="box-h"/>
+          <path d="M100 132 H660 L630 182 H130 Z" class="box-h"/>
+          <path d="M130 188 H630 L600 238 H160 Z" class="box-h"/>
+          <path d="M160 244 H600 L570 294 H190 Z" class="box-h"/>
+          <path d="M190 300 H570 L540 350 H220 Z" class="box-c"/>
+          <path d="M220 356 H540 L510 406 H250 Z" class="box-c"/>
+        </g>
+        <g font-size="15" font-weight="700">
+          <text x="90" y="50"><tspan class="t-h t-mono">P0</tspan>  Ficha</text>
+          <text x="120" y="106"><tspan class="t-h t-mono">P1</tspan>  Prueba rápida</text>
+          <text x="150" y="162"><tspan class="t-h t-mono">P2</tspan>  Neto y estabilidad</text>
+          <text x="180" y="218"><tspan class="t-h t-mono">P3</tspan>  Fuera de muestra</text>
+          <text x="210" y="274"><tspan class="t-h t-mono">P4</tspan>  Prop (EV y correlación)</text>
+          <text x="240" y="330"><tspan class="t-c t-mono">P5</tspan>  EA en MQL5</text>
+          <text x="270" y="386"><tspan class="t-c t-mono">P6</tspan>  Incubación</text>
+        </g>
+        <g font-size="13" class="t-muted t-mono" text-anchor="end">
+          <text x="672" y="50">10 min</text><text x="642" y="106">1 h</text><text x="612" y="162">2 h</text>
+          <text x="582" y="218">30 min</text><text x="552" y="274">30 min</text><text x="522" y="330">2 h</text><text x="492" y="386">4-8 sem</text>
+        </g>
+        <g font-size="12.5" class="t-muted">
+          <text x="380" y="50">¿coste &gt; 0,10 R? ¿&lt; 40 ops/año?</text>
+          <text x="380" y="106" text-anchor="start">¿bruto &lt; 3× coste? ¿bate al placebo?</text>
+        </g>
+        <text x="380" y="432" font-size="13" text-anchor="middle" class="t-muted">Azul: pruebas en Python · Naranja: el EA real en MetaTrader</text>
+      </svg>
+    </div>
+    <figcaption>Figura 3. Las siete etapas del embudo de <code>metodo/METODO.md</code> con su tiempo aproximado. El EA se escribe en P5, cuando la ventaja ya está probada: el Strategy Tester confirma la simulación, no la descubre.</figcaption>
+  </figure>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Lo que dice tu diario</th><th>Dato</th></tr></thead>
+    <tbody>
+      <tr><td>Ideas probadas en el diario</td><td><span class="mono">24</span></td></tr>
+      <tr><td>Han pasado hasta P4</td><td><span class="mono">3</span> (reversión en índices, ORB en juego V2, bonos de fin de mes)</td></tr>
+      <tr><td>Han terminado P6</td><td><span class="mono">0</span> todavía</td></tr>
+    </tbody>
+  </table></div>
+  <p>Una tasa de éxito de 1 de cada 8 es razonable en investigación honesta. Si un día Claude te trae 5 de cada 8 aprobadas, sospecha antes de celebrar.</p>
+</section>
+
+<!-- 5 -->
+<section id="encargo">
+  <span class="eyebrow">Sección 5</span>
+  <h2>Cómo hacer un buen encargo</h2>
+  <p>Claude hace exactamente lo que le pides, con mucha energía. Si el encargo es vago, rellena los huecos con decisiones razonables pero que no son tuyas: elegirá periodos, costes y parámetros, y probablemente probará variantes hasta que algo salga bonito. Compara estos dos mensajes:</p>
+
+  <div class="pair">
+    <div class="bad">
+      <span class="tag">Encargo vago</span>
+      <pre>Hazme un EA de breakout para el
+DAX que sea rentable y pase FTMO.</pre>
+      <p>No dice por qué debería funcionar, ni con qué costes, ni qué es "rentable". Invita a optimizar hasta que el backtest guste.</p>
+    </div>
+    <div class="good">
+      <span class="tag">Encargo con ficha</span>
+      <pre>Hipótesis: tras un rango de apertura
+amplio (≥ 1,5× su media) el precio
+sigue en la dirección de la ruptura.
+Mercados: GER40, UK100, JP225 en M1.
+Regla fija, sin optimizar. Coste FTMO.
+Éxito: neto t ≥ 2,4 y bate al placebo
+de hora aleatoria (200 réplicas).
+Ajuste hasta 2022; no mires 2023-26.
+Entrega: tabla P0-P2 y apunte en el
+diario.</pre>
+      <p>Todo lo que importa está decidido antes de mirar un solo resultado.</p>
+    </div>
+  </div>
+
+  <div class="ficha">
+    <h3>Plantilla de ficha para tus encargos</h3>
+    <ol>
+      <li><strong>Hipótesis causal:</strong> quién pierde dinero y por qué, en una frase.</li>
+      <li><strong>Mercados y marco temporal:</strong> varios parecidos a la vez, no solo uno.</li>
+      <li><strong>Regla exacta:</strong> entrada, stop y salida, sin parámetros por optimizar.</li>
+      <li><strong>Costes:</strong> los del lugar donde operarás, y una segunda pasada al doble.</li>
+      <li><strong>Criterio de éxito:</strong> qué número tiene que salir para seguir.</li>
+      <li><strong>Control:</strong> placebo con las mismas salidas o paseo aleatorio.</li>
+      <li><strong>Datos prohibidos:</strong> el tramo fuera de muestra que no se abre todavía.</li>
+      <li><strong>Entregable:</strong> qué archivo, qué tabla y qué entrada del diario.</li>
+    </ol>
+  </div>
+  <p>A este documento escrito antes de probar lo llamamos <strong>preregistro</strong>. Sirve para que ni tú ni Claude podáis mover la portería después de ver el resultado.</p>
+</section>
+
+<!-- 6 -->
+<section id="ciclo">
+  <span class="eyebrow">Sección 6</span>
+  <h2>El ciclo de formación</h2>
+  <p>Claude no recuerda conversaciones anteriores. Lo que sí lee al empezar es tu repositorio. Por eso cada error que corriges debe terminar escrito en un sitio que la próxima sesión vaya a leer. Así el sistema mejora aunque el modelo sea el mismo.</p>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 760 400" role="img" aria-label="Ciclo de cuatro pasos: encargar, ejecutar, revisar, registrar">
+        <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker></defs>
+        <circle cx="380" cy="200" r="70" class="box-n"/>
+        <text x="380" y="192" font-size="15" font-weight="700" text-anchor="middle">Repositorio</text>
+        <text x="380" y="212" font-size="12" text-anchor="middle" class="t-muted">la memoria</text>
+        <text x="380" y="228" font-size="12" text-anchor="middle" class="t-muted">compartida</text>
+
+        <rect x="270" y="14" width="220" height="72" rx="12" class="box-h"/>
+        <text x="380" y="44" font-size="16" font-weight="700" text-anchor="middle" class="t-h">1 · Encargar</text>
+        <text x="380" y="66" font-size="13" text-anchor="middle">ficha y preregistro</text>
+
+        <rect x="530" y="164" width="220" height="72" rx="12" class="box-c"/>
+        <text x="640" y="194" font-size="16" font-weight="700" text-anchor="middle" class="t-c">2 · Ejecutar</text>
+        <text x="640" y="216" font-size="13" text-anchor="middle">Claude prueba y entrega</text>
+
+        <rect x="270" y="314" width="220" height="72" rx="12" class="box-h"/>
+        <text x="380" y="344" font-size="16" font-weight="700" text-anchor="middle" class="t-h">3 · Revisar</text>
+        <text x="380" y="366" font-size="13" text-anchor="middle">¿cumple el criterio?</text>
+
+        <rect x="10" y="164" width="220" height="72" rx="12" class="box-h"/>
+        <text x="120" y="194" font-size="16" font-weight="700" text-anchor="middle" class="t-h">4 · Registrar</text>
+        <text x="120" y="216" font-size="13" text-anchor="middle">diario, método, reglas</text>
+
+        <path d="M492 60 Q610 80 630 158" class="ln" marker-end="url(#arr2)"/>
+        <path d="M630 242 Q610 320 494 340" class="ln" marker-end="url(#arr2)"/>
+        <path d="M266 340 Q150 320 130 242" class="ln" marker-end="url(#arr2)"/>
+        <path d="M130 158 Q150 80 266 60" class="ln" marker-end="url(#arr2)"/>
+        <path d="M232 200 H306" class="ln-h" stroke-dasharray="4 4"/>
+        <path d="M454 200 H528" class="ln-c" stroke-dasharray="4 4"/>
+      </svg>
+    </div>
+    <figcaption>Figura 4. Cada vuelta deja algo escrito. Claude lee el repositorio al empezar (línea naranja) y tú lo actualizas al terminar (línea azul).</figcaption>
+  </figure>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Dónde se apunta</th><th>Qué va ahí</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td><code>DIARIO.md</code></td><td>Cada idea probada y su veredicto, también las descartadas</td><td>"Scalping v2: 0/60 casillas, descartado"</td></tr>
+      <tr><td><code>metodo/METODO.md</code></td><td>Las reglas del embudo y lo que se ha aprendido sobre ellas</td><td>"P1 usa toda la historia: con 2018-22 la potencia es la mitad"</td></tr>
+      <tr><td><code>CLAUDE.md</code></td><td>Instrucciones que Claude debe seguir siempre</td><td>"Imprime siempre el resultado con costes al doble"</td></tr>
+      <tr><td>Plantillas y scripts</td><td>Código ya revisado que se reutiliza</td><td><code>PlantillaPropEA.mq5</code>, <code>embudo.py</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>Una buena costumbre: al final de cada sesión, pide a Claude <em>"resume qué hemos aprendido hoy y propón qué línea añadir a METODO.md o a CLAUDE.md"</em>. Tú decides si se añade.</p>
+</section>
+
+<!-- 7 -->
+<section id="trampas">
+  <span class="eyebrow">Sección 7</span>
+  <h2>Cuatro trampas que tu ojo debe detectar</h2>
+  <p>Claude conoce estas trampas, pero bajo un encargo vago puede caer en ellas igual que una persona. Tu revisión es la segunda red.</p>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 760 300" role="img" aria-label="Curva de capital: sube dentro de muestra y se aplana fuera de muestra">
+        <g class="grid">
+          <line x1="70" x2="740" y1="40" y2="40"/><line x1="70" x2="740" y1="100" y2="100"/>
+          <line x1="70" x2="740" y1="160" y2="160"/><line x1="70" x2="740" y1="220" y2="220"/>
+        </g>
+        <line x1="70" x2="740" y1="250" y2="250" class="axis"/>
+        <rect x="520" y="20" width="220" height="230" class="f-muted" opacity=".08"/>
+        <line x1="520" x2="520" y1="20" y2="250" class="ln" stroke-dasharray="5 4"/>
+        <text x="295" y="276" font-size="13" text-anchor="middle" class="t-muted">Dentro de muestra (donde se optimizó)</text>
+        <text x="630" y="276" font-size="13" text-anchor="middle" class="t-muted">Fuera de muestra</text>
+        <g font-size="12" class="t-muted t-mono" text-anchor="end">
+          <text x="62" y="44">+60 R</text><text x="62" y="104">+40 R</text><text x="62" y="164">+20 R</text><text x="62" y="254">0</text>
+        </g>
+        <polyline class="ln-h" points="70,250 100,238 130,240 160,222 190,214 220,218 250,196 280,190 310,176 340,180 370,158 400,140 430,132 460,112 490,98 520,70"/>
+        <polyline class="ln-c" stroke-width="2.5" points="520,70 545,80 570,74 595,92 620,86 645,98 670,90 695,104 720,96 740,102"/>
+        <circle cx="520" cy="70" r="5" class="f-h"/>
+        <text x="300" y="74" font-size="13" class="t-h">el backtest que te enseñan</text>
+        <text x="600" y="128" font-size="13" class="t-c">lo que pasa después</text>
+      </svg>
+    </div>
+    <figcaption>Figura 5. Ejemplo ilustrativo, no datos reales. Una curva optimizada sobre el pasado suele aplanarse o caer en datos que no ha visto. Por eso el tramo 2023-2026 se abre una sola vez.</figcaption>
+  </figure>
+
+  <div class="traps">
+    <div>
+      <h3>Sobreajuste</h3>
+      <p>Ajustar parámetros hasta que el pasado encaja. La curva sale perfecta y no predice nada.</p>
+      <span class="fix">Pide: regla fija, meseta de parámetros (vecinos ±20 %) y fuera de muestra sin tocar.</span>
+    </div>
+    <div>
+      <h3>Mirar al futuro</h3>
+      <p>Usar sin querer un dato que aún no existía, como el cierre de la vela que se está operando.</p>
+      <span class="fix">Pide: señal al cierre y ejecución en la vela siguiente, y la prueba de truncado.</span>
+    </div>
+    <div>
+      <h3>Costes de juguete</h3>
+      <p>Backtest sin spread ni comisión, o con los de otro broker. Lo que es bueno en bruto puede ser negativo en neto.</p>
+      <span class="fix">Pide: costes reales del lugar y una segunda pasada al doble.</span>
+    </div>
+    <div>
+      <h3>Demasiadas variantes</h3>
+      <p>Si pruebas 20 versiones, alguna sale bien por pura suerte. Ver la figura 6.</p>
+      <span class="fix">Pide: cuántas variantes se miraron y el t corregido por ese número.</span>
+    </div>
+  </div>
+
+  <figure>
+    <div class="fig">
+      <svg viewBox="0 0 760 280" role="img" aria-label="Veinte variantes sin ventaja; una supera t igual a 2 por azar">
+        <!-- escala: t=0 en y=150, 1 unidad de t = 45 px -->
+        <line x1="60" x2="740" y1="150" y2="150" class="axis"/>
+        <line x1="60" x2="740" y1="60" y2="60" class="ln" stroke-dasharray="6 4" stroke="var(--loss)"/>
+        <text x="736" y="52" font-size="12.5" text-anchor="end" class="t-loss">t = 2: "parece que funciona"</text>
+        <g font-size="12" class="t-muted t-mono" text-anchor="end">
+          <text x="52" y="64">2</text><text x="52" y="109">1</text><text x="52" y="154">0</text><text x="52" y="199">−1</text><text x="52" y="244">−2</text>
+        </g>
+        <g class="grid"><line x1="60" x2="740" y1="105" y2="105"/><line x1="60" x2="740" y1="195" y2="195"/><line x1="60" x2="740" y1="240" y2="240"/></g>
+        <!-- 20 barras, ancho 22, paso 33, inicio x=78 -->
+        <g class="f-muted" opacity=".6">
+          <rect x="78"  y="150" width="22" height="27"/>
+          <rect x="111" y="123" width="22" height="27"/>
+          <rect x="144" y="150" width="22" height="54"/>
+          <rect x="177" y="141" width="22" height="9"/>
+          <rect x="210" y="105" width="22" height="45"/>
+          <rect x="243" y="150" width="22" height="18"/>
+          <rect x="276" y="150" width="22" height="63"/>
+          <rect x="309" y="114" width="22" height="36"/>
+          <rect x="342" y="150" width="22" height="36"/>
+          <rect x="375" y="132" width="22" height="18"/>
+          <rect x="441" y="150" width="22" height="9"/>
+          <rect x="474" y="96"  width="22" height="54"/>
+          <rect x="507" y="150" width="22" height="72"/>
+          <rect x="540" y="137" width="22" height="13"/>
+          <rect x="573" y="150" width="22" height="31"/>
+          <rect x="606" y="110" width="22" height="40"/>
+          <rect x="639" y="150" width="22" height="45"/>
+          <rect x="672" y="128" width="22" height="22"/>
+          <rect x="705" y="150" width="22" height="22"/>
+        </g>
+        <rect x="408" y="44" width="22" height="106" class="f-c"/>
+        <text x="419" y="36" font-size="12.5" text-anchor="middle" class="t-c t-mono">t 2,35</text>
+        <text x="400" y="272" font-size="13" text-anchor="middle" class="t-muted">20 variantes de una regla sin ninguna ventaja real (simulación ilustrativa)</text>
+      </svg>
+    </div>
+    <figcaption>Figura 6. Con 20 intentos al azar, lo esperable es que alguno cruce t = 2. Si solo te enseñan esa barra naranja, parece un descubrimiento. Por eso tu método exige t más alto cuando hay más variantes y pide la matriz de todas las que se miraron.</figcaption>
+  </figure>
+</section>
+
+<!-- 8 -->
+<section id="glosario">
+  <span class="eyebrow">Sección 8</span>
+  <h2>Glosario mínimo</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Término</th><th>Qué significa en este curso</th></tr></thead>
+    <tbody>
+      <tr><td>EA</td><td>Expert Advisor: programa que opera solo en MetaTrader 5 (lenguaje MQL5).</td></tr>
+      <tr><td>R</td><td>Unidad de riesgo. 1 R es lo que pierdes si salta el stop.</td></tr>
+      <tr><td>Bruto / neto</td><td>Resultado antes y después de spread, comisión y swap.</td></tr>
+      <tr><td>t</td><td>Cuánto se separa el resultado del cero teniendo en cuenta el ruido. Por encima de 2 empieza a ser creíble; con muchas variantes hace falta más.</td></tr>
+      <tr><td>Placebo</td><td>La misma estrategia con entradas al azar. La de verdad tiene que ganarle con claridad.</td></tr>
+      <tr><td>Paseo aleatorio</td><td>Precios inventados sin ningún patrón. Si tu backtest gana ahí, el fallo está en el código.</td></tr>
+      <tr><td>Fuera de muestra</td><td>Datos que no se usaron para diseñar la regla. Se miran una sola vez.</td></tr>
+      <tr><td>Walk-forward</td><td>Ajustar en un tramo, probar en el siguiente y avanzar, repitiendo.</td></tr>
+      <tr><td>Preregistro</td><td>Hipótesis, regla y criterio de éxito escritos antes de ver resultados.</td></tr>
+      <tr><td>Incubación</td><td>Semanas en demo sin tocar nada, para cazar fallos de implementación.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 9 -->
+<section id="practica">
+  <span class="eyebrow">Sección 9</span>
+  <h2>Comprueba lo aprendido</h2>
+  <div class="quiz" id="quiz">
+    <div class="q" data-ok="1">
+      <h3>1. Claude te trae un backtest con neto +0,04 R y bruto +0,10 R por operación. ¿Qué haces?</h3>
+      <div class="opts">
+        <button type="button">Pasar a escribir el EA, porque el neto es positivo.</button>
+        <button type="button">Revisar el filtro de P0/P1: el coste es 0,06 R y el bruto no llega a 3 veces el coste.</button>
+        <button type="button">Pedir que optimice el stop para subir el neto.</button>
+      </div>
+      <p class="why" hidden>El bruto (0,10) es menos de 3 × 0,06. Con costes al doble el neto sería negativo. Optimizar el stop sería mover la portería.</p>
+    </div>
+    <div class="q" data-ok="2">
+      <h3>2. ¿Cuándo se escribe el EA en MQL5?</h3>
+      <div class="opts">
+        <button type="button">Al principio, para probar la idea en el Strategy Tester.</button>
+        <button type="button">Cuando el backtest en Python sale bonito.</button>
+        <button type="button">En P5, cuando la ventaja ya pasó P0-P4. El Strategy Tester confirma, no descubre.</button>
+      </div>
+      <p class="why" hidden>Escribir el EA es caro. Solo merece la pena para ideas que ya han superado las etapas baratas.</p>
+    </div>
+    <div class="q" data-ok="0">
+      <h3>3. Corriges a Claude porque usó costes de otro broker. ¿Cómo evitas que vuelva a pasar en otra sesión?</h3>
+      <div class="opts">
+        <button type="button">Añades la regla a CLAUDE.md o METODO.md, que Claude lee al empezar.</button>
+        <button type="button">Se lo recuerdas en el chat; ya lo recordará.</button>
+        <button type="button">Cambias de modelo.</button>
+      </div>
+      <p class="why" hidden>Claude no guarda memoria entre conversaciones. Lo que no está escrito en el repositorio se pierde.</p>
+    </div>
+  </div>
+
+  <h3>Ejercicio para esta semana</h3>
+  <ul class="check">
+    <li><label><input type="checkbox" id="ej1"><span>Elige una idea de tu lista y escribe su ficha con los 8 puntos de la plantilla.</span></label></li>
+    <li><label><input type="checkbox" id="ej2"><span>Pide a Claude solo P0 y P1. Nada de EA todavía.</span></label></li>
+    <li><label><input type="checkbox" id="ej3"><span>Revisa el resultado con la lista de las cuatro trampas.</span></label></li>
+    <li><label><input type="checkbox" id="ej4"><span>Apunta el veredicto en <code>DIARIO.md</code>, también si es un descarte.</span></label></li>
+    <li><label><input type="checkbox" id="ej5"><span>Escribe una lección aprendida en <code>METODO.md</code> o <code>CLAUDE.md</code>.</span></label></li>
+  </ul>
+</section>
+
+<footer>
+  <p><strong>Próximo capítulo:</strong> dónde buscar ideas con más probabilidad de ventaja, y cómo pedir a Claude una búsqueda de papers que no te devuelva solo lo popular.</p>
+  <p>Material de formación sobre investigación simulada. Nada de lo que aparece aquí es una recomendación de inversión.</p>
+</footer>
+</main>
+
+<script>
+document.querySelectorAll('#quiz .q').forEach(function(q){
+  var ok = Number(q.dataset.ok);
+  var btns = q.querySelectorAll('.opts button');
+  btns.forEach(function(b, i){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){ x.classList.remove('ok','ko'); });
+      b.classList.add(i === ok ? 'ok' : 'ko');
+      if (i !== ok) btns[ok].classList.add('ok');
+      q.querySelector('.why').hidden = false;
+    });
+  });
+});
+document.querySelectorAll('.check input').forEach(function(c){
+  try { c.checked = localStorage.getItem('cap1-' + c.id) === '1'; } catch(e) {}
+  c.addEventListener('change', function(){
+    try { localStorage.setItem('cap1-' + c.id, c.checked ? '1' : '0'); } catch(e) {}
+  });
+});
+</script>
