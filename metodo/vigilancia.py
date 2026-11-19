@@ -15,6 +15,7 @@ Con varianza conocida, el SPRT equivale a vigilar la **suma de R netas** S tras 
 Así se puede seguir a mano en una hoja de cálculo.
 
 Uso:
+    python -m metodo.vigilancia --n 14 --suma 2.24          # solo SPRT, con los datos del informe diario
     python -m metodo.vigilancia real.csv replica.csv
     python -m metodo.vigilancia ORB_US100_ops.csv replica.csv --mt5 --riesgo-eur 2000
 
@@ -74,6 +75,15 @@ def sprt(r, mu1=MU1, sigma=SIGMA, alfa=ALFA, beta=BETA) -> EstadoSPRT:
         estado, en = ("parar", i_ab + 1) if i_ab < i_ar else ("confirmado", i_ar + 1)
     total = len(r)
     return EstadoSPRT(total, float(s[-1]) if total else 0.0, c_lo + p * total, c_hi + p * total, estado, en)
+
+
+def sprt_resumen(n: int, suma_r: float, mu1=MU1, sigma=SIGMA, alfa=ALFA, beta=BETA) -> EstadoSPRT:
+    """Estado del SPRT solo con el nº de operaciones y la suma de R (lo que da el informe diario).
+    Solo mira el punto actual: no sabe si antes se cruzó un límite (para eso hace falta la serie)."""
+    c_lo, c_hi, p = limites_sprt(mu1, sigma, alfa, beta)
+    lim_lo, lim_hi = c_lo + p * n, c_hi + p * n
+    estado = "parar" if suma_r <= lim_lo else "confirmado" if suma_r >= lim_hi else "seguir"
+    return EstadoSPRT(n, float(suma_r), lim_lo, lim_hi, estado, None)
 
 
 # ---------------------------------------------------------------- (a) cruce de ejecución
@@ -138,12 +148,23 @@ def informe(real: pd.DataFrame, replica: pd.DataFrame, tol_r=0.25) -> str:
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("real")
-    ap.add_argument("replica")
+    ap.add_argument("real", nargs="?")
+    ap.add_argument("replica", nargs="?")
+    ap.add_argument("--n", type=int, help="modo rápido: nº de operaciones (con --suma, sin archivos)")
+    ap.add_argument("--suma", type=float, help="modo rápido: suma de R netas")
     ap.add_argument("--mt5", action="store_true", help="el archivo real es el CSV de PlantillaPropEA.mq5")
     ap.add_argument("--riesgo-eur", type=float, help="riesgo por operación en euros (necesario con --mt5)")
     ap.add_argument("--tol-r", type=float, default=0.25)
     a = ap.parse_args(argv)
+    if a.n is not None or a.suma is not None:
+        if a.n is None or a.suma is None:
+            ap.error("el modo rápido necesita --n y --suma")
+        e = sprt_resumen(a.n, a.suma)
+        print(e)
+        print(f"Margen hasta la parada: {e.suma_r - e.limite_parar:.1f} R")
+        return
+    if not (a.real and a.replica):
+        ap.error("hacen falta real.csv y replica.csv, o --n y --suma")
     if a.mt5 and not a.riesgo_eur:
         ap.error("--mt5 necesita --riesgo-eur")
     real = leer_mt5(a.real, a.riesgo_eur) if a.mt5 else leer(a.real)

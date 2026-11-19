@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from metodo.vigilancia import alerta_ejecucion, cruce, limites_sprt, sprt
+from metodo.vigilancia import alerta_ejecucion, cruce, limites_sprt, sprt, sprt_resumen
 
 
 def _r_orb(n, media, rng):
@@ -36,6 +36,12 @@ class TestSPRT(unittest.TestCase):
         e = sprt(r)
         self.assertEqual(e.estado, "parar")
         self.assertLess(e.decidido_en, 60)
+
+    def test_resumen_coincide_con_la_serie(self):
+        r = [0.5, -1.0, 2.0, -1.0, 0.74]
+        self.assertEqual(sprt_resumen(len(r), sum(r)).estado, sprt(r).estado)
+        self.assertEqual(sprt_resumen(100, -40.0).estado, "parar")
+        self.assertEqual(sprt_resumen(10, 80.0).estado, "confirmado")
 
     def test_pocas_ops_sigue(self):
         self.assertEqual(sprt([-1.0] * 30).estado, "seguir")

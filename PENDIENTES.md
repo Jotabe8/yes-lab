@@ -9,7 +9,7 @@ Actualizado el 19-11-2026. Contexto: `metodo/vigilancia.py` (cruce diario real v
 | 1 | Localizar el CSV de operaciones del EA en el PC (buscar en `%APPDATA%\MetaQuotes` con `-Force`, o en MT5: Archivo → Abrir carpeta de datos → MQL5\Files) y mandarlo por correo como adjunto | Jorge | `ops_live.csv` no aparece en C:\ sin `-Force` |
 | 2 | Réplica del Strategy Tester (ticks reales FTMO, parámetros del EA) de los mismos días del reto, con columnas `fecha, lado, R` | Jorge | Necesita el PC |
 | 3 | Pasar las 14 ops una a una por `python -m metodo.vigilancia real.csv replica.csv` (SPRT y cruce día a día) | Claude | Depende de 1 y 2 |
-| 4 | Decidir si se une la rama `claude/vigilancia-sprt` a `main` (PR) | Jorge | — |
+| 4 | Revisar y fusionar la PR de la rama `claude/vigilancia-sprt` | Jorge | — |
 | 5 | Plan de escalado entre firmas (FTMO, tope 400.000 $; ya están preparadas las instalaciones MT5_FTMO_10K_A y B) | Claude | Aparcado |
 
 ## Cerrados
