@@ -22,6 +22,7 @@ def fred(s):
 def par(y_ayer, y_hoy, anios=10):
     """Retorno diario de un bono a la par emitido ayer (cupón = y_ayer) valorado hoy a y_hoy, más el devengo."""
     c, y, n = y_ayer / 100, y_hoy / 100, 2 * anios
+    y = np.where(np.abs(y) < 1e-6, 1e-6, y)          # rendimiento 0 (Bund 2016-21): límite continuo
     v = (1 + y / 2) ** -n
     p = (c / y) * (1 - v) + v
     return p - 1 + c / 252
