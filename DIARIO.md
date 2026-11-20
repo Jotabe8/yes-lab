@@ -154,3 +154,11 @@ umbrales (I1 percentil bajo: t 0,5 y 2ª mitad negativa). Corr con el ORB −0,0
 - 16-11 (noche, v14b): conmutador por Hurst (sigue si persistente, contra si antipersistente) en GER40/UK100/JP225/oro todos los días 2012-26: neto −0,03 R, pata contra −0,11 R t −4 en los 4 mercados. DESCARTADO (clase A). metodo/v14/RESULTADOS_CONMUTADOR.md.
 - 16-11 (v14c): seguimiento en real preregistrado: Hurst H5 de cada día del v018 desde el 17-11; decide con 100 ops (dif persistente − antipersistente > 0, t ≥ 1,65). metodo/v14/seguimiento.py + workflow semanal v14-seguimiento.yml (activo al fusionar).
 - 16-11 (v14d): Hurst sobre los descartados prometedores (ORB sin condición GER40/UK100/JP225/oro y gotobi USDJPY con réplicas EURJPY/GBPJPY, M1 2012-26): 0/4 pasan, placebo p 0,39-0,93. Gotobi con bid/ask reales: +0,012 R neto t 0,5. Hurst en M1 no aporta a nada del proyecto; solo queda el seguimiento en real (v14c). metodo/v14/RESULTADOS_DESCARTADOS.md.
+
+## 2026-11-20 — v16: 5 sistemas aleatorios en 5 mercados aleatorios + búsqueda desde los datos
+Semilla 20261120 → EURUSD, UK100, JP225, US500, XAUUSD (M5 Dukascopy 2018-26). Los 5 aleatorios y
+10.000 más pierden justo el coste; el mejor de 2.000 en 2018-22 pierde fuera. Mapa 2018-22 de 4.628
+pruebas con nulo por permutación: 52 celdas |t|≥3 frente a 27,7 del azar (36 en EURUSD).
+4 candidatas preregistradas (commit 7f09137) → 0/4 pasan en 2023-26 (mejor: oro largo 06:30 si ayer
+cayó, +0,016 R t 1,42). Único patrón persistente: reloj horario EURUSD (Breedon-Ranaldo), 0,26× coste
+fuera. DESCARTADO todo. Informe: metodo/v16/INFORME.md.

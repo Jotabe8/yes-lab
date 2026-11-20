@@ -1,0 +1,1 @@
+nulo: celdas que pasan la selección por mapa: media 1.0 p95 3.0 reparto [21 13 11  5]

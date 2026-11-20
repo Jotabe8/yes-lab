@@ -1,0 +1,31 @@
+=== Confirmación 2023-26 (R con stop 0,5·ATR14; t por semana) ===
+id               C1      C2      C3      C4
+mercado      EURUSD  EURUSD  EURUSD  XAUUSD
+n_exp           430     428    1282     427
+neto_exp     0.0147  0.0294  0.0324  0.0282
+t_exp          1.97    2.36    2.24    2.36
+n_oos           307     318     988     334
+ops_año        80.0    83.0   258.0    87.0
+bruto_oos     0.007  0.0016  0.0245   0.031
+coste_oos     0.026  0.0239   0.025  0.0155
+neto_oos     -0.019 -0.0222 -0.0005  0.0155
+t_oos         -1.66   -1.78   -0.04    1.42
+neto_x2      -0.045 -0.0461 -0.0255  0.0001
+neto_23_24  -0.0275  0.0006  -0.015  0.0019
+neto_25_26  -0.0101 -0.0499  0.0154   0.029
+placebo_p95    0.12   -0.05   -0.09    1.17
+p_placebo     0.511   0.507   0.049   0.026
+n_placebo       227     227     203     228
+decae          0.18    0.03    0.43    0.63
+PASA          False   False   False   False
+g_t           False   False   False   False
+g_doble       False   False   False    True
+g_mitades     False   False   False    True
+g_placebo     False   False    True    True
+
+correlación diaria de R neta fuera de muestra:
+      C1    C2    C3    C4
+C1  1.00 -0.00 -0.05  0.06
+C2 -0.00  1.00 -0.06 -0.20
+C3 -0.05 -0.06  1.00  0.02
+C4  0.06 -0.20  0.02  1.00

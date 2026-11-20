@@ -1,0 +1,6 @@
+mercado  t_inicial                      regla_final  t_entreno  t_valid  neto_valid  t_oos  neto_oos
+ EURUSD      -1.88          12:50 H360m k0.27 corto       1.85    -0.12     -0.0064  -1.14   -0.0449
+  UK100      -2.49          11:15 H180m k0.71 corto       1.89    -1.24     -0.0202  -0.81   -0.0111
+  JP225      -1.18 01:05 H240m k0.21 sigue_posrango       2.16     0.34      0.0183   0.70    0.0242
+  US500      -1.00           01:00 H240m k0.2 largo       2.34    -0.74     -0.0201   0.27    0.0055
+ XAUUSD      -1.27      19:45 H60m k0.75 contra_r1h       0.44    -1.10     -0.0060  -1.37   -0.0054

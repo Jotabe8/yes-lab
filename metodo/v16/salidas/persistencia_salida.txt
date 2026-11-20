@@ -1,0 +1,15 @@
+celdas 4628 | corr(t exp, t oos) +0.075
+|t exp|>=2: 284 celdas | mismo signo fuera 64 % | t fuera medio (con signo) +0.33 | efecto fuera medio +0.28× coste | con |t fuera|>=2 mismo signo: 20
+|t exp|>=3: 52 celdas | mismo signo fuera 67 % | t fuera medio (con signo) +0.57 | efecto fuera medio +0.39× coste | con |t fuera|>=2 mismo signo: 8
+|t exp|>=4: 9 celdas | mismo signo fuera 67 % | t fuera medio (con signo) +1.11 | efecto fuera medio +0.64× coste | con |t fuera|>=2 mismo signo: 3
+EURUSD corr +0.211 |t|>=3: 36, mismo signo 69 %
+UK100 corr -0.157 |t|>=3: 2, mismo signo 100 %
+JP225 corr +0.094 |t|>=3: 2, mismo signo 100 %
+US500 corr -0.036 |t|>=3: 2, mismo signo 100 %
+XAUUSD corr +0.040 |t|>=3: 10, mismo signo 40 %
+solo 'todos los días' (reloj puro): corr +0.134
+  reloj EURUSD corr +0.394
+  reloj UK100 corr -0.417
+  reloj JP225 corr +0.154
+  reloj US500 corr -0.117
+  reloj XAUUSD corr -0.066
