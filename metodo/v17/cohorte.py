@@ -122,8 +122,10 @@ def metricas(r: np.ndarray, idx: pd.DatetimeIndex) -> tuple:
 
 def main():
     filas = []
-    tramos = {"A": ("2001-01-01", "2007-12-31"), "B": ("2008-01-01", "2014-12-31"),
-              "IS": ("2001-01-01", "2014-12-31"), "OOS": ("2015-01-01", "2026-12-31")}
+    corte = int(sys.argv[1]) if len(sys.argv) > 1 else 2015     # primer año fuera de muestra
+    mitad = 2001 + (corte - 2001) // 2
+    tramos = {"A": ("2001-01-01", f"{mitad - 1}-12-31"), "B": (f"{mitad}-01-01", f"{corte - 1}-12-31"),
+              "IS": ("2001-01-01", f"{corte - 1}-12-31"), "OOS": (f"{corte}-01-01", "2026-12-31")}
     for clase, ms in CLASES.items():
         for m in ms:
             try:
@@ -161,7 +163,7 @@ def main():
                 filas.append(f)
         print(clase, len(filas), flush=True)
     df = pd.DataFrame(filas)
-    df.to_csv(Path(__file__).parent / "cohorte.csv.gz", index=False)
+    df.to_csv(Path(__file__).parent / ("cohorte.csv.gz" if corte == 2015 else f"cohorte_{corte}.csv.gz"), index=False)
     print(df.shape)
 
 

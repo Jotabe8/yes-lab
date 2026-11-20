@@ -166,6 +166,13 @@ del placebo es +0,13. La señal manda corto el 70 % de los meses y comprar esos 
 da +0,086 R: lo que se ve es la deriva alcista, no el flujo. Europa sale algo mejor en
 ajuste y se da la vuelta en prueba. Tiempo total con el método: unos 20 minutos.
 
+## 8. Qué predice el fuera de muestra (v17, 20-11-2026)
+Medido en 4.284 reglas diarias reales (`metodo/v17/INFORME.md`): las reglas con t ≥ 3 en el ajuste retienen ≈ 26 % del
+t fuera (sin deriva). El recorte del embudo solo cuadra si `n_pruebas` es TODO lo mirado: usar siempre `familia=`
+(libro). Juzgar la familia por la media de sus variantes (aviso "media de la familia"), no por la mejor. Probadas y
+sin valor: prueba de ruido OHLC, Walk Forward Correlation, estabilidad por mitades, vol/DD como selector, BHY global
+(mata el control positivo). Meseta: mejora marginal, no puerta. PBO: redundante con el t.
+
 ## 6. Plantilla MQL5
 
 `metodo/PlantillaPropEA.mq5`: solo se rellena `Senal()` (y `Gestionar()` si hay

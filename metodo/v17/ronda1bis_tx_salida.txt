@@ -1,0 +1,43 @@
+Cohorte 4284 reglas, objetivo tx_OOS; EB factor de encogimiento b = 0.00 (std t_IS 0.92; con ruido puro ≈ 1)
+Pendiente MCO de tx_OOS sobre t_IS: 0.16 (1 = sin encoger)
+
+rasgo        Spearman  Δ vs t_IS [IC95 por mercados]   top5%: t_OOS medio  %t>0   top1%: t_OOS  %t>0
+t_is         +0.118   [+0.000, +0.000]            +0.20  59%           +0.71  77%
+meseta       +0.138   [+0.004, +0.036]            +0.18  57%           +0.46  65%
+cruzado      +0.132   [-0.043, +0.076]            +0.10  59%           +0.04  60%
+mesa_cruz    +0.150   [+0.004, +0.058]            +0.29  60%           +0.69  81%
+estab        +0.136   [-0.022, +0.046]            +0.22  61%           +0.49  63%
+wfc          +0.036   [-0.174, +0.002]            -0.33  41%           -0.46  33%
+eb_fam       +0.171   [-0.004, +0.116]            +0.37  63%           -0.11  41%
+vol          +0.022   [-0.205, -0.000]            -0.08  46%           -0.03  51%
+dd           +0.038   [-0.137, -0.024]            -0.15  43%           -0.26  37%
+
+Por clase: Spearman t_is / meseta / mesa_cruz con el OOS
+  agricola  n  833  +0.059  +0.034  +0.091
+  bono      n  476  +0.230  +0.287  +0.250
+  divisa    n  833  +0.090  +0.106  +0.105
+  energia   n  595  -0.011  -0.023  +0.010
+  indice    n 1071  +0.269  +0.318  +0.294
+  metal     n  476  -0.057  -0.045  -0.027
+
+Control positivo: IBS largo en índices US (p1=thr 0,2 o 0,1, todas las h)
+  t_is       percentil medio 83%, mínimo 34%
+  meseta     percentil medio 88%, mínimo 52%
+  cruzado    percentil medio 88%, mínimo 58%
+  estab      percentil medio 83%, mínimo 31%
+  eb_fam     percentil medio 96%, mínimo 96%
+  tx_OOS medio +1.21
+
+Por familia (media t_is vs media OOS, solo lado +1 y −1):
+             t_is       tx_OOS      
+lado           -1     1     -1     1
+familia                             
+cambio_mes    NaN  0.61    NaN -0.68
+diasemana   -0.51 -0.54  -0.77 -0.72
+donchian     0.01 -0.20  -0.29 -0.21
+ibs          0.24  0.23   0.31  0.37
+nr          -0.46 -0.26  -0.45 -0.46
+seguidos    -0.05  0.21   0.19 -0.06
+sma         -0.03  0.02  -0.45 -0.40
+tsmom        0.05  0.12  -0.25 -0.21
+vela_grande  0.12 -0.00  -0.02 -0.21

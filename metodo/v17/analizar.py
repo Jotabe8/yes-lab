@@ -5,7 +5,8 @@ from pathlib import Path
 import numpy as np, pandas as pd
 
 AQUI = Path(__file__).parent
-Y = sys.argv[1] if len(sys.argv) > 1 else "tx"        # tx = sin deriva (timing), t = bruto con exposición
+Y = sys.argv[1] if len(sys.argv) > 1 else "tx"
+ARCH = sys.argv[2] if len(sys.argv) > 2 else "cohorte.csv.gz"        # tx = sin deriva (timing), t = bruto con exposición
 
 
 def rasgos(d: pd.DataFrame, y: str) -> pd.DataFrame:
@@ -44,21 +45,25 @@ def rasgos(d: pd.DataFrame, y: str) -> pd.DataFrame:
     return d, b
 
 
+def _rk(a):
+    return pd.Series(a).rank().to_numpy()
+
+
 def boot_spearman(d, col, y, reps=500, seed=0):
+    """IC 95 % de Δ Spearman (rasgo − t_is) remuestreando MERCADOS enteros (las reglas de un mercado no son independientes)."""
     rng = np.random.default_rng(seed)
-    ms = d.mercado.unique()
-    base, alt = [], []
+    grupos = [np.flatnonzero(d.mercado.to_numpy() == m) for m in d.mercado.unique()]
+    a, b, c = d.t_is.to_numpy(), d[col].to_numpy(), d[y].to_numpy()
+    dif = []
     for _ in range(reps):
-        sel = rng.choice(ms, len(ms))
-        x = pd.concat([d[d.mercado == m] for m in sel])
-        base.append(x.t_is.rank().corr(x[y].rank()))
-        alt.append(x[col].rank().corr(x[y].rank()))
-    dif = np.array(alt) - np.array(base)
+        ix = np.concatenate([grupos[i] for i in rng.integers(0, len(grupos), len(grupos))])
+        rc = _rk(c[ix])
+        dif.append(np.corrcoef(_rk(b[ix]), rc)[0, 1] - np.corrcoef(_rk(a[ix]), rc)[0, 1])
     return np.percentile(dif, [2.5, 97.5])
 
 
 def main():
-    d = pd.read_csv(AQUI / "cohorte.csv.gz").dropna(subset=[f"{Y}_IS", f"{Y}_OOS"])
+    d = pd.read_csv(AQUI / ARCH).dropna(subset=[f"{Y}_IS", f"{Y}_OOS"])
     d, b = rasgos(d, Y)
     yo = f"{Y}_OOS"
     print(f"Cohorte {len(d)} reglas, objetivo {yo}; EB factor de encogimiento b = {b:.2f} "
@@ -74,6 +79,11 @@ def main():
             top = x[x[col] >= x[col].quantile(1 - q)]
             r += [top[yo].mean(), (top[yo] > 0).mean()]
         print(f"{col:<12} {rho:+.3f}   [{ic[0]:+.3f}, {ic[1]:+.3f}]            {r[0]:+.2f}  {r[1]:.0%}           {r[2]:+.2f}  {r[3]:.0%}")
+    # por clase de activo
+    print("\nPor clase: Spearman t_is / meseta / mesa_cruz con el OOS")
+    for cl, x in d.groupby("clase"):
+        r = [x[c].rank().corr(x[yo].rank()) for c in ("t_is", "meseta", "mesa_cruz")]
+        print(f"  {cl:<9} n {len(x):4d}  {r[0]:+.3f}  {r[1]:+.3f}  {r[2]:+.3f}")
     # controles
     print("\nControl positivo: IBS largo en índices US (p1=thr 0,2 o 0,1, todas las h)")
     c = d[(d.familia == "ibs") & (d.lado == 1) & d.mercado.isin(["GSPC", "NDX", "RUT", "DJI", "ES", "NQ", "YM"])]

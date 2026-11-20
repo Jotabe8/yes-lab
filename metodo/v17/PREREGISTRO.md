@@ -22,3 +22,8 @@ la clase), estabilidad (mín. de las dos mitades), WFC (Tinsley: corr. A-B de la
 ## Ronda 1-bis (confirmación preregistrada ANTES de correr, 20-11 ~23:55 UTC)
 El ganador de la ronda 1 (meseta y meseta+cruzado) se confirma en OTRO corte: ajuste 2001-10, fuera 2011-26,
 y por clase de activo (debe mejorar en ≥ 4 de 6 clases en `tx`). Si no, se descarta.
+
+## Rondas 2-5 (exploratorias, criterio igual que arriba; resultados en INFORME.md)
+2 encogimiento por tramos de t y recorte del embudo; 3 prueba de ruido (σ 0,15 ATR, 8 réplicas, señales con ruido y R
+con precios reales); 4 umbrales de pruebas múltiples y familia frente a mejor variante; 5 PBO (10 bloques) frente al t
+fuera de la variante elegida.
