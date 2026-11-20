@@ -1,0 +1,14 @@
+Cohorte 4284 reglas, objetivo t_OOS; EB factor de encogimiento b = 0.35 (std t_IS 1.24; con ruido puro ≈ 1)
+Pendiente MCO de t_OOS sobre t_IS: 0.42 (1 = sin encoger)
+
+rasgo        Spearman  Δ vs t_IS [IC95 por mercados]   top5%: t_OOS medio  %t>0   top1%: t_OOS  %t>0
+t_is         +0.393   [+0.000, +0.000]            +1.24  81%           +1.49  88%
+meseta       +0.424   [+0.018, +0.040]            +1.40  84%           +1.84  91%
+cruzado      +0.386   [-0.059, +0.042]            +0.87  72%           +0.72  70%
+mesa_cruz    +0.437   [+0.014, +0.071]            +1.53  90%           +1.74  93%
+estab        +0.390   [-0.045, +0.011]            +1.26  84%           +1.59  90%
+wfc          -0.046   [-0.593, -0.313]            -0.22  43%           +0.32  57%
+eb_fam       +0.443   [+0.021, +0.080]            +1.62  91%           +1.74  93%
+vol          +0.044   [-0.471, -0.230]            -0.08  43%           +0.09  49%
+dd           +0.251   [-0.189, -0.083]            +0.09  53%           -0.16  51%
+
