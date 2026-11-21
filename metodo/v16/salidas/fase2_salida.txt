@@ -1,0 +1,65 @@
+pruebas en el mapa: 4628  (celdas m×b×H: 356)
+umbral FWER 5 % (p95 del max|t| nulo): 4.92  | max|t| nulo medio 4.37
+|t|>=3 → real 52 vs nulo medio 27.7 (p95 37)
+|t|>=3 y efecto>=2×coste → real 25 vs nulo medio 14.3 (p95 21)
+
+=== 40 mejores |t| con efecto ≥ 2× coste (exploración 2018-22) ===
+mercado  hora  H       rasgo lado    n     media         t  efecto_x_coste
+ EURUSD 01:30 12    posrango bajo  433  0.000156  5.616041        2.085898
+ EURUSD 06:00 12       rayer bajo  433 -0.000217 -4.469156        2.888430
+ XAUUSD 06:30 12       rayer bajo  430  0.000361  4.306219        3.037328
+ EURUSD 09:00 36       todos      1296 -0.000215 -4.019978        2.864846
+ EURUSD 01:00 12    posrango bajo  433  0.000157  3.949365        2.090685
+  US500 04:00 12       rayer alto  393  0.000276  3.932418        3.454926
+ EURUSD 01:00 36    posrango bajo  433  0.000187  3.683598        2.494704
+ EURUSD 01:00 36       rayer bajo  433  0.000193  3.576484        2.578841
+  JP225 06:00 12       rayer alto  429  0.000494  3.540396        2.788313
+ EURUSD 11:00 12       rayer bajo  433 -0.000163 -3.503510        2.175556
+ EURUSD 13:00 36        rdia alto  432 -0.000385 -3.465561        5.133134
+ EURUSD 01:00 36         r1h bajo  433  0.000185  3.458613        2.465051
+ EURUSD 01:00 36        rdia bajo  433  0.000185  3.458613        2.465051
+ EURUSD 04:00 36        rdia alto  433 -0.000170 -3.439741        2.273081
+ EURUSD 11:00 12 volsorpresa alto  426 -0.000189 -3.430273        2.521100
+ EURUSD 11:00 12        rdia bajo  432 -0.000182 -3.324167        2.431416
+ EURUSD 09:00 36 volsorpresa bajo  426 -0.000238 -3.312862        3.167590
+ EURUSD 09:00 36   cruzado1h bajo  430 -0.000293 -3.239037        3.910915
+  UK100 04:00 12    posrango alto  402  0.000210  3.231068        2.122731
+ EURUSD 04:00 36         r1h alto  433 -0.000172 -3.149979        2.288147
+ EURUSD 09:00 36       rayer bajo  433 -0.000287 -3.146808        3.828045
+ EURUSD 11:00 12         r1h bajo  432 -0.000155 -3.138261        2.073045
+  UK100 02:30 36    posrango alto  398  0.000297  3.083885        2.995515
+ EURUSD 04:00 36       rayer bajo  433 -0.000184 -3.074779        2.456029
+  US500 04:00 36       rayer alto  399  0.000517  3.036392        6.459292
+  UK100 17:00 36       rayer alto  421 -0.000563 -2.942195        5.690417
+  US500 02:00 36    posrango alto  395  0.000291  2.938998        3.636084
+  UK100 15:30 36    posrango alto  424 -0.000441 -2.891928        4.459423
+ EURUSD 09:00 36        rdia bajo  432 -0.000243 -2.804099        3.234517
+  JP225 03:30 12         r1h bajo  426 -0.000411 -2.802733        2.323025
+ EURUSD 09:00 36    posrango bajo  432 -0.000221 -2.775460        2.952652
+ EURUSD 08:30 36    posrango bajo  432 -0.000212 -2.749446        2.824462
+ EURUSD 09:00 36         r1h alto  432 -0.000260 -2.748962        3.473051
+ EURUSD 06:00 36 volsorpresa alto  427  0.000252  2.720504        3.355500
+  US500 03:00 36       rayer alto  404  0.000300  2.714399        3.746458
+  UK100 10:30 12   cruzado1h alto  427  0.000255  2.714296        2.576212
+ EURUSD 09:00 36       rayer alto  432 -0.000250 -2.691967        3.337127
+ EURUSD 01:00 36 volsorpresa alto  427  0.000151  2.659560        2.008898
+  JP225 01:30 12        rdia bajo  430 -0.000391 -2.609458        2.207047
+  UK100 16:30 36    posrango alto  424 -0.000299 -2.608896        3.022190
+
+=== Recuento por rasgo de |t|>=3 (real) ===
+rasgo
+cruzado1h       2
+posrango        6
+r1h             7
+rayer          13
+rdia            6
+todos           8
+volsorpresa    10
+
+=== Recuento por mercado de |t|>=3 (real) ===
+mercado
+EURUSD    36
+JP225      2
+UK100      2
+US500      2
+XAUUSD    10

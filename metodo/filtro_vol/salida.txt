@@ -1,0 +1,22 @@
+Días con percentil: 3264 (2012-08-21 → 2026-11-13); bloqueados 12.0%; coste medio 0.036 R
+
+=== 2012-17 (5.4 años, 1181 ops)
+F1 bloqueados: 107 ops, bruto +0.079, neto +0.054 R (t sem +0.23) | permitidos 1074, neto +0.084 (t sem +1.11)
+F3 pausas ≥10 días: 90 ops en 5 episodios, neto +0.081 (t sem +0.31)
+F2 sin filtro: 18.0 R/año, Sharpe 0.54, DD 48.5 R | con p90: 16.9 R/año, Sharpe 0.53, DD 37.6 R
+   mejora real: R/año -1.1, Sharpe -0.01, DD -10.9 | placebo p95: R/año +4.7, Sharpe +0.16, DD (p5) -9.2 | p-valor Sharpe 0.476
+   por año (neto bloqueados, n): 2013: +0.87 (5), 2014: +0.43 (39), 2015: -0.62 (23), 2016: +0.11 (23), 2017: -0.22 (17)
+
+=== 2018-26 (8.9 años, 2083 ops)
+F1 bloqueados: 285 ops, bruto -0.017, neto -0.035 R (t sem -0.28) | permitidos 1798, neto +0.221 (t sem +4.12)
+F3 pausas ≥10 días: 245 ops en 13 episodios, neto -0.057 (t sem -0.44)
+F2 sin filtro: 43.8 R/año, Sharpe 1.20, DD 36.1 R | con p90: 44.9 R/año, Sharpe 1.31, DD 31.6 R
+   mejora real: R/año +1.1, Sharpe +0.11, DD -4.4 | placebo p95: R/año +1.1, Sharpe +0.10, DD (p5) -6.1 | p-valor Sharpe 0.035
+   por año (neto bloqueados, n): 2018: +0.18 (73), 2019: +0.84 (8), 2020: -0.72 (32), 2021: +0.78 (9), 2022: -0.02 (58), 2024: -0.44 (35), 2025: -0.26 (37), 2026: +0.39 (33)
+
+=== 2012-26 (14.2 años, 3264 ops)
+F1 bloqueados: 392 ops, bruto +0.010, neto -0.010 R (t sem -0.09) | permitidos 2872, neto +0.170 (t sem +3.86)
+F3 pausas ≥10 días: 335 ops en 18 episodios, neto -0.020 (t sem -0.17)
+F2 sin filtro: 34.0 R/año, Sharpe 0.96, DD 48.5 R | con p90: 34.3 R/año, Sharpe 1.03, DD 37.6 R
+   mejora real: R/año +0.3, Sharpe +0.07, DD -10.9 | placebo p95: R/año +0.8, Sharpe +0.07, DD (p5) -8.6 | p-valor Sharpe 0.060
+   por año (neto bloqueados, n): 2013: +0.87 (5), 2014: +0.43 (39), 2015: -0.62 (23), 2016: +0.11 (23), 2017: -0.22 (17), 2018: +0.18 (73), 2019: +0.84 (8), 2020: -0.72 (32), 2021: +0.78 (9), 2022: -0.02 (58), 2024: -0.44 (35), 2025: -0.26 (37), 2026: +0.39 (33)
