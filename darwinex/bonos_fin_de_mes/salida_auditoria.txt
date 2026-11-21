@@ -1,0 +1,26 @@
+1) MISMA REGLA, OTRO PRECIO (bono a la par exacto)
+duración fija 8,5 (original) 1990-2026       n  442 | bruto  24.57 pb | neto  21.57 (t  5.60) | 1ª mitad  22.88 2ª  20.26 | x2  18.57
+duración fija 8,5 (original) 2019-2026       n   94 | bruto  21.24 pb | neto  18.24 (t  2.50) | 1ª mitad  26.66 2ª   9.82 | x2  15.24
+bono a la par exacto 1990-2026               n  442 | bruto  24.09 pb | neto  21.09 (t  5.77) | 1ª mitad  21.02 2ª  21.17 | x2  18.09
+bono a la par exacto 2019-2026               n   94 | bruto  22.25 pb | neto  19.25 (t  2.60) | 1ª mitad  28.77 2ª   9.74 | x2  16.25
+par, en exceso de la letra 1990-2026         n  442 | bruto  20.84 pb | neto  17.84 (t  4.88) | 1ª mitad  16.19 2ª  19.48 | x2  14.84
+par, en exceso de la letra 2019-2026         n   94 | bruto  18.95 pb | neto  15.95 (t  2.15) | 1ª mitad  27.49 2ª   4.41 | x2  12.95
+
+2) PLACEBO COMPLETO: 3 sesiones terminando en cada posición del mes (bono a la par, 1990-2026, bruto pb)
+   precio: fin de mes  24.1 | resto media   2.9 sd  3.9 | máximo del resto   8.6 (pos 11) | percentil 100
+      3:-0.6 4:3.4 5:-4.2 6:-2.9 7:-3.4 8:3.0 9:7.6 10:8.1 11:8.6 12:8.0 13:6.2 14:4.4 15:2.0 16:3.9 17:5.1 18:5.2 -1:24.1 -2:12.8 -3:9.4 -4:3.6 -5:3.4 -6:0.1 -7:-2.2 -8:1.5
+     fin de mes − media del resto del mismo mes:  21.2 pb t 5.45 | 2019-26  24.0 pb t 3.01
+   exceso de la letra: fin de mes  20.8 | resto media  -0.4 sd  3.9 | máximo del resto   5.3 (pos 11) | percentil 100
+      3:-3.8 4:0.2 5:-7.4 6:-6.2 7:-6.7 8:-0.3 9:4.4 10:4.8 11:5.3 12:4.7 13:2.9 14:1.1 15:-1.2 16:0.7 17:1.8 18:1.9 -1:20.8 -2:9.5 -3:6.2 -4:0.3 -5:0.1 -6:-3.2 -7:-5.5 -8:-1.8
+     fin de mes − media del resto del mismo mes:  21.2 pb t 5.45 | 2019-26  23.9 pb t 3.01
+
+3) FUTURO ZN REAL (Yahoo) con vencimientos detectados contra FRED
+   días marcados como salto: 55 de 6566 (0.8 %)
+   meses con salto dentro de la ventana: 1
+ZN sin limpiar 2000-2026                     n  309 | bruto  17.24 pb | neto  14.24 (t  4.15) | 1ª mitad  17.27 2ª  11.23 | x2  11.24
+ZN limpio 2001-2026                          n  309 | bruto  17.48 pb | neto  14.48 (t  4.18) | 1ª mitad  17.75 2ª  11.23 | x2  11.48
+ZN limpio 2019-2026                          n   94 | bruto  13.52 pb | neto  10.52 (t  1.93) | 1ª mitad  17.23 2ª   3.81 | x2   7.52
+   ZN placebo completo: fin de mes  17.5 | resto media  -1.7 máx   3.2 (pos 12) | percentil 100
+   ZN fin de mes − resto del mismo mes:  19.2 pb t 5.17
+   ZN neto por año (pb): {2001: 734, 2002: 438, 2003: -87, 2004: 27, 2005: 66, 2006: 66, 2007: 193, 2008: 316, 2009: -53, 2010: 493, 2011: 198, 2012: 306, 2013: 40, 2014: 166, 2015: 62, 2016: 307, 2017: -8, 2018: 224, 2019: 206, 2020: 333, 2021: -56, 2022: 321, 2023: -20, 2024: 126, 2025: 162, 2026: -84}
+   correlación ventana ZN vs FRED por mes: 0.961; ZN/FRED media 0.70

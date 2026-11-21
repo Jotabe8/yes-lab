@@ -1,0 +1,69 @@
+name: Datos Bund fin de mes
+
+# Bundesbank, BCE, Yahoo y Dukascopy están bloqueados desde el entorno de Claude: la descarga corre aquí.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-5jjcu9]
+    paths:
+      - .github/workflows/datos-bund.yml
+
+permissions:
+  contents: write
+
+jobs:
+  datos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Descargar
+        run: |
+          mkdir -p datos_bund
+          pip install -q yfinance pandas requests
+          python3 - <<'PY'
+          import requests, pandas as pd, yfinance as yf
+          H = {"Accept": "text/csv"}
+          bb = {"bbsis_zar_10y": "BBSIS/D.I.ZAR.ZI.EUR.S1311.B.A604.R10XX.R.A.A._Z._Z.A",
+                "bbsis_zst_10y": "BBSIS/D.I.ZST.ZI.EUR.S1311.B.A604.R10XX.R.A.A._Z._Z.A",
+                "bbk01_wt1010": "BBK01/WT1010"}
+          for n, k in bb.items():
+              for url in [f"https://api.statistiken.bundesbank.de/rest/download/{k}?format=csv&lang=en",
+                          f"https://api.statistiken.bundesbank.de/rest/data/{k}?format=csv&lang=en"]:
+                  try:
+                      r = requests.get(url, timeout=120, headers=H); print(n, url, r.status_code, len(r.text))
+                      if r.ok and len(r.text) > 2000: open(f"datos_bund/{n}.csv", "w").write(r.text); break
+                  except Exception as e: print("falla", n, e)
+          for n, k in {"ecb_aaa_10y": "YC/B.U2.EUR.4F.G_N_A.SV_C_YM.SR_10Y", "ecb_todos_10y": "YC/B.U2.EUR.4F.G_N_C.SV_C_YM.SR_10Y"}.items():
+              try:
+                  r = requests.get(f"https://data-api.ecb.europa.eu/service/data/{k}?format=csvdata", timeout=120)
+                  print(n, r.status_code, len(r.text))
+                  if r.ok: open(f"datos_bund/{n}.csv", "w").write(r.text)
+              except Exception as e: print("falla", n, e)
+          for t in ["FGBL=F", "GBL=F", "FGBL.EX", "BUND=F"]:
+              try:
+                  d = yf.download(t, start="1990-01-01", auto_adjust=False, progress=False)
+                  print(t, len(d))
+                  if len(d) > 100:
+                      d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+                      d[["Open", "High", "Low", "Close"]].to_csv(f"datos_bund/yahoo_{t.replace('=', '_')}.csv")
+              except Exception as e: print("falla", t, e)
+          PY
+      - name: Dukascopy Bund CFD (informativo)
+        run: |
+          mkdir -p /tmp/dk && cd /tmp/dk && npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          node -e 'const m=require("dukascopy-node"); const meta=m.instrumentMetaData||{}; console.log(Object.keys(meta).filter(k=>/bund|gilt|tbond|bond/i.test(k)).join(","))' | tee $GITHUB_WORKSPACE/datos_bund/dukascopy_instrumentos.txt || true
+          for i in bundtreur; do
+            npx dukascopy-node -i $i -from 2010-01-01 -to 2026-11-18 -t d1 -p bid -f csv -dir $GITHUB_WORKSPACE/datos_bund || true
+          done
+          ls -la $GITHUB_WORKSPACE/datos_bund
+      - name: Guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos_bund
+          git diff --cached --quiet || git commit -m "Datos del Bund $(date -u +%F)"
+          git pull --rebase -q || true
+          git push
