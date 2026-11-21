@@ -1,0 +1,14 @@
+
+objetivo tx_OOS: n 4284, corr(t_is, ruido) 0.91
+  t_is    Spearman +0.169  Δ IC95 [+0.000, +0.000]  top5% t_OOS +0.29 (63% > 0)
+  ruido   Spearman +0.158  Δ IC95 [-0.031, +0.007]  top5% t_OOS +0.16 (60% > 0)
+  min_lr  Spearman +0.150  Δ IC95 [-0.032, -0.007]  top5% t_OOS +0.17 (58% > 0)
+  caida   Spearman -0.054  Δ IC95 [-0.306, -0.142]  top5% t_OOS -0.20 (43% > 0)
+  control IBS US: t_is 1.28 → con ruido 0.89; resto de la cohorte -0.04 → -0.05
+
+objetivo t_OOS: n 4284, corr(t_is, ruido) 0.95
+  t_is    Spearman +0.393  Δ IC95 [+0.000, +0.000]  top5% t_OOS +1.24 (81% > 0)
+  ruido   Spearman +0.397  Δ IC95 [-0.020, +0.022]  top5% t_OOS +1.30 (85% > 0)
+  min_lr  Spearman +0.390  Δ IC95 [-0.019, +0.011]  top5% t_OOS +1.29 (84% > 0)
+  caida   Spearman -0.051  Δ IC95 [-0.561, -0.314]  top5% t_OOS -0.34 (37% > 0)
+  control IBS US: t_is 2.26 → con ruido 1.92; resto de la cohorte -0.00 → -0.00

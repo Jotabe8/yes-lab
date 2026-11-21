@@ -1,0 +1,48 @@
+
+######## cohorte.csv.gz
+
+objetivo tx: 4284 reglas
+  t ≥ 1,64 (sin corregir)        pasan  167  t_OOS medio +0.32  % con t_OOS>1 25%  % t_OOS>0 65%  familias 9
+  Bonferroni n=10 (t ≥ 2,58)     pasan   26  t_OOS medio +0.79  % con t_OOS>1 38%  % t_OOS>0 88%  familias 4
+  Bonferroni n=100 (t ≥ 3,29)    pasan    6  t_OOS medio +0.83  % con t_OOS>1 50%  % t_OOS>0 83%  familias 4
+  BH 5 % global                  pasan    1  t_OOS medio +2.47  % con t_OOS>1 100%  % t_OOS>0 100%  familias 1
+  BHY 5 % global                 pasan    1  t_OOS medio +2.47  % con t_OOS>1 100%  % t_OOS>0 100%  familias 1
+  Bonferroni global n=4284       pasan    1  t_OOS medio +2.47  % con t_OOS>1 100%  % t_OOS>0 100%  familias 1
+  familias×clase×lado: 102; Spearman(media_is, media_oos) +0.45, Spearman(mejor_is, media_oos) +0.15
+  top10 por media: media_oos +0.10, su mejor variante fuera +0.36 | top10 por mejor variante: media_oos -0.12, mejor variante fuera +0.90
+  top 5 por media: indice/seguidos/+1 +1.14→+0.34; indice/ibs/+1 +0.98→+0.53; metal/tsmom/-1 +0.81→-0.26; metal/cambio_mes/+1 +0.77→-0.09; indice/ibs/-1 +0.72→+0.17
+
+objetivo t: 4284 reglas
+  t ≥ 1,64 (sin corregir)        pasan  410  t_OOS medio +1.00  % con t_OOS>1 51%  % t_OOS>0 78%  familias 9
+  Bonferroni n=10 (t ≥ 2,58)     pasan   72  t_OOS medio +1.38  % con t_OOS>1 72%  % t_OOS>0 86%  familias 9
+  Bonferroni n=100 (t ≥ 3,29)    pasan   18  t_OOS medio +1.69  % con t_OOS>1 89%  % t_OOS>0 94%  familias 6
+  BH 5 % global                  pasan   12  t_OOS medio +1.54  % con t_OOS>1 83%  % t_OOS>0 92%  familias 4
+  BHY 5 % global                 pasan    0
+  Bonferroni global n=4284       pasan    2  t_OOS medio +2.29  % con t_OOS>1 100%  % t_OOS>0 100%  familias 2
+  familias×clase×lado: 102; Spearman(media_is, media_oos) +0.60, Spearman(mejor_is, media_oos) +0.42
+  top10 por media: media_oos +1.03, su mejor variante fuera +1.77 | top10 por mejor variante: media_oos +0.32, mejor variante fuera +1.40
+  top 5 por media: metal/tsmom/+1 +2.00→+0.78; indice/ibs/+1 +1.77→+1.73; indice/seguidos/+1 +1.64→+1.16; metal/sma/+1 +1.64→+0.54; metal/cambio_mes/+1 +1.49→+0.47
+
+######## cohorte_2011.csv.gz
+
+objetivo tx: 4284 reglas
+  t ≥ 1,64 (sin corregir)        pasan  180  t_OOS medio +0.20  % con t_OOS>1 23%  % t_OOS>0 57%  familias 9
+  Bonferroni n=10 (t ≥ 2,58)     pasan   25  t_OOS medio +0.93  % con t_OOS>1 44%  % t_OOS>0 80%  familias 4
+  Bonferroni n=100 (t ≥ 3,29)    pasan    5  t_OOS medio +1.65  % con t_OOS>1 80%  % t_OOS>0 100%  familias 4
+  BH 5 % global                  pasan    0
+  BHY 5 % global                 pasan    0
+  Bonferroni global n=4284       pasan    0
+  familias×clase×lado: 102; Spearman(media_is, media_oos) +0.40, Spearman(mejor_is, media_oos) +0.02
+  top10 por media: media_oos +0.10, su mejor variante fuera +0.11 | top10 por mejor variante: media_oos -0.18, mejor variante fuera +0.84
+  top 5 por media: indice/cambio_mes/+1 +1.06→-0.11; bono/ibs/-1 +0.96→+0.31; indice/ibs/+1 +0.96→+0.66; indice/seguidos/+1 +0.95→+0.60; metal/cambio_mes/+1 +0.81→-0.07
+
+objetivo t: 4284 reglas
+  t ≥ 1,64 (sin corregir)        pasan  501  t_OOS medio +0.32  % con t_OOS>1 29%  % t_OOS>0 61%  familias 9
+  Bonferroni n=10 (t ≥ 2,58)     pasan   99  t_OOS medio +0.89  % con t_OOS>1 52%  % t_OOS>0 80%  familias 9
+  Bonferroni n=100 (t ≥ 3,29)    pasan   19  t_OOS medio +1.49  % con t_OOS>1 79%  % t_OOS>0 89%  familias 7
+  BH 5 % global                  pasan    0
+  BHY 5 % global                 pasan    0
+  Bonferroni global n=4284       pasan    0
+  familias×clase×lado: 102; Spearman(media_is, media_oos) +0.27, Spearman(mejor_is, media_oos) +0.16
+  top10 por media: media_oos +0.18, su mejor variante fuera +0.69 | top10 por mejor variante: media_oos +0.32, mejor variante fuera +1.48
+  top 5 por media: metal/tsmom/+1 +2.51→+0.45; metal/sma/+1 +2.21→+0.14; metal/cambio_mes/+1 +1.90→+0.20; metal/donchian/+1 +1.85→+0.23; metal/ibs/+1 +1.83→+0.86

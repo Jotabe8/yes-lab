@@ -1,0 +1,25 @@
+396 grupos; Spearman(PBO, t fuera de la elegida) -0.068; Spearman(t ajuste de la elegida, t fuera) +0.229
+                  n  t_in  t_out   pos  t_out_gt1
+clase_pbo                                        
+≤0,2             66  1.53   0.13  0.58       0.20
+0,2-0,5         133  1.03  -0.08  0.53       0.14
+>0,5 (bloquea)  197  0.64  -0.05  0.48       0.11
+
+Con t ajuste de la elegida ≥ 2,58: n 16
+            n  t_out  pos
+clase_pbo                
+≤0,2       10   0.61  0.9
+0,2-0,5     6   1.12  1.0
+396 grupos; Spearman(PBO, t fuera de la elegida) -0.111; Spearman(t ajuste de la elegida, t fuera) +0.190
+                  n  t_in  t_out   pos  t_out_gt1
+clase_pbo                                        
+≤0,2             57  1.61   0.06  0.56       0.18
+0,2-0,5         137  1.04   0.07  0.55       0.15
+>0,5 (bloquea)  202  0.71  -0.19  0.43       0.08
+
+Con t ajuste de la elegida ≥ 2,58: n 17
+                 n  t_out   pos
+clase_pbo                      
+≤0,2            10   0.56  0.80
+0,2-0,5          6   1.12  0.83
+>0,5 (bloquea)   1  -0.18  0.00

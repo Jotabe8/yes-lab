@@ -72,3 +72,29 @@ class TestNulos(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAvisosV17(unittest.TestCase):
+    def _ops(self, semilla=3):
+        rng = np.random.default_rng(semilla)
+        f = pd.bdate_range("2011-01-03", periods=1500)
+        r = np.where(rng.random(1500) < 0.6, -1.0, rng.exponential(1.8, 1500))
+        return pd.DataFrame({"fecha": f, "r_bruto": r, "coste_r": 0.03})
+
+    def test_sin_libro_avisa_sin_bloquear(self):
+        res = embudo(self._ops(), 10, "2023-01-01")
+        fila = [p for p in res.puertas if p[0] == "libro de pruebas"][0]
+        self.assertFalse(fila[1])
+        self.assertFalse(fila[3])          # no bloquea
+
+    def test_media_de_la_familia(self):
+        o = self._ops()
+        rng = np.random.default_rng(4)
+        dias = pd.DatetimeIndex(sorted(o.fecha.unique()))
+        malas = pd.DataFrame(rng.normal(-0.05, 1, (len(dias), 8)), index=dias,
+                             columns=[f"v{i}" for i in range(8)])
+        txt = str(embudo(o, 10, "2023-01-01", variantes=malas))
+        self.assertIn("media de la familia", txt)
+        fila = [p for p in embudo(o, 10, "2023-01-01", variantes=malas).puertas if p[0] == "media de la familia"][0]
+        self.assertFalse(fila[1])
+        self.assertFalse(fila[3])

@@ -1,0 +1,35 @@
+Cohorte 4284 reglas, objetivo tx_OOS; EB factor de encogimiento b = 0.00 (std t_IS 0.95; con ruido puro ≈ 1)
+Pendiente MCO de tx_OOS sobre t_IS: 0.18 (1 = sin encoger)
+
+rasgo        Spearman  Δ vs t_IS [IC95 por mercados]   top5%: t_OOS medio  %t>0   top1%: t_OOS  %t>0
+t_is         +0.169   [+0.000, +0.000]            +0.29  63%           +0.57  77%
+meseta       +0.191   [+0.008, +0.035]            +0.33  63%           +0.66  74%
+cruzado      +0.160   [-0.061, +0.037]            +0.17  61%           +0.26  70%
+mesa_cruz    +0.198   [-0.002, +0.055]            +0.42  69%           +0.71  84%
+estab        +0.168   [-0.035, +0.032]            +0.31  62%           +0.54  78%
+wfc          -0.015   [-0.288, -0.094]            -0.39  37%           -0.25  47%
+eb_fam       +0.198   [-0.023, +0.074]            +0.26  65%           +0.34  65%
+vol          +0.024   [-0.236, -0.068]            -0.10  40%           +0.13  47%
+dd           +0.072   [-0.148, -0.047]            +0.02  52%           -0.20  51%
+
+Control positivo: IBS largo en índices US (p1=thr 0,2 o 0,1, todas las h)
+  t_is       percentil medio 85%, mínimo 29%
+  meseta     percentil medio 90%, mínimo 53%
+  cruzado    percentil medio 90%, mínimo 74%
+  estab      percentil medio 85%, mínimo 28%
+  eb_fam     percentil medio 97%, mínimo 97%
+  tx_OOS medio +1.09
+
+Por familia (media t_is vs media OOS, solo lado +1 y −1):
+             t_is       tx_OOS      
+lado           -1     1     -1     1
+familia                             
+cambio_mes    NaN  0.18    NaN -0.42
+diasemana   -0.63 -0.65  -0.66 -0.61
+donchian    -0.03 -0.20  -0.23 -0.14
+ibs          0.30  0.29   0.22  0.32
+nr          -0.57 -0.36  -0.32 -0.40
+seguidos     0.02  0.18   0.14 -0.07
+sma         -0.02 -0.02  -0.35 -0.32
+tsmom        0.13  0.13  -0.17 -0.14
+vela_grande -0.03 -0.04   0.04 -0.18

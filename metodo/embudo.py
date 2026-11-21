@@ -195,6 +195,13 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
                     bloquea=False)
             n_pruebas = n_libro
 
+    else:
+        # v17 (20-11-2026): el libro no se había usado ni una vez desde el PR #52. Sin él, n_pruebas se cuenta a mano
+        # y en la cohorte de 4.284 reglas reales el recorte con n=10 prometía t 2,6 fuera y salió 0,9; con el N real
+        # de lo mirado (4.284) prometía 1,0. Aviso, no bloquea.
+        res.add("libro de pruebas", False, f"sin familia=: n_pruebas {n_pruebas} contado a mano; contar TODO lo mirado "
+                "(cada casilla de un mapa, mercado y parámetro)", bloquea=False)
+
     # P0-P1: frecuencia y coste
     ops_año = len(ops) / años
     res.add("frecuencia", ops_año >= MIN_OPS_AÑO, f"{ops_año:.0f} ops/año (mín {MIN_OPS_AÑO})")
@@ -249,6 +256,13 @@ def embudo(ops: pd.DataFrame, n_pruebas: int, corte_oos: str, placebo=None,
         res.add("SPA mejor de N", sp["p_spa"] <= MAX_P_SPA,
                 f"p {sp['p_spa']:.3f} con {sp['n_variantes']} variantes; mejor {sp['mejor']} "
                 f"{sp['media_mejor']:+.3f} R/día; StepM: {', '.join(sp['superiores']) or 'ninguna'}{aviso}",
+                bloquea=False)
+        # v17: la media de TODAS las variantes predice el fuera de la familia mucho mejor que su mejor variante
+        # (Spearman 0,40-0,60 frente a 0,02-0,42 en 102 familias reales, dos cortes). Aviso: una ventaja estrecha
+        # y real (el ORB US100 dentro de "ORB en todos los mercados") puede tener media ≈ 0.
+        tv = variantes.apply(lambda c: t_stat(c.to_numpy()))
+        res.add("media de la familia", tv.mean() > 0,
+                f"t medio de las {len(tv)} variantes {tv.mean():+.2f} ({(tv > 0).mean():.0%} > 0) vs mejor {tv.max():+.2f}",
                 bloquea=False)
         pb = pbo(variantes)
         res.add("PBO (CSCV)", pb["pbo"] <= MAX_PBO,
