@@ -1,0 +1,101 @@
+name: v18 caída S&P 500 (datos)
+
+# Yahoo y Dukascopy están bloqueados desde el entorno de Claude: la descarga corre aquí.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-wseqo8]
+    paths:
+      - .github/workflows/v18-caida.yml
+
+permissions:
+  contents: write
+
+jobs:
+  yahoo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Diarios e intradía 5 min (Yahoo)
+        run: |
+          mkdir -p salida && pip install -q yfinance pandas
+          python3 - <<'PY'
+          import yfinance as yf
+          diarios = {"GSPC": "^GSPC", "NDX": "^NDX", "DJI": "^DJI", "RUT": "^RUT", "VIX": "^VIX", "VIX9D": "^VIX9D",
+                     "VIX3M": "^VIX3M", "TNX": "^TNX", "DXY": "DX-Y.NYB", "ES": "ES=F", "NQ": "NQ=F", "GC": "GC=F",
+                     "BTC": "BTC-USD", "XLK": "XLK", "XLF": "XLF", "XLE": "XLE", "XLU": "XLU", "XLV": "XLV", "XLY": "XLY",
+                     "XLP": "XLP", "XLI": "XLI", "SMH": "SMH", "NVDA": "NVDA", "RSP": "RSP", "HYG": "HYG", "TLT": "TLT"}
+          for n, t in diarios.items():
+              try:
+                  d = yf.download(t, start="1950-01-01", auto_adjust=False, progress=False)
+                  d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+                  d[["Open", "High", "Low", "Close", "Volume"]].to_csv(f"salida/d_{n}.csv"); print(n, len(d), d.index[-1])
+              except Exception as e: print("falla", n, e)
+          for n, t in {"SPY": "SPY", "QQQ": "QQQ", "DIA": "DIA", "ES": "ES=F"}.items():
+              try:
+                  d = yf.download(t, period="60d", interval="5m", auto_adjust=False, progress=False, prepost=False)
+                  d.columns = [c[0] if isinstance(c, tuple) else c for c in d.columns]
+                  d[["Open", "High", "Low", "Close", "Volume"]].to_csv(f"salida/m5_{n}.csv"); print(n, len(d))
+              except Exception as e: print("falla", n, e)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yahoo
+          path: salida/
+
+  duka:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        par: ["US100:usatechidxusd", "US500:usa500idxusd", "US30:usa30idxusd"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: M1 bid/ask 2026-11 y barras 30 min
+        run: |
+          SIM=${PAR%%:*}; INS=${PAR##*:}
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          for P in bid ask; do
+            npx dukascopy-node -i $INS -from 2026-11-01 -to 2026-11-21 -t m1 -p $P -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo "falla $P"
+          done
+          ls -la
+          cd .. && pip install -q pandas numpy && python orb_acciones/barras30.py $SIM velas salida/${SIM}_b30_nov.csv
+          python3 - <<PY
+          import glob, pandas as pd
+          for lado in ("bid", "ask"):
+              fs = sorted(glob.glob("velas/*-m1-%s-*.csv" % lado))
+              df = pd.concat([pd.read_csv(f) for f in fs]); df.to_csv("salida/${SIM}_m1_%s_nov.csv" % lado, index=False)
+          PY
+        env:
+          PAR: ${{ matrix.par }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: duka-${{ strategy.job-index }}
+          path: salida/
+
+  juntar:
+    needs: [yahoo, duka]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p metodo/v18/datos
+          find art -name '*.csv' -exec cp {} metodo/v18/datos/ \;
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metodo/v18/datos
+          git diff --cached --quiet || git commit -m "v18: datos de la caída de noviembre 2026"
+          git pull --rebase -q || true
+          git push

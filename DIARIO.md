@@ -165,3 +165,8 @@ pruebas con nulo por permutación: 52 celdas |t|≥3 frente a 27,7 del azar (36 
 4 candidatas preregistradas (commit 7f09137) → 0/4 pasan en 2023-26 (mejor: oro largo 06:30 si ayer
 cayó, +0,016 R t 1,42). Único patrón persistente: reloj horario EURUSD (Breedon-Ranaldo), 0,26× coste
 fuera. DESCARTADO todo. Informe: metodo/v16/INFORME.md.
+
+## 2026-11-21 — v18: caída del S&P 500 (16-20 nov) y episodios de caída intradía
+- Semana: S&P −8,61 % (−11,6 % desde máx.), NDX −10,4 %, Dow −8,0 %, VIX 35,9; causa IA (Nvidia, Anthropic IPO) + Fed. Toda la caída en la sesión al contado (noches −0,35 %).
+- Preregistro metodo/v18/PREREGISTRO.md: régimen S (US500 ≥ 5 % bajo máx. 60 s), R1 corto 10:00→16:00 y R2 sigue la 1.ª media hora, US500/US100/US30 2011-22, barras 30 min.
+- R1 neto −0,078 R t −1,50 (sesiones en caída suben de media), R2 +0,039 t 0,68 bajo placebo. 0/2 → DESCARTADA en P1 la familia. metodo/v18/INFORME.md.

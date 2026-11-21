@@ -1,0 +1,30 @@
+Días S 2011-22: 595 de 3077 (50/año)
+
+=== R1 — P1/T0 ajuste 2011-2022 ===
+R1 con stop: n=1737 (58/año/mercado) bruto -0.055 R | coste 0.023 (×-2.4) | neto -0.078 t_sem -1.50 (t op -2.23) | ×2 -0.100 | stops 53 %
+R1 sin stop: n=1737 (58/año/mercado) bruto -0.101 R | coste 0.018 (×-5.6) | neto -0.119 t_sem -1.61 (t op -2.36) | ×2 -0.137 | stops 0 %
+   US500: n=595 (20/año/mercado) bruto -0.062 R | coste 0.024 (×-2.6) | neto -0.087 t_sem -1.60 (t op -1.46) | ×2 -0.111 | stops 54 %
+   US100: n=592 (20/año/mercado) bruto -0.041 R | coste 0.019 (×-2.1) | neto -0.060 t_sem -1.09 (t op -0.99) | ×2 -0.079 | stops 53 %
+   US30: n=550 (23/año/mercado) bruto -0.062 R | coste 0.025 (×-2.5) | neto -0.087 t_sem -1.52 (t op -1.42) | ×2 -0.111 | stops 52 %
+   horquilla Dukascopy medida ≈ 0.051 R ida y vuelta (FTMO usada 0.023)
+   placebo (mismo corto en días fuera de S): media +0.018 p95 +0.096 | real -0.055 → NO supera
+   P1 R1: NO PASA
+   años: 2012:-9.2 2013:-2.1 2014:-28.0 2015:-35.1 2016:-7.7 2018:+30.7 2019:-40.0 2020:-57.1 2021:-6.3 2022:+20.2 | positivos 20 %
+   régimen vecino 4%: n=2106 (70/año/mercado) bruto +0.018 R | coste 0.024 (×+0.7) | neto -0.006 t_sem -0.12 (t op -0.18) | ×2 -0.031 | stops 52 %
+   régimen vecino 6%: n=1434 (60/año/mercado) bruto -0.035 R | coste 0.022 (×-1.6) | neto -0.057 t_sem -0.94 (t op -1.46) | ×2 -0.078 | stops 53 %
+
+=== R2 — P1/T0 ajuste 2011-2022 ===
+R2 con stop: n=1502 (50/año/mercado) bruto +0.062 R | coste 0.023 (×+2.7) | neto +0.039 t_sem 0.68 (t op 0.96) | ×2 +0.016 | stops 57 %
+R2 sin stop: n=1502 (50/año/mercado) bruto +0.051 R | coste 0.018 (×+2.8) | neto +0.033 t_sem 0.37 (t op 0.57) | ×2 +0.015 | stops 0 %
+   US500: n=516 (17/año/mercado) bruto +0.061 R | coste 0.025 (×+2.5) | neto +0.037 t_sem 0.56 (t op 0.53) | ×2 +0.012 | stops 57 %
+   US100: n=514 (17/año/mercado) bruto +0.096 R | coste 0.020 (×+4.8) | neto +0.076 t_sem 1.16 (t op 1.07) | ×2 +0.056 | stops 57 %
+   US30: n=472 (20/año/mercado) bruto +0.027 R | coste 0.025 (×+1.0) | neto +0.001 t_sem 0.02 (t op 0.02) | ×2 -0.024 | stops 57 %
+   horquilla Dukascopy medida ≈ 0.045 R ida y vuelta (FTMO usada 0.023)
+   placebo (lado aleatorio mismos días): media +0.008 p95 +0.078 | real +0.062 → NO supera
+   P1 R2: NO PASA
+   años: 2012:+16.2 2013:-2.1 2014:-6.5 2015:-28.0 2016:-14.4 2018:+59.4 2019:-6.2 2020:+15.6 2021:+0.5 2022:+24.1 | positivos 50 %
+   régimen vecino 4%: n=1840 (61/año/mercado) bruto +0.075 R | coste 0.025 (×+3.0) | neto +0.050 t_sem 0.97 (t op 1.33) | ×2 +0.025 | stops 56 %
+   régimen vecino 6%: n=1242 (52/año/mercado) bruto +0.045 R | coste 0.022 (×+2.0) | neto +0.023 t_sem 0.35 (t op 0.51) | ×2 +0.001 | stops 58 %
+
+=== Control: R1 en todos los días 2011-22 (deriva de sesión sin condición) ===
+corto todos los días: n=8704 (264/año/mercado) bruto +0.007 R | coste 0.043 (×+0.2) | neto -0.036 t_sem -1.45 (t op -2.24) | ×2 -0.079 | stops 49 %
