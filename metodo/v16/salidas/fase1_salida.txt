@@ -1,0 +1,24 @@
+=== Los 5 sistemas aleatorios (R por operación; t por semana) ===
+ sistema mercado entrada_utc  H_min  k_atr           regla  exp_n  exp_bruto  exp_coste  exp_neto   exp_t  oos_n  oos_bruto  oos_neto   oos_t
+       1  EURUSD       12:45    240   0.32      sigue_rdia   1282    -0.0178     0.0379   -0.0557 -2.0688    987    -0.0107   -0.0497 -1.5690
+       2   UK100       11:50    120   0.97 contra_posrango   1265    -0.0032     0.0086   -0.0119 -1.8730    977     0.0127    0.0019  0.2526
+       3   JP225       01:00     60   0.69  sigue_posrango   1216     0.0110     0.0179   -0.0069 -0.8305    982     0.0012   -0.0131 -1.5977
+       4   US500       01:35    360   0.39  sigue_posrango   1211    -0.0015     0.0239   -0.0254 -1.7979    983     0.0327    0.0143  0.9405
+       5  XAUUSD       19:20     60   0.97     contra_rdia   1241     0.0007     0.0112   -0.0105 -2.8087    961     0.0034   -0.0051 -1.5534
+
+=== 2000 aleatorios por mercado ===
+EURUSD: bruto exp medio -0.0000 R | neto exp medio -0.0240 R | coste medio 0.0239 R | % neto>0 exp 5.5 % | % t_exp>2 0.0 % | t_bruto exp p5/p50/p95 -1.99/-0.00/+2.00
+JP225: bruto exp medio +0.0010 R | neto exp medio -0.0239 R | coste medio 0.0249 R | % neto>0 exp 2.2 % | % t_exp>2 0.0 % | t_bruto exp p5/p50/p95 -1.61/+0.07/+1.63
+UK100: bruto exp medio +0.0005 R | neto exp medio -0.0269 R | coste medio 0.0274 R | % neto>0 exp 5.1 % | % t_exp>2 0.1 % | t_bruto exp p5/p50/p95 -1.76/+0.03/+1.76
+US500: bruto exp medio +0.0018 R | neto exp medio -0.0159 R | coste medio 0.0177 R | % neto>0 exp 8.0 % | % t_exp>2 0.0 % | t_bruto exp p5/p50/p95 -1.45/+0.13/+1.57
+XAUUSD: bruto exp medio +0.0018 R | neto exp medio -0.0197 R | coste medio 0.0215 R | % neto>0 exp 6.8 % | % t_exp>2 0.0 % | t_bruto exp p5/p50/p95 -1.63/+0.06/+1.77
+
+=== Sesgo de selección: el mejor de N por t neto en exploración, ¿qué hace fuera? ===
+N=    5: t exp del mejor -0.52 | neto exp -0.0071 R | neto OOS -0.0136 R | t OOS -0.96 | % OOS>0 22 %
+N=   20: t exp del mejor 0.33 | neto exp +0.0061 R | neto OOS -0.0164 R | t OOS -0.95 | % OOS>0 22 %
+N=  100: t exp del mejor 0.98 | neto exp +0.0166 R | neto OOS -0.0155 R | t OOS -0.98 | % OOS>0 21 %
+N=  500: t exp del mejor 1.51 | neto exp +0.0237 R | neto OOS -0.0191 R | t OOS -1.18 | % OOS>0 19 %
+N= 2000: t exp del mejor 1.91 | neto exp +0.0300 R | neto OOS -0.0290 R | t OOS -1.63 | % OOS>0 20 %
+
+corr(t exp, t OOS) entre los 10000 aleatorios: +0.725
+corr(t_bruto exp, t_bruto OOS): +0.075

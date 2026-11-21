@@ -1,0 +1,20 @@
+{
+ "C1": {
+  "mercado": "EURUSD",
+  "b": 18,
+  "rasgo": "posrango",
+  "q1": 0.2971653709873605
+ },
+ "C2": {
+  "mercado": "EURUSD",
+  "b": 72,
+  "rasgo": "rayer",
+  "q1": -0.0016739481746341027
+ },
+ "C4": {
+  "mercado": "XAUUSD",
+  "b": 78,
+  "rasgo": "rayer",
+  "q1": -0.002454475674313376
+ }
+}
