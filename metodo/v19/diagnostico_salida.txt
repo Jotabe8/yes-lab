@@ -1,0 +1,41 @@
+1) Paseo aleatorio: estrategia vs siempre comprado en las MISMAS velas sintéticas (20 réplicas)
+   réplica 0 con rendimiento log: estrategia +0.006, siempre +0.005
+   R estrategia +0.091, siempre comprado +0.096 (sesgo de Jensen: E[e^x − 1] > 0 con media log 0)
+   t del exceso de momento en el paseo: media -0.23, rango -2.29 a +1.80, |t|≥2 en 5%
+
+2) Exceso de momento sobre la beta en datos reales (neutral a la exposición)
+principal 20 monedas, aritmético             exceso +0.766 R/semana t  2.26 | ajuste t  2.45 | OOS +0.519 t  0.97
+principal 20 monedas, log                    exceso +0.608 R/semana t  1.89 | ajuste t  1.90 | OOS +0.453 t  0.90
+lookback 22                                  exceso +0.576 R/semana t  1.64 | ajuste t  1.87 | OOS +0.314 t  0.58
+lookback 34                                  exceso +0.784 R/semana t  2.32 | ajuste t  2.77 | OOS +0.435 t  0.81
+réplica 126 monedas                          exceso +3.706 R/semana t  2.35 | ajuste t  2.67 | OOS +2.820 t  1.07
+solo BTC+ETH                                 exceso +0.186 R/semana t  3.60 | ajuste t  3.24 | OOS +0.144 t  1.90
+   exceso por año (principal, R/semana): {2019: 0.048, 2020: 0.874, 2021: 2.492, 2022: 0.477, 2023: 0.916, 2024: 0.968, 2025: 0.547, 2026: -0.548}
+   exceso por año (réplica): {2019: -0.058, 2020: 5.122, 2021: 11.508, 2022: 1.01, 2023: 6.774, 2024: 2.092, 2025: 4.201, 2026: -2.842}
+
+3) Estrategia en log (sin el regalo de Jensen), neto exchange
+   R/op log +0.123 (aritmético +0.220)
+
+4) FTMO 2-Step con riesgo por moneda reducido (las posiciones van juntas: hasta 20 a la vez)
+   posiciones abiertas por semana: media 9.7, máx 20
+   riesgo 0.1 %/moneda: EV/cuota +25493 € (p pasar 86%) vs control +1908 €
+   riesgo 0.2 %/moneda: EV/cuota +4605 € (p pasar 42%) vs control +238 €
+   riesgo 0.3 %/moneda: EV/cuota +2245 € (p pasar 35%) vs control +66 €
+   riesgo 0.5 %/moneda: EV/cuota +125 € (p pasar 22%) vs control -442 €
+
+   Ojo: el EV diario aquí usa las R semanales en la fecha de cierre; el DD diario real intrasemana es mayor.
+
+5) P4 bien hecho: R diaria a mercado (365 días/año), FTMO 0,05 %/lado + swap 25 %/año
+   estrategia: R/año +76.6, peor día -27.3 R, Sharpe 1.00, 2023+ Sharpe 0.72
+   siempre comprado: R/año +73.1, peor día -46.6 R, Sharpe 0.58, 2023+ Sharpe 0.44
+   riesgo 0.1 %/moneda: EV/cuota estrategia +4243 € (pasa 74%) | solo 2023+ +2804 € | siempre comprado +4012 € | control media 0 +223 €
+   riesgo 0.2 %/moneda: EV/cuota estrategia +6274 € (pasa 60%) | solo 2023+ +4726 € | siempre comprado +3471 € | control media 0 +1413 €
+   riesgo 0.3 %/moneda: EV/cuota estrategia +5258 € (pasa 46%) | solo 2023+ +4355 € | siempre comprado +1969 € | control media 0 +1398 €
+   riesgo 0.5 %/moneda: EV/cuota estrategia +1976 € (pasa 30%) | solo 2023+ +1814 € | siempre comprado +469 € | control media 0 +613 €
+
+6) P4 sin deriva de cripto: se quita a la estrategia la beta de su exposición media (supuesto: cripto con deriva 0)
+   R/año estrategia +76.6 − beta +35.1 = +41.5; Sharpe 0.54; 2023+ 0.27
+   riesgo 0.1 %: EV/cuota +1927 € (pasa 48%) vs control media 0 +223 €
+   riesgo 0.2 %: EV/cuota +3621 € (pasa 47%) vs control media 0 +1413 €
+   riesgo 0.3 %: EV/cuota +3188 € (pasa 37%) vs control media 0 +1398 €
+   por año R (estrategia sin deriva): {2019: -17.2, 2020: 99.1, 2021: 258.5, 2022: -105.8, 2023: 73.3, 2024: 110.0, 2025: -27.5, 2026: -72.0}

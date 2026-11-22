@@ -1,0 +1,84 @@
+Universo principal 20 monedas; réplica 126 monedas
+sin_fuga BTC: sin fuga: la señal no cambia al borrar el futuro
+Fracción de semanas compradas por moneda: {'ADA': np.float64(0.47), 'ATOM': np.float64(0.44), 'AVAX': np.float64(0.46), 'BCH': np.float64(0.49), 'BNB': np.float64(0.57), 'BTC': np.float64(0.56), 'DOGE': np.float64(0.47), 'DOT': np.float64(0.41), 'EOS': np.float64(0.45), 'ETC': np.float64(0.45), 'ETH': np.float64(0.56), 'FIL': np.float64(0.38), 'LINK': np.float64(0.52), 'LTC': np.float64(0.53), 'NEAR': np.float64(0.47), 'SOL': np.float64(0.51), 'TRX': np.float64(0.57), 'UNI': np.float64(0.47), 'XLM': np.float64(0.43), 'XRP': np.float64(0.45)}
+Siempre comprado (beta, bruto)         ops  7276 bruto +0.130 coste 0.000 neto +0.130 t  2.49 | ajuste +0.143 t  2.01 | OOS +0.119 t  1.58
+Principal 28 d (bruto)                 ops  3538 bruto +0.220 coste 0.000 neto +0.220 t  3.29 | ajuste +0.265 t  2.81 | OOS +0.180 t  1.90
+
+Por año (bruto R/op, ops):
+fecha     2019     2020     2021     2022     2023     2024     2025     2026
+mean     0.093    0.314    0.537   -0.164    0.263    0.325    0.081   -0.033
+size   257.000  480.000  595.000  330.000  545.000  543.000  380.000  408.000
+sum     23.936  150.772  319.459  -54.244  143.554  176.267   30.664  -13.295
+
+Por moneda (bruto R/op):
+moneda      ADA     ATOM     AVAX      BCH      BNB      BTC     DOGE      DOT      EOS      ETC      ETH      FIL     LINK      LTC     NEAR      SOL      TRX      UNI      XLM      XRP
+mean      0.202    0.017    0.309    0.133    0.317    0.336    0.426    0.024    0.088    0.192    0.305    0.221    0.213    0.108    0.316    0.289    0.261    0.131    0.156    0.225
+size    186.000  169.000  141.000  172.000  225.000  224.000  174.000  129.000  147.000  181.000  225.000  116.000  205.000  213.000  144.000  160.000  229.000  145.000  172.000  181.000
+
+===== exchange: coste 0.10 %/lado, swap 0 %/año =====
+principal 28 d                         ops  3538 bruto +0.220 coste 0.006 neto +0.214 t  3.19 | ajuste +0.260 t  2.76 | OOS +0.172 t  1.82
+OK  frecuencia                   464 ops/año (mín 40)
+OK  coste en R                   0.006 R/op (máx 0.1)
+OK  bruto vs coste               bruto +0.220 R = 36.8× coste
+OK  supera placebo p95           bruto +0.220 vs p95 +0.162
+NO  motor en paseo aleatorio     R bruta en paseo aleatorio +0.091 (t 15.73, 71827 ops, 15.2× coste; debe ser ≈ 0)
+OK  neto ajuste > 0              +0.260 R/op, t 2.76 (por op 6.84)
+OK  coste ×2 > 0                 +0.208 R/op
+OK  años positivos               6/8 años
+OK  fuera de muestra             +0.172 R/op, n 1876, t 1.82
+OK  t total corregido            t 3.19 (por op 8.51) vs 2.71 (15 pruebas); aviso, lo decide la EV recortada
+OK  PSR / ops mínimas            PSR 100.0%; hacen falta 673 ops (17 meses) para fiarse
+OK  EV/cuota 2-Step recortada    -525 € con +0.142 R/op (p pasar 12%) vs control sin edge -540 €, DD p95 31.0 R
+VEREDICTO: DESCARTAR
+
+===== dz_cfd: coste 0.08 %/lado, swap 20 %/año =====
+principal 28 d                         ops  3538 bruto +0.220 coste 0.045 neto +0.174 t  2.60 | ajuste +0.229 t  2.44 | OOS +0.126 t  1.33
+swap de equilibrio (neto = 0): 106.1 %/año
+OK  frecuencia                   464 ops/año (mín 40)
+OK  coste en R                   0.045 R/op (máx 0.1)
+OK  bruto vs coste               bruto +0.220 R = 4.9× coste
+OK  neto ajuste > 0              +0.229 R/op, t 2.44 (por op 6.04)
+OK  coste ×2 > 0                 +0.129 R/op
+OK  años positivos               6/8 años
+OK  fuera de muestra             +0.126 R/op, n 1876, t 1.33
+ojo t total corregido            t 2.60 (por op 6.95) vs 2.71 (15 pruebas); aviso, lo decide la EV recortada
+OK  PSR / ops mínimas            PSR 100.0%; hacen falta 1055 ops (27 meses) para fiarse
+NO  EV/cuota 2-Step recortada    -540 € con +0.103 R/op (p pasar 11%) vs control sin edge -540 €, DD p95 37.0 R
+VEREDICTO: DESCARTAR
+
+===== ftmo: coste 0.05 %/lado, swap 25 %/año =====
+principal 28 d                         ops  3538 bruto +0.220 coste 0.054 neto +0.166 t  2.48 | ajuste +0.223 t  2.37 | OOS +0.116 t  1.23
+swap de equilibrio (neto = 0): 107.0 %/año
+OK  frecuencia                   464 ops/año (mín 40)
+OK  coste en R                   0.054 R/op (máx 0.1)
+OK  bruto vs coste               bruto +0.220 R = 4.1× coste
+OK  neto ajuste > 0              +0.223 R/op, t 2.37 (por op 5.86)
+OK  coste ×2 > 0                 +0.112 R/op
+OK  años positivos               6/8 años
+OK  fuera de muestra             +0.116 R/op, n 1876, t 1.23
+ojo t total corregido            t 2.48 (por op 6.62) vs 2.71 (15 pruebas); aviso, lo decide la EV recortada
+OK  PSR / ops mínimas            PSR 100.0%; hacen falta 1174 ops (30 meses) para fiarse
+NO  EV/cuota 2-Step recortada    -540 € con +0.095 R/op (p pasar 10%) vs control sin edge -540 €, DD p95 38.5 R
+VEREDICTO: DESCARTAR
+
+===== Meseta y variantes (exchange) =====
+lookback 22 d                          ops  3461 bruto +0.199 coste 0.007 neto +0.192 t  2.73 | ajuste +0.238 t  2.37 | OOS +0.152 t  1.53
+lookback 34 d                          ops  3557 bruto +0.221 coste 0.006 neto +0.216 t  3.23 | ajuste +0.275 t  2.93 | OOS +0.163 t  1.74
+comprado/vendido 28 d                  ops  7270 bruto +0.084 coste 0.006 neto +0.078 t  2.11 | ajuste +0.115 t  2.37 | OOS +0.046 t  0.84
+  solo patas vendidas                  ops  3732 bruto -0.045 coste 0.006 neto -0.051 t -0.85 | ajuste -0.028 t -0.36 | OOS -0.070 t -0.78
+
+===== Réplica: otro universo =====
+réplica bruto                          ops 15507 bruto +0.162 coste 0.000 neto +0.162 t  2.55 | ajuste +0.211 t  2.33 | OOS +0.126 t  1.44
+réplica neto exchange                  ops 15507 bruto +0.162 coste 0.005 neto +0.157 t  2.47 | ajuste +0.207 t  2.29 | OOS +0.120 t  1.37
+réplica bruto +0.162 vs placebo p50 +0.068 p95 +0.080
+fecha     2019      2020     2021      2022      2023      2024      2025      2026
+mean    -0.133     0.341     0.47    -0.226     0.255     0.163    -0.049    -0.039
+size   320.000  1558.000  2778.00  1861.000  3178.000  2789.000  1379.000  1644.000
+
+===== Correlación y aporte al DARWIN (mensual) =====
+exchange: meses 91 corr ORB -0.07 corr reversión +0.11 | SR ORB+rev 1.92 cripto 1.08 igual riesgo 2.09 mejor peso ORB+rev 0.65 → 2.17
+   solo 2023+: SR ORB+rev 2.05 cripto 0.91 igual riesgo 2.02
+dz_cfd: meses 91 corr ORB -0.06 corr reversión +0.11 | SR ORB+rev 1.92 cripto 0.90 igual riesgo 1.96 mejor peso ORB+rev 0.70 → 2.09
+   solo 2023+: SR ORB+rev 2.05 cripto 0.70 igual riesgo 1.87
+
+t_requerido(15) = 2.71
