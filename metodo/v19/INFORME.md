@@ -56,3 +56,23 @@ con σ semanal de 10-20 %, el nocional por R es pequeño.
 
 P5: EA MQL5 multisímbolo (rebalanceo dominical, tamaño 1/σ, tope de exposición total) con los símbolos reales de FTMO,
 comparación operación a operación y P6 en Free Trial/demo 8 semanas con parada si el exceso sobre la beta es < 0.
+
+## P5 (22-11-2026): EA en el Strategy Tester con los símbolos reales de FTMO
+
+Datos leídos de la cuenta FTMO (solo lectura, API de Python; nada cargado en ese terminal). Tester en C:\MT5_Lab con
+símbolos personalizados `<SIM>_FTMO` (contrato, swap, margen y horquilla reales), 2017-01 → 2026-11, 100.000 USD, 0,2 %.
+
+- **FTMO cripto**: 30 símbolos, swap **−30 %/año largo y corto** (modo interés anual, triple el viernes), margen 30 %
+  (1:3,3), sin comisión, cotizan el fin de semana. No existen TRX, ATOM, FIL ni EOS: la cesta queda en 16 monedas.
+  Horquilla (domingo noche): BTC 0,002 %, ETH 0,035 %, SOL 0,043 %, XRP/DOGE 0,16 %, ADA 0,21 %, BCH/AVAX 0,30 %, LTC 0,38 %.
+- **Comparación con Python** (mismas D1 FTMO): 2.585 semanas, R media +0,321 en las dos, corr 1,000, máx |ΔR| 0,00005.
+  Emparejado 88 % de Python (umbral 90 %): 328 de las 354 que faltan son semanas tras un corte diario del EA y 24 por
+  la regla de 60 días; sin esas causas, 99,9 %. **La lógica del EA reproduce Python.**
+- **Resultado económico**: +100.095 USD en ~10 años (bruto +152.726, swap −52.631 = 34 % del bruto). **DD máx −21,2 %**
+  (oct-2023), peor día −3,8 %, 26 cortes diarios internos del 4 %. Por años: 2017 +24 %, 2018 −8 %, 2019 +8 %, 2020 +21 %,
+  2021 +32 %, 2022 −10 %, 2023 +8 %, 2024 +10 %, **2025 −0,4 %, 2026 −5 %**. Exposición media 10 %, máx 58 %.
+
+Lectura: con el riesgo que daba EV positiva en el bootstrap de días (0,2 %/moneda), el DD real de 21 % rompe dos veces
+la pérdida total de FTMO (10 %); el bootstrap de días rompía los regímenes de cripto y sobrestimaba el EV. A 0,1 % el DD
+sería ~11 % con ~+3,5 %/año: no llega al +10 % de la fase 1 en un plazo razonable. Además la regla de FTMO sobre
+apuestas en un solo sentido en símbolos correlacionados es un riesgo de denegación de retiros.
