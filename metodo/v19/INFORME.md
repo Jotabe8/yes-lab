@@ -76,3 +76,5 @@ Lectura: con el riesgo que daba EV positiva en el bootstrap de días (0,2 %/mone
 la pérdida total de FTMO (10 %); el bootstrap de días rompía los regímenes de cripto y sobrestimaba el EV. A 0,1 % el DD
 sería ~11 % con ~+3,5 %/año: no llega al +10 % de la fase 1 en un plazo razonable. Además la regla de FTMO sobre
 apuestas en un solo sentido en símbolos correlacionados es un riesgo de denegación de retiros.
+
+**Veredicto final (22-11-2026, Jorge): DESCARTADO.** Falla en P5 por perfil incompatible con FTMO (DD −21 % con el riesgo que daba EV) y se apaga en 2025-26. No queda en reserva.
