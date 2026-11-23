@@ -98,6 +98,10 @@ separa bien y bloquea. SPA real p 0,12 (2018-26) y 0,09 (2018-22) frente a place
 que es aviso. El placebo bruto no vale como nula del SPA (stop corto + salida al cierre +
 deriva alcista dan media > 0 sin costes).
 
+`metodo/rapido.py` (23-11-2026, Numba): núcleo del ORB sobre las matrices M1 de `metodo/v9/datos/*_m1.npz` y placebo de
+dirección con las mismas salidas. Una pasada de US100 2019-26 baja de 0,28 s a 0,7 ms (~400×); 1.000 réplicas de placebo,
+0,4 s en lugar de ~5 min. Dependencias en `requirements.txt`.
+
 `metodo/robustez.py` (requiere `pip install arch`): `spa()`, `pbo()`, `psr()`, `dsr()`,
 `min_trl()`. Lectura del PBO: < 20 % bien, 20-50 % sospechoso, > 50 % elegir la mejor
 variante no sirve. Referencia: el ORB US100 v018 da PSR 99,5 % y necesita ~750 operaciones
