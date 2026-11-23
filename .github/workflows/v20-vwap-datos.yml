@@ -37,8 +37,8 @@ jobs:
           HASTA=$((Y+1))-01-02; [ $Y = 2026 ] && HASTA=2026-11-14
           mkdir -p velas salida && cd velas
           npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
-          npx dukascopy-node -i $INS -from $((Y-1))-12-30 -to $HASTA -t m1 -p bid -v -vu units -f csv -dir . -r 5 -bs 20 -bp 300 -fr >/dev/null 2>&1 || echo falla
-          ls | head; head -3 *.csv | head
+          npx dukascopy-node -i $INS -from $((Y-1))-12-30 -to $HASTA -t m1 -p bid -v -f csv -dir . -r 5 -bs 20 -bp 300 -fr 2>&1 | tail -5 || echo falla
+          ls -la | head; head -3 *.csv | head
           cd .. && pip install -q pandas numpy && python metodo/v20/extraer_vol.py $SIM velas $Y salida/vol_${SIM}_$Y.npz || echo sin datos
       - uses: actions/upload-artifact@v4
         with:
@@ -47,6 +47,7 @@ jobs:
           if-no-files-found: ignore
 
   alpaca:
+    if: ${{ github.run_number == 1 }}
     runs-on: ubuntu-latest
     timeout-minutes: 180
     strategy:
