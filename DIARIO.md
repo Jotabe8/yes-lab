@@ -11,6 +11,7 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 
 | Fecha | Estrategia | Mercados | Veredicto |
 | --- | --- | --- | --- |
+| 2026-11-23 | Rutina semanal, preregistrado (`darwinex/rutina_2026_11_23/`): A) corto del 10 años las 5 primeras sesiones si la bolsa batió a los bonos en las 15 primeras del mes anterior (Beyond Passive 2026); B) tendencia EWMA 20/80 en futuros de tick grande (Kurth-Eisler-Rej-Bouchaud 2026) | 10 años FRED + S&P 1990-26; ZT, ZF, ZN, ZB y ES 2001-26 | **Ninguna pasa.** A: tramo publicado +19 pb t 2,33, fuera de muestra −10,7 pb (t −0,8), completo t 1,2 (clase A: minería). B: cartera Sharpe neto 0,33 t 1,39 en 2009-26, ES 0,22; 2.ª mitad 0,51 (clase C) |
 | 2026-11-20 | Revisión del filtro de volatilidad p90 del ORB US100 (`metodo/filtro_vol/`), preregistrada, 3 pruebas, t por semana y placebo de racimos | US100 2012-26 | **Mantener filtro y tope de 21 días**: días bloqueados neto −0,010 R (t −0,09, 392 ops), pausas ≥ 10 días −0,02 R; el filtro no sube R/año (+0,3) pero baja el peor DD 48,5 → 37,6 R (más que el placebo p5) |
 | 2026-11-20 | v17 método (`metodo/v17/INFORME.md`): qué métrica del ajuste predice el fuera, en una cohorte de 4.284 reglas diarias reales (9 familias, 37 mercados, cortes 2015 y 2011); ideas de internet: meseta, WFC, ruido OHLC, EB, BHY, familia, PBO | 37 mercados diarios | Sirven: encogimiento (t ≥ 3 retiene 26 %; recorte cuadra solo con N real) y media de la familia (Spearman 0,40-0,60 vs 0,02-0,42); descartadas: ruido, WFC, estabilidad, vol/DD, BHY; meseta marginal; PBO redundante. Avisos nuevos en el embudo |
 | 2026-11-19 | Compras de fin de mes en bonos: auditoría, P4 en Darwinex Zero y réplica en el Bund, preregistrado (`darwinex/bonos_fin_de_mes/`) | ZN real (Yahoo, rolls limpios), Bund 10 a (Bundesbank) | **Descartada**: cifras del informe reproducidas y placebo completo limpio (fin de mes +24 pb vs resto ≤ +8,6), pero el ZN rinde el 70 % y 2019-26 t 1,93; DARWIN 1,72 → 1,90 con DD 20,6 → 22,1 R (criterio 2 falla), ventaja a la mitad 1,74; Bund neto t 1,76 y 2019-26 negativo |
@@ -41,6 +42,20 @@ ajuste y 1 de prueba. El código está en `lab/estrategias.py`.
 | 2026-10-01 | Cambio de mes | SPY, IBEX, SAN, BTC | Descartada: sin efecto medible en 2016-2026 |
 
 ---
+
+## 2026-11-23 · Rutina semanal: corto condicionado de principio de mes y tendencia en tick grande (preregistradas)
+
+- **Preregistro:** `darwinex/rutina_2026_11_23/PREREGISTRO.md`, en un commit propio anterior al script.
+- **Comando:** `python -m darwinex.rutina_2026_11_23.pruebas` (salida en `salida.txt`).
+- **A. Hipótesis:** el rebalanceo de carteras mixtas vende bonos al principio del mes si la bolsa batió a los bonos. **Regla:** si S&P − 10 años > 0 en las 15 primeras sesiones del mes, corto del 10 años las 5 primeras del mes siguiente; 3 pb.
+  - Tramo publicado (2002-08 → 2025-06): +19,0 pb netos, t 2,33. Su resultado se reproduce casi entero.
+  - Fuera de muestra (1990-2002 y 2025-26, 94 ops): −10,7 pb, t −0,8. Completo: +8,5 pb, t 1,2.
+  - **Veredicto: no pasa, clase A.** Es un resultado de la muestra elegida. Por décadas: 1990s −6,9 pb, 2000s +9,6, 2010s +14,7, 2019-26 +18,4 (ninguna con t > 1,4).
+- **B. Hipótesis:** en futuros de tick grande la tendencia corta sobrevive tras 2009. **Regla:** EWMA 20 − EWMA 80 normalizada, recortada a ±2, a igual volatilidad en ZT, ZF, ZN y ZB; 1 tick por lado.
+  - 2009-07 → 2026-10: Sharpe neto 0,33, t 1,39 (1.ª mitad 0,14, 2.ª 0,51, 2019-26 0,57). Costes ×2: 0,29. ES (control): 0,22.
+  - 2001-2009: 0,18, así que en nuestros datos no hay la ruptura que describe el artículo.
+  - **Veredicto: no pasa, clase C** (signo correcto, potencia insuficiente con 4 contratos muy correlacionados).
+- **Límites:** el detector de saltos de vencimiento sustituye 31-71 días por contrato (incluye algunos días reales extremos); FRED se usa como precio en A, no el futuro (el ZN rinde ~70 % del efecto de FRED según la entrada del 19-11).
 
 ## 2026-11-16 · Compras de duración de fin de mes en bonos (preregistrada)
 
