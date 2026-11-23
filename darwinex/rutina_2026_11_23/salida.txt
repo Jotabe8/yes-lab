@@ -1,0 +1,32 @@
+A. Corto del 10 años 5 primeras sesiones si S&P > bono en las 15 primeras del mes anterior (pb/op)
+  Completo 1990-2026                 n= 268  neto   +8.5  t +1.20  bruto  +11.5
+  Fuera de muestra (90-02 y 25-26)   n=  94  neto  -10.7  t -0.80  bruto   -7.7
+  Tramo publicado 2002-08 a 2025-06  n= 174  neto  +19.0  t +2.33  bruto  +22.0
+  Completo, costes x2                neto   +5.5  t +0.78
+  Placebo sesiones 6-10, completo    neto  -11.8  t -1.65
+  Placebo fuera de muestra           neto  -16.5  t -1.33
+  Informativo: meses sin señal       n= 173  bruto corto  -16.2  t -1.70
+  1990-1999: n= 71 neto   -6.9 t -0.43
+  2000-2009: n= 66 neto   +9.6 t +0.65
+  2010-2018: n= 71 neto  +14.7 t +1.24
+  2019-2026: n= 60 neto  +18.4 t +1.35
+  Veredicto A: NO PASA
+
+B. Tendencia EWMA 20/80 en Treasuries (tick grande) frente a ES
+  Saltos de vencimiento sustituidos: ZT 71, ZF 62, ZN 67, ZB 31, ES 0
+  Cartera τ=20, 2009-07 a 2026-10      Sharpe +0.33  t +1.39
+    1.ª mitad                          Sharpe +0.14  t +0.42
+    2.ª mitad                          Sharpe +0.51  t +1.49
+    2019-2026                          Sharpe +0.57  t +1.59
+    costes x2                          Sharpe +0.29  t +1.22
+  Informativo 2001 a 2009-06           Sharpe +0.18  t +0.48
+    ZT solo, 2009-07 a 2026-10         Sharpe +0.48  t +1.98
+    ZF solo, 2009-07 a 2026-10         Sharpe +0.29  t +1.20
+    ZN solo, 2009-07 a 2026-10         Sharpe +0.20  t +0.82
+    ZB solo, 2009-07 a 2026-10         Sharpe +0.20  t +0.85
+    ES solo, 2009-07 a 2026-10         Sharpe +0.22  t +0.93
+  Informativo, otras τ (cartera, 2009-07 a 2026-10 / 2001 a 2009-06):
+    τ=5   Sharpe +0.01 / +0.21
+    τ=10  Sharpe +0.23 / +0.30
+    τ=50  Sharpe +0.37 / +0.17
+  Veredicto B: NO PASA
