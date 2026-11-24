@@ -39,5 +39,11 @@ comprador); la de eBay está sin configurar a propósito.
   los avisos de búsquedas guardadas de eBay/Wallapop, los pasa por `evaluar.py` y manda un
   correo solo con los que dejan margen. Los ya revisados quedan con la etiqueta
   `arbitraje/revisado`.
-- **Windows (`../windows/prueba_notificaciones.ps1`):** prueba si las notificaciones de
-  Wallapop que llegan del iPhone por Enlace Móvil se pueden leer. No envía nada.
+- **Windows (`../windows/instalar.ps1`, una sola vez):** descarga los archivos en
+  `Documents\arbitraje`, instala Enlace Móvil y Python si faltan, evita la suspensión
+  enchufado, prueba el acceso a las notificaciones y crea la tarea programada
+  *Arbitraje - avisos Wallapop*. Esa tarea, al iniciar sesión (y cada 15 min si se para),
+  ejecuta `prueba_notificaciones.ps1 -Vigilar` oculto: cada notificación de Wallapop que
+  llega por Enlace Móvil se pasa por `evaluar.py`, se guarda en `avisos_wallapop.csv`
+  (con precio y decisión) y, si sale COMPRAR, salta un aviso de Windows. Todo local.
+  `instalar.ps1 -Quitar` borra la tarea.

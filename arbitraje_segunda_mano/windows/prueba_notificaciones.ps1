@@ -24,6 +24,8 @@ if ($PSVersionTable.PSEdition -ne 'Desktop') {
     exit $LASTEXITCODE
 }
 
+if ($Vigilar) { try { Start-Transcript -Path "$PSScriptRoot\vigilancia.log" -Append | Out-Null } catch {} }
+
 Add-Type -AssemblyName System.Runtime.WindowsRuntime
 $null = [Windows.UI.Notifications.Management.UserNotificationListener, Windows.UI.Notifications, ContentType = WindowsRuntime]
 $null = [Windows.UI.Notifications.UserNotification, Windows.UI.Notifications, ContentType = WindowsRuntime]
@@ -87,18 +89,72 @@ if (-not $Vigilar) {
     exit 0
 }
 
+# ---- Vigilancia (la lanza la tarea programada que crea instalar.ps1) ----
+$raiz = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent   # carpeta que contiene arbitraje_segunda_mano
+
+function Buscar-Python {
+    $candidatos = @('py', 'python') + @(Get-ChildItem "$env:LOCALAPPDATA\Programs\Python\Python3*\python.exe" `
+        -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | ForEach-Object FullName)
+    foreach ($c in $candidatos) {
+        try { & $c -c "import sys" 2>$null; if ($LASTEXITCODE -eq 0) { return $c } } catch {}
+    }
+    return $null
+}
+$python = Buscar-Python
+$env:PYTHONIOENCODING = 'utf-8'
+Write-Host "Python: $(if ($python) { $python } else { 'no encontrado (solo se guardará el aviso)' })"
+
+function Evaluar-Aviso([string]$texto) {
+    # Último importe con € del texto: "350 €", "1.200€", "349,99 €".
+    $m = [regex]::Matches($texto, '(\d{1,3}(?:\.\d{3})+|\d+)(?:,(\d{1,2}))?\s?€')
+    if ($m.Count -eq 0) { return @{ Precio = ''; Decision = 'sin precio' } }
+    $u = $m[$m.Count - 1]
+    $precio = ($u.Groups[1].Value -replace '\.', '')
+    if ($u.Groups[2].Success) { $precio += '.' + $u.Groups[2].Value }
+    if (-not $python) { return @{ Precio = $precio; Decision = 'sin python' } }
+    Push-Location $raiz
+    $arg = ($texto -replace '"', "'") -replace '^-+', ''   # PS 5.1 rompe las comillas al pasarlas a un exe
+    try { $salida = (& $python -m arbitraje_segunda_mano.app.evaluar $arg $precio 2>&1) | Out-String }
+    finally { Pop-Location }
+    $decision = if ($salida -cmatch 'COMPRAR') { 'COMPRAR' } elseif ($salida -match 'no comprar') { 'no comprar' }
+                elseif ($salida -match 'descartado') { 'fuera de catálogo' } else { 'error' }
+    return @{ Precio = $precio; Decision = $decision; Detalle = $salida.Trim() }
+}
+
+function Avisar([string]$titulo, [string]$texto) {
+    # Aviso local de Windows; no sale del PC.
+    try {
+        $null = [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]
+        $null = [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom.XmlDocument, ContentType = WindowsRuntime]
+        $xml = New-Object Windows.Data.Xml.Dom.XmlDocument
+        $e = { param($t) [Security.SecurityElement]::Escape($t) }
+        $xml.LoadXml("<toast><visual><binding template='ToastGeneric'><text>$(& $e $titulo)</text><text>$(& $e $texto)</text></binding></visual></toast>")
+        $aumid = '{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\WindowsPowerShell\v1.0\powershell.exe'
+        [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($aumid).Show(
+            [Windows.UI.Notifications.ToastNotification]::new($xml))
+    } catch { Write-Host "No se pudo mostrar el aviso: $($_.Exception.Message)" }
+}
+
 $vistas = @{}
 if (Test-Path $Csv) { Import-Csv $Csv | ForEach-Object { $vistas[$_.Id] = $true } }
-Write-Host "Vigilando cada $Segundos s. Guardando en $Csv (Ctrl+C para parar)."
+Write-Host "$(Get-Date) Vigilando cada $Segundos s. Guardando en $Csv."
 while ($true) {
-    # Un fallo puntual al leer no debe matar la vigilancia (corre oculta desde el Programador de tareas).
+    # Un fallo puntual no debe matar la vigilancia (corre oculta desde el Programador de tareas).
     $lote = try { @(Leer) } catch { Write-Host "Error leyendo: $($_.Exception.GetBaseException().Message)"; @() }
     foreach ($n in $lote) {
         if ($vistas.ContainsKey("$($n.Id)")) { continue }
+        if ($n.App -match 'PowerShell') { continue }   # nuestros propios avisos
         if ("$($n.App) $($n.Texto)" -notmatch $Filtro) { continue }
         $vistas["$($n.Id)"] = $true
-        $n | Export-Csv $Csv -Append -NoTypeInformation -Encoding UTF8
-        Write-Host "$($n.Hora)  $($n.Texto)"
+        $ev = try { Evaluar-Aviso $n.Texto } catch { @{ Precio = ''; Decision = "error: $($_.Exception.Message)" } }
+        $fila = [pscustomobject]@{ Id = $n.Id; Hora = $n.Hora; App = $n.App; Texto = $n.Texto
+                                   Precio = $ev.Precio; Decision = $ev.Decision }
+        try { $fila | Export-Csv $Csv -Append -NoTypeInformation -Encoding UTF8 } catch { Write-Host "CSV: $_" }
+        Write-Host "$($n.Hora)  [$($ev.Decision)]  $($n.Texto)"
+        if ($ev.Decision -eq 'COMPRAR') {
+            $resumen = ($ev.Detalle -split "`r?`n" | Where-Object { $_ -match 'Margen|Modelo' }) -join ' · '
+            Avisar "Arbitraje: COMPRAR ($($ev.Precio) €)" "$($n.Texto)`n$resumen"
+        }
     }
     Start-Sleep -Seconds $Segundos
 }
