@@ -140,23 +140,6 @@ details[open] summary { margin-bottom: 12px; }
       <div class="grow"><label for="p-completo">Bono Completo (€/mes)</label><input id="p-completo" type="number" step="0.05" min="0"></div>
       <button class="btn" id="b-precios" type="button">Guardar precios</button>
     </div>
-    <h2 style="margin-top:18px">Avisos a mi Telegram</h2>
-    <p class="hint" style="margin-top:2px">Te llega un mensaje de Telegram automático en cada lavado o cobro. Crea tu bot con @BotFather, pega aquí su token, escríbele «hola» al bot desde tu Telegram y pulsa «Buscar mi chat».</p>
-    <div class="row" style="margin-top:10px">
-      <div class="grow" style="flex-basis:320px"><label for="n-token">Token del bot</label><input id="n-token" placeholder="123456789:AAH…" autocomplete="off" spellcheck="false"></div>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <div class="grow"><label for="n-chat">Mi chat (ID)</label><input id="n-chat" inputmode="numeric" placeholder="Se rellena con «Buscar mi chat»"></div>
-      <button class="btn" id="b-chat" type="button">Buscar mi chat</button>
-    </div>
-    <div class="row" style="margin-top:10px;align-items:center">
-      <label style="display:flex;gap:8px;align-items:center;margin:0;color:var(--fg)"><input type="checkbox" id="n-lav" style="width:auto"> Avisar de cada lavado</label>
-      <label style="display:flex;gap:8px;align-items:center;margin:0;color:var(--fg)"><input type="checkbox" id="n-cob" style="width:auto"> Avisar de cada alta y cobro</label>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <button class="btn" id="b-notif" type="button">Guardar avisos</button>
-      <button class="btn" id="b-notif-prueba" type="button">Enviarme una prueba</button>
-    </div>
     <p class="hint" style="margin-top:18px">Los datos se guardan solo en esta tablet. Copia la copia de seguridad una vez a la semana y pégala en un correo.</p>
     <div class="row" style="margin-top:10px">
       <button class="btn" id="b-copia" type="button">Copiar copia de seguridad</button>
@@ -220,15 +203,6 @@ function cobrarMes(m) {
   const desde = m.hasta && m.hasta >= t ? addDays(m.hasta, 1) : t;
   m.hasta = unMesDesde(desde);
 }
-/* ---- Avisos automáticos al encargado (bot de Telegram) ---- */
-const TG = 'https://api.telegram.org/bot';
-async function notificar(texto) {
-  const n = db.notif; if (!n || !n.token || !n.chat) return false;
-  const url = `${TG}${n.token}/sendMessage?chat_id=${encodeURIComponent(n.chat)}&text=${encodeURIComponent(texto)}`;
-  try { const r = await fetch(url); const j = await r.json(); return !!j.ok; }
-  catch (e) { try { await fetch(url, { mode: 'no-cors' }); } catch (_) {} return null; }
-}
-const hora = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
 function contarLavado() { const t = hoy(); if (db.diaLavados !== t) { db.diaLavados = t; db.lavadosHoy = 0; } db.lavadosHoy++; }
 
 /* ---- Comprobar ---- */
@@ -255,7 +229,6 @@ function pintarResultado() {
       e.preventDefault();
       const n = { nombre: $('#a-nombre').value.trim(), telefono: $('#a-tel').value.trim(), matricula: actual, plan: document.querySelector('input[name=plan]:checked').value, hasta: null, ultimo: null };
       cobrarMes(n); db.socios.push(n); guardar();
-      if (db.notif && db.notif.cobros) notificar(`🆕 Nuevo socio ${hora()} · ${fmt(n.matricula)} · ${n.nombre} · Bono ${PLANES[n.plan]} ${eur(db.precios[n.plan])} · válido hasta ${fecha(n.hasta)}`);
       aviso(`Alta hecha. Bono válido hasta el ${fecha(n.hasta)}.`); pintarResultado(); pintarLista();
     });
     $('#a-nombre').focus();
@@ -277,10 +250,8 @@ function pintarResultado() {
     <div class="body"><div class="row" style="align-items:center">${placa(m.matricula)}<div class="who">${esc(m.nombre)}<small>Bono ${esc(plan)} · ${esc(m.telefono || 'sin teléfono')}</small></div></div>
     ${botones ? `<div class="row">${botones}</div>` : ''}
     ${telWA(m.telefono) ? `<div><a class="wa" href="https://wa.me/${telWA(m.telefono)}?text=${encodeURIComponent(textoAviso(m))}" target="_blank" rel="noopener">Enviar su bono por WhatsApp</a></div>` : ''}</div></div>`;
-  const bl = $('#b-lavar'); if (bl) bl.onclick = () => { m.ultimo = t; contarLavado(); guardar(); aviso('Lavado apuntado.');
-    if (db.notif && db.notif.lavados) notificar(`🚗 Lavado ${hora()} · ${fmt(m.matricula)} · ${m.nombre} · Bono ${plan} (hasta ${fecha(m.hasta)}) · Lavados hoy: ${db.lavadosHoy}`); pintarResultado(); pintarLista(); $('#q').select(); };
-  const br = $('#b-renovar'); if (br) br.onclick = () => { cobrarMes(m); guardar();
-    if (db.notif && db.notif.cobros) notificar(`💶 Cobro ${hora()} · ${fmt(m.matricula)} · ${m.nombre} · Bono ${plan} ${precio} · válido hasta ${fecha(m.hasta)}`); aviso(`Cobrado. Bono válido hasta el ${fecha(m.hasta)}.`); pintarResultado(); pintarLista(); };
+  const bl = $('#b-lavar'); if (bl) bl.onclick = () => { m.ultimo = t; contarLavado(); guardar(); aviso('Lavado apuntado.'); pintarResultado(); pintarLista(); $('#q').select(); };
+  const br = $('#b-renovar'); if (br) br.onclick = () => { cobrarMes(m); guardar(); aviso(`Cobrado. Bono válido hasta el ${fecha(m.hasta)}.`); pintarResultado(); pintarLista(); };
 }
 
 /* ---- Lista ---- */
@@ -334,34 +305,6 @@ $('#tabla').addEventListener('click', e => { const tr = e.target.closest('[data-
 /* ---- Ajustes ---- */
 $('#p-basico').value = db.precios.basico; $('#p-completo').value = db.precios.completo;
 $('#b-precios').onclick = () => { db.precios.basico = Number($('#p-basico').value) || 0; db.precios.completo = Number($('#p-completo').value) || 0; guardar(); aviso('Precios guardados.'); pintarLista(); pintarResultado(); };
-const nf = db.notif || {};
-$('#n-token').value = nf.token || ''; $('#n-chat').value = nf.chat || '';
-$('#n-lav').checked = nf.lavados !== false; $('#n-cob').checked = nf.cobros !== false;
-const leerNotif = () => { db.notif = { token: $('#n-token').value.trim(), chat: $('#n-chat').value.trim(), lavados: $('#n-lav').checked, cobros: $('#n-cob').checked }; guardar(); };
-const enMarco = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
-const MARCO = 'Esta vista de prueba bloquea Telegram. Abre el archivo index.html directamente en Chrome.';
-$('#b-notif').onclick = () => { leerNotif(); aviso(db.notif.token && db.notif.chat ? 'Avisos guardados.' : 'Avisos desactivados: falta el token o el chat.'); };
-$('#b-chat').onclick = async () => {
-  leerNotif();
-  if (!db.notif.token) { aviso('Pega primero el token del bot.'); return; }
-  if (enMarco) { aviso(MARCO); return; }
-  try {
-    const j = await (await fetch(`${TG}${db.notif.token}/getUpdates`)).json();
-    if (!j.ok) { aviso('El token no es válido. Cópialo otra vez de @BotFather.'); return; }
-    const msgs = (j.result || []).map(u => u.message || u.edited_message).filter(Boolean);
-    const ult = msgs[msgs.length - 1];
-    if (!ult) { aviso('No encuentro mensajes. Escríbele «hola» a tu bot en Telegram y vuelve a pulsar.'); return; }
-    $('#n-chat').value = ult.chat.id; leerNotif();
-    aviso(`Chat encontrado: ${ult.chat.first_name || ult.chat.title || ult.chat.id}. Ahora pulsa «Enviarme una prueba».`);
-  } catch (e) { aviso('No se ha podido conectar con Telegram. Revisa la conexión a internet.'); }
-};
-$('#b-notif-prueba').onclick = async () => {
-  leerNotif();
-  if (!db.notif.token || !db.notif.chat) { aviso('Falta el token del bot o tu chat.'); return; }
-  if (enMarco) { aviso(MARCO); return; }
-  const ok = await notificar(`✅ Prueba de Bono Lavado ES La Soledad (${hora()}). Los avisos funcionan.`);
-  aviso(ok === false ? 'Telegram no ha aceptado el mensaje. Revisa el token y el chat.' : 'Prueba enviada. Mira tu Telegram.');
-};
 $('#b-copia').onclick = async () => {
   const txt = JSON.stringify(db);
   try { await navigator.clipboard.writeText(txt); aviso('Copia copiada. Pégala en un correo para guardarla.'); }
