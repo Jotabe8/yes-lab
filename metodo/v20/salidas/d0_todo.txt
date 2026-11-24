@@ -1,0 +1,18 @@
+
+US100: días 3753  2012-01-19..2026-11-13
+  minutos con volumen Dukascopy > 0: 0.335
+  ticks_ftmo vs twap: días 1257  corr (P−VWAP)/ATR en minutos [60, 150, 270, 385]: 1.000 0.999 0.998 0.997  signo igual 0.987  |ΔVWAP|/ATR mediana 0.007
+  etf vs twap: días 2714  corr (P−VWAP)/ATR en minutos [60, 150, 270, 385]: 0.989 0.985 0.980 0.981  signo igual 0.958  |ΔVWAP|/ATR mediana 0.023
+  etf vs ticks_ftmo: días 2714  corr (P−VWAP)/ATR en minutos [60, 150, 270, 385]: 0.989 0.987 0.983 0.985  signo igual 0.963  |ΔVWAP|/ATR mediana 0.019
+
+US500: días 3772  2012-01-16..2026-11-13
+  ticks_ftmo: sin datos
+  etf vs twap: días 2716  corr (P−VWAP)/ATR en minutos [60, 150, 270, 385]: 0.991 0.987 0.985 0.985  signo igual 0.966  |ΔVWAP|/ATR mediana 0.017
+
+US30: días 3343  2013-10-01..2026-11-13
+  ticks_ftmo: sin datos
+  etf vs twap: días 2712  corr (P−VWAP)/ATR en minutos [60, 150, 270, 385]: 0.979 0.977 0.972 0.975  signo igual 0.945  |ΔVWAP|/ATR mediana 0.028
+
+GER40: días 3379  2013-10-01..2026-11-13
+  ticks_ftmo: sin datos
+  etf: sin datos

@@ -165,3 +165,10 @@ pruebas con nulo por permutación: 52 celdas |t|≥3 frente a 27,7 del azar (36 
 4 candidatas preregistradas (commit 7f09137) → 0/4 pasan en 2023-26 (mejor: oro largo 06:30 si ayer
 cayó, +0,016 R t 1,42). Único patrón persistente: reloj horario EURUSD (Breedon-Ranaldo), 0,26× coste
 fuera. DESCARTADO todo. Informe: metodo/v16/INFORME.md.
+
+## 2026-11-24 — v20: VWAP como base de una estrategia
+Volumen real 1 min de QQQ/SPY/DIA (Alpaca SIP 2016-26) y volumen de ticks FTMO US100 (PC, 2021-26): el VWAP es
+casi igual a la media simple desde la apertura (corr de P − VWAP 0,98-0,999, mismo signo 95-99 %), ticks ≈ real.
+P1 2012-22 en US100/US500/US30/GER40 con coste FTMO: 0/4. H1 cierre lejos del VWAP → día siguiente (t 0,02),
+H2 VWAP como stop del ORB (empeora, Δ −0,05 R), H3 bandas ±2σ (−0,7 R), H4 tendencia VWAP Zarattini (bruto + en
+US100 = momentum del ORB, neto ≈ 0 / negativo). DESCARTADA la familia VWAP. Informe: metodo/v20/INFORME.md.

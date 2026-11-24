@@ -1,0 +1,21 @@
+v20 hipótesis — peso duka, tramo p1
+
+H1 cierre frente al VWAP -> mismo lado al día siguiente (R, 1R = 0,5 ATR)
+  US100                        n=   75 media=-0.0193 t=-0.18 bruto -0.0140 coste 0.0053 placebo p95 +0.2311 | control rend +0.0372
+  JUNTOS                       n=   75 media=-0.0193 t=-0.18 bruto -0.0140
+  regresión (días con señal): coef z -0.2933 t -0.39 | coef rend -0.0684 t -0.16
+  meseta q70                   n=  116 media=+0.0694 t=+0.79 
+  meseta q90                   n=   33 media=-0.1533 t=-0.98 
+
+H2 ORB con stop dinámico VWAP desde las 10:00 (R neta)
+  US100: ops 289 base +0.1581 (t +1.17) VWAP +0.1014 (t +1.02)  Δ -0.0567 t -0.63  Sharpe/año 1.03 -> 0.90
+
+H3 bandas ±2σ, vuelta al VWAP (R, 1R = distancia al stop 3σ)
+  US100                        n=  317 media=-0.1313 t=-1.35 bruto -0.0856 coste 0.0457 placebo p95 +0.1186 dur med 17 min | neto -2.46 pb/op t -1.27
+  JUNTOS                       n=  317 media=-0.1313 t=-1.35 bruto -0.0856
+
+H4 tendencia VWAP (rendimiento diario neto, pb = 1e-4)
+  M1 US100: días 326 neto +9.25 pb t +1.13 bruto +20.44 pb giros/día 15.2  placebo neto p95 -1.81 pb
+  M1 JUNTOS (fracción)         n=  326 media=+0.0009 t=+1.13 
+  M5 US100: días 326 neto +7.96 pb t +0.90 bruto +13.29 pb giros/día 6.7  placebo neto p95 +1.79 pb
+  M5 JUNTOS (fracción)         n=  326 media=+0.0008 t=+0.90 
