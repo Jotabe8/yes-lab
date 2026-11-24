@@ -248,7 +248,8 @@ function pintarResultado() {
   }
   r.innerHTML = `<div class="res ${cls}"><div class="band"><h2>${titulo}</h2><p>${sub}</p></div>
     <div class="body"><div class="row" style="align-items:center">${placa(m.matricula)}<div class="who">${esc(m.nombre)}<small>Bono ${esc(plan)} · ${esc(m.telefono || 'sin teléfono')}</small></div></div>
-    ${botones ? `<div class="row">${botones}</div>` : ''}</div></div>`;
+    ${botones ? `<div class="row">${botones}</div>` : ''}
+    ${telWA(m.telefono) ? `<div><a class="wa" href="https://wa.me/${telWA(m.telefono)}?text=${encodeURIComponent(textoAviso(m))}" target="_blank" rel="noopener">Enviar su bono por WhatsApp</a></div>` : ''}</div></div>`;
   const bl = $('#b-lavar'); if (bl) bl.onclick = () => { m.ultimo = t; contarLavado(); guardar(); aviso('Lavado apuntado.'); pintarResultado(); pintarLista(); $('#q').select(); };
   const br = $('#b-renovar'); if (br) br.onclick = () => { cobrarMes(m); guardar(); aviso(`Cobrado. Bono válido hasta el ${fecha(m.hasta)}.`); pintarResultado(); pintarLista(); };
 }
@@ -276,6 +277,7 @@ function telWA(tel) {
 }
 function textoAviso(m) {
   const nombre = (m.nombre || '').split(' ')[0];
+  if (estado(m).k === 'ok') return `Hola ${nombre}, tu Bono Lavado ${PLANES[m.plan] || ''} de ES La Soledad está activo hasta el ${fecha(m.hasta)}. Puedes pasar por el túnel una vez al día: pide tu ticket en la tienda diciendo tu matrícula (${fmt(m.matricula)}). ¡Gracias!`;
   return m.hasta < hoy()
     ? `Hola ${nombre}, tu Bono Lavado de ES La Soledad caducó el ${fecha(m.hasta)}. Pásate por la tienda para renovarlo y seguir lavando cuando quieras. ¡Gracias!`
     : `Hola ${nombre}, tu Bono Lavado de ES La Soledad caduca el ${fecha(m.hasta)}. Renuévalo en la tienda para seguir lavando sin cortes. ¡Gracias!`;
