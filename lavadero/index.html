@@ -221,7 +221,7 @@ function cobrarMes(m) {
 function notificar(texto) {
   const n = db.notif; if (!n || !n.tel || !n.key) return false;
   const tel = telWA(n.tel); if (!tel) return false;
-  const url = `https://api.callmebot.com/whatsapp.php?phone=${tel}&text=${encodeURIComponent(texto)}&apikey=${encodeURIComponent(n.key)}`;
+  const url = `https://api.callmebot.com/whatsapp.php?phone=%2B${tel}&text=${encodeURIComponent(texto)}&apikey=${encodeURIComponent(n.key)}`;
   try { fetch(url, { mode: 'no-cors' }).catch(() => { new Image().src = url; }); } catch (e) { new Image().src = url; }
   return true;
 }
