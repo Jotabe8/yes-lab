@@ -16,9 +16,11 @@ App de una sola pantalla para controlar en la caja de la tienda los bonos mensua
 
 Los precios se cambian en «Precios y copia de seguridad».
 
-## Instalación
+## Dónde abrirla
 
-Copia `index.html` a la tablet o al ordenador de la tienda y ábrelo con Chrome. Funciona sin internet.
+**https://jotabe8.github.io/yes-lab/lavadero/** (GitHub Pages, rama `claude/practical-galileo-5inths`). Ábrela en Chrome y guárdala en marcadores o en la pantalla de inicio.
+
+También se puede copiar `index.html` a la tablet y abrirlo con Chrome sin internet, pero entonces no salen los avisos de Telegram.
 
 ## Importante
 
