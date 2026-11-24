@@ -140,7 +140,21 @@ details[open] summary { margin-bottom: 12px; }
       <div class="grow"><label for="p-completo">Bono Completo (€/mes)</label><input id="p-completo" type="number" step="0.05" min="0"></div>
       <button class="btn" id="b-precios" type="button">Guardar precios</button>
     </div>
-    <p class="hint">Los datos se guardan solo en esta tablet. Copia la copia de seguridad una vez a la semana y pégala en un correo.</p>
+    <h2 style="margin-top:18px">Avisos a mi WhatsApp</h2>
+    <p class="hint" style="margin-top:2px">Te llega un WhatsApp automático en cada lavado o cobro. Usa el servicio gratuito CallMeBot: primero activa tu número siguiendo las instrucciones de callmebot.com y copia aquí la clave (apikey) que te envían.</p>
+    <div class="row" style="margin-top:10px">
+      <div class="grow"><label for="n-tel">Mi móvil</label><input id="n-tel" inputmode="tel" placeholder="600 000 000"></div>
+      <div class="grow"><label for="n-key">Clave de CallMeBot (apikey)</label><input id="n-key" inputmode="numeric" placeholder="1234567"></div>
+    </div>
+    <div class="row" style="margin-top:10px;align-items:center">
+      <label style="display:flex;gap:8px;align-items:center;margin:0;color:var(--fg)"><input type="checkbox" id="n-lav" style="width:auto"> Avisar de cada lavado</label>
+      <label style="display:flex;gap:8px;align-items:center;margin:0;color:var(--fg)"><input type="checkbox" id="n-cob" style="width:auto"> Avisar de cada alta y cobro</label>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn" id="b-notif" type="button">Guardar avisos</button>
+      <button class="btn" id="b-notif-prueba" type="button">Enviarme una prueba</button>
+    </div>
+    <p class="hint" style="margin-top:18px">Los datos se guardan solo en esta tablet. Copia la copia de seguridad una vez a la semana y pégala en un correo.</p>
     <div class="row" style="margin-top:10px">
       <button class="btn" id="b-copia" type="button">Copiar copia de seguridad</button>
       <label class="btn" for="f-restaurar" style="margin:0;color:var(--fg);font:700 18px var(--f-display)">Restaurar copia</label>
@@ -203,6 +217,15 @@ function cobrarMes(m) {
   const desde = m.hasta && m.hasta >= t ? addDays(m.hasta, 1) : t;
   m.hasta = unMesDesde(desde);
 }
+/* ---- Avisos automáticos al encargado (CallMeBot) ---- */
+function notificar(texto) {
+  const n = db.notif; if (!n || !n.tel || !n.key) return false;
+  const tel = telWA(n.tel); if (!tel) return false;
+  const url = `https://api.callmebot.com/whatsapp.php?phone=${tel}&text=${encodeURIComponent(texto)}&apikey=${encodeURIComponent(n.key)}`;
+  try { fetch(url, { mode: 'no-cors' }).catch(() => { new Image().src = url; }); } catch (e) { new Image().src = url; }
+  return true;
+}
+const hora = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
 function contarLavado() { const t = hoy(); if (db.diaLavados !== t) { db.diaLavados = t; db.lavadosHoy = 0; } db.lavadosHoy++; }
 
 /* ---- Comprobar ---- */
@@ -229,6 +252,7 @@ function pintarResultado() {
       e.preventDefault();
       const n = { nombre: $('#a-nombre').value.trim(), telefono: $('#a-tel').value.trim(), matricula: actual, plan: document.querySelector('input[name=plan]:checked').value, hasta: null, ultimo: null };
       cobrarMes(n); db.socios.push(n); guardar();
+      if (db.notif && db.notif.cobros) notificar(`🆕 Nuevo socio ${hora()} · ${fmt(n.matricula)} · ${n.nombre} · Bono ${PLANES[n.plan]} ${eur(db.precios[n.plan])} · válido hasta ${fecha(n.hasta)}`);
       aviso(`Alta hecha. Bono válido hasta el ${fecha(n.hasta)}.`); pintarResultado(); pintarLista();
     });
     $('#a-nombre').focus();
@@ -250,8 +274,10 @@ function pintarResultado() {
     <div class="body"><div class="row" style="align-items:center">${placa(m.matricula)}<div class="who">${esc(m.nombre)}<small>Bono ${esc(plan)} · ${esc(m.telefono || 'sin teléfono')}</small></div></div>
     ${botones ? `<div class="row">${botones}</div>` : ''}
     ${telWA(m.telefono) ? `<div><a class="wa" href="https://wa.me/${telWA(m.telefono)}?text=${encodeURIComponent(textoAviso(m))}" target="_blank" rel="noopener">Enviar su bono por WhatsApp</a></div>` : ''}</div></div>`;
-  const bl = $('#b-lavar'); if (bl) bl.onclick = () => { m.ultimo = t; contarLavado(); guardar(); aviso('Lavado apuntado.'); pintarResultado(); pintarLista(); $('#q').select(); };
-  const br = $('#b-renovar'); if (br) br.onclick = () => { cobrarMes(m); guardar(); aviso(`Cobrado. Bono válido hasta el ${fecha(m.hasta)}.`); pintarResultado(); pintarLista(); };
+  const bl = $('#b-lavar'); if (bl) bl.onclick = () => { m.ultimo = t; contarLavado(); guardar(); aviso('Lavado apuntado.');
+    if (db.notif && db.notif.lavados) notificar(`🚗 Lavado ${hora()} · ${fmt(m.matricula)} · ${m.nombre} · Bono ${plan} (hasta ${fecha(m.hasta)}) · Lavados hoy: ${db.lavadosHoy}`); pintarResultado(); pintarLista(); $('#q').select(); };
+  const br = $('#b-renovar'); if (br) br.onclick = () => { cobrarMes(m); guardar();
+    if (db.notif && db.notif.cobros) notificar(`💶 Cobro ${hora()} · ${fmt(m.matricula)} · ${m.nombre} · Bono ${plan} ${precio} · válido hasta ${fecha(m.hasta)}`); aviso(`Cobrado. Bono válido hasta el ${fecha(m.hasta)}.`); pintarResultado(); pintarLista(); };
 }
 
 /* ---- Lista ---- */
@@ -305,6 +331,19 @@ $('#tabla').addEventListener('click', e => { const tr = e.target.closest('[data-
 /* ---- Ajustes ---- */
 $('#p-basico').value = db.precios.basico; $('#p-completo').value = db.precios.completo;
 $('#b-precios').onclick = () => { db.precios.basico = Number($('#p-basico').value) || 0; db.precios.completo = Number($('#p-completo').value) || 0; guardar(); aviso('Precios guardados.'); pintarLista(); pintarResultado(); };
+const nf = db.notif || {};
+$('#n-tel').value = nf.tel || ''; $('#n-key').value = nf.key || '';
+$('#n-lav').checked = nf.lavados !== false; $('#n-cob').checked = nf.cobros !== false;
+const leerNotif = () => { db.notif = { tel: $('#n-tel').value.trim(), key: $('#n-key').value.trim(), lavados: $('#n-lav').checked, cobros: $('#n-cob').checked }; guardar(); };
+$('#b-notif').onclick = () => { leerNotif(); aviso(db.notif.tel && db.notif.key ? 'Avisos guardados.' : 'Avisos desactivados: falta el móvil o la clave.'); };
+$('#b-notif-prueba').onclick = () => {
+  leerNotif();
+  if (!telWA(db.notif.tel) || !db.notif.key) { aviso('Pon tu móvil y la clave de CallMeBot.'); return; }
+  let enMarco = true; try { enMarco = window.self !== window.top; } catch (e) {}
+  if (enMarco) { aviso('Esta vista de prueba bloquea los avisos. Abre el archivo index.html directamente en Chrome.'); return; }
+  notificar(`✅ Prueba de Bono Lavado ES La Soledad (${hora()}). Los avisos funcionan.`);
+  aviso('Prueba enviada. Si en un minuto no te llega, revisa el móvil y la clave.');
+};
 $('#b-copia').onclick = async () => {
   const txt = JSON.stringify(db);
   try { await navigator.clipboard.writeText(txt); aviso('Copia copiada. Pégala en un correo para guardarla.'); }

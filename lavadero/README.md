@@ -23,3 +23,14 @@ Copia `index.html` a la tablet o al ordenador de la tienda y ábrelo con Chrome.
 ## Importante
 
 Los datos se guardan solo en ese navegador. Una vez a la semana, pulsa «Copiar copia de seguridad» y pega el texto en un correo. Para recuperarla, guarda ese texto en un archivo `.json` y usa «Restaurar copia».
+
+## Avisos automáticos a tu WhatsApp
+
+La app puede mandarte un WhatsApp en cada lavado y en cada alta o cobro, usando el servicio gratuito [CallMeBot](https://www.callmebot.com/), pensado para uso personal.
+
+1. Mira en callmebot.com el número actual de su bot (cambia de vez en cuando) y guárdalo en los contactos del móvil.
+2. Envíale por WhatsApp el texto `I allow callmebot to send me messages`.
+3. Te contesta con tu clave (*apikey*).
+4. En la app, abre «Precios y copia de seguridad» → «Avisos a mi WhatsApp», pon tu móvil y la clave, y pulsa «Enviarme una prueba».
+
+Los avisos solo funcionan abriendo `index.html` directamente en Chrome, con internet. En la vista previa de claude.ai están bloqueados.
