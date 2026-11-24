@@ -2,7 +2,7 @@
 #
 # Qué hace, en orden:
 #   1. Descarga (o actualiza) los archivos del repositorio en Documents\arbitraje.
-#   2. Comprueba Enlace Móvil y Python; si faltan, los instala con winget.
+#   2. Comprueba Enlace Móvil (opcional) y Python; si falta Python, lo instala con winget.
 #   3. Evita que el PC se suspenda enchufado (las notificaciones solo llegan con el PC despierto).
 #   4. Prueba el acceso a las notificaciones; si Windows no lo da, abre los ajustes y espera.
 #   5. Crea la tarea programada "Arbitraje - avisos Wallapop": al iniciar sesión (y cada 15 min
@@ -84,15 +84,9 @@ Paso "2. Enlace Móvil y Python"
 $winget = Get-Command winget -ErrorAction SilentlyContinue
 $enlace = Get-AppxPackage -Name Microsoft.YourPhone -ErrorAction SilentlyContinue
 if (-not $enlace) { $enlace = Get-AppxPackage -Name *CrossDevice* -ErrorAction SilentlyContinue }
-if ($enlace) {
-    Write-Host "Enlace Móvil instalado: $($enlace[0].Name) $($enlace[0].Version)"
-} elseif ($winget) {
-    Write-Host "Enlace Móvil no está instalado: instalando desde Microsoft Store..."
-    & winget install --id 9NMPJ99VJBWV --source msstore --accept-package-agreements --accept-source-agreements
-} else {
-    Write-Host "Enlace Móvil no está instalado y no hay winget: abro la Store para instalarlo."
-    Start-Process 'ms-windows-store://pdp/?productid=9NMPJ99VJBWV'
-}
+# No hace falta: los avisos pueden venir también del navegador (Wallapop web con notificaciones).
+if ($enlace) { Write-Host "Enlace Móvil instalado: $($enlace[0].Name) $($enlace[0].Version)" }
+else { Write-Host "Enlace Móvil no está (no hace falta si los avisos llegan por el navegador)." }
 
 function Hay-Python {
     foreach ($c in @('py', 'python') + @(Get-ChildItem "$env:LOCALAPPDATA\Programs\Python\Python3*\python.exe" -ErrorAction SilentlyContinue | ForEach-Object FullName)) {
@@ -152,7 +146,7 @@ $ajustes = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoin
 $quien = New-ScheduledTaskPrincipal -UserId $usuario -LogonType Interactive -RunLevel Limited
 try {
     Register-ScheduledTask -TaskName $Tarea -Action $accion -Trigger $alIniciar -Settings $ajustes -Principal $quien `
-        -Description 'Lee las notificaciones de Wallapop (Enlace Móvil) y las guarda en avisos_wallapop.csv. Solo local.' -Force | Out-Null
+        -Description 'Lee las notificaciones de Wallapop (navegador o Enlace Móvil) y las guarda en avisos_wallapop.csv. Solo local.' -Force | Out-Null
     Start-ScheduledTask -TaskName $Tarea
 } catch {
     Write-Host "No se pudo crear la tarea: $($_.Exception.Message)" -ForegroundColor Red

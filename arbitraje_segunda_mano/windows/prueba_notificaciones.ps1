@@ -84,6 +84,8 @@ if (-not $Vigilar) {
     $todas | Group-Object App | Sort-Object Count -Descending | Format-Table Count, Name -AutoSize
     $enlace = @($todas | Where-Object { $_.App -match 'Enlace|Phone Link|YourPhone|CrossDevice' })
     Write-Host "Desde Enlace Móvil: $($enlace.Count)"
+    $nav = @($todas | Where-Object { $_.App -match 'Edge|Chrome|Firefox|Opera|Brave' })
+    Write-Host "Desde el navegador: $($nav.Count)"
     $wp = @($todas | Where-Object { "$($_.App) $($_.Texto)" -match $Filtro })
     Write-Host "De Wallapop: $($wp.Count)"
     exit 0
