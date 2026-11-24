@@ -1,0 +1,19 @@
+id,categoria,modelo,palabras_clave,excluir,precio_nuevo,mediana_usado,precio_suelo,dias_venta,fuente_precios,fecha_precios
+ps5-slim-disco,consolas,PS5 Slim con lector,ps5 slim|ps5 lector|ps5 disco|ps5 standard|playstation5 slim|playstation5,digital|pro|portal,,450,,,anuncios Wallapop (precio pedido 450-500; venta real algo menor),2026-11-24
+ps5-slim-digital,consolas,PS5 Slim Digital,ps5 digital|ps5 slim digital|playstation5 digital,pro|portal|lector,599.99,400,,,"nuevo: PVP oficial (3DJuegos); usado: anuncios Wallapop",2026-11-24
+ps5-pro,consolas,PS5 Pro,ps5 pro|playstation5 pro,portal,,,,,,
+ps-portal,consolas,PlayStation Portal,ps portal|playstation portal|ps5 portal,,,,,,,
+switch-oled,consolas,Nintendo Switch OLED,switch oled|nintendo switch oled,switch2|lite,,,,,,
+switch-2,consolas,Nintendo Switch 2,switch2|nintendo switch2,,,,,,,
+steam-deck-oled,consolas,Steam Deck OLED,steam deck oled,,,,,,,
+xbox-series-x,consolas,Xbox Series X,xbox series x|series x,series s,,,,,,
+sony-a7-iii,camaras,Sony A7 III (cuerpo),a7 iii|a7iii|a7 mark iii|a7m3|ilce7m3|alpha 7 iii|a7 3,a7r|a7s|a7c|a7 iv|a7iv,,900,,,"MPB 814-1159 (tienda, con garantía); particular algo menos",2026-11-24
+sony-a7-iv,camaras,Sony A7 IV (cuerpo),a7 iv|a7iv|a7 mark iv|a7m4|ilce7m4|alpha 7 iv,a7r|a7s|a7c,,,,,,
+sony-a6400,camaras,Sony A6400,a6400|alpha 6400|ilce6400,,,,,,,
+fuji-x-t3,camaras,Fujifilm X-T3,x t3|xt3,x t30,,,,,,
+fuji-x100v,camaras,Fujifilm X100V,x100v,x100vi|x100f,,,,,,
+canon-r6,camaras,Canon EOS R6,eos r6|canon r6,r6 mark ii|r6 ii|r6ii,,,,,,
+canon-rp,camaras,Canon EOS RP,eos rp|canon rp,,,,,,,
+nikon-z6-ii,camaras,Nikon Z6 II,z6 ii|z6ii|z6 mark ii,,,,,,,
+sigma-24-70-dgdn,camaras,Sigma 24-70 f2.8 DG DN (Sony E),sigma 24 70 2 8 dg dn|sigma 24 70 dg dn,canon|nikon|l mount,,,,,,
+sony-85-18,camaras,Sony FE 85 mm f1.8,fe 85 1 8|sony 85mm 1 8|sony 85 1 8|sel85f18,gm|1 4,,,,,,

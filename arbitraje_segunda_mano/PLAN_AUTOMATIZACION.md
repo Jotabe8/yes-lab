@@ -39,6 +39,15 @@ de riesgo:
 | **Wallapop por scraping** | Endpoint interno de búsqueda o actor de Apify | **Alto**: prohibido por sus condiciones | **No**, salvo permiso escrito o decisión explícita tuya asumiendo el riesgo, y nunca con tu cuenta de compraventa |
 | **Wallapop con permiso** | Escribir a Wallapop pidiendo acceso (como Wallapop PRO / socio) | Ninguno | Pedirlo en paralelo, poco probable |
 
+**Decidido (24-11-2026):** Wallapop se usa **solo mediante sus propias alertas** de búsquedas
+guardadas; nada de saltarse sus defensas. Como el móvil es un iPhone (no permite reenviar
+notificaciones de otras apps), la vía a probar es el PC con Windows encendido 24/7:
+Enlace Móvil (Phone Link) muestra las notificaciones del iPhone en Windows, y un pequeño
+programa con la API oficial `UserNotificationListener` las leería y las pasaría a la
+aplicación. **Sin confirmar** que las notificaciones de Phone Link sean legibles así: es lo
+primero que hay que probar. Plan B: revisar a mano las alertas y pegar el anuncio en
+`evaluar.py`.
+
 **Recomendación:** construir toda la aplicación (catálogo, valoración, margen, alertas,
 libro) con eBay y las alertas como primeras fuentes. Es el 80 % del trabajo y vale para
 cualquier fuente. Decidir lo de Wallapop cuando el resto funcione y haya números.
