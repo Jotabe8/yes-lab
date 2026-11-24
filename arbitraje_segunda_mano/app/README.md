@@ -32,3 +32,12 @@ El resto está vacío: hay que rellenar `mediana_usado` (ventas reales, no preci
 Embalaje 3 €, reacondicionado 5 €, 5 % de probabilidad de que la compra salga mal,
 umbral de compra: margen ≥ 30 € **y** ≥ 25 % del coste. Comisión de Wallapop 0 % (paga el
 comprador); la de eBay está sin configurar a propósito.
+
+## Avisos automáticos
+
+- **Gmail (en la nube):** una tarea programada lee cada hora, de 8:00 a 23:00 (hora de Madrid),
+  los avisos de búsquedas guardadas de eBay/Wallapop, los pasa por `evaluar.py` y manda un
+  correo solo con los que dejan margen. Los ya revisados quedan con la etiqueta
+  `arbitraje/revisado`.
+- **Windows (`../windows/prueba_notificaciones.ps1`):** prueba si las notificaciones de
+  Wallapop que llegan del iPhone por Enlace Móvil se pueden leer. No envía nada.
