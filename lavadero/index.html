@@ -140,11 +140,14 @@ details[open] summary { margin-bottom: 12px; }
       <div class="grow"><label for="p-completo">Bono Completo (€/mes)</label><input id="p-completo" type="number" step="0.05" min="0"></div>
       <button class="btn" id="b-precios" type="button">Guardar precios</button>
     </div>
-    <h2 style="margin-top:18px">Avisos a mi WhatsApp</h2>
-    <p class="hint" style="margin-top:2px">Te llega un WhatsApp automático en cada lavado o cobro. Usa el servicio gratuito CallMeBot: primero activa tu número siguiendo las instrucciones de callmebot.com y copia aquí la clave (apikey) que te envían.</p>
+    <h2 style="margin-top:18px">Avisos a mi Telegram</h2>
+    <p class="hint" style="margin-top:2px">Te llega un mensaje de Telegram automático en cada lavado o cobro. Crea tu bot con @BotFather, pega aquí su token, escríbele «hola» al bot desde tu Telegram y pulsa «Buscar mi chat».</p>
     <div class="row" style="margin-top:10px">
-      <div class="grow"><label for="n-tel">Mi móvil</label><input id="n-tel" inputmode="tel" placeholder="600 000 000"></div>
-      <div class="grow"><label for="n-key">Clave de CallMeBot (apikey)</label><input id="n-key" inputmode="numeric" placeholder="1234567"></div>
+      <div class="grow" style="flex-basis:320px"><label for="n-token">Token del bot</label><input id="n-token" placeholder="123456789:AAH…" autocomplete="off" spellcheck="false"></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <div class="grow"><label for="n-chat">Mi chat (ID)</label><input id="n-chat" inputmode="numeric" placeholder="Se rellena con «Buscar mi chat»"></div>
+      <button class="btn" id="b-chat" type="button">Buscar mi chat</button>
     </div>
     <div class="row" style="margin-top:10px;align-items:center">
       <label style="display:flex;gap:8px;align-items:center;margin:0;color:var(--fg)"><input type="checkbox" id="n-lav" style="width:auto"> Avisar de cada lavado</label>
@@ -217,13 +220,13 @@ function cobrarMes(m) {
   const desde = m.hasta && m.hasta >= t ? addDays(m.hasta, 1) : t;
   m.hasta = unMesDesde(desde);
 }
-/* ---- Avisos automáticos al encargado (CallMeBot) ---- */
-function notificar(texto) {
-  const n = db.notif; if (!n || !n.tel || !n.key) return false;
-  const tel = telWA(n.tel); if (!tel) return false;
-  const url = `https://api.callmebot.com/whatsapp.php?phone=%2B${tel}&text=${encodeURIComponent(texto)}&apikey=${encodeURIComponent(n.key)}`;
-  try { fetch(url, { mode: 'no-cors' }).catch(() => { new Image().src = url; }); } catch (e) { new Image().src = url; }
-  return true;
+/* ---- Avisos automáticos al encargado (bot de Telegram) ---- */
+const TG = 'https://api.telegram.org/bot';
+async function notificar(texto) {
+  const n = db.notif; if (!n || !n.token || !n.chat) return false;
+  const url = `${TG}${n.token}/sendMessage?chat_id=${encodeURIComponent(n.chat)}&text=${encodeURIComponent(texto)}`;
+  try { const r = await fetch(url); const j = await r.json(); return !!j.ok; }
+  catch (e) { try { await fetch(url, { mode: 'no-cors' }); } catch (_) {} return null; }
 }
 const hora = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
 function contarLavado() { const t = hoy(); if (db.diaLavados !== t) { db.diaLavados = t; db.lavadosHoy = 0; } db.lavadosHoy++; }
@@ -332,17 +335,32 @@ $('#tabla').addEventListener('click', e => { const tr = e.target.closest('[data-
 $('#p-basico').value = db.precios.basico; $('#p-completo').value = db.precios.completo;
 $('#b-precios').onclick = () => { db.precios.basico = Number($('#p-basico').value) || 0; db.precios.completo = Number($('#p-completo').value) || 0; guardar(); aviso('Precios guardados.'); pintarLista(); pintarResultado(); };
 const nf = db.notif || {};
-$('#n-tel').value = nf.tel || ''; $('#n-key').value = nf.key || '';
+$('#n-token').value = nf.token || ''; $('#n-chat').value = nf.chat || '';
 $('#n-lav').checked = nf.lavados !== false; $('#n-cob').checked = nf.cobros !== false;
-const leerNotif = () => { db.notif = { tel: $('#n-tel').value.trim(), key: $('#n-key').value.trim(), lavados: $('#n-lav').checked, cobros: $('#n-cob').checked }; guardar(); };
-$('#b-notif').onclick = () => { leerNotif(); aviso(db.notif.tel && db.notif.key ? 'Avisos guardados.' : 'Avisos desactivados: falta el móvil o la clave.'); };
-$('#b-notif-prueba').onclick = () => {
+const leerNotif = () => { db.notif = { token: $('#n-token').value.trim(), chat: $('#n-chat').value.trim(), lavados: $('#n-lav').checked, cobros: $('#n-cob').checked }; guardar(); };
+const enMarco = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+const MARCO = 'Esta vista de prueba bloquea Telegram. Abre el archivo index.html directamente en Chrome.';
+$('#b-notif').onclick = () => { leerNotif(); aviso(db.notif.token && db.notif.chat ? 'Avisos guardados.' : 'Avisos desactivados: falta el token o el chat.'); };
+$('#b-chat').onclick = async () => {
   leerNotif();
-  if (!telWA(db.notif.tel) || !db.notif.key) { aviso('Pon tu móvil y la clave de CallMeBot.'); return; }
-  let enMarco = true; try { enMarco = window.self !== window.top; } catch (e) {}
-  if (enMarco) { aviso('Esta vista de prueba bloquea los avisos. Abre el archivo index.html directamente en Chrome.'); return; }
-  notificar(`✅ Prueba de Bono Lavado ES La Soledad (${hora()}). Los avisos funcionan.`);
-  aviso('Prueba enviada. Si en un minuto no te llega, revisa el móvil y la clave.');
+  if (!db.notif.token) { aviso('Pega primero el token del bot.'); return; }
+  if (enMarco) { aviso(MARCO); return; }
+  try {
+    const j = await (await fetch(`${TG}${db.notif.token}/getUpdates`)).json();
+    if (!j.ok) { aviso('El token no es válido. Cópialo otra vez de @BotFather.'); return; }
+    const msgs = (j.result || []).map(u => u.message || u.edited_message).filter(Boolean);
+    const ult = msgs[msgs.length - 1];
+    if (!ult) { aviso('No encuentro mensajes. Escríbele «hola» a tu bot en Telegram y vuelve a pulsar.'); return; }
+    $('#n-chat').value = ult.chat.id; leerNotif();
+    aviso(`Chat encontrado: ${ult.chat.first_name || ult.chat.title || ult.chat.id}. Ahora pulsa «Enviarme una prueba».`);
+  } catch (e) { aviso('No se ha podido conectar con Telegram. Revisa la conexión a internet.'); }
+};
+$('#b-notif-prueba').onclick = async () => {
+  leerNotif();
+  if (!db.notif.token || !db.notif.chat) { aviso('Falta el token del bot o tu chat.'); return; }
+  if (enMarco) { aviso(MARCO); return; }
+  const ok = await notificar(`✅ Prueba de Bono Lavado ES La Soledad (${hora()}). Los avisos funcionan.`);
+  aviso(ok === false ? 'Telegram no ha aceptado el mensaje. Revisa el token y el chat.' : 'Prueba enviada. Mira tu Telegram.');
 };
 $('#b-copia').onclick = async () => {
   const txt = JSON.stringify(db);
