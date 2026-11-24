@@ -7,938 +7,273 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
 <style>
-/* Layout: app de mostrador para tablet. Banda de cabecera degradada naranja-rojo, pestañas, una tarea por pantalla. */
+/* Layout: una sola pantalla de mostrador. Cabecera naranja-roja, casilla de matrícula grande, resultado y lista de socios. */
 :root {
-  --naranja: #FF8200;
-  --rojo: #E1251B;
-  --amarillo: #FFB81C;
-  --bg: #F3F2F0;
-  --surface: #FFFFFF;
-  --surface-2: #F8F6F4;
-  --fg: #1F1A17;
-  --muted: #6A615B;
-  --line: #E2DCD6;
-  --accent: #FF8200;
-  --accent-ink: #A84F00;
-  --on-accent: #1F1A17;
-  --ok: #17803A; --ok-bg: #E4F3E8;
-  --warn: #8A5A00; --warn-bg: #FFF1CF;
-  --bad: #C0161C; --bad-bg: #FCE6E4;
-  --plate-blue: #003399;
-  --shadow: 0 1px 2px rgba(40,25,10,.06), 0 4px 16px rgba(40,25,10,.06);
+  --naranja: #FF8200; --rojo: #E1251B; --amarillo: #FFB81C;
+  --bg: #F3F2F0; --surface: #FFFFFF; --surface-2: #F7F5F3; --fg: #1F1A17; --muted: #6A615B; --line: #E2DCD6;
+  --accent: #FF8200; --on-accent: #1F1A17;
+  --ok: #17803A; --ok-bg: #E4F3E8; --warn: #8A5A00; --warn-bg: #FFF1CF; --bad: #C0161C; --bad-bg: #FCE6E4;
   --f-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
   --f-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --r: 10px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #15110E; --surface: #211A16; --surface-2: #2A221D; --fg: #F4EDE7; --muted: #B4A79C; --line: #3B312A;
-    --accent: #FF8F1F; --accent-ink: #FFA54D; --on-accent: #1F1A17;
-    --ok: #63D184; --ok-bg: #14301D; --warn: #FFCB52; --warn-bg: #382A0B; --bad: #FF7468; --bad-bg: #3D1613;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    --accent: #FF8F1F; --ok: #63D184; --ok-bg: #14301D; --warn: #FFCB52; --warn-bg: #382A0B; --bad: #FF7468; --bad-bg: #3D1613;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #15110E; --surface: #211A16; --surface-2: #2A221D; --fg: #F4EDE7; --muted: #B4A79C; --line: #3B312A;
-  --accent: #FF8F1F; --accent-ink: #FFA54D; --on-accent: #1F1A17;
-  --ok: #63D184; --ok-bg: #14301D; --warn: #FFCB52; --warn-bg: #382A0B; --bad: #FF7468; --bad-bg: #3D1613;
-  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+  --accent: #FF8F1F; --ok: #63D184; --ok-bg: #14301D; --warn: #FFCB52; --warn-bg: #382A0B; --bad: #FF7468; --bad-bg: #3D1613;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-body { background: var(--bg); color: var(--fg); font: 15px/1.5 var(--f-body); }
+body { background: var(--bg); color: var(--fg); font: 16px/1.5 var(--f-body); }
 [hidden] { display: none !important; }
-button, input, select, textarea { font: inherit; color: inherit; }
+button, input, select { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--amarillo); outline-offset: 2px; }
-.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 820px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
-/* Cabecera */
-.top { background: linear-gradient(100deg, var(--naranja) 0%, #F35A12 55%, var(--rojo) 100%); color: #fff; margin-top: calc(-1 * env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); }
-.top .wrap { display: flex; align-items: center; gap: 14px; padding-block: 14px; flex-wrap: wrap; }
-.mark { width: 40px; height: 40px; border-radius: 50%; background: conic-gradient(var(--amarillo) 0 33%, #fff 0 34%, var(--naranja) 0 66%, #fff 0 67%, var(--rojo) 0); border: 3px solid #fff; flex: none; }
-.brand { min-width: 0; flex: 1; }
-.brand h1 { margin: 0; font: 800 26px/1 var(--f-display); letter-spacing: .01em; text-wrap: balance; }
-.brand h1 span { font-weight: 600; opacity: .92; }
-.brand p { margin: 3px 0 0; font-size: 13px; opacity: .92; }
-.hoy-chip { font: 600 14px var(--f-display); letter-spacing: .04em; text-transform: uppercase; background: rgba(255,255,255,.18); padding: 6px 10px; border-radius: 999px; white-space: nowrap; }
-.tabs { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--naranja); }
-.tabs .wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
-.tab { border: 0; background: none; padding: 14px 14px 12px; font: 700 16px var(--f-display); letter-spacing: .02em; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
-.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--accent); }
-.tab:hover { color: var(--fg); }
+.top { background: linear-gradient(100deg, var(--naranja), #F35A12 55%, var(--rojo)); color: #fff; margin-top: calc(-1 * env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); }
+.top .wrap { padding-block: 16px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.top h1 { margin: 0; font: 800 28px/1.1 var(--f-display); flex: 1; }
+.top h1 span { font-weight: 600; }
+.top p { margin: 0; font: 600 15px var(--f-display); letter-spacing: .04em; text-transform: uppercase; opacity: .95; }
 
-main { padding-block: 20px 60px; }
-.view { display: grid; gap: 18px; }
-h2 { font: 700 24px/1.15 var(--f-display); margin: 0; text-wrap: balance; }
-h3 { font: 700 18px/1.2 var(--f-display); margin: 0; letter-spacing: .01em; }
-.sub { color: var(--muted); margin: 4px 0 0; }
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 18px; box-shadow: var(--shadow); min-width: 0; }
-.demo { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: var(--warn-bg); color: var(--warn); border-radius: var(--r); padding: 10px 14px; font-size: 14px; }
-.demo strong { font-weight: 600; }
-.demo button { margin-left: auto; }
-
-/* Controles */
-label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 6px; color: var(--muted); letter-spacing: .02em; }
-input, select, textarea { width: 100%; padding: 11px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); min-width: 0; }
-input:focus, select:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
-.btn { border: 0; border-radius: 8px; padding: 11px 18px; font: 700 16px var(--f-display); letter-spacing: .03em; cursor: pointer; background: var(--surface-2); color: var(--fg); border: 1.5px solid var(--line); white-space: nowrap; }
-.btn:hover { border-color: var(--muted); }
-.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
-.btn.primary:hover { filter: brightness(1.05); }
-.btn.big { padding: 16px 24px; font-size: 20px; }
-.btn.danger { color: var(--bad); }
-.btn:disabled { opacity: .45; cursor: not-allowed; }
-.btn.sm { padding: 7px 12px; font-size: 14px; }
+main { padding-block: 20px 48px; display: grid; gap: 16px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; min-width: 0; }
+h2 { margin: 0; font: 700 20px var(--f-display); }
+label { display: block; font-weight: 600; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+input, select { width: 100%; padding: 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--surface); min-width: 0; }
+input:focus, select:focus { border-color: var(--accent); outline: none; }
+#q { font: 700 30px var(--f-display); letter-spacing: .08em; text-transform: uppercase; padding: 14px 16px; }
+#q::placeholder { font: 400 18px var(--f-body); letter-spacing: 0; text-transform: none; }
+.btn { border: 1.5px solid var(--line); background: var(--surface-2); border-radius: 8px; padding: 12px 18px; font: 700 18px var(--f-display); letter-spacing: .02em; cursor: pointer; white-space: nowrap; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.big { padding: 16px 26px; font-size: 22px; }
+.btn.sm { padding: 6px 12px; font-size: 15px; }
 .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; }
-.row > .grow { flex: 1 1 220px; min-width: 0; }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-.hint { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
-.seg { display: inline-flex; border: 1.5px solid var(--line); border-radius: 8px; overflow: hidden; }
-.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.seg label { margin: 0; padding: 10px 16px; cursor: pointer; color: var(--fg); font: 600 15px var(--f-body); letter-spacing: 0; }
-.seg input:checked + label { background: var(--accent); color: var(--on-accent); }
-.seg input:focus-visible + label { outline: 3px solid var(--amarillo); outline-offset: -3px; }
+.row > .grow { flex: 1 1 200px; min-width: 0; }
+.hint { color: var(--muted); font-size: 14px; margin: 8px 0 0; }
 
-/* Buscador de validación */
-.search input#q { font: 700 26px var(--f-display); letter-spacing: .06em; padding: 14px 16px; text-transform: uppercase; }
-.search input#q::placeholder { text-transform: none; letter-spacing: 0; font: 400 17px var(--f-body); }
+.res { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+.res .band { padding: 18px 20px; }
+.res .band h2 { font-size: 34px; line-height: 1.1; }
+.res .band p { margin: 4px 0 0; font-size: 17px; }
+.res.ok .band { background: var(--ok-bg); color: var(--ok); }
+.res.warn .band { background: var(--warn-bg); color: var(--warn); }
+.res.bad .band { background: var(--bad-bg); color: var(--bad); }
+.res .body { padding: 18px 20px; display: grid; gap: 14px; }
+.who { font: 700 22px var(--f-display); }
+.who small { display: block; font: 400 15px var(--f-body); color: var(--muted); }
 
-/* Tarjeta de resultado */
-.result { border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); }
-.result .band { padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
-.result .band .dot { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font: 800 26px var(--f-display); flex: none; color: var(--surface); }
-.result .band h3 { font-size: 28px; }
-.result .band p { margin: 2px 0 0; }
-.result.ok .band { background: var(--ok-bg); color: var(--ok); } .result.ok .dot { background: var(--ok); }
-.result.warn .band { background: var(--warn-bg); color: var(--warn); } .result.warn .dot { background: var(--warn); }
-.result.bad .band { background: var(--bad-bg); color: var(--bad); } .result.bad .dot { background: var(--bad); }
-.result .body { padding: 18px 20px; display: grid; gap: 16px; }
-.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 18px; }
-.fact > span { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
-.fact b { font-weight: 600; }
-.who { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.who .name { font: 700 22px var(--f-display); }
-.action { display: grid; gap: 12px; padding: 14px; border-radius: 8px; background: var(--surface-2); border: 1px dashed var(--line); }
+.plate { display: inline-flex; border: 2px solid #1a1a1a; border-radius: 5px; background: #fff; color: #111; font: 700 17px/1 var(--f-display); letter-spacing: .08em; overflow: hidden; white-space: nowrap; vertical-align: middle; }
+.plate::before { content: "E"; background: #003399; color: #fff; font-size: 10px; letter-spacing: 0; padding: 10px 4px 2px; }
+.plate b { padding: 4px 8px 3px; }
 
-/* Matrícula española */
-.plate { display: inline-flex; align-items: stretch; border: 2px solid #1a1a1a; border-radius: 5px; background: #fff; color: #111; font: 700 20px/1 var(--f-display); letter-spacing: .08em; overflow: hidden; white-space: nowrap; }
-.plate::before { content: "E"; background: var(--plate-blue); color: #fff; font-size: 11px; letter-spacing: 0; padding: 14px 4px 3px; display: flex; align-items: flex-end; background-image: radial-gradient(circle, #FFCC00 1.2px, transparent 1.5px); background-size: 6px 6px; background-position: center 3px; background-repeat: repeat-x; }
-.plate b { padding: 5px 9px 4px; font-weight: 700; }
-.plate.sm { font-size: 15px; } .plate.sm::before { padding: 10px 3px 2px; font-size: 9px; } .plate.sm b { padding: 3px 7px 2px; }
+.pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.pill.ok { background: var(--ok-bg); color: var(--ok); } .pill.warn { background: var(--warn-bg); color: var(--warn); } .pill.bad { background: var(--bad-bg); color: var(--bad); }
 
-/* Píldoras de estado */
-.pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
-.pill.ok { background: var(--ok-bg); color: var(--ok); }
-.pill.warn { background: var(--warn-bg); color: var(--warn); }
-.pill.bad { background: var(--bad-bg); color: var(--bad); }
-.pill.muted { background: var(--surface-2); color: var(--muted); }
-
-/* Tablas */
 .tablewrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; padding: 8px; border-bottom: 1px solid var(--line); }
+td { padding: 10px 8px; border-bottom: 1px solid var(--line); }
 tr.click { cursor: pointer; } tr.click:hover td { background: var(--surface-2); }
-td.num, th.num { text-align: right; }
-.empty { color: var(--muted); padding: 18px 4px; }
-.chips { display: flex; gap: 8px; flex-wrap: wrap; }
-.chip { border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 14px; }
-.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-
-/* KPIs */
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
-.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; }
-.kpi span { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
-.kpi b { display: block; font: 800 34px/1.1 var(--f-display); margin-top: 6px; font-variant-numeric: tabular-nums; }
-.kpi small { color: var(--muted); }
-.bars { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; align-items: end; height: 150px; padding-top: 18px; border-bottom: 1px solid var(--line); }
-.bar { position: relative; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; }
-.bar.today { background: var(--rojo); }
-.bar i { position: absolute; top: -18px; left: 0; right: 0; text-align: center; font: 600 12px var(--f-body); font-style: normal; color: var(--muted); font-variant-numeric: tabular-nums; }
-.barlabels { display: grid; grid-template-columns: repeat(14, 1fr); gap: 6px; font-size: 11px; color: var(--muted); text-align: center; margin-top: 4px; font-variant-numeric: tabular-nums; }
-
-/* Diálogos */
-dialog { border: 0; border-radius: 14px; padding: 0; width: min(560px, calc(100vw - 24px)); max-height: calc(100vh - 40px); background: var(--surface); color: var(--fg); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
-dialog::backdrop { background: rgba(20,12,6,.55); }
-dialog .dh { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 10px; position: sticky; top: 0; background: var(--surface); z-index: 1; }
-dialog .dh h3 { flex: 1; font-size: 21px; }
-dialog .db { padding: 18px 20px; display: grid; gap: 14px; }
-dialog .df { padding: 14px 20px; border-top: 1px solid var(--line); display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
-.x { border: 0; background: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 8px; }
-.card-socio { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; padding: 16px; border-radius: 12px; background: linear-gradient(120deg, var(--naranja), var(--rojo)); color: #fff; }
-.card-socio .qr { background: #fff; padding: 8px; border-radius: 8px; line-height: 0; flex: none; }
-.card-socio .qr svg { width: 132px; height: 132px; display: block; }
-.card-socio .qr .noqr { width: 132px; height: 132px; display: grid; place-items: center; text-align: center; color: #111; font: 600 13px/1.3 var(--f-body); line-height: 1.3; }
-.card-socio .meta { min-width: 0; display: grid; gap: 6px; }
-.card-socio .meta .id { font: 800 30px/1 var(--f-display); letter-spacing: .04em; }
-.card-socio .meta small { opacity: .9; }
-.hist { display: grid; gap: 6px; max-height: 220px; overflow: auto; font-size: 14px; }
-.hist div { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--line); font-variant-numeric: tabular-nums; }
-.hist div span:last-child { color: var(--muted); text-align: right; }
-.camwrap video { width: 100%; border-radius: 8px; background: #000; }
-
-/* Avisos */
-.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 12px 18px; border-radius: 10px; font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,.3); z-index: 50; max-width: calc(100vw - 32px); }
-.toast.err { background: var(--bad); color: #fff; }
-
-.list { display: grid; gap: 8px; }
-.list .li { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid var(--line); }
-.list .li .grow { flex: 1; min-width: 0; }
-.plans td input { padding: 8px; }
-.plans td { min-width: 90px; }
-.plans td:first-child { min-width: 140px; }
-.plans td.wide { min-width: 200px; }
-
-@media (max-width: 560px) {
-  .brand h1 { font-size: 22px; }
-  .result .band h3 { font-size: 23px; }
-  .btn.big { width: 100%; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .result { animation: pop .18s ease-out; }
-  @keyframes pop { from { transform: scale(.985); } to { transform: none; } }
-}
-@media print {
-  .top, .tabs, main, .toast, dialog .dh, dialog .df, dialog .no-print { display: none !important; }
-  dialog { box-shadow: none; position: static; }
-  .card-socio { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-}
+.stats { display: flex; gap: 18px; flex-wrap: wrap; color: var(--muted); font-size: 15px; }
+.stats b { color: var(--fg); font: 700 20px var(--f-display); margin-right: 4px; }
+details summary { cursor: pointer; font: 700 18px var(--f-display); }
+details[open] summary { margin-bottom: 12px; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1.5px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.seg label { margin: 0; padding: 11px 16px; cursor: pointer; color: var(--fg); font: 600 16px var(--f-body); }
+.seg input:checked + label { background: var(--accent); color: var(--on-accent); }
+.seg input:focus-visible + label { outline: 3px solid var(--amarillo); outline-offset: -3px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 12px 18px; border-radius: 10px; font-weight: 600; max-width: calc(100vw - 32px); z-index: 9; }
+@media (max-width: 520px) { .btn.big { width: 100%; } .res .band h2 { font-size: 28px; } }
 </style>
 </head>
 <body>
 
-<header class="top">
-  <div class="wrap">
-    <div class="mark" aria-hidden="true"></div>
-    <div class="brand">
-      <h1>Bono Lavado <span>ES La Soledad</span></h1>
-      <p>Control de bonos mensuales de túnel en caja</p>
-    </div>
-    <div class="hoy-chip" id="hoy-chip"></div>
-  </div>
-</header>
-
-<nav class="tabs" aria-label="Secciones">
-  <div class="wrap" role="tablist">
-    <button class="tab" role="tab" data-view="validar" aria-selected="true">Comprobar bono</button>
-    <button class="tab" role="tab" data-view="alta" aria-selected="false">Nuevo socio</button>
-    <button class="tab" role="tab" data-view="socios" aria-selected="false">Socios</button>
-    <button class="tab" role="tab" data-view="resumen" aria-selected="false">Resumen</button>
-    <button class="tab" role="tab" data-view="ajustes" aria-selected="false">Planes y ajustes</button>
-  </div>
-</nav>
+<header class="top"><div class="wrap"><h1>Bono Lavado <span>ES La Soledad</span></h1><p id="fecha"></p></div></header>
 
 <main class="wrap">
-  <div class="demo" id="demo-banner" hidden>
-    <span><strong>Datos de ejemplo.</strong> Los socios y movimientos que ves son inventados para probar la app.</span>
-    <button class="btn sm" id="b-demo-clear">Empezar con datos reales</button>
+  <form class="box" id="f-buscar" autocomplete="off">
+    <label for="q">Matrícula del cliente</label>
+    <div class="row">
+      <div class="grow"><input id="q" placeholder="Ej.: 4821 LKB" autofocus></div>
+      <button class="btn primary big" type="submit">Comprobar</button>
+    </div>
+  </form>
+
+  <div id="resultado"></div>
+
+  <div class="box">
+    <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
+      <h2>Socios</h2>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="tablewrap"><table id="tabla"></table></div>
   </div>
 
-  <!-- COMPROBAR -->
-  <section class="view" id="v-validar" style="margin-top:16px">
-    <form class="panel search" id="f-buscar" autocomplete="off">
-      <label for="q">Matrícula, nº de socio o nombre</label>
-      <div class="row">
-        <div class="grow"><input id="q" name="q" placeholder="Ej.: 4821 LKB o LS-0003" autofocus></div>
-        <button class="btn primary big" type="submit">Comprobar</button>
-        <button class="btn big" type="button" id="b-cam" hidden>Escanear QR</button>
-      </div>
-      <p class="hint">Con un lector de códigos USB o Bluetooth, escanea el QR de la tarjeta del socio directamente en esta casilla.</p>
-    </form>
-    <div id="resultado"></div>
-    <div class="panel">
-      <div class="row" style="justify-content:space-between;align-items:center">
-        <h3>Lavados de túnel de hoy</h3>
-        <span class="pill muted" id="hoy-count"></span>
-      </div>
-      <div id="hoy-list"></div>
+  <details class="box" id="ajustes">
+    <summary>Precios y copia de seguridad</summary>
+    <div class="row">
+      <div class="grow"><label for="p-basico">Bono Básico (€/mes)</label><input id="p-basico" type="number" step="0.05" min="0"></div>
+      <div class="grow"><label for="p-completo">Bono Completo (€/mes)</label><input id="p-completo" type="number" step="0.05" min="0"></div>
+      <button class="btn" id="b-precios" type="button">Guardar precios</button>
     </div>
-  </section>
-
-  <!-- ALTA -->
-  <section class="view" id="v-alta" hidden style="margin-top:16px">
-    <div>
-      <h2>Nuevo socio</h2>
-      <p class="sub">Cobra el primer mes en caja y registra aquí al cliente. Al guardar verás su tarjeta con el código QR.</p>
+    <p class="hint">Los datos se guardan solo en esta tablet. Copia la copia de seguridad una vez a la semana y pégala en un correo.</p>
+    <div class="row" style="margin-top:10px">
+      <button class="btn" id="b-copia" type="button">Copiar copia de seguridad</button>
+      <label class="btn" for="f-restaurar" style="margin:0;color:var(--fg);font:700 18px var(--f-display)">Restaurar copia</label>
+      <input type="file" id="f-restaurar" accept=".json,application/json,text/plain" hidden>
+      <button class="btn" id="b-vaciar" type="button" style="color:var(--bad)">Borrar todo</button>
     </div>
-    <form class="panel" id="f-alta" autocomplete="off">
-      <div class="grid2">
-        <div><label for="a-nombre">Nombre y apellidos</label><input id="a-nombre" required></div>
-        <div><label for="a-tel">Teléfono (para avisos por WhatsApp)</label><input id="a-tel" inputmode="tel"></div>
-        <div><label for="a-mat">Matrícula</label><input id="a-mat" required placeholder="1234 ABC" style="text-transform:uppercase"></div>
-        <div><label for="a-plan">Plan</label><select id="a-plan"></select></div>
-        <div><label>Forma de pago</label>
-          <div class="seg"><input type="radio" name="a-metodo" id="a-m-ef" value="efectivo" checked><label for="a-m-ef">Efectivo</label><input type="radio" name="a-metodo" id="a-m-tj" value="tarjeta"><label for="a-m-tj">Tarjeta</label></div>
-        </div>
-        <div><label for="a-importe">Importe cobrado (€)</label><input id="a-importe" type="number" step="0.01" min="0" inputmode="decimal"></div>
-      </div>
-      <div style="margin-top:14px"><label for="a-notas">Notas (opcional)</label><input id="a-notas" placeholder="Ej.: furgoneta, prefiere aviso por llamada"></div>
-      <p class="hint" id="a-periodo"></p>
-      <div class="row" style="margin-top:12px"><button class="btn primary big" type="submit">Cobrar y dar de alta</button></div>
-    </form>
-  </section>
-
-  <!-- SOCIOS -->
-  <section class="view" id="v-socios" hidden style="margin-top:16px">
-    <div class="row" style="justify-content:space-between;align-items:end">
-      <div><h2>Socios</h2><p class="sub" id="socios-sub"></p></div>
-      <button class="btn primary" data-goto="alta">Nuevo socio</button>
-    </div>
-    <div class="panel">
-      <div class="row" style="margin-bottom:12px">
-        <div class="grow"><label for="s-q">Buscar</label><input id="s-q" placeholder="Nombre, matrícula, teléfono o nº de socio"></div>
-      </div>
-      <div class="chips" id="s-filtros">
-        <button class="chip" data-f="todos" aria-pressed="true">Todos</button>
-        <button class="chip" data-f="activo" aria-pressed="false">Activos</button>
-        <button class="chip" data-f="pronto" aria-pressed="false">Caducan en 7 días</button>
-        <button class="chip" data-f="caducado" aria-pressed="false">Caducados</button>
-        <button class="chip" data-f="baja" aria-pressed="false">De baja</button>
-      </div>
-      <div class="tablewrap" style="margin-top:12px"><table id="t-socios"></table></div>
-    </div>
-  </section>
-
-  <!-- RESUMEN -->
-  <section class="view" id="v-resumen" hidden style="margin-top:16px">
-    <div><h2>Resumen</h2><p class="sub" id="res-sub"></p></div>
-    <div class="kpis" id="kpis"></div>
-    <div class="panel">
-      <h3>Lavados de túnel con bono, últimos 14 días</h3>
-      <div class="bars" id="bars"></div>
-      <div class="barlabels" id="barlabels"></div>
-    </div>
-    <div class="grid2">
-      <div class="panel"><h3>Caducan en los próximos 7 días</h3><p class="hint">Copia el aviso y envíalo por WhatsApp para que renueven.</p><div class="list" id="l-pronto"></div></div>
-      <div class="panel"><h3>Caducados sin renovar (últimos 30 días)</h3><p class="hint">Clientes a recuperar.</p><div class="list" id="l-caducados"></div></div>
-    </div>
-    <div class="panel">
-      <div class="row" style="justify-content:space-between;align-items:center"><h3>Ventas de bonos de este mes</h3><button class="btn sm" id="b-csv">Copiar ventas (CSV)</button></div>
-      <div class="tablewrap" style="margin-top:8px"><table id="t-ventas"></table></div>
-    </div>
-  </section>
-
-  <!-- AJUSTES -->
-  <section class="view" id="v-ajustes" hidden style="margin-top:16px">
-    <div><h2>Planes y ajustes</h2><p class="sub">Los precios de ejemplo están en la franja de las tarifas planas de túnel que ya hay en España. Ajústalos a los vuestros.</p></div>
-    <div class="panel">
-      <h3>Planes de bono</h3>
-      <div class="tablewrap" style="margin-top:10px"><table class="plans" id="t-planes"></table></div>
-      <div class="row" style="margin-top:12px"><button class="btn" id="b-plan-add">Añadir plan</button><button class="btn primary" id="b-plan-save">Guardar planes</button></div>
-      <p class="hint">"Lavados al día" limita cuántas veces puede pasar por el túnel en un mismo día. "Monedas boxes" es el saldo en euros que se le entrega en monedas al mes para los boxes de autoservicio (0 si el plan no lo incluye).</p>
-    </div>
-    <div class="panel">
-      <h3>Copia de seguridad</h3>
-      <p class="hint" style="margin-top:4px">Los datos se guardan solo en este dispositivo. Haz una copia cada semana y guárdala en el ordenador o el correo.</p>
-      <div class="row" style="margin-top:12px">
-        <button class="btn" id="b-backup-dl">Descargar copia</button>
-        <button class="btn" id="b-backup-copy">Copiar copia al portapapeles</button>
-        <label class="btn" for="f-restore" style="margin:0;color:var(--fg);font:700 16px var(--f-display)">Restaurar copia</label>
-        <input type="file" id="f-restore" accept="application/json,.json" hidden>
-      </div>
-    </div>
-    <div class="panel">
-      <h3>Datos</h3>
-      <div class="row" style="margin-top:10px">
-        <button class="btn danger" id="b-reset-demo">Volver a cargar datos de ejemplo</button>
-        <button class="btn danger" id="b-wipe">Borrar todos los socios y movimientos</button>
-      </div>
-    </div>
-  </section>
+    <p class="hint" id="confirmar-vaciar" hidden>¿Seguro? Se borran todos los socios. <button class="btn sm" id="b-vaciar-si" type="button" style="color:var(--bad)">Sí, borrar</button></p>
+  </details>
 </main>
-
-<!-- Diálogo socio -->
-<dialog id="d-socio"><div id="d-socio-c"></div></dialog>
-<!-- Diálogo renovar -->
-<dialog id="d-renovar">
-  <form id="f-renovar" method="dialog">
-    <div class="dh"><h3>Vender bono</h3><button type="button" class="x" data-close aria-label="Cerrar">×</button></div>
-    <div class="db">
-      <p id="r-quien" style="margin:0"></p>
-      <div><label for="r-plan">Plan</label><select id="r-plan"></select></div>
-      <div><label>Forma de pago</label>
-        <div class="seg"><input type="radio" name="r-metodo" id="r-m-ef" value="efectivo" checked><label for="r-m-ef">Efectivo</label><input type="radio" name="r-metodo" id="r-m-tj" value="tarjeta"><label for="r-m-tj">Tarjeta</label></div>
-      </div>
-      <div><label for="r-importe">Importe cobrado (€)</label><input id="r-importe" type="number" step="0.01" min="0" inputmode="decimal"></div>
-      <p class="hint" id="r-periodo" style="margin:0"></p>
-    </div>
-    <div class="df"><button type="button" class="btn" data-close>Cancelar</button><button type="submit" class="btn primary">Cobrar y renovar</button></div>
-  </form>
-</dialog>
-<!-- Diálogo confirmar -->
-<dialog id="d-confirm">
-  <div class="dh"><h3 id="c-title">¿Seguro?</h3></div>
-  <div class="db"><p id="c-msg" style="margin:0"></p></div>
-  <div class="df"><button class="btn" id="c-no">Cancelar</button><button class="btn primary" id="c-yes">Confirmar</button></div>
-</dialog>
-<!-- Diálogo cámara -->
-<dialog id="d-cam">
-  <div class="dh"><h3>Escanear QR del socio</h3><button type="button" class="x" id="cam-close" aria-label="Cerrar">×</button></div>
-  <div class="db camwrap"><video id="cam-video" playsinline muted></video><p class="hint" style="margin:0">Acerca la tarjeta o el móvil del cliente a la cámara.</p></div>
-</dialog>
 
 <div class="toast" id="toast" role="status" hidden></div>
 
-<script src="qrcode.js"></script>
 <script>
 (() => {
 'use strict';
-const KEY = 'bonoLavado.laSoledad.v1';
-
-/* ---------- utilidades ---------- */
+const KEY = 'bonoLavado.laSoledad.simple.v1';
 const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pad = n => String(n).padStart(2, '0');
 const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-const today = () => ymd(new Date());
-const parse = s => { const [y, m, d] = s.slice(0, 10).split('-').map(Number); return new Date(y, m - 1, d); };
+const hoy = () => ymd(new Date());
+const parse = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
 const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return ymd(d); };
-const addMonths = (s, n) => { const d = parse(s); const day = d.getDate(); d.setDate(1); d.setMonth(d.getMonth() + n); const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); d.setDate(Math.min(day, last)); return ymd(d); };
-const daysBetween = (a, b) => Math.round((parse(b) - parse(a)) / 86400000);
-const fmtDate = s => parse(s).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
-const fmtShort = s => parse(s).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
-const fmtTime = s => s.slice(11, 16);
+const unMesDesde = s => { const d = parse(s); const dia = d.getDate(); d.setDate(1); d.setMonth(d.getMonth() + 1); d.setDate(Math.min(dia, new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate())); return addDays(ymd(d), -1); };
+const dias = (a, b) => Math.round((parse(b) - parse(a)) / 86400000);
+const fecha = s => parse(s).toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
 const eur = n => (Number(n) || 0).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
-const normPlate = s => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-const fmtPlate = s => { const p = normPlate(s); const m = p.match(/^(\d{4})([A-Z]{3})$/); return m ? `${m[1]} ${m[2]}` : p; };
-const stamp = () => { const d = new Date(); return `${ymd(d)}T${pad(d.getHours())}:${pad(d.getMinutes())}`; };
-const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
-const plateHTML = (p, sm) => `<span class="plate${sm ? ' sm' : ''}"><b>${esc(fmtPlate(p))}</b></span>`;
+const norm = s => String(s || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+const fmt = s => { const p = norm(s); const m = p.match(/^(\d{4})([A-Z]{3})$/); return m ? `${m[1]} ${m[2]}` : p; };
+const placa = p => `<span class="plate"><b>${esc(fmt(p))}</b></span>`;
+const PLANES = { basico: 'Básico', completo: 'Completo' };
 
-/* ---------- datos ---------- */
-const defaultPlans = () => ([
-  { id: 'basico', nombre: 'Básico', precio: 11.95, lavadosDia: 1, programa: 'Túnel lavado + secado', boxes: 0 },
-  { id: 'plus', nombre: 'Plus', precio: 15.95, lavadosDia: 1, programa: 'Túnel completo con cera y bajos', boxes: 0 },
-  { id: 'total', nombre: 'Total + Boxes', precio: 19.95, lavadosDia: 1, programa: 'Túnel completo con cera y bajos', boxes: 5 },
-]);
-
-function seed() {
-  // Generador pseudoaleatorio fijo: los datos de ejemplo salen siempre iguales.
-  let s = 20261124; const rnd = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
-  const t = today();
-  const planes = defaultPlans();
-  const gente = [
-    ['Antonio García Pérez', '4821 LKB', '612 345 118', 'plus', 20, 5],
-    ['Carmen Ruiz Delgado', '7310 MBN', '644 210 873', 'basico', 3, 2],
-    ['José Martín Ortega', '0954 KZR', '699 801 225', 'total', 12, 7],
-    ['Lucía Fernández Gil', '3367 LTP', '630 557 941', 'basico', -5, 3],
-    ['Manuel Sánchez Ramos', '8842 JWD', '671 993 004', 'plus', 27, 1],
-    ['Pilar Gómez Herrera', '1209 MCF', '622 418 760', 'basico', 6, 4],
-    ['Francisco Díaz Molina', '5530 HXS', '658 302 117', 'total', 15, 6],
-    ['Rosa Moreno Castillo', '6718 KDG', '617 774 392', 'plus', -18, 2],
-    ['Javier Romero Vidal', '2486 LPM', '685 120 556', 'basico', 9, 3],
-    ['Elena Navarro Cano', '9075 MDK', '633 908 461', 'plus', 1, 8],
-    ['David Torres Rubio', '4153 JTV', '646 275 830', 'basico', 22, 2],
-    ['Isabel Molina Prieto', '3891 LBR', '609 663 248', 'total', 2, 5],
-  ];
-  const socios = [], ventas = [], lavados = [];
-  gente.forEach(([nombre, mat, tel, planId, cadOff, meses], i) => {
-    const caduca = addDays(t, cadOff);
-    const alta = addMonths(addDays(caduca, 1), -meses);
-    const id = `LS-${pad(i + 1).padStart(4, '0')}`;
-    const plan = planes.find(p => p.id === planId);
-    socios.push({ id, nombre, telefono: tel, matricula: normPlate(mat), planId, alta, caduca, notas: '', baja: false });
-    let desde = alta;
-    for (let k = 0; k < meses; k++) {
-      let hasta = addDays(addMonths(desde, 1), -1);
-      if (k === meses - 1) hasta = caduca;
-      ventas.push({ id: uid(), socioId: id, planId, importe: plan.precio, metodo: rnd() < 0.78 ? 'efectivo' : 'tarjeta', fecha: `${desde}T${pad(9 + Math.floor(rnd() * 10))}:${pad(Math.floor(rnd() * 60))}`, desde, hasta });
-      desde = addDays(hasta, 1);
-    }
-    // Lavados de los últimos 30 días dentro del periodo pagado
-    const freq = planId === 'basico' ? 0.11 : 0.16;
-    for (let d = 30; d >= 1; d--) {
-      const dia = addDays(t, -d);
-      if (dia < alta || dia > caduca) continue;
-      if (rnd() < freq) {
-        lavados.push({ id: uid(), socioId: id, tipo: 'tunel', fecha: `${dia}T${pad(8 + Math.floor(rnd() * 12))}:${pad(Math.floor(rnd() * 60))}`, ticket: String(100000 + Math.floor(rnd() * 899999)) });
-      }
-    }
-    if (plan.boxes > 0 && cadOff >= 0) {
-      lavados.push({ id: uid(), socioId: id, tipo: 'boxes', fecha: `${addDays(t, -Math.min(4, Math.max(1, 30 - cadOff)))}T11:20`, importe: 2 });
-    }
-  });
-  // Dos socios ya han lavado hoy, para ver el aviso "ya ha lavado hoy".
-  lavados.push({ id: uid(), socioId: 'LS-0001', tipo: 'tunel', fecha: `${t}T09:14`, ticket: '482190' });
-  lavados.push({ id: uid(), socioId: 'LS-0005', tipo: 'tunel', fecha: `${t}T10:02`, ticket: '482233' });
-  return { version: 1, demo: true, siguiente: gente.length + 1, planes, socios, ventas, lavados };
+function ejemplo() {
+  const t = hoy();
+  const s = (nombre, mat, tel, plan, off, lavoHoy) => ({ nombre, matricula: norm(mat), telefono: tel, plan, hasta: addDays(t, off), ultimo: lavoHoy ? t : addDays(t, -3) });
+  return { demo: true, precios: { basico: 11.95, completo: 15.95 }, socios: [
+    s('Antonio García', '4821 LKB', '612 345 118', 'completo', 20, true),
+    s('Carmen Ruiz', '7310 MBN', '644 210 873', 'basico', 3, false),
+    s('José Martín', '0954 KZR', '699 801 225', 'completo', 12, false),
+    s('Lucía Fernández', '3367 LTP', '630 557 941', 'basico', -5, false),
+    s('Manuel Sánchez', '8842 JWD', '671 993 004', 'basico', 27, false),
+  ], lavadosHoy: 1, diaLavados: t };
 }
+let db;
+try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; }
+if (!db || !Array.isArray(db.socios)) db = ejemplo();
+const guardar = () => { try { localStorage.setItem(KEY, JSON.stringify(db)); } catch (e) { aviso('No se ha podido guardar. Haz una copia de seguridad.'); } };
+guardar();
 
-let storageOk = true;
-function load() {
-  try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch (e) { storageOk = false; }
-  return null;
-}
-function save() {
-  try { localStorage.setItem(KEY, JSON.stringify(db)); return true; }
-  catch (e) { if (storageOk) toast('No se ha podido guardar en este dispositivo. Haz una copia de seguridad desde Planes y ajustes.', true); storageOk = false; return false; }
-}
-let db = load();
-if (!db || !Array.isArray(db.socios)) { db = seed(); save(); }
-
-/* ---------- lógica del bono ---------- */
-const planOf = m => db.planes.find(p => p.id === m.planId) || { id: m.planId, nombre: '(plan eliminado)', precio: 0, lavadosDia: 1, programa: '', boxes: 0 };
-const socio = id => db.socios.find(m => m.id === id);
+let tt;
+function aviso(t) { const el = $('#toast'); el.textContent = t; el.hidden = false; clearTimeout(tt); tt = setTimeout(() => el.hidden = true, 3500); }
 function estado(m) {
-  if (m.baja) return { k: 'baja', txt: 'De baja', cls: 'muted' };
-  const t = today();
-  if (!m.caduca || m.caduca < t) return { k: 'caducado', txt: m.caduca ? `Caducado ${fmtShort(m.caduca)}` : 'Sin bono', cls: 'bad' };
-  const d = daysBetween(t, m.caduca);
-  if (d <= 7) return { k: 'pronto', txt: d === 0 ? 'Caduca hoy' : `Caduca en ${d} ${d === 1 ? 'día' : 'días'}`, cls: 'warn', dias: d };
-  return { k: 'activo', txt: 'Activo', cls: 'ok', dias: d };
+  const t = hoy();
+  if (m.hasta < t) return { k: 'bad', txt: 'Caducado' };
+  const d = dias(t, m.hasta);
+  return d <= 7 ? { k: 'warn', txt: d === 0 ? 'Caduca hoy' : `Caduca en ${d} d` } : { k: 'ok', txt: 'Activo' };
 }
-const vigente = m => ['activo', 'pronto'].includes(estado(m).k);
-const lavadosHoy = m => db.lavados.filter(l => l.socioId === m.id && l.tipo === 'tunel' && l.fecha.startsWith(today()));
-function periodoActual(m) {
-  const t = today();
-  return db.ventas.filter(v => v.socioId === m.id && v.desde <= t && v.hasta >= t).sort((a, b) => a.desde < b.desde ? 1 : -1)[0] || null;
+function cobrarMes(m) {
+  const t = hoy();
+  const desde = m.hasta && m.hasta >= t ? addDays(m.hasta, 1) : t;
+  m.hasta = unMesDesde(desde);
 }
-function boxesRestante(m) {
-  const plan = planOf(m); if (!plan.boxes) return 0;
-  const p = periodoActual(m); if (!p) return 0;
-  const usado = db.lavados.filter(l => l.socioId === m.id && l.tipo === 'boxes' && l.fecha.slice(0, 10) >= p.desde && l.fecha.slice(0, 10) <= p.hasta).reduce((a, l) => a + (Number(l.importe) || 0), 0);
-  return Math.max(0, plan.boxes - usado);
-}
-function nuevoPeriodo(m) {
-  const t = today();
-  const desde = (m && m.caduca && m.caduca >= t) ? addDays(m.caduca, 1) : t;
-  return { desde, hasta: addDays(addMonths(desde, 1), -1) };
-}
-function venderBono(m, planId, importe, metodo) {
-  const per = nuevoPeriodo(m);
-  db.ventas.push({ id: uid(), socioId: m.id, planId, importe: Number(importe) || 0, metodo, fecha: stamp(), desde: per.desde, hasta: per.hasta });
-  m.planId = planId; m.caduca = per.hasta; m.baja = false;
-  save();
-  return per;
-}
-function buscar(q) {
-  const raw = q.trim(); if (!raw) return [];
-  const up = raw.toUpperCase(); const np = normPlate(raw);
-  const byId = db.socios.filter(m => m.id === up || normPlate(m.id) === np);
-  if (byId.length) return byId;
-  const byPlate = db.socios.filter(m => m.matricula === np);
-  if (byPlate.length) return byPlate;
-  const low = raw.toLowerCase(); const digits = raw.replace(/\D/g, '');
-  return db.socios.filter(m => m.nombre.toLowerCase().includes(low) || (np.length >= 3 && m.matricula.includes(np)) || (digits.length >= 4 && m.telefono.replace(/\D/g, '').includes(digits)));
-}
+function contarLavado() { const t = hoy(); if (db.diaLavados !== t) { db.diaLavados = t; db.lavadosHoy = 0; } db.lavadosHoy++; }
 
-/* ---------- interfaz general ---------- */
-let toastT;
-function toast(msg, err) {
-  const el = $('#toast'); el.textContent = msg; el.className = 'toast' + (err ? ' err' : ''); el.hidden = false;
-  clearTimeout(toastT); toastT = setTimeout(() => { el.hidden = true; }, 3800);
-}
-function confirmar(titulo, msg, okTxt, fn) {
-  const d = $('#d-confirm'); $('#c-title').textContent = titulo; $('#c-msg').textContent = msg; $('#c-yes').textContent = okTxt || 'Confirmar';
-  $('#c-yes').onclick = () => { d.close(); fn(); };
-  $('#c-no').onclick = () => d.close();
-  d.showModal();
-}
-async function copiar(txt, okMsg) {
-  try { await navigator.clipboard.writeText(txt); toast(okMsg || 'Copiado'); }
-  catch (e) {
-    const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select();
-    let ok = false; try { ok = document.execCommand('copy'); } catch (_) {}
-    ta.remove(); toast(ok ? (okMsg || 'Copiado') : 'No se ha podido copiar. Selecciona el texto a mano.', !ok);
-  }
-}
-const embedded = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
-
-function irA(view) {
-  $$('.tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === view)));
-  $$('.view').forEach(v => { v.hidden = v.id !== 'v-' + view; });
-  render(view);
-  if (view === 'validar') setTimeout(() => $('#q').focus(), 30);
-  try { localStorage.setItem(KEY + '.tab', view); } catch (e) {}
-  window.scrollTo(0, 0);
-}
-$$('.tab').forEach(b => b.addEventListener('click', () => irA(b.dataset.view)));
-document.addEventListener('click', e => { const g = e.target.closest('[data-goto]'); if (g) irA(g.dataset.goto); });
-$$('dialog').forEach(d => d.addEventListener('click', e => { if (e.target.closest('[data-close]')) d.close(); }));
-
-function render(view) {
-  $('#hoy-chip').textContent = new Date().toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' });
-  $('#demo-banner').hidden = !db.demo;
-  if (view === 'validar') renderHoy();
-  if (view === 'alta') prepararAlta();
-  if (view === 'socios') renderSocios();
-  if (view === 'resumen') renderResumen();
-  if (view === 'ajustes') renderPlanes();
-}
-
-/* ---------- comprobar bono ---------- */
+/* ---- Comprobar ---- */
 let actual = null;
-$('#f-buscar').addEventListener('submit', e => {
-  e.preventDefault();
-  const q = $('#q').value; const r = buscar(q);
-  if (!q.trim()) { $('#resultado').innerHTML = ''; return; }
-  if (r.length === 1) { actual = r[0].id; renderResultado(); }
-  else if (r.length > 1) {
-    actual = null;
-    $('#resultado').innerHTML = `<div class="panel"><h3>Hay ${r.length} socios que coinciden</h3><div class="list" style="margin-top:8px">${r.map(m => { const st = estado(m); return `<div class="li"><div class="grow"><b>${esc(m.nombre)}</b><br><small class="sub">${esc(m.id)}</small></div>${plateHTML(m.matricula, true)}<span class="pill ${st.cls}">${esc(st.txt)}</span><button class="btn sm primary" data-pick="${esc(m.id)}">Elegir</button></div>`; }).join('')}</div></div>`;
-  } else {
-    actual = null;
-    $('#resultado').innerHTML = `<div class="result bad"><div class="band"><div class="dot">?</div><div><h3>No es socio</h3><p>No hay ningún bono con «${esc(q)}». Revisa la matrícula o dalo de alta.</p></div></div><div class="body"><div class="row"><button class="btn primary" id="b-alta-desde">Dar de alta a este cliente</button></div></div></div>`;
-    $('#b-alta-desde').onclick = () => { irA('alta'); if (/\d/.test(q)) $('#a-mat').value = fmtPlate(q); else $('#a-nombre').value = q; };
-  }
-});
-$('#resultado').addEventListener('click', e => {
-  const p = e.target.closest('[data-pick]'); if (p) { actual = p.dataset.pick; renderResultado(); }
-});
+$('#f-buscar').addEventListener('submit', e => { e.preventDefault(); const p = norm($('#q').value); if (!p) return; actual = p; pintarResultado(); });
 
-function renderResultado() {
-  const m = socio(actual); if (!m) { $('#resultado').innerHTML = ''; return; }
-  const st = estado(m); const plan = planOf(m); const hoy = lavadosHoy(m);
-  let cls, icon, titulo, sub, accion = '';
-  if (st.k === 'baja') {
-    cls = 'bad'; icon = '×'; titulo = 'Socio de baja'; sub = 'Este cliente se dio de baja. Puedes venderle un bono nuevo para reactivarlo.';
-    accion = `<div class="row"><button class="btn primary big" data-renovar="${esc(m.id)}">Vender bono</button></div>`;
-  } else if (st.k === 'caducado') {
-    cls = 'bad'; icon = '×'; titulo = 'Bono caducado';
-    sub = m.caduca ? `Caducó el ${fmtDate(m.caduca)}. No le des ticket hasta que renueve.` : 'No tiene ningún bono pagado.';
-    accion = `<div class="row"><button class="btn primary big" data-renovar="${esc(m.id)}">Renovar bono · ${eur(plan.precio)}</button></div>`;
-  } else if (hoy.length >= (Number(plan.lavadosDia) || 1)) {
-    const u = hoy[hoy.length - 1];
-    cls = 'warn'; icon = '!'; titulo = 'Ya ha lavado hoy';
-    sub = `Último lavado a las ${fmtTime(u.fecha)}${u.ticket ? ` (ticket ${esc(u.ticket)})` : ''}. Su plan permite ${plan.lavadosDia} al día. Podrá volver mañana.`;
-  } else {
-    cls = 'ok'; icon = '✓'; titulo = 'Puede lavar';
-    sub = `Bono ${esc(plan.nombre)} válido hasta el ${fmtDate(m.caduca)}${st.k === 'pronto' ? ` · ${esc(st.txt.toLowerCase())}` : ''}.`;
-    accion = `<form class="action" id="f-lavar" autocomplete="off">
-        <div><b>1.</b> Saca en el TPV el ticket de túnel: <b>${esc(plan.programa || plan.nombre)}</b>, como lavado de bono.<br><b>2.</b> Anota el código del ticket y entrégaselo al cliente para que lo marque en el túnel.</div>
-        <div class="row"><div class="grow"><label for="l-ticket">Código del ticket (opcional)</label><input id="l-ticket" inputmode="numeric" placeholder="Ej.: 482190"></div><button class="btn primary big" type="submit">Registrar lavado</button></div>
-      </form>`;
-  }
-  let boxes = '';
-  if (plan.boxes > 0 && vigente(m)) {
-    const rest = boxesRestante(m);
-    boxes = `<form class="action" id="f-boxes" autocomplete="off">
-      <div><b>Monedas para boxes:</b> le quedan <b>${eur(rest)}</b> de ${eur(plan.boxes)} este mes.</div>
-      <div class="row"><div class="grow"><label for="b-imp">Euros que le entregas en monedas</label><input id="b-imp" type="number" min="0.5" step="0.5" max="${rest}" value="${Math.min(2, rest)}" ${rest <= 0 ? 'disabled' : ''}></div><button class="btn" type="submit" ${rest <= 0 ? 'disabled' : ''}>Registrar monedas</button></div>
-    </form>`;
-  }
-  const ult = db.lavados.filter(l => l.socioId === m.id && l.tipo === 'tunel').sort((a, b) => a.fecha < b.fecha ? 1 : -1)[0];
-  $('#resultado').innerHTML = `<div class="result ${cls}">
-    <div class="band"><div class="dot" aria-hidden="true">${icon}</div><div><h3>${titulo}</h3><p>${sub}</p></div></div>
-    <div class="body">
-      <div class="who">${plateHTML(m.matricula)}<div><div class="name">${esc(m.nombre)}</div><small class="sub">${esc(m.id)}${m.notas ? ' · ' + esc(m.notas) : ''}</small></div><button class="btn sm" style="margin-left:auto" data-ficha="${esc(m.id)}">Ver ficha</button></div>
-      <div class="facts">
-        <div class="fact"><span>Plan</span><b>${esc(plan.nombre)} · ${eur(plan.precio)}/mes</b></div>
-        <div class="fact"><span>Programa túnel</span><b>${esc(plan.programa || '—')}</b></div>
-        <div class="fact"><span>Válido hasta</span><b>${m.caduca ? fmtDate(m.caduca) : '—'}</b></div>
-        <div class="fact"><span>Último lavado</span><b>${ult ? `${fmtShort(ult.fecha)} · ${fmtTime(ult.fecha)}` : 'Ninguno'}</b></div>
-      </div>
-      ${accion}${boxes}
-    </div></div>`;
-  const fl = $('#f-lavar');
-  if (fl) fl.addEventListener('submit', e => {
-    e.preventDefault();
-    db.lavados.push({ id: uid(), socioId: m.id, tipo: 'tunel', fecha: stamp(), ticket: $('#l-ticket').value.trim() });
-    save(); toast(`Lavado registrado para ${fmtPlate(m.matricula)}. Entrega el ticket al cliente.`);
-    renderResultado(); renderHoy();
-  });
-  const fb = $('#f-boxes');
-  if (fb) fb.addEventListener('submit', e => {
-    e.preventDefault();
-    const imp = Number($('#b-imp').value); const rest = boxesRestante(m);
-    if (!(imp > 0)) { toast('Indica cuántos euros en monedas le entregas.', true); return; }
-    if (imp > rest + 1e-9) { toast(`Solo le quedan ${eur(rest)} este mes.`, true); return; }
-    db.lavados.push({ id: uid(), socioId: m.id, tipo: 'boxes', fecha: stamp(), importe: imp });
-    save(); toast(`Entregados ${eur(imp)} en monedas para boxes.`); renderResultado();
-  });
-}
-document.addEventListener('click', e => {
-  const r = e.target.closest('[data-renovar]'); if (r) abrirRenovar(r.dataset.renovar);
-  const f = e.target.closest('[data-ficha]'); if (f) abrirFicha(f.dataset.ficha);
-});
-
-function renderHoy() {
-  const t = today();
-  const hoy = db.lavados.filter(l => l.tipo === 'tunel' && l.fecha.startsWith(t)).sort((a, b) => a.fecha < b.fecha ? 1 : -1);
-  $('#hoy-count').textContent = `${hoy.length} ${hoy.length === 1 ? 'lavado' : 'lavados'}`;
-  $('#hoy-list').innerHTML = hoy.length ? `<div class="tablewrap"><table><thead><tr><th>Hora</th><th>Matrícula</th><th>Socio</th><th>Plan</th><th>Ticket</th></tr></thead><tbody>${hoy.map(l => { const m = socio(l.socioId) || { nombre: '?', matricula: '', planId: '' }; return `<tr class="click" data-ficha="${esc(l.socioId)}"><td>${fmtTime(l.fecha)}</td><td>${plateHTML(m.matricula, true)}</td><td>${esc(m.nombre)}</td><td>${esc(planOf(m).nombre)}</td><td>${esc(l.ticket || '—')}</td></tr>`; }).join('')}</tbody></table></div>`
-    : '<p class="empty">Todavía no ha lavado ningún socio hoy.</p>';
-}
-
-/* ---------- cámara (si el navegador lo permite) ---------- */
-let camStream = null, camLoop = null;
-if ('BarcodeDetector' in window && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) $('#b-cam').hidden = false;
-$('#b-cam').addEventListener('click', async () => {
-  try {
-    const det = new window.BarcodeDetector({ formats: ['qr_code'] });
-    camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    const v = $('#cam-video'); v.srcObject = camStream; await v.play(); $('#d-cam').showModal();
-    camLoop = setInterval(async () => {
-      try { const c = await det.detect(v); if (c.length) { $('#q').value = c[0].rawValue; cerrarCam(); $('#f-buscar').requestSubmit(); } } catch (_) {}
-    }, 300);
-  } catch (e) { cerrarCam(); toast('No se puede usar la cámara aquí. Usa un lector USB o escribe la matrícula.', true); }
-});
-function cerrarCam() { clearInterval(camLoop); if (camStream) camStream.getTracks().forEach(t => t.stop()); camStream = null; if ($('#d-cam').open) $('#d-cam').close(); }
-$('#cam-close').addEventListener('click', cerrarCam);
-$('#d-cam').addEventListener('close', cerrarCam);
-
-/* ---------- alta ---------- */
-function opcionesPlan(sel, actualId) {
-  sel.innerHTML = db.planes.map(p => `<option value="${esc(p.id)}" ${p.id === actualId ? 'selected' : ''}>${esc(p.nombre)} · ${eur(p.precio)}/mes</option>`).join('');
-}
-function prepararAlta() {
-  const prev = $('#a-plan').value;
-  opcionesPlan($('#a-plan'), prev || (db.planes[0] && db.planes[0].id));
-  actualizarAlta();
-}
-function actualizarAlta() {
-  const p = db.planes.find(x => x.id === $('#a-plan').value);
-  if (p && !$('#a-importe').dataset.touched) $('#a-importe').value = p.precio.toFixed(2);
-  const per = nuevoPeriodo(null);
-  $('#a-periodo').textContent = `El bono será válido del ${fmtDate(per.desde)} al ${fmtDate(per.hasta)}, ambos incluidos.`;
-}
-$('#a-plan').addEventListener('change', () => { delete $('#a-importe').dataset.touched; actualizarAlta(); });
-$('#a-importe').addEventListener('input', () => { $('#a-importe').dataset.touched = '1'; });
-$('#f-alta').addEventListener('submit', e => {
-  e.preventDefault();
-  const nombre = $('#a-nombre').value.trim(); const mat = normPlate($('#a-mat').value);
-  if (!nombre || mat.length < 4) { toast('Falta el nombre o la matrícula no es válida.', true); return; }
-  const dup = db.socios.find(m => m.matricula === mat && !m.baja);
-  if (dup) { toast(`La matrícula ${fmtPlate(mat)} ya es del socio ${dup.id}. Renueva su bono desde su ficha.`, true); return; }
-  const n = db.siguiente || (db.socios.length + 1);
-  const m = { id: `LS-${String(n).padStart(4, '0')}`, nombre, telefono: $('#a-tel').value.trim(), matricula: mat, planId: $('#a-plan').value, alta: today(), caduca: null, notas: $('#a-notas').value.trim(), baja: false };
-  db.siguiente = n + 1; db.socios.push(m);
-  const metodo = document.querySelector('input[name="a-metodo"]:checked').value;
-  venderBono(m, m.planId, $('#a-importe').value, metodo);
-  $('#f-alta').reset(); delete $('#a-importe').dataset.touched; prepararAlta();
-  toast(`Socio ${m.id} dado de alta.`);
-  abrirFicha(m.id);
-});
-
-/* ---------- renovar ---------- */
-let renovando = null;
-function abrirRenovar(id) {
-  const m = socio(id); if (!m) return; renovando = id;
-  if ($('#d-socio').open) $('#d-socio').close();
-  opcionesPlan($('#r-plan'), m.planId);
-  $('#r-quien').innerHTML = `${plateHTML(m.matricula, true)} <b>${esc(m.nombre)}</b> · ${esc(m.id)}`;
-  delete $('#r-importe').dataset.touched; actualizarRenovar();
-  $('#d-renovar').showModal();
-}
-function actualizarRenovar() {
-  const m = socio(renovando); const p = db.planes.find(x => x.id === $('#r-plan').value);
-  if (p && !$('#r-importe').dataset.touched) $('#r-importe').value = p.precio.toFixed(2);
-  const per = nuevoPeriodo(m);
-  $('#r-periodo').textContent = `Nuevo periodo: del ${fmtDate(per.desde)} al ${fmtDate(per.hasta)}.` + (m.caduca && m.caduca >= today() ? ' Se suma a los días que aún le quedan.' : '');
-}
-$('#r-plan').addEventListener('change', () => { delete $('#r-importe').dataset.touched; actualizarRenovar(); });
-$('#r-importe').addEventListener('input', () => { $('#r-importe').dataset.touched = '1'; });
-$('#f-renovar').addEventListener('submit', e => {
-  e.preventDefault();
-  const m = socio(renovando); if (!m) return;
-  const metodo = document.querySelector('input[name="r-metodo"]:checked').value;
-  const per = venderBono(m, $('#r-plan').value, $('#r-importe').value, metodo);
-  $('#d-renovar').close();
-  toast(`Bono renovado hasta el ${fmtDate(per.hasta)}.`);
-  if (actual === m.id && !$('#v-validar').hidden) renderResultado();
-  const vis = $$('.view').find(v => !v.hidden); if (vis) render(vis.id.slice(2));
-});
-
-/* ---------- ficha del socio ---------- */
-function qrSVG(text) {
-  try { const qr = window.qrcode(0, 'M'); qr.addData(text); qr.make(); return qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); }
-  catch (e) { return `<div class="noqr">${esc(text)}<br>(QR no disponible)</div>`; }
-}
-const avisoTexto = m => {
-  const st = estado(m);
-  if (st.k === 'caducado') return `Hola ${m.nombre.split(' ')[0]}, tu Bono Lavado de ES La Soledad caducó el ${fmtDate(m.caduca)}. Pásate por la tienda para renovarlo y seguir lavando cuando quieras.`;
-  return `Hola ${m.nombre.split(' ')[0]}, tu Bono Lavado de ES La Soledad caduca el ${fmtDate(m.caduca)}. Renuévalo en la tienda para seguir lavando sin interrupciones.`;
-};
-function abrirFicha(id, editar) {
-  const m = socio(id); if (!m) return;
-  const st = estado(m); const plan = planOf(m);
-  const ventas = db.ventas.filter(v => v.socioId === id).sort((a, b) => a.fecha < b.fecha ? 1 : -1);
-  const lav = db.lavados.filter(l => l.socioId === id).sort((a, b) => a.fecha < b.fecha ? 1 : -1);
-  const c = $('#d-socio-c');
-  c.innerHTML = `
-    <div class="dh"><h3>Ficha de socio</h3><button type="button" class="x" data-close aria-label="Cerrar">×</button></div>
-    <div class="db">
-      <div class="card-socio">
-        <div class="qr">${qrSVG(m.id)}</div>
-        <div class="meta"><small>BONO LAVADO · ES LA SOLEDAD</small><div class="id">${esc(m.id)}</div><div>${esc(m.nombre)}</div><div>${plateHTML(m.matricula, true)}</div><small>${esc(plan.nombre)} · válido hasta ${m.caduca ? fmtDate(m.caduca) : '—'}</small></div>
-      </div>
-      ${editar ? `
-      <form id="f-editar" class="grid2" autocomplete="off">
-        <div><label for="e-nombre">Nombre</label><input id="e-nombre" value="${esc(m.nombre)}" required></div>
-        <div><label for="e-tel">Teléfono</label><input id="e-tel" value="${esc(m.telefono)}"></div>
-        <div><label for="e-mat">Matrícula</label><input id="e-mat" value="${esc(fmtPlate(m.matricula))}" required style="text-transform:uppercase"></div>
-        <div><label for="e-notas">Notas</label><input id="e-notas" value="${esc(m.notas)}"></div>
-        <div class="row"><button class="btn primary" type="submit">Guardar cambios</button><button class="btn" type="button" data-ficha-ver="${esc(m.id)}">Cancelar</button></div>
-      </form>` : `
-      <div class="facts">
-        <div class="fact"><span>Estado</span><b><span class="pill ${st.cls}">${esc(st.txt)}</span></b></div>
-        <div class="fact"><span>Teléfono</span><b>${esc(m.telefono || '—')}</b></div>
-        <div class="fact"><span>Socio desde</span><b>${fmtDate(m.alta)}</b></div>
-        <div class="fact"><span>Pagado en total</span><b>${eur(ventas.reduce((a, v) => a + v.importe, 0))}</b></div>
-      </div>
-      ${m.notas ? `<p style="margin:0" class="sub">Notas: ${esc(m.notas)}</p>` : ''}`}
-      <div class="row no-print">
-        <button class="btn primary" data-renovar="${esc(m.id)}">${m.baja ? 'Vender bono' : 'Renovar bono'}</button>
-        <button class="btn" id="b-aviso">Copiar aviso para WhatsApp</button>
-        ${editar ? '' : `<button class="btn" data-ficha-editar="${esc(m.id)}">Editar datos</button>`}
-        ${embedded ? '' : '<button class="btn" id="b-print">Imprimir tarjeta</button>'}
-      </div>
-      <div class="grid2 no-print">
-        <div><h3>Pagos</h3><div class="hist">${ventas.map(v => `<div><span>${fmtShort(v.fecha)} · ${eur(v.importe)} ${v.metodo}</span><span>${fmtShort(v.desde)} – ${fmtShort(v.hasta)}</span></div>`).join('') || '<p class="empty">Sin pagos</p>'}</div></div>
-        <div><h3>Lavados</h3><div class="hist">${lav.slice(0, 40).map(l => `<div><span>${fmtShort(l.fecha)} · ${fmtTime(l.fecha)}</span><span>${l.tipo === 'boxes' ? `Monedas boxes ${eur(l.importe)}` : `Túnel${l.ticket ? ' · ' + esc(l.ticket) : ''}`}</span></div>`).join('') || '<p class="empty">Sin lavados</p>'}</div></div>
-      </div>
-    </div>
-    <div class="df no-print">${m.baja ? '' : `<button class="btn danger" id="b-baja">Dar de baja</button>`}<button class="btn" data-close>Cerrar</button></div>`;
-  const d = $('#d-socio'); if (!d.open) d.showModal();
-  $('#b-aviso').onclick = () => copiar(avisoTexto(m), 'Aviso copiado. Pégalo en WhatsApp.');
-  const pr = $('#b-print'); if (pr) pr.onclick = () => window.print();
-  const bj = $('#b-baja'); if (bj) bj.onclick = () => {
-    d.close();
-    confirmar('Dar de baja', `${m.nombre} (${fmtPlate(m.matricula)}) dejará de poder lavar con bono. Su historial se conserva.`, 'Dar de baja', () => {
-      m.baja = true; save(); toast('Socio dado de baja.');
-      const vis = $$('.view').find(v => !v.hidden); if (vis) render(vis.id.slice(2)); if (actual === m.id) renderResultado();
+function pintarResultado() {
+  const r = $('#resultado'); if (!actual) { r.innerHTML = ''; return; }
+  const m = db.socios.find(x => x.matricula === actual);
+  if (!m) {
+    r.innerHTML = `<div class="res bad"><div class="band"><h2>No es socio</h2><p>${placa(actual)} no tiene bono. Puedes darle de alta ahora.</p></div>
+      <form class="body" id="f-alta" autocomplete="off">
+        <div class="row">
+          <div class="grow"><label for="a-nombre">Nombre</label><input id="a-nombre" required></div>
+          <div class="grow"><label for="a-tel">Teléfono</label><input id="a-tel" inputmode="tel"></div>
+        </div>
+        <div><label>Bono</label><div class="seg">
+          <input type="radio" name="plan" id="pl-b" value="basico" checked><label for="pl-b">Básico · ${eur(db.precios.basico)}</label>
+          <input type="radio" name="plan" id="pl-c" value="completo"><label for="pl-c">Completo · ${eur(db.precios.completo)}</label>
+        </div></div>
+        <div><button class="btn primary big" type="submit">Cobrar y dar de alta</button></div>
+      </form></div>`;
+    $('#f-alta').addEventListener('submit', e => {
+      e.preventDefault();
+      const n = { nombre: $('#a-nombre').value.trim(), telefono: $('#a-tel').value.trim(), matricula: actual, plan: document.querySelector('input[name=plan]:checked').value, hasta: null, ultimo: null };
+      cobrarMes(n); db.socios.push(n); guardar();
+      aviso(`Alta hecha. Bono válido hasta el ${fecha(n.hasta)}.`); pintarResultado(); pintarLista();
     });
-  };
-  const fe = $('#f-editar'); if (fe) fe.addEventListener('submit', e => {
-    e.preventDefault();
-    const mat = normPlate($('#e-mat').value);
-    const dup = db.socios.find(x => x.id !== m.id && x.matricula === mat && !x.baja);
-    if (dup) { toast(`Esa matrícula ya es del socio ${dup.id}.`, true); return; }
-    m.nombre = $('#e-nombre').value.trim() || m.nombre; m.telefono = $('#e-tel').value.trim(); m.matricula = mat || m.matricula; m.notas = $('#e-notas').value.trim();
-    save(); toast('Datos guardados.'); abrirFicha(m.id);
-    const vis = $$('.view').find(v => !v.hidden); if (vis) render(vis.id.slice(2));
-  });
-}
-document.addEventListener('click', e => {
-  const ed = e.target.closest('[data-ficha-editar]'); if (ed) abrirFicha(ed.dataset.fichaEditar, true);
-  const vr = e.target.closest('[data-ficha-ver]'); if (vr) abrirFicha(vr.dataset.fichaVer);
-});
-
-/* ---------- socios ---------- */
-let filtro = 'todos';
-$('#s-filtros').addEventListener('click', e => {
-  const b = e.target.closest('[data-f]'); if (!b) return; filtro = b.dataset.f;
-  $$('#s-filtros .chip').forEach(c => c.setAttribute('aria-pressed', String(c === b))); renderSocios();
-});
-$('#s-q').addEventListener('input', renderSocios);
-function renderSocios() {
-  const q = $('#s-q').value.trim().toLowerCase(); const np = normPlate(q); const dg = q.replace(/\D/g, '');
-  const activos = db.socios.filter(vigente).length;
-  $('#socios-sub').textContent = `${activos} con bono en vigor de ${db.socios.filter(m => !m.baja).length} registrados`;
-  const orden = { pronto: 0, activo: 1, caducado: 2, baja: 3 };
-  const rows = db.socios.filter(m => {
-    const k = estado(m).k;
-    if (filtro !== 'todos' && k !== filtro && !(filtro === 'activo' && k === 'pronto')) return false;
-    if (!q) return true;
-    return m.nombre.toLowerCase().includes(q) || m.id.toLowerCase().includes(q) || (np && m.matricula.includes(np)) || (dg.length >= 3 && m.telefono.replace(/\D/g, '').includes(dg));
-  }).sort((a, b) => (orden[estado(a).k] - orden[estado(b).k]) || ((a.caduca || '') < (b.caduca || '') ? -1 : 1));
-  $('#t-socios').innerHTML = `<thead><tr><th>Socio</th><th>Matrícula</th><th>Plan</th><th>Estado</th><th>Válido hasta</th><th class="num">Lavados 30 días</th></tr></thead><tbody>${
-    rows.map(m => { const st = estado(m); const n30 = db.lavados.filter(l => l.socioId === m.id && l.tipo === 'tunel' && l.fecha.slice(0, 10) > addDays(today(), -30)).length;
-      return `<tr class="click" data-ficha="${esc(m.id)}"><td><b>${esc(m.nombre)}</b><br><small class="sub">${esc(m.id)}</small></td><td>${plateHTML(m.matricula, true)}</td><td>${esc(planOf(m).nombre)}</td><td><span class="pill ${st.cls}">${esc(st.txt)}</span></td><td>${m.caduca ? fmtDate(m.caduca) : '—'}</td><td class="num">${n30}</td></tr>`; }).join('')
-    || '<tr><td colspan="6" class="empty">No hay socios con ese filtro.</td></tr>'}</tbody>`;
+    $('#a-nombre').focus();
+    return;
+  }
+  const st = estado(m), t = hoy(), plan = PLANES[m.plan] || m.plan, precio = eur(db.precios[m.plan]);
+  let cls, titulo, sub, botones;
+  if (m.hasta < t) {
+    cls = 'bad'; titulo = 'Bono caducado'; sub = `Caducó el ${fecha(m.hasta)}. Cobra el mes para que pueda lavar.`;
+    botones = `<button class="btn primary big" id="b-renovar">Cobrar mes · ${precio}</button>`;
+  } else if (m.ultimo === t) {
+    cls = 'warn'; titulo = 'Ya ha lavado hoy'; sub = 'Puede volver a lavar mañana.';
+    botones = st.k === 'warn' ? `<button class="btn" id="b-renovar">Cobrar mes siguiente · ${precio}</button>` : '';
+  } else {
+    cls = 'ok'; titulo = 'Puede lavar'; sub = `Dale el ticket de túnel <b>${esc(plan)}</b>. Bono válido hasta el ${fecha(m.hasta)}.`;
+    botones = `<button class="btn primary big" id="b-lavar">Ticket entregado</button>` + (st.k === 'warn' ? `<button class="btn" id="b-renovar">Cobrar mes siguiente · ${precio}</button>` : '');
+  }
+  r.innerHTML = `<div class="res ${cls}"><div class="band"><h2>${titulo}</h2><p>${sub}</p></div>
+    <div class="body"><div class="row" style="align-items:center">${placa(m.matricula)}<div class="who">${esc(m.nombre)}<small>Bono ${esc(plan)} · ${esc(m.telefono || 'sin teléfono')}</small></div></div>
+    ${botones ? `<div class="row">${botones}</div>` : ''}</div></div>`;
+  const bl = $('#b-lavar'); if (bl) bl.onclick = () => { m.ultimo = t; contarLavado(); guardar(); aviso('Lavado apuntado.'); pintarResultado(); pintarLista(); $('#q').select(); };
+  const br = $('#b-renovar'); if (br) br.onclick = () => { cobrarMes(m); guardar(); aviso(`Cobrado. Bono válido hasta el ${fecha(m.hasta)}.`); pintarResultado(); pintarLista(); };
 }
 
-/* ---------- resumen ---------- */
-function renderResumen() {
-  const t = today(); const mes = t.slice(0, 7);
-  const vig = db.socios.filter(vigente);
-  const ventasMes = db.ventas.filter(v => v.fecha.slice(0, 7) === mes);
-  const total = ventasMes.reduce((a, v) => a + v.importe, 0);
-  const ef = ventasMes.filter(v => v.metodo === 'efectivo').reduce((a, v) => a + v.importe, 0);
-  const lavMes = db.lavados.filter(l => l.tipo === 'tunel' && l.fecha.slice(0, 7) === mes);
-  const l30 = db.lavados.filter(l => l.tipo === 'tunel' && l.fecha.slice(0, 10) > addDays(t, -30)).length;
-  const cuotaMedia = vig.length ? vig.reduce((a, m) => a + planOf(m).precio, 0) / vig.length : 0;
-  $('#res-sub').textContent = `Datos de ${new Date().toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}`;
-  $('#kpis').innerHTML = `
-    <div class="kpi"><span>Socios con bono en vigor</span><b>${vig.length}</b><small>Cuota media ${eur(cuotaMedia)}</small></div>
-    <div class="kpi"><span>Ingresos recurrentes al mes</span><b>${eur(vig.reduce((a, m) => a + planOf(m).precio, 0))}</b><small>Si todos renuevan</small></div>
-    <div class="kpi"><span>Bonos vendidos este mes</span><b>${eur(total)}</b><small>${ventasMes.length} ventas · ${eur(ef)} en efectivo</small></div>
-    <div class="kpi"><span>Lavados de túnel este mes</span><b>${lavMes.length}</b><small>${vig.length ? (l30 / vig.length).toFixed(1).replace('.', ',') : '0'} por socio en 30 días</small></div>`;
-  const dias = [...Array(14)].map((_, i) => addDays(t, i - 13));
-  const cnt = dias.map(d => db.lavados.filter(l => l.tipo === 'tunel' && l.fecha.startsWith(d)).length);
-  const max = Math.max(1, ...cnt);
-  $('#bars').innerHTML = cnt.map((c, i) => `<div class="bar${dias[i] === t ? ' today' : ''}" style="height:${(c / max) * 100}%" title="${fmtShort(dias[i])}: ${c}"><i>${c}</i></div>`).join('');
-  $('#barlabels').innerHTML = dias.map(d => `<span>${parse(d).getDate()}</span>`).join('');
-  const pronto = db.socios.filter(m => estado(m).k === 'pronto').sort((a, b) => a.caduca < b.caduca ? -1 : 1);
-  const cad = db.socios.filter(m => !m.baja && m.caduca && m.caduca < t && m.caduca >= addDays(t, -30)).sort((a, b) => a.caduca < b.caduca ? 1 : -1);
-  const li = m => `<div class="li"><div class="grow"><b>${esc(m.nombre)}</b><br><small class="sub">${esc(m.telefono || 'sin teléfono')} · ${esc(estado(m).txt)}</small></div>${plateHTML(m.matricula, true)}<button class="btn sm" data-aviso="${esc(m.id)}">Copiar aviso</button><button class="btn sm primary" data-renovar="${esc(m.id)}">Renovar</button></div>`;
-  $('#l-pronto').innerHTML = pronto.map(li).join('') || '<p class="empty">Nadie caduca esta semana.</p>';
-  $('#l-caducados').innerHTML = cad.map(li).join('') || '<p class="empty">No hay bonos caducados recientes.</p>';
-  $('#t-ventas').innerHTML = `<thead><tr><th>Fecha</th><th>Socio</th><th>Plan</th><th>Pago</th><th class="num">Importe</th></tr></thead><tbody>${
-    ventasMes.sort((a, b) => a.fecha < b.fecha ? 1 : -1).map(v => { const m = socio(v.socioId) || { nombre: '?' }; const p = db.planes.find(x => x.id === v.planId); return `<tr><td>${fmtShort(v.fecha)} ${fmtTime(v.fecha)}</td><td>${esc(m.nombre)}</td><td>${esc(p ? p.nombre : v.planId)}</td><td>${esc(v.metodo)}</td><td class="num">${eur(v.importe)}</td></tr>`; }).join('')
-    || '<tr><td colspan="5" class="empty">Sin ventas este mes.</td></tr>'}</tbody>`;
+/* ---- Lista ---- */
+function pintarLista() {
+  const t = hoy();
+  const vigentes = db.socios.filter(m => m.hasta >= t);
+  const lav = db.diaLavados === t ? db.lavadosHoy : 0;
+  const ingresos = vigentes.reduce((a, m) => a + (db.precios[m.plan] || 0), 0);
+  $('#stats').innerHTML = `<span><b>${vigentes.length}</b>activos</span><span><b>${lav}</b>lavados hoy</span><span><b>${eur(ingresos)}</b>al mes</span>`;
+  const orden = m => m.hasta < t ? 1 : 0;
+  const filas = [...db.socios].sort((a, b) => orden(a) - orden(b) || (a.hasta < b.hasta ? -1 : 1));
+  $('#tabla').innerHTML = `<thead><tr><th>Matrícula</th><th>Nombre</th><th>Bono</th><th>Válido hasta</th><th></th></tr></thead><tbody>${
+    filas.map(m => { const st = estado(m); return `<tr class="click" data-m="${esc(m.matricula)}"><td>${placa(m.matricula)}</td><td>${esc(m.nombre)}</td><td>${esc(PLANES[m.plan] || m.plan)}</td><td>${fecha(m.hasta)}</td><td><span class="pill ${st.k}">${st.txt}</span></td></tr>`; }).join('')
+    || '<tr><td colspan="5" style="color:var(--muted)">Todavía no hay socios. Escribe una matrícula arriba para dar el primer alta.</td></tr>'}</tbody>`;
 }
-document.addEventListener('click', e => { const a = e.target.closest('[data-aviso]'); if (a) { const m = socio(a.dataset.aviso); if (m) copiar(avisoTexto(m), 'Aviso copiado. Pégalo en WhatsApp.'); } });
-$('#b-csv').addEventListener('click', () => {
-  const mes = today().slice(0, 7);
-  const filas = [['fecha', 'socio', 'nombre', 'matricula', 'plan', 'pago', 'importe', 'desde', 'hasta']].concat(
-    db.ventas.filter(v => v.fecha.slice(0, 7) === mes).map(v => { const m = socio(v.socioId) || {}; return [v.fecha.replace('T', ' '), v.socioId, m.nombre || '', fmtPlate(m.matricula || ''), v.planId, v.metodo, v.importe.toFixed(2).replace('.', ','), v.desde, v.hasta]; }));
-  copiar(filas.map(r => r.map(x => `"${String(x).replace(/"/g, '""')}"`).join(';')).join('\n'), 'Ventas copiadas. Pégalas en una hoja de cálculo.');
-});
+$('#tabla').addEventListener('click', e => { const tr = e.target.closest('[data-m]'); if (!tr) return; $('#q').value = fmt(tr.dataset.m); actual = tr.dataset.m; pintarResultado(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
-/* ---------- planes y ajustes ---------- */
-function renderPlanes() {
-  $('#t-planes').innerHTML = `<thead><tr><th>Nombre</th><th>Precio €/mes</th><th>Lavados al día</th><th>Programa de túnel</th><th>Monedas boxes €/mes</th><th>Socios</th><th></th></tr></thead><tbody>${
-    db.planes.map(p => { const n = db.socios.filter(m => m.planId === p.id && !m.baja).length; return `<tr data-plan="${esc(p.id)}">
-      <td><input id="p-n-${esc(p.id)}" data-k="nombre" value="${esc(p.nombre)}" aria-label="Nombre del plan"></td>
-      <td><input id="p-p-${esc(p.id)}" data-k="precio" type="number" step="0.05" min="0" value="${p.precio}" aria-label="Precio"></td>
-      <td><input id="p-d-${esc(p.id)}" data-k="lavadosDia" type="number" step="1" min="1" value="${p.lavadosDia}" aria-label="Lavados al día"></td>
-      <td class="wide"><input id="p-g-${esc(p.id)}" data-k="programa" value="${esc(p.programa)}" aria-label="Programa de túnel"></td>
-      <td><input id="p-b-${esc(p.id)}" data-k="boxes" type="number" step="0.5" min="0" value="${p.boxes}" aria-label="Monedas boxes"></td>
-      <td class="num">${n}</td>
-      <td><button class="btn sm danger" data-del-plan="${esc(p.id)}" ${n ? 'disabled title="Hay socios con este plan"' : ''}>Quitar</button></td></tr>`; }).join('')}</tbody>`;
-}
-function leerPlanes() {
-  $$('#t-planes tr[data-plan]').forEach(tr => {
-    const p = db.planes.find(x => x.id === tr.dataset.plan); if (!p) return;
-    tr.querySelectorAll('input').forEach(i => { const k = i.dataset.k; p[k] = ['precio', 'boxes'].includes(k) ? Math.max(0, Number(i.value) || 0) : k === 'lavadosDia' ? Math.max(1, Math.round(Number(i.value) || 1)) : i.value.trim(); });
-  });
-}
-$('#b-plan-save').addEventListener('click', () => { leerPlanes(); save(); renderPlanes(); toast('Planes guardados.'); });
-$('#b-plan-add').addEventListener('click', () => { leerPlanes(); db.planes.push({ id: 'p' + uid().slice(0, 6), nombre: 'Nuevo plan', precio: 12.95, lavadosDia: 1, programa: '', boxes: 0 }); save(); renderPlanes(); });
-$('#t-planes').addEventListener('click', e => {
-  const b = e.target.closest('[data-del-plan]'); if (!b || b.disabled) return;
-  leerPlanes(); db.planes = db.planes.filter(p => p.id !== b.dataset.delPlan); save(); renderPlanes(); toast('Plan quitado.');
+/* ---- Ajustes ---- */
+$('#p-basico').value = db.precios.basico; $('#p-completo').value = db.precios.completo;
+$('#b-precios').onclick = () => { db.precios.basico = Number($('#p-basico').value) || 0; db.precios.completo = Number($('#p-completo').value) || 0; guardar(); aviso('Precios guardados.'); pintarLista(); pintarResultado(); };
+$('#b-copia').onclick = async () => {
+  const txt = JSON.stringify(db);
+  try { await navigator.clipboard.writeText(txt); aviso('Copia copiada. Pégala en un correo para guardarla.'); }
+  catch (e) { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); aviso('Copia copiada.'); } catch (_) { aviso('No se ha podido copiar.'); } ta.remove(); }
+};
+$('#f-restaurar').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return; const r = new FileReader();
+  r.onload = () => { try { const d = JSON.parse(r.result); if (!Array.isArray(d.socios)) throw 0; db = d; guardar(); aviso('Copia restaurada.'); actual = null; pintarResultado(); pintarLista(); } catch (_) { aviso('Ese archivo no es una copia válida.'); } };
+  r.readAsText(f); e.target.value = '';
 });
-const backupTxt = () => JSON.stringify(db, null, 1);
-$('#b-backup-dl').addEventListener('click', () => {
-  try {
-    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([backupTxt()], { type: 'application/json' }));
-    a.download = `bono-lavado-copia-${today()}.json`; document.body.appendChild(a); a.click(); a.remove();
-    if (embedded) toast('Si no se descarga nada, usa «Copiar copia al portapapeles».');
-  } catch (e) { toast('No se ha podido descargar. Usa «Copiar copia al portapapeles».', true); }
-});
-$('#b-backup-copy').addEventListener('click', () => copiar(backupTxt(), 'Copia de seguridad copiada. Pégala en un correo o un documento.'));
-$('#f-restore').addEventListener('change', e => {
-  const f = e.target.files[0]; if (!f) return;
-  const r = new FileReader();
-  r.onload = () => {
-    try {
-      const d = JSON.parse(r.result);
-      if (!Array.isArray(d.socios) || !Array.isArray(d.planes)) throw new Error('formato');
-      confirmar('Restaurar copia', `Se sustituirán los datos actuales por los de la copia (${d.socios.length} socios).`, 'Restaurar', () => { db = d; save(); toast('Copia restaurada.'); irA('resumen'); });
-    } catch (err) { toast('Ese archivo no es una copia válida de Bono Lavado.', true); }
-    e.target.value = '';
-  };
-  r.readAsText(f);
-});
-function vaciar() { db = { version: 1, demo: false, siguiente: 1, planes: db.planes && db.planes.length ? db.planes : defaultPlans(), socios: [], ventas: [], lavados: [] }; save(); }
-$('#b-demo-clear').addEventListener('click', () => confirmar('Empezar con datos reales', 'Se borrarán los socios y movimientos de ejemplo. Los planes se conservan.', 'Borrar ejemplos', () => { vaciar(); toast('Listo. Ya puedes dar de alta a tus socios.'); irA('alta'); }));
-$('#b-wipe').addEventListener('click', () => confirmar('Borrar todo', 'Se borrarán todos los socios, pagos y lavados de este dispositivo. Haz antes una copia de seguridad.', 'Borrar todo', () => { vaciar(); toast('Datos borrados.'); irA('validar'); }));
-$('#b-reset-demo').addEventListener('click', () => confirmar('Cargar datos de ejemplo', 'Se sustituirán los datos actuales por los de ejemplo.', 'Cargar ejemplo', () => { db = seed(); save(); toast('Datos de ejemplo cargados.'); irA('validar'); }));
+$('#b-vaciar').onclick = () => { $('#confirmar-vaciar').hidden = false; };
+$('#b-vaciar-si').onclick = () => { db = { demo: false, precios: db.precios, socios: [], lavadosHoy: 0, diaLavados: hoy() }; guardar(); actual = null; $('#confirmar-vaciar').hidden = true; pintarResultado(); pintarLista(); aviso('Todo borrado.'); };
 
-/* ---------- arranque ---------- */
-let inicio = 'validar';
-try { const t = localStorage.getItem(KEY + '.tab'); if (t && $('#v-' + t)) inicio = t; } catch (e) {}
-irA(inicio);
-if (inicio === 'validar' && db.demo) { $('#q').value = '0954 KZR'; $('#f-buscar').requestSubmit(); $('#q').select(); }
+$('#fecha').textContent = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+pintarLista();
+if (db.demo && db.socios.length) { $('#q').value = '0954 KZR'; actual = norm('0954KZR'); pintarResultado(); }
 })();
 </script>
 </body>
