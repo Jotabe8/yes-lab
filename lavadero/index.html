@@ -93,6 +93,13 @@ details[open] summary { margin-bottom: 12px; }
 .seg label { margin: 0; padding: 11px 16px; cursor: pointer; color: var(--fg); font: 600 16px var(--f-body); }
 .seg input:checked + label { background: var(--accent); color: var(--on-accent); }
 .seg input:focus-visible + label { outline: 3px solid var(--amarillo); outline-offset: -3px; }
+.aviso { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.aviso:last-child { border-bottom: 0; }
+.aviso .grow { flex: 1 1 160px; min-width: 0; }
+.aviso small { color: var(--muted); }
+.wa { display: inline-flex; align-items: center; gap: 8px; background: #1FA855; border: 1.5px solid #1FA855; color: #fff; text-decoration: none; border-radius: 8px; padding: 8px 14px; font: 700 16px var(--f-display); letter-spacing: .02em; white-space: nowrap; }
+.wa:hover { filter: brightness(1.06); }
+.wa.hecho { background: transparent; color: var(--ok); border-color: var(--line); }
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 12px 18px; border-radius: 10px; font-weight: 600; max-width: calc(100vw - 32px); z-index: 9; }
 @media (max-width: 520px) { .btn.big { width: 100%; } .res .band h2 { font-size: 28px; } }
 </style>
@@ -111,6 +118,12 @@ details[open] summary { margin-bottom: 12px; }
   </form>
 
   <div id="resultado"></div>
+
+  <div class="box" id="avisos-box">
+    <h2>Avisar por WhatsApp</h2>
+    <p class="hint" style="margin:2px 0 6px">Bonos que caducan esta semana o han caducado hace poco. El botón abre WhatsApp con el mensaje ya escrito; solo hay que darle a enviar.</p>
+    <div id="avisos"></div>
+  </div>
 
   <div class="box">
     <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:8px">
@@ -247,12 +260,44 @@ function pintarLista() {
   const lav = db.diaLavados === t ? db.lavadosHoy : 0;
   const ingresos = vigentes.reduce((a, m) => a + (db.precios[m.plan] || 0), 0);
   $('#stats').innerHTML = `<span><b>${vigentes.length}</b>activos</span><span><b>${lav}</b>lavados hoy</span><span><b>${eur(ingresos)}</b>al mes</span>`;
+  pintarAvisos();
   const orden = m => m.hasta < t ? 1 : 0;
   const filas = [...db.socios].sort((a, b) => orden(a) - orden(b) || (a.hasta < b.hasta ? -1 : 1));
   $('#tabla').innerHTML = `<thead><tr><th>Matrícula</th><th>Nombre</th><th>Bono</th><th>Válido hasta</th><th></th></tr></thead><tbody>${
     filas.map(m => { const st = estado(m); return `<tr class="click" data-m="${esc(m.matricula)}"><td>${placa(m.matricula)}</td><td>${esc(m.nombre)}</td><td>${esc(PLANES[m.plan] || m.plan)}</td><td>${fecha(m.hasta)}</td><td><span class="pill ${st.k}">${st.txt}</span></td></tr>`; }).join('')
     || '<tr><td colspan="5" style="color:var(--muted)">Todavía no hay socios. Escribe una matrícula arriba para dar el primer alta.</td></tr>'}</tbody>`;
 }
+/* ---- Avisos por WhatsApp ---- */
+function telWA(tel) {
+  let d = String(tel || '').replace(/\D/g, '');
+  if (d.startsWith('00')) d = d.slice(2);
+  if (d.length === 9) d = '34' + d;
+  return d.length >= 11 ? d : '';
+}
+function textoAviso(m) {
+  const nombre = (m.nombre || '').split(' ')[0];
+  return m.hasta < hoy()
+    ? `Hola ${nombre}, tu Bono Lavado de ES La Soledad caducó el ${fecha(m.hasta)}. Pásate por la tienda para renovarlo y seguir lavando cuando quieras. ¡Gracias!`
+    : `Hola ${nombre}, tu Bono Lavado de ES La Soledad caduca el ${fecha(m.hasta)}. Renuévalo en la tienda para seguir lavando sin cortes. ¡Gracias!`;
+}
+function pintarAvisos() {
+  const t = hoy(), limite = addDays(t, 7), desde = addDays(t, -15);
+  const lista = db.socios.filter(m => m.hasta <= limite && m.hasta >= desde).sort((a, b) => a.hasta < b.hasta ? 1 : -1);
+  $('#avisos-box').hidden = !lista.length;
+  $('#avisos').innerHTML = lista.map(m => {
+    const st = estado(m), n = telWA(m.telefono);
+    const avisado = m.avisado && m.avisado >= addDays(m.hasta, -7);
+    const boton = !n ? '<small>Sin teléfono</small>'
+      : `<a class="wa${avisado ? ' hecho' : ''}" href="https://wa.me/${n}?text=${encodeURIComponent(textoAviso(m))}" target="_blank" rel="noopener" data-avisar="${esc(m.matricula)}">${avisado ? `✓ Avisado ${fecha(m.avisado)}` : 'Avisar por WhatsApp'}</a>`;
+    return `<div class="aviso">${placa(m.matricula)}<div class="grow"><b>${esc(m.nombre)}</b><br><small>${esc(m.telefono || '')}</small></div><span class="pill ${st.k}">${st.txt}</span>${boton}</div>`;
+  }).join('');
+}
+$('#avisos').addEventListener('click', e => {
+  const a = e.target.closest('[data-avisar]'); if (!a) return;
+  const m = db.socios.find(x => x.matricula === a.dataset.avisar);
+  if (m) { m.avisado = hoy(); guardar(); setTimeout(pintarAvisos, 300); }
+});
+
 $('#tabla').addEventListener('click', e => { const tr = e.target.closest('[data-m]'); if (!tr) return; $('#q').value = fmt(tr.dataset.m); actual = tr.dataset.m; pintarResultado(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
 /* ---- Ajustes ---- */

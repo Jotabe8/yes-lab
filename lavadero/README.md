@@ -12,6 +12,8 @@ App de una sola pantalla para controlar en la caja de la tienda los bonos mensua
    - **Rojo, no es socio:** rellena el nombre y el teléfono, elige el bono, cobra y pulsa **Cobrar y dar de alta**.
 3. Abajo está la lista de socios con su fecha de caducidad. Tocando una fila se comprueba ese socio.
 
+4. En **Avisar por WhatsApp** salen los bonos que caducan esta semana o caducaron hace menos de 15 días. El botón abre WhatsApp con el mensaje ya escrito, y después queda marcado como avisado.
+
 Los precios se cambian en «Precios y copia de seguridad».
 
 ## Instalación
