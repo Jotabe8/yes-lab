@@ -35,7 +35,7 @@ comprador); la de eBay está sin configurar a propósito.
 
 ## Avisos automáticos
 
-- **Gmail (en la nube):** una tarea programada lee cada hora, de 8:00 a 23:00 (hora de Madrid),
+- **Gmail (en la nube, desactivada hasta tener el conector de Gmail en la tarea):** una tarea programada lee cada hora, de 8:00 a 23:00 (hora de Madrid),
   los avisos de búsquedas guardadas de eBay/Wallapop, los pasa por `evaluar.py` y manda un
   correo solo con los que dejan margen. Los ya revisados quedan con la etiqueta
   `arbitraje/revisado`.
