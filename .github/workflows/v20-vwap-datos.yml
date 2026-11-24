@@ -1,0 +1,93 @@
+name: v20 VWAP datos (volumen Dukascopy y barras Alpaca)
+
+on:
+  push:
+    branches: [claude/project-thread-wlxhtw]
+    paths:
+      - .github/workflows/v20-vwap-datos.yml
+      - metodo/v20/extraer_vol.py
+      - metodo/v20/alpaca_barras.py
+
+permissions:
+  contents: write
+
+jobs:
+  duka:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 30
+      matrix:
+        par: ["US100:usatechidxusd", "US500:usa500idxusd", "US30:usa30idxusd", "GER40:deuidxeur"]
+        y: [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Descargar y extraer
+        env:
+          PAR: ${{ matrix.par }}
+        run: |
+          SIM=${PAR%%:*}; INS=${PAR##*:}; Y=${{ matrix.y }}
+          HASTA=$((Y+1))-01-02; [ $Y = 2026 ] && HASTA=2026-11-14
+          mkdir -p velas salida && cd velas
+          npm init -y >/dev/null && npm i dukascopy-node@1 >/dev/null 2>&1
+          npx dukascopy-node -i $INS -from $((Y-1))-12-30 -to $HASTA -t m1 -p bid -v -f csv -dir . -r 5 -bs 20 -bp 300 -fr 2>&1 | tail -5 || echo falla
+          ls -la | head; head -3 *.csv | head
+          cd .. && pip install -q pandas numpy && python metodo/v20/extraer_vol.py $SIM velas $Y salida/vol_${SIM}_$Y.npz || echo sin datos
+      - uses: actions/upload-artifact@v4
+        with:
+          name: duka-${{ strategy.job-index }}
+          path: salida/
+          if-no-files-found: ignore
+
+  alpaca:
+    if: ${{ github.run_number == 1 }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        s: [QQQ, SPY, DIA]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: clave
+        run: |
+          if [ -z "$K" ]; then echo "Faltan los secretos ALPACA_KEY_ID y ALPACA_SECRET"; echo "hay=no" >> $GITHUB_OUTPUT
+          else echo "hay=si" >> $GITHUB_OUTPUT; fi
+        env:
+          K: ${{ secrets.ALPACA_KEY_ID }}
+      - if: steps.clave.outputs.hay == 'si'
+        run: mkdir -p salida && pip install -q pandas numpy && python metodo/v20/alpaca_barras.py ${{ matrix.s }} salida/etf_${{ matrix.s }}.npz
+        env:
+          ALPACA_KEY_ID: ${{ secrets.ALPACA_KEY_ID }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+      - if: steps.clave.outputs.hay == 'si'
+        uses: actions/upload-artifact@v4
+        with:
+          name: etf-${{ matrix.s }}
+          path: salida/
+
+  juntar:
+    needs: [duka, alpaca]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: art
+      - name: Guardar
+        run: |
+          mkdir -p metodo/v20/datos && find art -name '*.npz' -exec cp {} metodo/v20/datos/ \;
+          ls -la metodo/v20/datos | head -80
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add metodo/v20/datos && git commit -m "v20: volumen Dukascopy y barras Alpaca" && git pull --rebase && git push || echo "nada que guardar"

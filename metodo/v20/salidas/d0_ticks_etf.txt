@@ -1,0 +1,4 @@
+días 1257 corr perfil de volumen ticks vs QQQ (media por minuto): 0.59 | corr minuto a minuto: 0.091
+ticks vs real QQQ: corr (P−VWAP)/ATR 10:30/12:00/14:00/15:55 0.993 0.992 0.991 0.989  signo igual 0.972  |ΔVWAP|/ATR mediana 0.016
+twap vs real QQQ: corr (P−VWAP)/ATR 10:30/12:00/14:00/15:55 0.991 0.987 0.983 0.981  signo igual 0.961  |ΔVWAP|/ATR mediana 0.023
+ticks vs twap: corr (P−VWAP)/ATR 10:30/12:00/14:00/15:55 1.000 0.999 0.998 0.997  signo igual 0.987  |ΔVWAP|/ATR mediana 0.007

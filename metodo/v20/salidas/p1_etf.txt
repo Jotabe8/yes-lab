@@ -1,0 +1,31 @@
+v20 hipótesis — peso etf, tramo p1
+
+H1 cierre frente al VWAP -> mismo lado al día siguiente (R, 1R = 0,5 ATR)
+  US100                        n=  665 media=-0.0417 t=-1.01 bruto -0.0314 coste 0.0103 placebo p95 +0.0813 | control rend -0.0241
+  US500                        n=  663 media=-0.0493 t=-1.16 bruto -0.0327 coste 0.0166 placebo p95 +0.0735 | control rend -0.0817
+  US30                         n=  674 media=-0.0233 t=-0.55 bruto -0.0066 coste 0.0167 placebo p95 +0.0706 | control rend -0.0488
+  JUNTOS                       n= 2002 media=-0.0380 t=-1.57 bruto -0.0235
+  regresión (días con señal): coef z -0.1942 t -1.37 | coef rend -0.0048 t -0.06
+  meseta q70                   n= 2975 media=-0.0130 t=-0.66 
+  meseta q90                   n= 1009 media=-0.0945 t=-2.61 
+
+H2 ORB con stop dinámico VWAP desde las 10:00 (R neta)
+  US100: ops 1581 base +0.1360 (t +2.26) VWAP +0.0704 (t +1.62)  Δ -0.0655 t -1.64  Sharpe/año 0.86 -> 0.61
+  US500: ops 1584 base +0.1114 (t +1.85) VWAP +0.0193 (t +0.46)  Δ -0.0922 t -2.20  Sharpe/año 0.70 -> 0.17
+  US30: ops 1584 base +0.0127 (t +0.22) VWAP -0.0058 (t -0.14)  Δ -0.0186 t -0.47  Sharpe/año 0.08 -> -0.05
+
+H3 bandas ±2σ, vuelta al VWAP (R, 1R = distancia al stop 3σ)
+  US100                        n= 1653 media=-0.1658 t=-4.03 bruto -0.0788 coste 0.0870 placebo p95 -0.0242 dur med 17 min | neto -2.08 pb/op t -2.95
+  US500                        n= 1837 media=-0.2093 t=-4.96 bruto -0.0489 coste 0.1604 placebo p95 -0.0992 dur med 13 min | neto -1.49 pb/op t -3.09
+  US30                         n= 1791 media=-0.2184 t=-4.60 bruto -0.0241 coste 0.1943 placebo p95 -0.1259 dur med 16 min | neto -1.55 pb/op t -3.24
+  JUNTOS                       n= 5281 media=-0.1987 t=-7.85 bruto -0.0498
+
+H4 tendencia VWAP (rendimiento diario neto, pb = 1e-4)
+  M1 US100: días 1751 neto +0.56 pb t +0.22 bruto +11.55 pb giros/día 14.9  placebo neto p95 -6.69 pb
+  M1 US500: días 1751 neto -10.75 pb t -5.33 bruto +3.08 pb giros/día 16.3  placebo neto p95 -9.99 pb
+  M1 US30: días 1751 neto -10.06 pb t -5.15 bruto +3.02 pb giros/día 15.4  placebo neto p95 -8.09 pb
+  M1 JUNTOS (fracción)         n= 5253 media=-0.0007 t=-5.33 
+  M5 US100: días 1751 neto +1.57 pb t +0.59 bruto +6.86 pb giros/día 6.7  placebo neto p95 -1.46 pb
+  M5 US500: días 1751 neto -2.65 pb t -1.34 bruto +3.83 pb giros/día 7.1  placebo neto p95 -3.65 pb
+  M5 US30: días 1751 neto -4.02 pb t -2.15 bruto +2.18 pb giros/día 6.7  placebo neto p95 -2.66 pb
+  M5 JUNTOS (fracción)         n= 5253 media=-0.0002 t=-1.34 
